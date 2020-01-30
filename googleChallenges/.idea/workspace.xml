@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="88795758-8225-42d3-aad0-9cf033194668" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="importingSettings">
+      <MavenImportingSettings>
+        <option name="importAutomatically" value="true" />
+      </MavenImportingSettings>
+    </option>
+  </component>
+  <component name="ProjectId" id="1X7Ty6m2SzQQ3QPYIVFdcI02tdN" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
+  </component>
+  <component name="RunManager">
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true">
+      <option name="MAIN_CLASS_NAME" value="com.romco.Main" />
+      <module name="googleChallenges" />
+      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Run" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.Main" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="88795758-8225-42d3-aad0-9cf033194668" name="Default Changelist" comment="" />
+      <created>1580396385112</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1580396385112</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="2472" y="239" key="#Project_Structure" timestamp="1580396606512">
+      <screen x="1920" y="0" width="1920" height="1160" />
+    </state>
+    <state x="2472" y="239" key="#Project_Structure/-1920.115.1920.1040/0.0.1920.1160/1920.0.1920.1160@1920.0.1920.1160" timestamp="1580396606512" />
+    <state x="765" y="296" key="#com.intellij.ide.util.MemberChooser" timestamp="1580401794892">
+      <screen x="0" y="0" width="1920" height="1160" />
+    </state>
+    <state x="765" y="296" key="#com.intellij.ide.util.MemberChooser/-1920.115.1920.1040/0.0.1920.1160/1920.0.1920.1160@0.0.1920.1160" timestamp="1580401794892" />
+    <state x="2685" y="296" key="#com.intellij.ide.util.MemberChooser/-1920.115.1920.1040/0.0.1920.1160/1920.0.1920.1160@1920.0.1920.1160" timestamp="1580396713805" />
+    <state x="2603" y="269" key="#com.intellij.ide.util.frameworkSupport.AddFrameworkSupportDialog" timestamp="1580396436144">
+      <screen x="1920" y="0" width="1920" height="1160" />
+    </state>
+    <state x="2603" y="269" key="#com.intellij.ide.util.frameworkSupport.AddFrameworkSupportDialog/-1920.115.1920.1040/0.0.1920.1160/1920.0.1920.1160@1920.0.1920.1160" timestamp="1580396436144" />
+    <state x="651" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1580402337032">
+      <screen x="0" y="0" width="1920" height="1160" />
+    </state>
+    <state x="651" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/-1920.115.1920.1040/0.0.1920.1160/1920.0.1920.1160@0.0.1920.1160" timestamp="1580402337032" />
+    <state width="1877" height="396" key="GridCell.Tab.0.bottom" timestamp="1580402745740">
+      <screen x="0" y="0" width="1920" height="1160" />
+    </state>
+    <state width="1877" height="396" key="GridCell.Tab.0.bottom/-1920.115.1920.1040/0.0.1920.1160/1920.0.1920.1160@0.0.1920.1160" timestamp="1580402745740" />
+    <state width="1877" height="396" key="GridCell.Tab.0.center" timestamp="1580402745740">
+      <screen x="0" y="0" width="1920" height="1160" />
+    </state>
+    <state width="1877" height="396" key="GridCell.Tab.0.center/-1920.115.1920.1040/0.0.1920.1160/1920.0.1920.1160@0.0.1920.1160" timestamp="1580402745740" />
+    <state width="1877" height="396" key="GridCell.Tab.0.left" timestamp="1580402745740">
+      <screen x="0" y="0" width="1920" height="1160" />
+    </state>
+    <state width="1877" height="396" key="GridCell.Tab.0.left/-1920.115.1920.1040/0.0.1920.1160/1920.0.1920.1160@0.0.1920.1160" timestamp="1580402745740" />
+    <state width="1877" height="396" key="GridCell.Tab.0.right" timestamp="1580402745740">
+      <screen x="0" y="0" width="1920" height="1160" />
+    </state>
+    <state width="1877" height="396" key="GridCell.Tab.0.right/-1920.115.1920.1040/0.0.1920.1160/1920.0.1920.1160@0.0.1920.1160" timestamp="1580402745740" />
+    <state width="1877" height="396" key="GridCell.Tab.1.bottom" timestamp="1580402745740">
+      <screen x="0" y="0" width="1920" height="1160" />
+    </state>
+    <state width="1877" height="396" key="GridCell.Tab.1.bottom/-1920.115.1920.1040/0.0.1920.1160/1920.0.1920.1160@0.0.1920.1160" timestamp="1580402745740" />
+    <state width="1877" height="396" key="GridCell.Tab.1.center" timestamp="1580402745740">
+      <screen x="0" y="0" width="1920" height="1160" />
+    </state>
+    <state width="1877" height="396" key="GridCell.Tab.1.center/-1920.115.1920.1040/0.0.1920.1160/1920.0.1920.1160@0.0.1920.1160" timestamp="1580402745740" />
+    <state width="1877" height="396" key="GridCell.Tab.1.left" timestamp="1580402745740">
+      <screen x="0" y="0" width="1920" height="1160" />
+    </state>
+    <state width="1877" height="396" key="GridCell.Tab.1.left/-1920.115.1920.1040/0.0.1920.1160/1920.0.1920.1160@0.0.1920.1160" timestamp="1580402745740" />
+    <state width="1877" height="396" key="GridCell.Tab.1.right" timestamp="1580402745740">
+      <screen x="0" y="0" width="1920" height="1160" />
+    </state>
+    <state width="1877" height="396" key="GridCell.Tab.1.right/-1920.115.1920.1040/0.0.1920.1160/1920.0.1920.1160@0.0.1920.1160" timestamp="1580402745740" />
+    <state x="2410" y="235" key="Maven.ArtifactSearchDialog" timestamp="1580396471164">
+      <screen x="1920" y="0" width="1920" height="1160" />
+    </state>
+    <state x="2410" y="235" key="Maven.ArtifactSearchDialog/-1920.115.1920.1040/0.0.1920.1160/1920.0.1920.1160@1920.0.1920.1160" timestamp="1580396471164" />
+    <state x="2381" y="223" key="SettingsEditor" timestamp="1580396620761">
+      <screen x="1920" y="0" width="1920" height="1160" />
+    </state>
+    <state x="2381" y="223" key="SettingsEditor/-1920.115.1920.1040/0.0.1920.1160/1920.0.1920.1160@1920.0.1920.1160" timestamp="1580396620761" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/googleChallenges$Main.ic" NAME="Main Coverage Results" MODIFIED="1580400981069" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+  </component>
+</project>
