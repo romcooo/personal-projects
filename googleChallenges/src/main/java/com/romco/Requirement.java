@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.Getter;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Data
@@ -47,6 +48,10 @@ class Requirement {
     
     public void add(Pizza pizza) {
         pizzas.add(pizza);
+    }
+
+    public void reverse() {
+        Collections.reverse(pizzas);
     }
     
     @Override

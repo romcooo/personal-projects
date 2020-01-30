@@ -12,20 +12,12 @@ class Pizza {
         this.type = type;
     }
     
-    public int getSlices() {
+    public long getSlices() {
         return slices;
     }
-    
+
     public int getType() {
         return type;
-    }
-    
-    public void setType(int type) {
-        this.type = type;
-    }
-    
-    public void setSlices(int slices) {
-        this.slices = slices;
     }
     
     @Override
