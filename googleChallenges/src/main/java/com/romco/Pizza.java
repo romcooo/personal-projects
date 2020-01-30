@@ -2,17 +2,16 @@ package com.romco;
 
 import lombok.Data;
 
-@Data
 class Pizza {
     private int slices;
-    private int type;
+    private short type;
     
-    public Pizza(int slices, int type) {
+    public Pizza(int slices, short type) {
         this.slices = slices;
         this.type = type;
     }
     
-    public long getSlices() {
+    public int getSlices() {
         return slices;
     }
 

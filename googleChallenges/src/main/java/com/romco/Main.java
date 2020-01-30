@@ -23,9 +23,9 @@ public class Main {
         List<String> inputs = new ArrayList<>();
 
 //        inputs.add(i0);
-//        inputs.add(i1);
+        inputs.add(i1);
 //        inputs.add(i2);
-        inputs.add(i3);
+//        inputs.add(i3);
 //        inputs.add(i4);
 
         for (String input : inputs) {
@@ -34,7 +34,8 @@ public class Main {
             System.out.println(requirement);
 
             Solver solver = new Solver(requirement);
-            solver.solve();
+//            solver.solve();
+            solver.solveNode();
             System.out.println("=========");
         }
 
