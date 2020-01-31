@@ -23,10 +23,10 @@ public class Main {
         List<String> inputs = new ArrayList<>();
 
 //        inputs.add(i0);
-        inputs.add(i1);
+//        inputs.add(i1);
 //        inputs.add(i2);
 //        inputs.add(i3);
-//        inputs.add(i4);
+        inputs.add(i4);
 
         for (String input : inputs) {
             Requirement requirement = InputParser.parse(input);

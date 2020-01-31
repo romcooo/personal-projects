@@ -4,8 +4,8 @@ import java.util.*;
 
 public class Solver {
     private Requirement requirement;
-    private List<Solution> solutions = new LinkedList<>();
-    private List<PizzaNode> lastNodes = new ArrayList<>();
+    private List<Solution> solutions = new Vector<>();
+    private List<PizzaNode> lastNodes = new Vector<>();
     static int counter = 0;
     
     public Solver(Requirement requirement) {
@@ -26,7 +26,7 @@ public class Solver {
      */
 
     public void solve() {
-        List<Pizza> pizzas = new LinkedList<>();
+        List<Pizza> pizzas = new Vector<>();
         solve(pizzas, requirement.getPizzas());
         Solution best = solutions.get(0);
         for (int i = 1; i < solutions.size(); i++) {
@@ -38,21 +38,23 @@ public class Solver {
     }
 
     public void solveNode() {
-        PizzaNode first = new PizzaNode(null, null);
+        PizzaNode first = new PizzaNode(null, new Pizza(0, -1));
         solveNode(first, requirement.getPizzas());
-        for (PizzaNode node : lastNodes) {
-//            System.out.println(node.printNodes());
-        }
+//        for (PizzaNode node : lastNodes) {
+//            if (node.get)
+//            System.out.println(node.getAllPizzaString());
+//        }
     }
 
     // true means it reached the end of remainingList
     public boolean solve(List<Pizza> order, List<Pizza> remainingList) {
 //        System.out.println(counter++);
         // if remainder is empty, we're at the end - add order and indicate end by "1"
+        
         if (remainingList.isEmpty()) {
 //            System.out.println("at end: " + order);
             if (!order.isEmpty()) {
-                solutions.add(new Solution(new LinkedList<>(List.copyOf(order))));
+                solutions.add(new Solution(new Vector<>(List.copyOf(order))));
                 order = null;
             }
             return true;
@@ -77,7 +79,7 @@ public class Solver {
             // at this point, we added the pizza to our order. We need to remove the pizza we just added
             // then pass the remaining pizzas to be evaluated
             remainingList.remove(0);
-            List<Pizza> beforeRemoval = new LinkedList<>(List.copyOf(remainingList));
+            List<Pizza> beforeRemoval = new Vector<>(List.copyOf(remainingList));
 
             // however, if this run reaches the end, we want to repeat the entire check except we want to
             // use the original list from that point after removing the originally added pizza, instead using the following
@@ -102,7 +104,7 @@ public class Solver {
 
     // true means it reached the end of remainingList
     public boolean solveNode(PizzaNode node, List<Pizza> remainingList) {
-//        System.out.println(counter++);
+        System.out.println(counter++);
         // if remainder is empty, we're at the end - add order and indicate end by "1"
         if (remainingList.isEmpty()) {
 //            System.out.println("at end: " + order);
@@ -114,45 +116,49 @@ public class Solver {
         // if we're not at the end, get next pizza
         Pizza nextPizza = remainingList.get(0);
         // if next pizza fits for us then add the pizza to our order
-        int missingSlices = getMissingSlicesNode(node);
-        System.out.println(missingSlices);
         if (nextPizza.getSlices() <= getMissingSlicesNode(node)) {
-            node.setPizza(nextPizza);
-            PizzaNode newNode = new PizzaNode(node, null);
+        
+//            node.setPizza(nextPizza);
+    
+            PizzaNode newNode = new PizzaNode(node, nextPizza);
+//            System.out.println(newNode.getAllPizzaString());
+            
             // if we're not missing anything, we're done
             if (getMissingSlicesNode(newNode) == 0) {
-                System.out.println("Perfect solution " + newNode.printNodes());
+                System.out.println("Perfect solution " + newNode.getAllPizzaString());
                 System.out.println(newNode.totalSlices());
                 lastNodes.add(newNode);
                 return false;
             }
             // if we're capped with our pizzas, we're also done
             if (newNode.count() == requirement.getMaxNumberOfPizzas()) {
-//                System.out.println("max slices in order: " + order);
+                System.out.println("max slices in order: " + newNode.getAllPizzaString());
                 lastNodes.add(newNode);
                 return false;
             }
             // at this point, we added the pizza to our order. We need to remove the pizza we just added
             // then pass the remaining pizzas to be evaluated
             remainingList.remove(0);
-            List<Pizza> beforeRemoval = new LinkedList<>(List.copyOf(remainingList));
+            List<Pizza> beforeRemoval = new Vector<>(List.copyOf(remainingList));
             // however, if this run reaches the end, we want to repeat the entire check except we want to
             // use the original list from that point after removing the originally added pizza, instead using the following
             // pizza
             if (solveNode(newNode, remainingList)) {
                 // remove the originally added pizza
-                System.out.println("last reached, now at : " + newNode.printNodes());
-                newNode = newNode.getPrevious();
-                System.out.println("last order reached end, proceeding with order: " + newNode.printNodes());
+//                System.out.println("last reached, now at : " + newNode.getAllPizzaString());
+//                newNode = newNode.getPrevious();
+                PizzaNode previous = newNode.getPrevious();
+                System.out.println("last order reached end, proceeding with order: " + previous.getAllPizzaString());
 //                System.out.println("remainder is" + beforeRemoval);
-                // then go on again, on the remainder of the original list
-                return solveNode(newNode, beforeRemoval);
+                // previous
+                return solveNode(previous, beforeRemoval);
             }
             // if it doesn't reach the end, return false
             return false;
         } else {
             // if the pizza is too big, remove it and keep going
-//            System.out.println(next.getSlices() + " is too big, need at most " + getMissingSlices(order) + " slices, going on, current order = " + order);
+//            System.out.println(nextPizza.getSlices() + " is too big, need at most " + getMissingSlicesNode(node)
+//                                       + " slices, going on, current order = " + node.getAllPizzaString());
             remainingList.remove(0);
             return solveNode(node, remainingList);
         }
@@ -168,24 +174,16 @@ public class Solver {
 
     public int getMissingSlicesNode(PizzaNode node) {
         int slices = 0;
-        slices += node.totalSlices();
-//        PizzaNode previous = node.getPrevious();
 //        if (node.getPizza() != null) {
 //            slices += node.getPizza().getSlices();
 //        }
-//        while (previous != null) {
+//        while (node.getPrevious() != null) {
+//            node = node.getPrevious();
 //            if (node.getPizza() != null) {
 //                slices += node.getPizza().getSlices();
 //            }
-//            previous = previous.getPrevious();
 //        }
-////        while (node.getPrevious() != null) {
-////            if (node.getPizza() != null) {
-////                slices += node.getPizza().getSlices();
-////            }
-////            node = node.getPrevious();
-////        }
-////        slices += node.getPizza().getSlices();
+        slices += node.totalSlices();
         return requirement.getMaxSlices() - slices;
     }
 

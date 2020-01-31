@@ -11,7 +11,7 @@ class InputParser {
         requirement.setMaxSlices(scanner.nextInt());
         requirement.setMaxNumberOfPizzas(scanner.nextInt());
         scanner.nextLine();
-        short counter = 0;
+        int counter = 0;
         while(scanner.hasNextInt()) {
             Pizza pizza = new Pizza(scanner.nextInt(), counter);
             requirement.add(pizza);

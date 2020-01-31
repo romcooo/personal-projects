@@ -17,47 +17,36 @@ public class PizzaNode {
         return pizza;
     }
 
-    public String printNodes() {
+    public String getAllPizzaString() {
         StringBuilder sb = new StringBuilder();
-        if (pizza != null) {
-            sb.append(pizza.toString())
-            .append(", ");
+        PizzaNode node = this;
+        while (node.getPrevious() != null) {
+            if (node.getPizza() != null) {
+                sb.append(node.getPizza())
+                  .append(", ");
+            }
+            node = node.getPrevious();
         }
-        PizzaNode newNode = this.previous;
-        while (newNode != null) {
-            sb.append(newNode.getPizza())
-              .append(", ");;
-            newNode = newNode.getPrevious();
+        if (sb.lastIndexOf(",") != -1) {
+            sb.delete(sb.lastIndexOf(","), sb.length());
+        } else {
+            sb.append("Empty");
         }
         return sb.toString();
     }
 
     public int totalSlices() {
-        if (this.pizza == null) {
-            if (this.previous == null) {
-                return 0;
+        int slices = 0;
+        PizzaNode node = this;
+        while (node.getPizza() != null) {
+            slices += node.getPizza().getSlices();
+            if (node.getPrevious() != null) {
+                node = node.getPrevious();
             } else {
-                return previous.totalSlices();
-            }
-        } else {
-            if (this.previous == null) {
-                return this.pizza.getSlices();
-            } else {
-                return this.pizza.getSlices() + previous.totalSlices();
+                break;
             }
         }
-//        if (this.pizza != null) {
-//            slices += pizza.getSlices();
-//        }
-//        if (this.previous != null) {
-//            slices += previous.totalSlices();
-//        }
-//        PizzaNode newNode = this.previous;
-//        while (newNode != null) {
-//            slices += newNode.getPizza().getSlices();
-//            newNode = newNode.getPrevious();
-//        }
-//        return slices;
+        return slices;
     }
 
     public void setPizza(Pizza pizza) {
@@ -65,11 +54,18 @@ public class PizzaNode {
     }
 
     public int count() {
-        if (previous == null) {
-            return 1;
-        } else {
-            return previous.count() + 1;
+        int count = 1;
+        PizzaNode node = this;
+        while (node.getPrevious() != null) {
+            count++;
+            node = node.getPrevious();
         }
+        return count;
+//        if (previous == null) {
+//            return 1;
+//        } else {
+//            return previous.count() + 1;
+//        }
     }
 
     @Override
