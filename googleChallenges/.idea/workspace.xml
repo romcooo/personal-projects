@@ -2,27 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="88795758-8225-42d3-aad0-9cf033194668" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/romco/pizzaChallenge/PizzaNode.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/romco/pizzaChallenge/SolverUtil.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/romco/pizzaChallenge/unused/OldSolver.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/romco/InputParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/romco/pizzaChallenge/InputParser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/romco/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/romco/pizzaChallenge/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/romco/NodeSolution.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/romco/pizzaChallenge/unused/NodeSolution.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/romco/OldSolver.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/romco/Pizza.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/romco/pizzaChallenge/Pizza.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/romco/PizzaNode.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/romco/Requirement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/romco/pizzaChallenge/Requirement.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/romco/Solution.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/romco/pizzaChallenge/unused/Solution.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/romco/Solver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/romco/pizzaChallenge/Solver.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/romco/InputParser.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/romco/Main.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/romco/NodeSolution.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/romco/Pizza.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/romco/PizzaNode.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/romco/Requirement.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/romco/Solution.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/romco/Solver.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/romco/pizzaChallenge/InputParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/romco/pizzaChallenge/InputParser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/romco/pizzaChallenge/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/romco/pizzaChallenge/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/romco/pizzaChallenge/Solver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/romco/pizzaChallenge/Solver.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/romco/pizzaChallenge/SolverUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/romco/pizzaChallenge/SolverUtil.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -167,9 +152,10 @@
       <screen x="0" y="0" width="1920" height="1160" />
     </state>
     <state x="676" y="290" width="836" height="580" key="#com.intellij.refactoring.move.moveMembers.MoveMembersDialog/-1920.115.1920.1040/0.0.1920.1160/1920.0.1920.1160@0.0.1920.1160" timestamp="1580467537664" />
-    <state x="651" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1580402337032">
-      <screen x="0" y="0" width="1920" height="1160" />
+    <state x="-1269" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1580476436081">
+      <screen x="-1920" y="0" width="1920" height="1040" />
     </state>
+    <state x="-1269" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/-1920.0.1920.1040/0.0.1920.1040@-1920.0.1920.1040" timestamp="1580476436081" />
     <state x="651" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/-1920.115.1920.1040/0.0.1920.1160/1920.0.1920.1160@0.0.1920.1160" timestamp="1580402337032" />
     <state x="582" y="175" key="CommitChangelistDialog2" timestamp="1580470542788">
       <screen x="0" y="0" width="1920" height="1160" />
@@ -180,25 +166,25 @@
     </state>
     <state x="-1828" y="92" width="1736" height="856" key="DiffContextDialog/-1920.0.1920.1040/0.0.1920.1040@-1920.0.1920.1040" timestamp="1580424011042" />
     <state x="92" y="103" width="1736" height="955" key="DiffContextDialog/-1920.115.1920.1040/0.0.1920.1160/1920.0.1920.1160@0.0.1920.1160" timestamp="1580470521035" />
-    <state width="1877" height="321" key="GridCell.Tab.0.bottom" timestamp="1580470542814">
-      <screen x="0" y="0" width="1920" height="1160" />
+    <state width="1877" height="223" key="GridCell.Tab.0.bottom" timestamp="1580478379041">
+      <screen x="-1920" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="348" key="GridCell.Tab.0.bottom/-1920.0.1920.1040/0.0.1920.1040@-1920.0.1920.1040" timestamp="1580425262263" />
+    <state width="1877" height="223" key="GridCell.Tab.0.bottom/-1920.0.1920.1040/0.0.1920.1040@-1920.0.1920.1040" timestamp="1580478379041" />
     <state width="1877" height="321" key="GridCell.Tab.0.bottom/-1920.115.1920.1040/0.0.1920.1160/1920.0.1920.1160@0.0.1920.1160" timestamp="1580470542814" />
-    <state width="1877" height="321" key="GridCell.Tab.0.center" timestamp="1580470542814">
-      <screen x="0" y="0" width="1920" height="1160" />
+    <state width="1877" height="223" key="GridCell.Tab.0.center" timestamp="1580478379040">
+      <screen x="-1920" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="348" key="GridCell.Tab.0.center/-1920.0.1920.1040/0.0.1920.1040@-1920.0.1920.1040" timestamp="1580425262263" />
+    <state width="1877" height="223" key="GridCell.Tab.0.center/-1920.0.1920.1040/0.0.1920.1040@-1920.0.1920.1040" timestamp="1580478379040" />
     <state width="1877" height="321" key="GridCell.Tab.0.center/-1920.115.1920.1040/0.0.1920.1160/1920.0.1920.1160@0.0.1920.1160" timestamp="1580470542814" />
-    <state width="1877" height="321" key="GridCell.Tab.0.left" timestamp="1580470542814">
-      <screen x="0" y="0" width="1920" height="1160" />
+    <state width="1877" height="223" key="GridCell.Tab.0.left" timestamp="1580478379040">
+      <screen x="-1920" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="348" key="GridCell.Tab.0.left/-1920.0.1920.1040/0.0.1920.1040@-1920.0.1920.1040" timestamp="1580425262263" />
+    <state width="1877" height="223" key="GridCell.Tab.0.left/-1920.0.1920.1040/0.0.1920.1040@-1920.0.1920.1040" timestamp="1580478379040" />
     <state width="1877" height="321" key="GridCell.Tab.0.left/-1920.115.1920.1040/0.0.1920.1160/1920.0.1920.1160@0.0.1920.1160" timestamp="1580470542814" />
-    <state width="1877" height="321" key="GridCell.Tab.0.right" timestamp="1580470542814">
-      <screen x="0" y="0" width="1920" height="1160" />
+    <state width="1877" height="223" key="GridCell.Tab.0.right" timestamp="1580478379041">
+      <screen x="-1920" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="348" key="GridCell.Tab.0.right/-1920.0.1920.1040/0.0.1920.1040@-1920.0.1920.1040" timestamp="1580425262263" />
+    <state width="1877" height="223" key="GridCell.Tab.0.right/-1920.0.1920.1040/0.0.1920.1040@-1920.0.1920.1040" timestamp="1580478379041" />
     <state width="1877" height="321" key="GridCell.Tab.0.right/-1920.115.1920.1040/0.0.1920.1160/1920.0.1920.1160@0.0.1920.1160" timestamp="1580470542814" />
     <state width="1877" height="396" key="GridCell.Tab.1.bottom" timestamp="1580464506036">
       <screen x="0" y="0" width="1920" height="1160" />
@@ -236,17 +222,18 @@
       <screen x="0" y="0" width="1920" height="1160" />
     </state>
     <state x="552" y="313" key="Vcs.Push.Dialog.v2/-1920.115.1920.1040/0.0.1920.1160/1920.0.1920.1160@0.0.1920.1160" timestamp="1580466455300" />
-    <state x="-1264" y="345" key="com.intellij.ide.util.TipDialog" timestamp="1580419652034">
+    <state x="-1264" y="345" key="com.intellij.ide.util.TipDialog" timestamp="1580475482593">
       <screen x="-1920" y="0" width="1920" height="1040" />
     </state>
-    <state x="-1264" y="345" key="com.intellij.ide.util.TipDialog/-1920.0.1920.1040/0.0.1920.1040@-1920.0.1920.1040" timestamp="1580419652034" />
+    <state x="-1264" y="345" key="com.intellij.ide.util.TipDialog/-1920.0.1920.1040/0.0.1920.1040@-1920.0.1920.1040" timestamp="1580475482593" />
     <state x="769" y="497" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1580466429772">
       <screen x="0" y="0" width="1920" height="1160" />
     </state>
     <state x="769" y="497" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/-1920.115.1920.1040/0.0.1920.1160/1920.0.1920.1160@0.0.1920.1160" timestamp="1580466429772" />
-    <state x="657" y="312" width="606" height="536" key="find.popup" timestamp="1580466872785">
-      <screen x="0" y="0" width="1920" height="1160" />
+    <state x="-1263" y="280" width="607" height="536" key="find.popup" timestamp="1580478321153">
+      <screen x="-1920" y="0" width="1920" height="1040" />
     </state>
+    <state x="-1263" y="280" width="607" height="536" key="find.popup/-1920.0.1920.1040/0.0.1920.1040@-1920.0.1920.1040" timestamp="1580478321153" />
     <state x="657" y="312" width="606" height="536" key="find.popup/-1920.115.1920.1040/0.0.1920.1160/1920.0.1920.1160@0.0.1920.1160" timestamp="1580466872785" />
     <state x="-1304" y="240" key="run.anything.popup" timestamp="1580417453703">
       <screen x="-1920" y="0" width="1920" height="1040" />
