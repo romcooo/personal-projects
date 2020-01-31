@@ -3,8 +3,10 @@ package com.romco;
 public class PizzaNode {
     PizzaNode previous;
     Pizza pizza;
+//    public static int numberOfInstances;
 
     public PizzaNode(PizzaNode previous, Pizza pizza) {
+//        numberOfInstances++;
         this.previous = previous;
         this.pizza = pizza;
     }

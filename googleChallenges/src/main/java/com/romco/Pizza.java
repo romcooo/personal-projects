@@ -4,9 +4,9 @@ import lombok.Data;
 
 class Pizza {
     private int slices;
-    private int type;
+    private short type;
     
-    public Pizza(int slices, int type) {
+    public Pizza(int slices, short type) {
         this.slices = slices;
         this.type = type;
     }
@@ -15,7 +15,7 @@ class Pizza {
         return slices;
     }
 
-    public int getType() {
+    public short getType() {
         return type;
     }
     
