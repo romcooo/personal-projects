@@ -1,11 +1,11 @@
 package com.romco.pizzaChallenge.unused;
 
-import com.romco.pizzaChallenge.PizzaNode;
+import com.romco.pizzaChallenge.Main;
 
 public class NodeSolution {
-    private PizzaNode lastNode;
+    private Main.PizzaNode lastNode;
 
-    public NodeSolution(PizzaNode node) {
+    public NodeSolution(Main.PizzaNode node) {
         this.lastNode = node;
     }
 

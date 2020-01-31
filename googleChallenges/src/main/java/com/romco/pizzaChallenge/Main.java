@@ -1,6 +1,8 @@
 package com.romco.pizzaChallenge;
 
-import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.*;
 
 public class Main {
 
@@ -22,4 +24,310 @@ public class Main {
         System.out.println(solver.solve());
     }
 
+    static class InputParser {
+        public static Requirement parse() {
+            Requirement requirement = new Requirement();
+            Scanner scanner = new Scanner(new BufferedReader(new InputStreamReader(System.in)));
+            requirement.setMaxSlices(scanner.nextInt());
+            requirement.setMaxNumberOfPizzas(scanner.nextInt());
+            scanner.nextLine();
+            short counter = 0;
+            String line = scanner.nextLine();
+            String[] lines = line.split(" ");
+            scanner.close();
+            for (String s : lines) {
+                requirement.add(new Pizza(Integer.parseInt(s), counter));
+                counter++;
+            }
+    //        while(scanner.hasNextInt()) {
+    //            System.out.println(counter);
+    //            Pizza pizza = new Pizza(scanner.nextInt(), counter);
+    //            requirement.add(pizza);
+    //            counter++;
+    //        }
+            return requirement;
+        }
+    }
+
+    public static class Pizza {
+        private int slices;
+        private short type;
+
+        public Pizza(int slices, short type) {
+            this.slices = slices;
+            this.type = type;
+        }
+
+        public int getSlices() {
+            return slices;
+        }
+
+        public short getType() {
+            return type;
+        }
+
+        @Override
+        public String toString() {
+            return "" + slices;
+        }
+    }
+
+    public static class PizzaNode {
+        PizzaNode previous;
+        Pizza pizza;
+    //    public static int numberOfInstances;
+
+        public PizzaNode(PizzaNode previous, Pizza pizza) {
+    //        numberOfInstances++;
+            this.previous = previous;
+            this.pizza = pizza;
+        }
+
+        public PizzaNode getPrevious() {
+            return previous;
+        }
+
+        public Pizza getPizza() {
+            return pizza;
+        }
+
+        public void setPizza(Pizza pizza) {
+            this.pizza = pizza;
+        }
+
+        @Override
+        public String toString() {
+            return "PizzaNode{" +
+                    "pizza=" + pizza +
+                    '}';
+        }
+    }
+
+    static
+    class Requirement {
+        private int maxSlices, maxNumberOfPizzas;
+        private List<Pizza> pizzas = new ArrayList<>();
+
+        public Requirement() {
+        }
+
+        public Requirement(int maxSlices, int maxNumberOfPizzas, List<Pizza> pizzas) {
+            this.maxSlices = maxSlices;
+            this.maxNumberOfPizzas = maxNumberOfPizzas;
+            this.pizzas = pizzas;
+        }
+
+        public int getMaxSlices() {
+            return maxSlices;
+        }
+
+        public void setMaxSlices(int maxSlices) {
+            this.maxSlices = maxSlices;
+        }
+
+        public int getMaxNumberOfPizzas() {
+            return maxNumberOfPizzas;
+        }
+
+        public void setMaxNumberOfPizzas(int maxNumberOfPizzas) {
+            this.maxNumberOfPizzas = maxNumberOfPizzas;
+        }
+
+        public List<Pizza> getPizzas() {
+            return pizzas;
+        }
+
+        public void setPizzas(List<Pizza> pizzas) {
+            this.pizzas = pizzas;
+        }
+
+        public void add(Pizza pizza) {
+            pizzas.add(pizza);
+        }
+
+        public void reverse() {
+            Collections.reverse(pizzas);
+        }
+
+        @Override
+        public String toString() {
+            return "Requirement{" +
+                    "maxSlices=" + maxSlices +
+                    ", numberOfTypes=" + maxNumberOfPizzas +
+                    ", pizzas=" + pizzas +
+                    '}';
+        }
+    }
+
+    public static class Solver {
+        private Requirement requirement;
+        private List<PizzaNode> lastNodes = new LinkedList<>();
+    //    public static int counter = 0;
+
+        public Solver(Requirement requirement) {
+            this.requirement = requirement;
+        }
+
+        public String solve() {
+            PizzaNode first = new PizzaNode(null, null);
+            solveUntilEndOrDone(first, 0);
+            PizzaNode best = SolverUtil.best(lastNodes);
+            return SolverUtil.countNodes(best)
+                    + "\n"
+                    + SolverUtil.getAllPizzaTypes(best);
+        }
+
+        /** first, check if we are at end.
+            If yes, register order into solutions and indicate end.
+            if not, check if the first of the remaining can be added.
+                if yes, add it to order then check if we are solved
+                    if yes, return completely
+                    else check if order is full
+                        if yes, end
+                        else recurse on remainder with that order
+                            if the remainder reached end, recurse on remainder without the last addition
+                else, recurse on remainder
+         */
+
+        // true means it reached the end of remainingList
+        public boolean solveUntilEndOrDone(PizzaNode node, int startAtIndex) {
+    //        System.out.println(counter++);
+            // if remainder is empty, we're at the end - add order and indicate end by "true"
+            if (startAtIndex == requirement.getPizzas().size()) {
+                if (node != null) {
+                    lastNodes.add(node);
+                }
+                return true;
+            }
+            // keep "going" through the list by increasing the pointer until we point at a pizza which still fits
+            while (requirement.getPizzas().get(startAtIndex)
+                              .getSlices() > SolverUtil.getMissingSlicesNode(requirement, node)) {
+                startAtIndex++;
+                if (startAtIndex == requirement.getPizzas().size()) {
+                    lastNodes.add(node);
+                    return true;
+                }
+            }
+            // if we're not at the end, get next pizza
+            Pizza nextPizza = requirement.getPizzas().get(startAtIndex);
+            // if next pizza fits for us then add the pizza to our order
+                PizzaNode newNode = new PizzaNode(node, nextPizza);
+    //            System.out.println("Adding pizza: " + SolverUtil.getAllPizzaString(newNode));
+                // if we're not missing anything, we're done
+                if (SolverUtil.getMissingSlicesNode(requirement, newNode) == 0) {
+    //                System.out.println("Perfect solution " + SolverUtil.getAllPizzaString(newNode)
+    //                                           + "\nTotal slices: " + SolverUtil.totalSlices(newNode)
+    //                                           + "\nNumber of types: " + SolverUtil.countNodes(newNode));
+                    lastNodes.add(newNode);
+                    return false;
+                }
+                // if we're capped with our pizzas, we're also done
+                if (SolverUtil.countNodes(newNode) == requirement.getMaxNumberOfPizzas()) {
+    //                System.out.println("max slices in order: " + SolverUtil.getAllPizzaString(newNode)
+    //                                           + "\nTotal slices: " + SolverUtil.totalSlices(newNode)
+    //                                           + "\nNumber of types: " + SolverUtil.countNodes(newNode));
+                    lastNodes.add(newNode);
+                    return false;
+                }
+                // at this point, we added the pizza to our order. We need to remove the pizza we just added
+                // then pass the remaining pizzas to be evaluated
+                startAtIndex++;
+                // however, if this run reaches the end, we want to repeat the entire check except we want to
+                // use the original list from that point after removing the originally added pizza, instead
+                // using the following pizza
+                if (solveUntilEndOrDone(newNode, startAtIndex)) {
+    //                System.out.println("last reached, now at : " + newNode.getAllPizzaString());
+                    // remove the originally added pizza
+                    PizzaNode previous = newNode.getPrevious();
+    //                System.out.println("last order reached end, proceeding with order: " + previous.getAllPizzaString());
+    //                System.out.println("remainder is" + beforeRemoval);
+                    // previous
+                    return solveUntilEndOrDone(previous, startAtIndex);
+                }
+                // if it doesn't reach the end, return false
+                return false;
+    //            System.out.println(nextPizza.getSlices() + " is too big, need at most " + getMissingSlicesNode(node)
+    //                                       + " slices, going on, current order = " + node.getAllPizzaString());
+        }
+
+    }
+
+    public static class SolverUtil {
+        public static int getMissingSlicesNode(Requirement requirement, PizzaNode node) {
+            return requirement.getMaxSlices() - totalSlices(node);
+        }
+
+        public static int totalSlices(PizzaNode node) {
+            int slices = 0;
+            while (node.getPizza() != null) {
+                slices += node.getPizza().getSlices();
+                if (node.getPrevious() != null) {
+                    node = node.getPrevious();
+                } else {
+                    break;
+                }
+            }
+            return slices;
+        }
+
+    //    public static String getAllPizzaString(PizzaNode node) {
+    //        if (node == null) {
+    //            return "";
+    //        }
+    //        StringBuilder sb = new StringBuilder();
+    //        while (node.getPrevious() != null) {
+    //            if (node.getPizza() != null) {
+    //                sb.append(node.getPizza())
+    //                        .append(", ");
+    //            }
+    //            node = node.getPrevious();
+    //        }
+    //        if (sb.lastIndexOf(",") != -1) {
+    //            sb.delete(sb.lastIndexOf(","), sb.length());
+    //        } else {
+    //            sb.append("Empty");
+    //        }
+    //        return sb.toString();
+    //    }
+
+        public static int countNodes(PizzaNode node) {
+            int count = 0;
+            while (node.getPrevious() != null) {
+                count++;
+                node = node.getPrevious();
+            }
+            return count;
+        }
+
+        public static PizzaNode best(List<PizzaNode> nodes) {
+            int sliceCount = 0;
+            PizzaNode best = null;
+            for (PizzaNode node : nodes) {
+                if (totalSlices(node) > sliceCount) {
+                    sliceCount = totalSlices(node);
+                    best = node;
+                }
+            }
+    //        System.out.println("best node is: " + getAllPizzaString(best)
+    //                                   + "\nwith slice count: " + sliceCount);
+            return best;
+        }
+
+        public static String getAllPizzaTypes(PizzaNode node) {
+            StringBuilder sb = new StringBuilder();
+            while (node.getPrevious() != null) {
+                if (node.getPizza() != null) {
+                    sb.append(node.getPizza().getType())
+                      .append(", ");
+                }
+                node = node.getPrevious();
+            }
+            if (sb.lastIndexOf(",") != -1) {
+                sb.delete(sb.lastIndexOf(","), sb.length());
+            } else {
+                sb.append("Empty");
+            }
+            return sb.toString();
+        }
+    }
 }
