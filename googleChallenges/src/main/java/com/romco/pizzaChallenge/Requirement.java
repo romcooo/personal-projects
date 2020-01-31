@@ -1,4 +1,4 @@
-package com.romco;
+package com.romco.pizzaChallenge;
 
 import lombok.Data;
 import lombok.Getter;

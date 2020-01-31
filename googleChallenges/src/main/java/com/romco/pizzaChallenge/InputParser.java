@@ -1,6 +1,4 @@
-package com.romco;
-
-import lombok.Data;
+package com.romco.pizzaChallenge;
 
 import java.util.Scanner;
 

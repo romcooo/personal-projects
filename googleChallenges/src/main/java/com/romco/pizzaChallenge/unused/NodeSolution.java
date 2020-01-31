@@ -1,6 +1,6 @@
-package com.romco;
+package com.romco.pizzaChallenge.unused;
 
-import java.util.List;
+import com.romco.pizzaChallenge.PizzaNode;
 
 public class NodeSolution {
     private PizzaNode lastNode;
@@ -9,9 +9,9 @@ public class NodeSolution {
         this.lastNode = node;
     }
 
-    public int totalSlices() {
-        return lastNode.totalSlices();
-    }
+//    public int totalSlices() {
+//        return lastNode.totalSlices();
+//    }
 
     @Override
     public String toString() {

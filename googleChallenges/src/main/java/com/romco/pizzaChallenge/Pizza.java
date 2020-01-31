@@ -1,8 +1,8 @@
-package com.romco;
+package com.romco.pizzaChallenge;
 
 import lombok.Data;
 
-class Pizza {
+public class Pizza {
     private int slices;
     private short type;
     
