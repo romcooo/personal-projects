@@ -6,7 +6,7 @@ import java.util.List;
 public class Solver {
     private Requirement requirement;
     private List<PizzaNode> lastNodes = new LinkedList<>();
-    public static int counter = 0;
+//    public static int counter = 0;
     
     public Solver(Requirement requirement) {
         this.requirement = requirement;
