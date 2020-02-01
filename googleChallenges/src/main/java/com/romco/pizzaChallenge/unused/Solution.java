@@ -1,28 +1,28 @@
 package com.romco.pizzaChallenge.unused;
 
-import com.romco.pizzaChallenge.Pizza;
+import com.romco.pizzaChallenge.Main;
 
 import java.util.List;
 
 public class Solution {
-    private List<Pizza> orderedPizzas;
+    private List<Main.Pizza> orderedPizzas;
     
-    public Solution(List<Pizza> orderedPizzas) {
+    public Solution(List<Main.Pizza> orderedPizzas) {
         this.orderedPizzas = List.copyOf(orderedPizzas);
     }
 
 
-    public List<Pizza> getOrderedPizzas() {
+    public List<Main.Pizza> getOrderedPizzas() {
         return orderedPizzas;
     }
     
-    public void setOrderedPizzas(List<Pizza> orderedPizzas) {
+    public void setOrderedPizzas(List<Main.Pizza> orderedPizzas) {
         this.orderedPizzas = orderedPizzas;
     }
     
     public int totalSlices() {
         int count = 0;
-        for (Pizza pizza : orderedPizzas) {
+        for (Main.Pizza pizza : orderedPizzas) {
             count += pizza.getSlices();
         }
         return count;

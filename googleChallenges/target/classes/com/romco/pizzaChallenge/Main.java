@@ -103,7 +103,8 @@ public class Main {
         }
     }
 
-    static class Requirement {
+    static
+    class Requirement {
         private int maxSlices, maxNumberOfPizzas;
         private List<Pizza> pizzas = new ArrayList<>();
 

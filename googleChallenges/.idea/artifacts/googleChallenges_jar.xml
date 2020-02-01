@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="googleChallenges:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/googleChallenges_jar</output-path>
+    <root id="archive" name="googleChallenges.jar">
+      <element id="module-output" name="googleChallenges" />
+    </root>
+  </artifact>
+</component>
