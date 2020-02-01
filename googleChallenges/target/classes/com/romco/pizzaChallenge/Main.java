@@ -318,15 +318,15 @@ public class Main {
             while (node.getPrevious() != null) {
                 if (node.getPizza() != null) {
                     sb.append(node.getPizza().getType())
-                      .append(", ");
+                            .append(" ");
                 }
                 node = node.getPrevious();
             }
-            if (sb.lastIndexOf(",") != -1) {
-                sb.delete(sb.lastIndexOf(","), sb.length());
-            } else {
-                sb.append("Empty");
-            }
+//            if (sb.lastIndexOf(" ") != -1) {
+//                sb.delete(sb.lastIndexOf(","), sb.length());
+//            } else {
+//                sb.append("Empty");
+//            }
             return sb.toString();
         }
     }
