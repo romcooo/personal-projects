@@ -1,6 +1,6 @@
 package com.romco.bracketeer.model;
 
 public class Match {
-    private Player player1;
+    private Participant participant1, participant2;
     
 }
