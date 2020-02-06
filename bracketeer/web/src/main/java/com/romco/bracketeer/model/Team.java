@@ -2,7 +2,7 @@ package com.romco.bracketeer.model;
 
 import java.util.List;
 
-public class Team<T> extends Participant {
+public class Team<T extends Participant> extends Participant {
     private List<T> members;
     
     public Team() {
