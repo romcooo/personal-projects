@@ -1,4 +1,4 @@
-package com.romco.bracketeer.model;
+package com.romco.bracketeer.model.participant;
 
 public class Player extends Participant {
     private final int id;

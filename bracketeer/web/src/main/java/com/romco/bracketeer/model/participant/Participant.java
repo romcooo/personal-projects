@@ -1,7 +1,10 @@
-package com.romco.bracketeer.model;
+package com.romco.bracketeer.model.participant;
+
+import com.romco.bracketeer.model.Match;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public abstract class Participant implements Comparable<Participant> {
     protected Integer id;
@@ -9,9 +12,12 @@ public abstract class Participant implements Comparable<Participant> {
     protected double score;
     protected boolean hadABye;
     protected List<Participant> playedAgainst;
+    protected Map<Integer, Match> playedMatchesByRoundNumber;
+    protected List<Match> playedMatches;
     
     public Participant() {
         playedAgainst = new ArrayList<>();
+        playedMatches = new ArrayList<>();
     }
     
     public boolean hadABye() {
@@ -44,10 +50,10 @@ public abstract class Participant implements Comparable<Participant> {
         if (!playedAgainst.contains(other)) {
             playedAgainst.add(other);
         }
-        other.setPlayedAgainst(this);
+        other.addPlayedAgainst(this);
     }
     
-    public void setPlayedAgainst(Participant other) {
+    public void addPlayedAgainst(Participant other) {
         if (!playedAgainst.contains(other)) {
             playedAgainst.add(other);
         }
@@ -55,6 +61,10 @@ public abstract class Participant implements Comparable<Participant> {
     
     public boolean hasPlayedAgainst(Participant other) {
         return this.playedAgainst.contains(other);
+    }
+    
+    public void addPlayedMatch(Match match) {
+        this.playedMatches.add(match);
     }
     
     @Override

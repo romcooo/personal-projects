@@ -1,6 +1,6 @@
-package com.romco.bracketeer.model.matchers;
+package com.romco.bracketeer.model.matcher;
 
-import com.romco.bracketeer.model.Participant;
+import com.romco.bracketeer.model.participant.Participant;
 import com.romco.bracketeer.model.Round;
 
 import java.util.List;

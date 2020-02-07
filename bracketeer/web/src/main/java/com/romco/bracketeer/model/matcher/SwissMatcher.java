@@ -1,14 +1,20 @@
-package com.romco.bracketeer.model.matchers;
+package com.romco.bracketeer.model.matcher;
 
 import com.romco.bracketeer.model.Match;
-import com.romco.bracketeer.model.Participant;
+import com.romco.bracketeer.model.participant.Participant;
 import com.romco.bracketeer.model.Round;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.*;
 
+// package-private because TournamentFormat provides the preferred builder method
 @Slf4j
-public class SwissMatcher implements Matcher {
+class SwissMatcher implements Matcher {
+    
+    // package-private constructor
+    SwissMatcher() {
+    }
+    
     @Override
     public Round generateRound(List<Participant> participants) {
         if (participants.isEmpty()) {
@@ -17,10 +23,17 @@ public class SwissMatcher implements Matcher {
         }
         
         List<Participant> toPairList = new ArrayList<>(participants);
+    
+        if (toPairList.stream().allMatch((p) -> p.getScore() == 0)) {
+            Collections.shuffle(toPairList);
+        } else {
+            // sort (reversed because we want descending)
+            toPairList.sort(Comparator.comparingDouble(Participant::getScore).reversed());
+        }
+        //TODO refactor to Round
+//        List<Match> matches = new ArrayList<>();
         
-        // sort (reversed because we want descending)
-        toPairList.sort(Comparator.comparingDouble(Participant::getScore).reversed());
-        List<Match> matches = new ArrayList<>();
+        Round round = new Round();
         
         // first need to check a bye
         if (toPairList.size() % 2 == 1) {
@@ -28,7 +41,12 @@ public class SwissMatcher implements Matcher {
                 Participant participant = toPairList.get(i);
                 if (!participant.hadABye()) {
                     // create the bye match, then remove the participant
-                    matches.add(new Match(participant));
+                    log.info("assigning bye to participant {}", participant);
+                    Match match = new Match(participant);
+    
+                    participant.addPlayedMatch(match);
+                    round.addMatch(match);
+                    
                     toPairList.remove(i);
                     break;
                 }
@@ -39,7 +57,7 @@ public class SwissMatcher implements Matcher {
         while (!toPairList.isEmpty()) {
             // get the participant with most points
             Participant current = toPairList.get(0);
-            log.trace("current: {}", current);
+            log.debug("current: {}", current);
             // then keep going through the rest of the list starting with the 2nd most point participant
             int i2 = 1;
             
@@ -48,7 +66,7 @@ public class SwissMatcher implements Matcher {
                 /* TODO this could be solved by simply setting everyone's hasPlayed list to empty as if noone
                  * played with noone
                  */
-                log.trace("at {} with size {}", i2, toPairList.size());
+                log.debug("at {} with size {}", i2, toPairList.size());
                 if (i2 == toPairList.size()) {
                     log.error("Error - either everyone has already played with everyone or some kind of " +
                                       "logical fault has happened." +
@@ -57,14 +75,22 @@ public class SwissMatcher implements Matcher {
                     break;
                 }
                 Participant next = toPairList.get(i2);
-                log.trace("next: {}", next);
+                log.debug("next: {}", next);
                 if (current.hasPlayedAgainst(next)) {
                     // in this case, keep going
                     i2++;
                 } else {
                     // this is the goal - match current with next, then remove both from the list and keep going
                     log.info("matching {} with {}", current, next);
-                    matches.add(new Match(current, next));
+                    
+                    Match match = new Match(current, next);
+                    round.addMatch(match);
+    
+                    current.addPlayedMatch(match);
+                    next.addPlayedMatch(match);
+    
+                    current.setPlayedAgainstBiDirectional(next);
+                    
                     toPairList.remove(current);
                     toPairList.remove(next);
                     break;
@@ -72,7 +98,7 @@ public class SwissMatcher implements Matcher {
             }
         }
     
-        log.info("Matches: {}", matches.toString());
-        return new Round(matches);
+        log.info("Matches: {}", round.getMatches().toString());
+        return round;
     }
 }

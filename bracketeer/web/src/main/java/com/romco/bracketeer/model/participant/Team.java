@@ -1,4 +1,4 @@
-package com.romco.bracketeer.model;
+package com.romco.bracketeer.model.participant;
 
 import java.util.List;
 

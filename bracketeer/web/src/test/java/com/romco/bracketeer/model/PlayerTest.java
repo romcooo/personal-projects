@@ -1,5 +1,6 @@
 package com.romco.bracketeer.model;
 
+import com.romco.bracketeer.model.participant.Player;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 
