@@ -19,13 +19,14 @@ public class RuleSet {
     
     private int bestOf;
     
-    private  Map<MatchResult, Double> pointMap;
+    private Map<MatchResult, Double> pointMap;
 
     public RuleSet(double pointsForWin, double pointsForLoss, double pointsForTie, int bestOf) {
         pointMap = new HashMap<>(3);
         pointMap.put(MatchResult.WIN, pointsForWin);
         pointMap.put(MatchResult.LOSS, pointsForLoss);
         pointMap.put(MatchResult.TIE, pointsForTie);
+        // todo maybe: for (MatchResult.values())
         this.bestOf = bestOf;
     }
 
@@ -42,6 +43,6 @@ public class RuleSet {
                 DEFAULT_BEST_OF
         );
     }
-    
+
 }
 
