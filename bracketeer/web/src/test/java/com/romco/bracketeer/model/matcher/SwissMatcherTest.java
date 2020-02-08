@@ -33,14 +33,14 @@ class SwissMatcherTest {
         tournament.addParticipant(player7);
         tournament.addParticipant(player8);
         
-        tournament.setScore(player1, 1);
-        tournament.setScore(player3, 2);
-        tournament.setScore(player4, 4);
-        tournament.setScore(player2, 4);
-        tournament.setScore(player5, 7);
-        tournament.setScore(player6, 8);
-        tournament.setScore(player7, 10);
-        tournament.setScore(player8, 12);
+        tournament.setStartingScore(player1, 1);
+        tournament.setStartingScore(player3, 2);
+        tournament.setStartingScore(player4, 4);
+        tournament.setStartingScore(player2, 4);
+        tournament.setStartingScore(player5, 7);
+        tournament.setStartingScore(player6, 8);
+        tournament.setStartingScore(player7, 10);
+        tournament.setStartingScore(player8, 12);
         
         Matcher matcher = new SwissMatcher();
         Round round = matcher.generateRound(tournament.getParticipantScores());
@@ -61,7 +61,8 @@ class SwissMatcherTest {
         assertEquals(player3, round.getMatch(3).getParticipants().get(0));
         assertEquals(player1, round.getMatch(3).getParticipants().get(1));
     }
-    
+
+    // todo fix below
 //    @Test
 //    void generateRoundWithABye() {
 //        List<Participant> participantList = new ArrayList<>();

@@ -10,7 +10,8 @@ import java.util.*;
 @Slf4j
 public class TournamentImpl implements Tournament {
     private List<Participant> participants;
-    private Map<Participant, Double> participantScores;
+    // todo remove scores and byes, retrieve them dynamically when needed from rounds by participants
+    private Map<Participant, Double> startingParticipantScores;
     private Map<Participant, Boolean> participantByes;
     private List<Round> rounds;
     private TournamentFormat type;
@@ -18,8 +19,9 @@ public class TournamentImpl implements Tournament {
 
     private TournamentImpl() {
         this.participants = new ArrayList<>();
-        this.participantScores = new HashMap<>();
+        this.startingParticipantScores = new HashMap<>();
         this.rounds = new LinkedList<>();
+        this.ruleSet = RuleSet.getDefaultRuleSet();
     }
 
     /**
@@ -49,7 +51,7 @@ public class TournamentImpl implements Tournament {
         } else {
             log.info("Adding participant {}", participant);
             participants.add(participant);
-            participantScores.put(participant, 0d);
+            startingParticipantScores.put(participant, 0d);
             return true;
         }
     }
@@ -59,15 +61,15 @@ public class TournamentImpl implements Tournament {
         return false;
     }
 
-    public void setScore(Participant participant, double score) {
-        participantScores.put(participant, score);
+    public void setStartingScore(Participant participant, double score) {
+        startingParticipantScores.put(participant, score);
     }
 
-    public void updateScore(Participant participant, double by) {
-        if (participantScores.containsKey(participant)) {
-            participantScores.put(participant, participantScores.get(participant) + by);
+    public void updateStartingScore(Participant participant, double by) {
+        if (startingParticipantScores.containsKey(participant)) {
+            startingParticipantScores.put(participant, startingParticipantScores.get(participant) + by);
         } else {
-            participantScores.put(participant, by);
+            startingParticipantScores.put(participant, by);
         }
     }
 
@@ -76,7 +78,7 @@ public class TournamentImpl implements Tournament {
         log.info("Unsorted participants: {}", participants);
         
         Matcher matcher = type.buildMatcher();
-        Round round = matcher.generateRound(participantScores);
+        Round round = matcher.generateRound(startingParticipantScores);
         rounds.add(round);
 
         // set Bye if needed
@@ -111,25 +113,13 @@ public class TournamentImpl implements Tournament {
                                   Participant participant,
                                   int gamesWon,
                                   int gamesLost) {
+
         Match match = rounds.get(roundNumber).getMatch(participant);
         
-        match.setResult(participant,
-                         gamesWon,
-                         gamesLost);
-    
-        Participant other = match.getOther(participant);
-        
-        if (gamesWon > gamesLost) {
-            updateScore(participant, 3);
-        }
-        if (gamesWon < gamesLost) {
-            updateScore(other, 3);
-        }
-        if (gamesWon == gamesLost) {
-            updateScore(participant, 1);
-            updateScore(other, 1);
-        }
-        
+        match.setMatchScore(participant,
+                            gamesWon,
+                            gamesLost);
+
         return false;
     }
 
@@ -139,6 +129,19 @@ public class TournamentImpl implements Tournament {
 
     @Override
     public Map<Participant, Double> getParticipantScores() {
-        return participantScores;
+        Map<Participant, Double> participantScoreMap = new HashMap<>();
+        for (Participant participant : participants) {
+            for (Round round : rounds) {
+                MatchResult result = round.getMatch(participant).getMatchResultForParticipant(participant);
+                if (result != null) {
+                    // if the map already contains some score, add result to it, otherwise add with first value
+                    participantScoreMap.put(participant,
+                                            participantScoreMap.containsKey(participant)
+                                                    ? participantScoreMap.get(participant) + ruleSet.getPoints(result)
+                                                    : ruleSet.getPoints(result));
+                }
+            }
+        }
+        return participantScoreMap;
     }
 }

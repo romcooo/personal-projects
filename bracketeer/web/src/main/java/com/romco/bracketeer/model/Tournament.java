@@ -16,5 +16,5 @@ public interface Tournament {
     Round generateNextRound();
 
     boolean setMatchResult(int roundNumber, Participant participant, int gamesWon, int gamesLost);
-    void setScore(Participant participant, double by);
+    void setStartingScore(Participant participant, double by);
 }
