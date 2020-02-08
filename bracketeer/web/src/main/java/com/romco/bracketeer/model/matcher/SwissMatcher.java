@@ -14,24 +14,26 @@ class SwissMatcher implements Matcher {
     // package-private constructor
     SwissMatcher() {
     }
-    
+
+    // TODO remake List<participant> to Map<Participant, Integer> (score map)
     @Override
-    public Round generateRound(List<Participant> participants) {
-        if (participants.isEmpty()) {
+    public Round generateRound(Map<Participant, Double> participantMap) {
+        if (participantMap.isEmpty()) {
             log.info("Empty list passed, returning null");
             return null;
         }
         
-        List<Participant> toPairList = new ArrayList<>(participants);
-    
-        if (toPairList.stream().allMatch((p) -> p.getScore() == 0)) {
+        List<Participant> toPairList = new ArrayList<>(participantMap.keySet());
+
+        if (participantMap.values().stream().allMatch((i) -> i == 0)) {
+            // if first round, shuffle
             Collections.shuffle(toPairList);
         } else {
             // sort (reversed because we want descending)
-            toPairList.sort(Comparator.comparingDouble(Participant::getScore).reversed());
+            log.debug("Before sorting: " + toPairList.toString());
+            toPairList.sort(Comparator.comparingDouble(participantMap::get).reversed());
+            log.debug("After sorting: " + toPairList.toString());
         }
-        //TODO refactor to Round
-//        List<Match> matches = new ArrayList<>();
         
         Round round = new Round();
         

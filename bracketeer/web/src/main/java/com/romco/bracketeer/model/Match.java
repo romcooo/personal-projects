@@ -4,15 +4,18 @@ import com.romco.bracketeer.model.participant.Participant;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
-import org.thymeleaf.expression.Lists;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Slf4j
 @Data
 @AllArgsConstructor
 public class Match {
+    private static int idSequence = 1;
     int id;
 //    private List<Participant> participants;
     private Map<Participant, Integer> resultMap;
@@ -20,6 +23,7 @@ public class Match {
     private boolean isBye;
     
     public Match(Participant participant1) {
+        this.id = idSequence++;
         resultMap = new HashMap<>(1);
         resultMap.put(participant1, null);
         
@@ -27,6 +31,7 @@ public class Match {
     }
     
     public Match(Participant participant1, Participant participant2) {
+        this.id = idSequence++;
         resultMap = new HashMap<>(2);
         resultMap.put(participant1, null);
         resultMap.put(participant2, null);

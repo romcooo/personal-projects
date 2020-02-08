@@ -9,7 +9,7 @@ import java.util.Map;
 public abstract class Participant implements Comparable<Participant> {
     protected Integer id;
     protected String name;
-    protected double score;
+//    protected double score;
     protected boolean hadABye;
     protected List<Participant> playedAgainst;
     protected Map<Integer, Match> playedMatchesByRoundNumber;
@@ -28,18 +28,18 @@ public abstract class Participant implements Comparable<Participant> {
         this.hadABye = hadABye;
     }
     
-    public double getScore() {
-        return this.score;
-    }
-    
-    public void setScore(double score) {
-        this.score = score;
-    }
-    
-    public void updateScore(int by) {
-        score += by;
-    }
-    
+//    public double getScore() {
+//        return this.score;
+//    }
+//
+//    public void setScore(double score) {
+//        this.score = score;
+//    }
+//
+//    public void updateScore(int by) {
+//        score += by;
+//    }
+//
     /**
      * Adds the passed value to the list of Participants against which this player has played,
      * AND calls the passed participant to add this to its "played against" list
@@ -90,7 +90,7 @@ public abstract class Participant implements Comparable<Participant> {
     public String toString() {
         return this.getClass().getSimpleName() +
                 "{name=" + name +
-                ", score=" + score +
+//                ", score=" + score +
                 '}';
     }
 }

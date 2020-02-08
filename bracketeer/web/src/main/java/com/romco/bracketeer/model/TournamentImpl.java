@@ -5,24 +5,30 @@ import com.romco.bracketeer.model.matcher.TournamentFormat;
 import com.romco.bracketeer.model.participant.Participant;
 import lombok.extern.slf4j.Slf4j;
 
-import javax.servlet.http.Part;
 import java.util.*;
 
 @Slf4j
 public class TournamentImpl implements Tournament {
     private List<Participant> participants;
+    private Map<Participant, Double> participantScores;
+    private Map<Participant, Boolean> participantByes;
     private List<Round> rounds;
     private TournamentFormat type;
     private RuleSet ruleSet;
-    
+
+    private TournamentImpl() {
+        this.participants = new ArrayList<>();
+        this.participantScores = new HashMap<>();
+        this.rounds = new LinkedList<>();
+    }
+
     /**
      * Creates a TournamentImpl with a RuleSet.getDefaultRuleSet()
      * @param type - TournamentType (Swiss, Round Robin, Single Elim, Double Elim)
      */
     public TournamentImpl(TournamentFormat type) {
+        this();
         this.type = type;
-        this.participants = new ArrayList<>();
-        this.rounds = new LinkedList<>();
         this.ruleSet = RuleSet.getDefaultRuleSet();
     }
     
@@ -43,6 +49,7 @@ public class TournamentImpl implements Tournament {
         } else {
             log.info("Adding participant {}", participant);
             participants.add(participant);
+            participantScores.put(participant, 0d);
             return true;
         }
     }
@@ -51,14 +58,34 @@ public class TournamentImpl implements Tournament {
     public boolean removeParticipant(Participant participant) {
         return false;
     }
-    
+
+    public void setScore(Participant participant, double score) {
+        participantScores.put(participant, score);
+    }
+
+    public void updateScore(Participant participant, double by) {
+        if (participantScores.containsKey(participant)) {
+            participantScores.put(participant, participantScores.get(participant) + by);
+        } else {
+            participantScores.put(participant, by);
+        }
+    }
+
     @Override
     public Round generateNextRound() {
         log.info("Unsorted participants: {}", participants);
         
         Matcher matcher = type.buildMatcher();
-        Round round = matcher.generateRound(participants);
+        Round round = matcher.generateRound(participantScores);
         rounds.add(round);
+
+        // set Bye if needed
+        for (Match match : round.getMatches()) {
+            if (match.isBye()) {
+                participantByes.put(match.getParticipants().get(0), true);
+            }
+        }
+
         return round;
     }
     
@@ -93,24 +120,25 @@ public class TournamentImpl implements Tournament {
         Participant other = match.getOther(participant);
         
         if (gamesWon > gamesLost) {
-            participant.updateScore(3);
+            updateScore(participant, 3);
         }
         if (gamesWon < gamesLost) {
-            other.updateScore(3);
+            updateScore(other, 3);
         }
         if (gamesWon == gamesLost) {
-            participant.updateScore(1);
-            other.updateScore(1);
+            updateScore(participant, 1);
+            updateScore(other, 1);
         }
         
         return false;
     }
-    
-    public void printStandings() {
-        participants.sort(Comparator.comparingDouble(Participant::getScore).reversed());
-        for (int i = 0; i < participants.size(); i++) {
-            Participant participant = participants.get(i);
-            System.out.println(participant);
-        }
+
+    public List<Participant> getParticipants() {
+        return participants;
+    }
+
+    @Override
+    public Map<Participant, Double> getParticipantScores() {
+        return participantScores;
     }
 }
