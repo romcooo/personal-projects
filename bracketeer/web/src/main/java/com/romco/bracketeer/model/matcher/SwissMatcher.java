@@ -15,23 +15,26 @@ class SwissMatcher implements Matcher {
     SwissMatcher() {
     }
 
-    // TODO remake List<participant> to Map<Participant, Integer> (score map)
+
+
     @Override
-    public Round generateRound(Map<Participant, Double> participantMap) {
-        if (participantMap.isEmpty()) {
+    public Round generateRound(List<Participant> participants,
+                               Map<Participant, Double> participantScores,
+                               Map<Participant, Integer> participantByes) {
+        if (participants.isEmpty()) {
             log.info("Empty list passed, returning null");
             return null;
         }
         
-        List<Participant> toPairList = new ArrayList<>(participantMap.keySet());
+        List<Participant> toPairList = new ArrayList<>(participants);
 
-        if (participantMap.values().stream().allMatch((i) -> i == 0)) {
+        if (participantScores.values().stream().allMatch((i) -> i == 0)) {
             // if first round, shuffle
             Collections.shuffle(toPairList);
         } else {
             // sort (reversed because we want descending)
             log.debug("Before sorting: " + toPairList.toString());
-            toPairList.sort(Comparator.comparingDouble(participantMap::get).reversed());
+            toPairList.sort(Comparator.comparingDouble(participantScores::get).reversed());
             log.debug("After sorting: " + toPairList.toString());
         }
         
@@ -39,9 +42,10 @@ class SwissMatcher implements Matcher {
         
         // first need to check a bye
         if (toPairList.size() % 2 == 1) {
+            int acceptableNumberOfByes = 0;
             for (int i = toPairList.size() - 1; i >= 0; i--) {
                 Participant participant = toPairList.get(i);
-                if (!participant.hadABye()) {
+                if (participantByes.containsKey(participant) && participantByes.get(participant) > acceptableNumberOfByes) {
                     // create the bye match, then remove the participant
                     log.info("assigning bye to participant {}", participant);
                     Match match = new Match(participant);
@@ -51,7 +55,11 @@ class SwissMatcher implements Matcher {
                     
                     toPairList.remove(i);
                     break;
+                } else if (i == 0) {
+                    acceptableNumberOfByes++;
+                    i = toPairList.size() - 1;
                 }
+
             }
         }
         

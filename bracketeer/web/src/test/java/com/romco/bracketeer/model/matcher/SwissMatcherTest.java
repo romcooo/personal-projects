@@ -43,7 +43,9 @@ class SwissMatcherTest {
         tournament.setStartingScore(player8, 12);
         
         Matcher matcher = new SwissMatcher();
-        Round round = matcher.generateRound(tournament.getParticipantScores());
+        Round round = matcher.generateRound(tournament.getParticipants(),
+                                            tournament.getParticipantScores(),
+                                            tournament.getParticipantByes());
         
         // first pair - 2 highest scoring
         assertEquals(player8, round.getMatch(0).getParticipants().get(0));

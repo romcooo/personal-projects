@@ -10,6 +10,7 @@ public interface Tournament {
     boolean removeParticipant(Participant participant);
 
     Map<Participant, Double> getParticipantScores();
+    Map<Participant, Integer> getParticipantByes();
     List<Participant> getParticipants();
     Round getRound(int n);
 

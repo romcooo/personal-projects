@@ -10,9 +10,8 @@ import java.util.*;
 @Slf4j
 public class TournamentImpl implements Tournament {
     private List<Participant> participants;
-    // todo remove scores and byes, retrieve them dynamically when needed from rounds by participants
     private Map<Participant, Double> startingParticipantScores;
-    private Map<Participant, Boolean> participantByes;
+    private Map<Participant, Integer> startingParticipantByes;
     private List<Round> rounds;
     private TournamentFormat type;
     private RuleSet ruleSet;
@@ -78,15 +77,8 @@ public class TournamentImpl implements Tournament {
         log.info("Unsorted participants: {}", participants);
         
         Matcher matcher = type.buildMatcher();
-        Round round = matcher.generateRound(startingParticipantScores);
+        Round round = matcher.generateRound(participants, getParticipantScores(), getParticipantByes());
         rounds.add(round);
-
-        // set Bye if needed
-        for (Match match : round.getMatches()) {
-            if (match.isBye()) {
-                participantByes.put(match.getParticipants().get(0), true);
-            }
-        }
 
         return round;
     }
@@ -108,7 +100,8 @@ public class TournamentImpl implements Tournament {
     public Participant getParticipant(int n) {
         return participants.get(n);
     }
-    
+
+    @Override
     public boolean setMatchResult(int roundNumber,
                                   Participant participant,
                                   int gamesWon,
@@ -123,8 +116,24 @@ public class TournamentImpl implements Tournament {
         return false;
     }
 
+    @Override
     public List<Participant> getParticipants() {
         return participants;
+    }
+
+    @Override
+    public Map<Participant, Integer> getParticipantByes() {
+        Map<Participant, Integer> participantByes = new HashMap<>();
+        for (Participant participant : participants) {
+            int numberOfByes = 0;
+            for (Round round : rounds) {
+                if (round.getMatch(participant).isBye()) {
+                    numberOfByes++;
+                }
+            }
+            participantByes.put(participant, numberOfByes);
+        }
+        return participantByes;
     }
 
     @Override

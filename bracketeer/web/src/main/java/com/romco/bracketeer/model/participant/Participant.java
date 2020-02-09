@@ -9,8 +9,6 @@ import java.util.Map;
 public abstract class Participant implements Comparable<Participant> {
     protected Integer id;
     protected String name;
-//    protected double score;
-    protected boolean hadABye;
     protected List<Participant> playedAgainst;
     protected Map<Integer, Match> playedMatchesByRoundNumber;
     protected List<Match> playedMatches;
@@ -19,27 +17,7 @@ public abstract class Participant implements Comparable<Participant> {
         playedAgainst = new ArrayList<>();
         playedMatches = new ArrayList<>();
     }
-    
-    public boolean hadABye() {
-        return hadABye;
-    }
-    
-    public void setHadABye(boolean hadABye) {
-        this.hadABye = hadABye;
-    }
-    
-//    public double getScore() {
-//        return this.score;
-//    }
-//
-//    public void setScore(double score) {
-//        this.score = score;
-//    }
-//
-//    public void updateScore(int by) {
-//        score += by;
-//    }
-//
+
     /**
      * Adds the passed value to the list of Participants against which this player has played,
      * AND calls the passed participant to add this to its "played against" list
