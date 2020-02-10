@@ -4,11 +4,15 @@ import com.romco.bracketeer.model.matcher.Matcher;
 import com.romco.bracketeer.model.matcher.TournamentFormat;
 import com.romco.bracketeer.model.participant.Participant;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
 
+import javax.servlet.http.Part;
 import java.util.*;
 
 @Slf4j
+@Component
 public class TournamentImpl implements Tournament {
+    private String name;
     private List<Participant> participants;
     private Map<Participant, Double> startingParticipantScores;
     private Map<Participant, Integer> startingParticipantByes;
@@ -17,6 +21,7 @@ public class TournamentImpl implements Tournament {
     private RuleSet ruleSet;
 
     private TournamentImpl() {
+        this.name = "";
         this.participants = new ArrayList<>();
         this.startingParticipantScores = new HashMap<>();
         this.startingParticipantByes = new HashMap<>();
@@ -31,7 +36,6 @@ public class TournamentImpl implements Tournament {
     public TournamentImpl(TournamentFormat type) {
         this();
         this.type = type;
-        this.ruleSet = RuleSet.getDefaultRuleSet();
     }
     
     // TODO maybe implement later
@@ -43,6 +47,15 @@ public class TournamentImpl implements Tournament {
 //        }
 //        return count;
 //    }
+    
+    
+    public String getName() {
+        return name;
+    }
+    
+    public void setName(String name) {
+        this.name = name;
+    }
     
     @Override
     public boolean addParticipant(Participant participant) {
@@ -60,7 +73,13 @@ public class TournamentImpl implements Tournament {
     
     // TODO
     @Override
-    public boolean removeParticipant(Participant participant) {
+    public boolean removeParticipant(int id) {
+        for (Participant participant : this.participants) {
+            if (participant.getId() == id) {
+                participants.remove(participant);
+                return true;
+            }
+        }
         return false;
     }
 
@@ -79,9 +98,11 @@ public class TournamentImpl implements Tournament {
     @Override
     public Round generateNextRound() {
         log.info("Unsorted participants: {}", participants);
+    
+        updateParticipants();
         
         Matcher matcher = type.buildMatcher();
-        Round round = matcher.generateRound(participants, getParticipantScores(), getParticipantByes());
+        Round round = matcher.generateRound(participants);
         rounds.add(round);
 
         return round;
@@ -119,44 +140,54 @@ public class TournamentImpl implements Tournament {
 
         return false;
     }
+    
+    public boolean setMatchResult(int roundNumber,
+                                  int participantId,
+                                  int gamesWon,
+                                  int gamesLost) {
+        for (Participant participant : participants) {
+            if (participant.getId() == participantId) {
+                setMatchResult(roundNumber, participant, gamesWon, gamesLost);
+                return true;
+            }
+        }
+        return false;
+    }
 
     @Override
     public List<Participant> getParticipants() {
+        updateParticipants();
         return participants;
     }
-
-    @Override
-    public Map<Participant, Integer> getParticipantByes() {
-        Map<Participant, Integer> participantByes = new HashMap<>();
-        for (Participant participant : participants) {
-            int numberOfByes = 0;
-            for (Round round : rounds) {
-                if (round.getMatch(participant).isBye()) {
-                    numberOfByes++;
-                }
+    
+    public Double getParticipantScore(Participant participant) {
+        double score = startingParticipantScores.get(participant);
+        for (Round round : rounds) {
+            MatchResult result = round.getMatch(participant).getMatchResultForParticipant(participant);
+            if (result != null) {
+                score += ruleSet.getPoints(result);
+                log.debug("Result for participant {} is {}, score set to {}", participant, result, score);
             }
-            participantByes.put(participant, numberOfByes);
         }
-        return participantByes;
+        log.debug("Score of participant {} is {}", participant, score);
+        return score;
     }
-
-    @Override
-    public Map<Participant, Double> getParticipantScores() {
-        Map<Participant, Double> participantScoreMap = new HashMap<>();
-        for (Participant participant : participants) {
-            participantScoreMap.put(participant, startingParticipantScores.get(participant));
-            
-            for (Round round : rounds) {
-                MatchResult result = round.getMatch(participant).getMatchResultForParticipant(participant);
-                if (result != null) {
-                    // if the map already contains some score, add result to it, otherwise add with first value
-                    participantScoreMap.put(participant,
-                                            participantScoreMap.containsKey(participant)
-                                                    ? participantScoreMap.get(participant) + ruleSet.getPoints(result)
-                                                    : ruleSet.getPoints(result));
-                }
+    
+    public Integer getParticipantByes(Participant participant) {
+        int byes = startingParticipantByes.get(participant);
+        for (Round round : rounds) {
+            if(round.getMatch(participant) != null && round.getMatch(participant).isBye()) {
+                byes++;
             }
         }
-        return participantScoreMap;
+        return byes;
+    }
+    
+    // == private methods
+    private void updateParticipants() {
+        for (Participant participant : this.participants) {
+            participant.setScore(getParticipantScore(participant));
+            participant.setNumberOfByes(getParticipantByes(participant));
+        }
     }
 }

@@ -1,16 +1,18 @@
 package com.romco.bracketeer.model.participant;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class Player extends Participant {
-    private final int id;
     
-    public Player(int id) {
+    public Player(String name) {
         super();
-        this.id = id;
+        super.name = name;
     }
     
     public Player(int id, String name) {
         super();
-        this.id = id;
+        super.id = id;
         super.name = name;
     }
 }

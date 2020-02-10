@@ -11,18 +11,22 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class MainController {
 
+    // == fields
     private final MainService service;
 
+    // == constructor
     @Autowired
     public MainController(MainService service) {
         this.service = service;
     }
 
      // == request methods
-    @GetMapping("new")
+    @GetMapping(ViewNames.Tournament.NEW)
     public String newTournament() {
         log.info("in newTournament");
         log.info(ViewNames.Tournament.NEW);
         return ViewNames.Tournament.NEW;
     }
+    
+    
 }

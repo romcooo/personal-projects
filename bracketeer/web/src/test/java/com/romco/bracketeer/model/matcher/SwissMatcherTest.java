@@ -51,9 +51,7 @@ class SwissMatcherTest {
         tournament.setStartingScore(player8, 12);
 
         Matcher matcher = new SwissMatcher();
-        Round round = matcher.generateRound(tournament.getParticipants(),
-                                            tournament.getParticipantScores(),
-                                            tournament.getParticipantByes());
+        Round round = tournament.generateNextRound();
 
         List<Match> matches = round.getMatches();
         for (int i = 0; i < matches.size(); i++) {
@@ -89,9 +87,7 @@ class SwissMatcherTest {
         }
         log.debug("after loop");
         Matcher matcher = new SwissMatcher();
-        Round round = matcher.generateRound(tournament.getParticipants(),
-                                            tournament.getParticipantScores(),
-                                            tournament.getParticipantByes());
+        Round round = matcher.generateRound(tournament.getParticipants());
 
         assertTrue(round.getMatch(0).isBye());
     }

@@ -18,9 +18,7 @@ class SwissMatcher implements Matcher {
 
 
     @Override
-    public Round generateRound(List<Participant> participants,
-                               Map<Participant, Double> participantScores,
-                               Map<Participant, Integer> participantByes) {
+    public Round generateRound(List<Participant> participants) {
         if (participants.isEmpty()) {
             log.info("Empty list passed, returning null");
             return null;
@@ -28,24 +26,24 @@ class SwissMatcher implements Matcher {
         
         List<Participant> toPairList = new ArrayList<>(participants);
 
-        if (participantScores.values().stream().allMatch((i) -> i == 0)) {
+        if (participants.stream().allMatch((participant) -> participant.getScore() == 0)) {
             // if first round, shuffle
             Collections.shuffle(toPairList);
         } else {
             // sort (reversed because we want descending)
             log.debug("Before sorting: " + toPairList.toString());
-            toPairList.sort(Comparator.comparingDouble(participantScores::get).reversed());
+            toPairList.sort(Comparator.comparingDouble(Participant::getScore).reversed());
             log.debug("After sorting: " + toPairList.toString());
         }
         
         Round round = new Round();
         
         // first need to check a bye
-        if (toPairList.size() % 2 == 1) {
+            if (toPairList.size() % 2 == 1) {
             int acceptableNumberOfByes = 0;
             for (int i = toPairList.size() - 1; i >= 0; i--) {
                 Participant participant = toPairList.get(i);
-                if (participantByes.containsKey(participant) && participantByes.get(participant) <= acceptableNumberOfByes) {
+                if (participant.getNumberOfByes() <= acceptableNumberOfByes) {
                     // create the bye match, then remove the participant
                     log.info("assigning bye to participant {}", participant);
                     Match match = new Match(participant);

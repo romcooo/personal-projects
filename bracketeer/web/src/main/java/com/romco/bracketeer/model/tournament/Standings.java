@@ -9,13 +9,11 @@ import java.util.*;
 public class Standings {
 
     public static void printStandings(Tournament tournament) {
-
         List<Participant> participants = new ArrayList<>(tournament.getParticipants());
-        Map<Participant, Double> participantScores = new HashMap<>(tournament.getParticipantScores());
-
-        participants.sort(Comparator.comparingDouble(participantScores::get).reversed());
+        
+        participants.sort(Comparator.comparingDouble(Participant::getScore).reversed());
         for (Participant participant : participants) {
-            log.info(participant + " has score of: " + participantScores.get(participant));
+            log.info(participant + " has score of: " + participant.getScore());
         }
     }
 

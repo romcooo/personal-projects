@@ -7,5 +7,5 @@ import java.util.List;
 import java.util.Map;
 
 public interface Matcher {
-    Round generateRound(List<Participant> participants, Map<Participant, Double> participantScores, Map<Participant, Integer> participantByes);
+    Round generateRound(List<Participant> participant);
 }
