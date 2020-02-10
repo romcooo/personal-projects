@@ -1,8 +1,8 @@
 package com.romco.bracketeer.model.matcher;
 
-import com.romco.bracketeer.model.Match;
+import com.romco.bracketeer.model.tournament.Match;
 import com.romco.bracketeer.model.participant.Participant;
-import com.romco.bracketeer.model.Round;
+import com.romco.bracketeer.model.tournament.Round;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.*;
@@ -45,7 +45,7 @@ class SwissMatcher implements Matcher {
             int acceptableNumberOfByes = 0;
             for (int i = toPairList.size() - 1; i >= 0; i--) {
                 Participant participant = toPairList.get(i);
-                if (participantByes.containsKey(participant) && participantByes.get(participant) > acceptableNumberOfByes) {
+                if (participantByes.containsKey(participant) && participantByes.get(participant) <= acceptableNumberOfByes) {
                     // create the bye match, then remove the participant
                     log.info("assigning bye to participant {}", participant);
                     Match match = new Match(participant);
@@ -94,6 +94,7 @@ class SwissMatcher implements Matcher {
                     log.info("matching {} with {}", current, next);
                     
                     Match match = new Match(current, next);
+                    log.debug(match.toString());
                     round.addMatch(match);
     
                     current.addPlayedMatch(match);

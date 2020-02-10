@@ -1,4 +1,4 @@
-package com.romco.bracketeer.model;
+package com.romco.bracketeer.model.tournament;
 
 import com.romco.bracketeer.model.matcher.Matcher;
 import com.romco.bracketeer.model.matcher.TournamentFormat;
@@ -19,6 +19,7 @@ public class TournamentImpl implements Tournament {
     private TournamentImpl() {
         this.participants = new ArrayList<>();
         this.startingParticipantScores = new HashMap<>();
+        this.startingParticipantByes = new HashMap<>();
         this.rounds = new LinkedList<>();
         this.ruleSet = RuleSet.getDefaultRuleSet();
     }
@@ -33,14 +34,15 @@ public class TournamentImpl implements Tournament {
         this.ruleSet = RuleSet.getDefaultRuleSet();
     }
     
-    public int addParticipants(List<Participant> participants) {
-        int count = 0;
-        for (Participant participant : participants) {
-            addParticipant(participant);
-            count++;
-        }
-        return count;
-    }
+    // TODO maybe implement later
+//    public int addParticipants(List<Participant> participants) {
+//        int count = 0;
+//        for (Participant participant : participants) {
+//            addParticipant(participant);
+//            count++;
+//        }
+//        return count;
+//    }
     
     @Override
     public boolean addParticipant(Participant participant) {
@@ -51,10 +53,12 @@ public class TournamentImpl implements Tournament {
             log.info("Adding participant {}", participant);
             participants.add(participant);
             startingParticipantScores.put(participant, 0d);
+            startingParticipantByes.put(participant, 0);
             return true;
         }
     }
     
+    // TODO
     @Override
     public boolean removeParticipant(Participant participant) {
         return false;
@@ -140,6 +144,8 @@ public class TournamentImpl implements Tournament {
     public Map<Participant, Double> getParticipantScores() {
         Map<Participant, Double> participantScoreMap = new HashMap<>();
         for (Participant participant : participants) {
+            participantScoreMap.put(participant, startingParticipantScores.get(participant));
+            
             for (Round round : rounds) {
                 MatchResult result = round.getMatch(participant).getMatchResultForParticipant(participant);
                 if (result != null) {

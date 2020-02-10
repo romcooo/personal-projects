@@ -1,4 +1,4 @@
-package com.romco.bracketeer.model;
+package com.romco.bracketeer.model.tournament;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -26,12 +26,12 @@ public class RuleSet {
         pointMap.put(MatchResult.WIN, pointsForWin);
         pointMap.put(MatchResult.LOSS, pointsForLoss);
         pointMap.put(MatchResult.TIE, pointsForTie);
-        // todo maybe: for (MatchResult.values())
+        
         this.bestOf = bestOf;
     }
 
     public double getPoints(MatchResult result) {
-        log.debug("getPoints for {} results in {} points.", result, pointMap.get(result));
+//        log.debug("getPoints for {} results in {} points.", result, pointMap.get(result));
         return pointMap.get(result);
     }
 

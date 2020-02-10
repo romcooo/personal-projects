@@ -2,6 +2,8 @@ package com.romco.bracketeer.model;
 
 import com.romco.bracketeer.model.matcher.TournamentFormat;
 import com.romco.bracketeer.model.participant.Player;
+import com.romco.bracketeer.model.tournament.Tournament;
+import com.romco.bracketeer.model.tournament.TournamentImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 

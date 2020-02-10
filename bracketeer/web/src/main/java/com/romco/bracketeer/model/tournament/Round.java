@@ -1,4 +1,4 @@
-package com.romco.bracketeer.model;
+package com.romco.bracketeer.model.tournament;
 
 import com.romco.bracketeer.model.participant.Participant;
 

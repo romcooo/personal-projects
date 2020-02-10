@@ -1,4 +1,4 @@
-package com.romco.bracketeer.model;
+package com.romco.bracketeer.model.tournament;
 
 import com.romco.bracketeer.model.participant.Participant;
 import lombok.AllArgsConstructor;
@@ -19,6 +19,7 @@ public class Match {
 
     private static int idSequence = 1;
     int id;
+    private List<Participant> participants;
     private Map<Participant, Integer> scoreMap;
     private int bestOf;
     private boolean isBye;
@@ -26,22 +27,27 @@ public class Match {
 
     public Match() {
         this.id = idSequence++;
+        participants = new ArrayList<>();
         resultMap = new HashMap<>();
         scoreMap = new HashMap<>();
     }
 
     public Match(Participant participant1) {
         this();
-
+        
+        participants.add(participant1);
         scoreMap = new HashMap<>(1);
-        scoreMap.put(participant1, null);
+        scoreMap.put(participant1, 1);
+        resultMap.put(participant1, MatchResult.WIN);
         
         this.isBye = true;
     }
     
     public Match(Participant participant1, Participant participant2) {
         this();
-
+    
+        participants.add(participant1);
+        participants.add(participant2);
         scoreMap = new HashMap<>(2);
         scoreMap.put(participant1, null);
         scoreMap.put(participant2, null);
@@ -50,18 +56,22 @@ public class Match {
     }
     
     public List<Participant> getOthers(Participant participant) {
-        return scoreMap.keySet()
-                       .stream()
-                       .filter((p) -> !p.equals(participant))
-                       .peek((p) -> log.debug("After filter: " + p))
-                       .collect(Collectors.toList());
+        return participants.stream()
+                    .filter((p) -> !p.equals(participant))
+                    .peek((p) -> log.debug("After filter: " + p))
+                    .collect(Collectors.toList());
+        
+//        return scoreMap.keySet()
+//                       .stream()
+//                       .filter((p) -> !p.equals(participant))
+//                       .peek((p) -> log.debug("After filter: " + p))
+//                       .collect(Collectors.toList());
     }
     
     public Participant getOther(Participant participant) {
-        List<Participant> others = scoreMap.keySet()
-                                           .stream()
-                                           .filter((p) -> !p.equals(participant))
-                                           .collect(Collectors.toList());
+        List<Participant> others = participants.stream()
+                                               .filter((p) -> !p.equals(participant))
+                                               .collect(Collectors.toList());
         
         if (others.size() > 1) {
             log.warn("getOther yielded more than one result");
@@ -120,7 +130,11 @@ public class Match {
     }
     
     public List<Participant> getParticipants() {
-        return new ArrayList<>(scoreMap.keySet());
+        return new ArrayList<>(participants);
+//        return new ArrayList<>(scoreMap.keySet());
     }
-
+    
+    public boolean isBye() {
+        return isBye;
+    }
 }

@@ -22,6 +22,7 @@ public class MainController {
     @GetMapping("new")
     public String newTournament() {
         log.info("in newTournament");
-        return ViewNames.HOME;
+        log.info(ViewNames.Tournament.NEW);
+        return ViewNames.Tournament.NEW;
     }
 }

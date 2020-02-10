@@ -1,6 +1,6 @@
 package com.romco.bracketeer.model.participant;
 
-import com.romco.bracketeer.model.Match;
+import com.romco.bracketeer.model.tournament.Match;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,8 +67,6 @@ public abstract class Participant implements Comparable<Participant> {
     @Override
     public String toString() {
         return this.getClass().getSimpleName() +
-                "{name=" + name +
-//                ", score=" + score +
-                '}';
+                "{name=" + name + '}';
     }
 }
