@@ -82,3 +82,6 @@ Spacing and layout
     The launch of your website is not the end of the story.
     Now it's time to monitor your users' behavior and make some changes to your website if necessary.
     You should also update your content regularly in order to show your users that your website is alive! For instance, a blog can be a great way of doing that.
+	
+== responsive web design
+http://www.responsivegridsystem.com/
