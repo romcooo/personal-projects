@@ -21,6 +21,15 @@ html {
     text-rendering: optimizeLegibility;
 }
 
+.clearfix {
+    zoom: 1;
+}
+.clearfix:after {
+    content: '.';
+    clear: both;
+    display: block;
+    height: 0;
+}
 
 /* == REUSABLE COMPONENTS == */
 
@@ -69,11 +78,6 @@ h2 {
     margin-bottom: 30px;
 }
 
-h3 {
-    font-size: 110%;
-    margin-bottom: 15px;
-}
-
 h2:after {
     display: block;
     background-color: #e67e22;
@@ -82,6 +86,11 @@ h2:after {
     margin: 0 auto;
     margin-top: 30px;
     content: " ";
+}
+
+h3 {
+    font-size: 110%;
+    margin-bottom: 15px;
 }
 
 /* == PARAGRAPHS == */
@@ -155,6 +164,24 @@ h2:after {
 .btn-ghost:active {
     border: 1px solid #cf6d17;
     color: #fff;
+}
+
+
+/* == GENERIC LINKS == */
+a:link,
+a:visited {
+    color: #e67e22;
+    text-decoration: none;
+    padding-bottom: 1px;
+    border-bottom: 1px solid #e67e22;
+    transition: 0.2s;
+}
+
+a:hover,
+a:active {
+/*    color: #555;*/
+    border-bottom: 1px solid transparent;
+    transition: 0.2s;
 }
 
 /* == HEADER == */
@@ -257,26 +284,35 @@ header {
 
 /* == HOW IT WORKS == */
 
+.section-steps {
+    background-color: #f4f4f4;
+}
+
 .steps-box {
-    margin-top: 30px;
 }
 
 .steps-box:first-child {
     text-align: right;
     padding-right: 3%;
+    margin-top: 30px;
 }
 
 .steps-box:last-child {
-    text-align: left;
     padding-left: 3%;
+    margin-top: 70px;
 }
 
 .app-screen {
-    width: 50%;
+    width: 40%;
 }
 
 .works-step {
     margin-bottom: 50px;
+}
+
+
+.works-step:last-of-type {
+    margin-bottom: 80px;
 }
 
 .works-step div {
@@ -290,11 +326,72 @@ header {
     padding: 10px;
     float: left;
     font-size: 150%;
-    margin-left: 25px
+    margin-right: 25px;
 }
 
+.button-app img {
+    height: 50px;
+    width: auto;
+    margin-right: 10px;
+    border-radius: 10%;
+}
 
+.button-app:link,
+.button-app:visited {
+    border: 0;
+}
 
+/* == CITIES == */
 
+.section-cities {
+    
+}
 
+.cities-box {
+    margin: 0;
+    padding: 1%;
+}
 
+.cities-box img {
+    width: 100%;
+    height: auto;
+    margin-bottom: 15px;
+}
+
+.cities-box h3 {
+    text-align: center;
+}
+
+.cities-box li {
+    padding-left: 5%;
+    display: block;
+    margin-bottom: 5px
+}
+
+.cities-box i {
+    display: inline-block;
+    width: 30px;
+    text-align: center;
+    color: #e67e22;
+    font-size: 110%;
+    margin-right: 5px;
+    
+    /* aligning text and icons: */
+    line-height: 120%;
+    vertical-align: middle;
+    margin-top: -2px;
+}
+
+/*
+
+.cities-box p {
+    padding-left: 10%;
+}
+*/
+/*
+
+.cities-box p i {
+    padding-right: 10px;
+    color: #e67e22;
+}
+*/
