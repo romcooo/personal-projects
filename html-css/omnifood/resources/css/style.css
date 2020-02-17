@@ -122,7 +122,8 @@ h3 {
 
 /*Both unvisited and visited will look the same: */
 .btn:link,
-.btn:visited {
+.btn:visited,
+input[type=submit] {
     display: inline-block;
     padding: 10px 30px;
     font-weight: 300;
@@ -132,7 +133,9 @@ h3 {
 }
 
 .btn:hover,
-.btn:active {
+.btn:active,
+input[type=submit]:hover,
+input[type=submit]:active {
     background-color: #cf6d17;
 }
 
@@ -141,7 +144,8 @@ h3 {
 }
 
 .btn-full:link,
-.btn-full:visited {
+.btn-full:visited,
+input[type=submit] {
     background-color: #e67e22;
     border: 1px solid #e67e22;
     color: #fff;
@@ -166,6 +170,17 @@ h3 {
     color: #fff;
 }
 
+.button-app img {
+    height: 50px;
+    width: auto;
+    margin-right: 10px;
+    border-radius: 10%;
+}
+
+.button-app:link,
+.button-app:visited {
+    border: 0;
+}
 
 /* == GENERIC LINKS == */
 a:link,
@@ -179,7 +194,7 @@ a:visited {
 
 a:hover,
 a:active {
-/*    color: #555;*/
+    color: #555;
     border-bottom: 1px solid transparent;
     transition: 0.2s;
 }
@@ -190,6 +205,7 @@ header {
     background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(img/hero.jpg);
     background-size: cover;
     background-position: center;
+    background-attachment: fixed;
     /*100% of the viewport*/
     height: 100vh; 
 }
@@ -329,17 +345,6 @@ header {
     margin-right: 25px;
 }
 
-.button-app img {
-    height: 50px;
-    width: auto;
-    margin-right: 10px;
-    border-radius: 10%;
-}
-
-.button-app:link,
-.button-app:visited {
-    border: 0;
-}
 
 /* == CITIES == */
 
@@ -362,13 +367,13 @@ header {
     text-align: center;
 }
 
-.cities-box li {
+.city-feature {
     padding-left: 5%;
     display: block;
     margin-bottom: 5px
 }
 
-.cities-box i {
+.city-feature i {
     display: inline-block;
     width: 30px;
     text-align: center;
@@ -382,16 +387,234 @@ header {
     margin-top: -2px;
 }
 
-/*
+/* == TESTIMONIALS == */
 
-.cities-box p {
-    padding-left: 10%;
+.section-testimonials {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url(img/back-customers.jpg);
+    background-size: cover;
+    color: #fff;
+    background-attachment: fixed;
+    
 }
-*/
-/*
 
-.cities-box p i {
-    padding-right: 10px;
+.section-testimonials blockquote:before {
+    content:"\201C";
+    font-size: 500%;
+    display: block;
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    
+}
+
+.section-testimonials blockquote {
+    padding: 2%;
+    font-style: italic;
+    line-height: 145%;
+    position: relative;
+    margin-top: 40px;
+}
+
+.section-testimonials cite {
+    display: block;
+    font-size: 90%;
+    margin-top: 25px;
+}
+
+.section-testimonials img {
+    height: 70px;
+    border-radius: 50%;
+    margin-right: 10px;
+    vertical-align: middle;
+}
+
+
+/* == SIGN UP == */
+
+
+.section-signup {
+    background-color: #f4f4f4;
+}
+
+.signup-box {
+    background-color: #fff;
+    border-radius: 5px;
+    width: 90%;
+    margin-left: 5%;
+    box-shadow: 0 2px 2px #d6d6d6;
+}
+
+
+.signup-box ul  {
+    list-style: none;
+}
+
+.signup-box ul li {
+    padding: 5px 0;
+}
+
+.signup-box div:first-child {
+    background-color: #fafafa;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.signup-box div {
+    padding: 15px;
+    border-bottom: solid 1px #e8e8e8;
+}
+
+.signup-box div:last-child {
+    text-align: center;
+    border-bottom: none;
+}
+
+.signup-box i {
+    
+    display: inline-block;
+    width: 30px;
+    text-align: center;
+    color: #e67e22;
+    font-size: 110%;
+    margin-right: 5px;
+    
+    /* aligning text and icons: */
+    line-height: 120%;
+    vertical-align: middle;
+    margin-top: -2px;
+}
+
+
+.plan-price {
+    font-size: 250%;
+    margin-bottom: 10px;
+    font-weight: 100;
     color: #e67e22;
 }
-*/
+
+.plan-price span {
+    font-size: 33%;
+    font-weight: 300;
+}
+
+.plan-price-meal {
+    font-size: 80%;
+}
+
+/* == CONTACT FORM == */
+
+.contact-form {
+    width: 60%;
+    margin: 0 auto;
+}
+
+
+input[type=text],
+input[type=email],
+select,
+textarea {
+    width: 100%;
+    padding: 7px;
+    border-radius: 3px;
+    border: 1px solid #ccc;
+}
+
+input[type=checkbox] {
+    margin: 10px 5px 10px 0;
+}
+
+textarea {
+    height: 100px;
+}
+
+*:focus {
+    outline:none;
+}
+
+/* == FOOTER == */
+
+footer {
+    background-color: #333;
+    color: #888;
+    padding: 40px;
+    font-size: 90%;
+}
+
+footer p {
+    text-align: center;
+    font-size: 90%;
+    margin-top: 10px;
+}
+
+.footer-content {
+    color: #fff;
+}
+
+.footer-nav {
+    list-style: none;
+    float: left;
+}
+
+.social-links {
+    list-style: none;
+    float: right;
+}
+
+footer li {
+    display: inline-block;
+    margin-right: 20px;
+}
+
+footer li:last-child {
+    margin-right: 0;
+}
+
+/* == FOOTER LINKS == */
+
+footer li a:link, 
+footer li a:visited {
+    text-decoration: none;
+    border: 0;
+    color: #888;
+    transition: color 0.25s;
+}
+
+.footer-nav li a:hover,
+.footer-nav li a:active {
+    color: #cf6d17;
+}
+
+
+.social-links li a {
+    font-size: 150%;
+}
+
+.ion-social-facebook,
+.ion-social-twitter,
+.ion-social-googleplus,
+.ion-social-instagram {
+    transition: inherit;
+}
+
+.ion-social-facebook:hover,
+.ion-social-facebook:active {
+    color: #3b5998;
+}
+
+.ion-social-twitter:hover,
+.ion-social-twitter:active {
+    color: #00aced;
+}
+
+.ion-social-googleplus:hover,
+.ion-social-googleplus:active {
+    color: #dd4b39;
+}
+
+.ion-social-instagram:hover,
+.ion-social-instagram:active {
+    color: #517fa4;
+}
+
+
+
