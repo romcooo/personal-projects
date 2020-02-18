@@ -1,0 +1,151 @@
+/* == COLOURS ==
+blue:
+    base: #289df6;
+    lighter: #69bbf9;
+
+dark:
+    dark: #333;
+    darker: #222;
+
+light:
+    base: #ecf6fe
+*/
+
+
+/* == HTML AND BODY == */
+body {
+    margin: 0 0;
+    font-family: 'Ubuntu', sans-serif;
+    background-color: #eee;
+    font-weight: 300;
+
+    background-color: #333;
+    transition: color 0.25s;
+}
+
+/* == TOP NAVIGATION == */
+
+.topnav {
+    overflow: hidden;
+    height: 90px;
+    font-weight: 400;
+    
+/*    can't inherit because it's in a separate html file */
+    transition: color 0.25s;
+/*
+    display: flex;
+    align-items: center;
+*/
+}
+
+.topnav a {
+    color: #ecf6fe;
+    text-decoration: none;
+    font-size: 20px;
+}
+
+/*.topnav a:hover {*/
+/*    background-color: #ddd;*/
+/*    color: #000;*/
+/*}*/
+
+.topnav .home-button {
+    position: absolute;
+    font-size: 40px;
+    padding: 21px 80px;
+/*    background-color: #222;*/
+/*    color: #289df6;*/
+    color: #097bd1;
+    
+    transition: inherit;
+}
+
+.topnav .home-button:hover {
+/*    color: #097bd1;*/
+    color: #289df6;
+}
+
+
+.topnav .right {
+    float: right;
+    padding: 32px 30px;
+    transition: inherit;
+}
+
+.topnav .right:hover {
+    
+    color: #289df6;
+}
+
+
+/* == SIDE NAVIGATION == */
+
+.sidenav {
+    margin-top: 90px;
+    height: 100%;
+    width: 200px;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #222;
+    overflow-x: hidden;
+    font-size: 25px;
+/*    padding-top: px;*/
+    
+/*    can't inherit because it's in a separate html file */
+    transition: color 0.25s;
+}
+
+.sidenav a:first-child {
+    padding-top: 15px;
+}
+
+.sidenav a {
+    padding: 5px 5px 10px 20px;
+    text-decoration: none;
+    color: #ecf6fe;
+    display: block;
+    
+    transition: inherit;
+}
+
+.sidenav a:hover {
+    color: #289df6;
+}
+
+.sidenav .subside {
+    transition: inherit;
+    
+    margin: 0 0 0 20px;
+    font-size: 80%;
+/*    padding: 0 0 0 0;*/
+    
+}
+
+/* == MAIN BODY & HEADERS == */
+
+.main h2 {
+/*    text-transform: uppercase;*/
+    text-align: center;
+}
+
+.main {
+    margin-left: 200px; /* Same as the width of the sidenav */
+    font-size: 30px;
+    color: #ddd;
+    padding: 10px 25px;
+/*    background-image: url(../img/bracket_aerial.jpg);*/
+    
+    background-image: linear-gradient(
+        rgba(0, 0, 0, 0.8),
+        rgba(0, 0, 0, 0.8)),
+        url(../../img/bracket_aerial.jpg);
+    
+    background-size: cover;
+    
+    background-position: center;
+    
+    height: 100vh; 
+    
+}

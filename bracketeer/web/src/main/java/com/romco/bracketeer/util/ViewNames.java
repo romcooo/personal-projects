@@ -1,7 +1,7 @@
 package com.romco.bracketeer.util;
 
 public final class ViewNames {
-    public static final String HOME = "home";
+    public static final String HOME = "index";
     
     public static class Tournament {
         public static final String BASE = "tournament/";

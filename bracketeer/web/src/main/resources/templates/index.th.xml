@@ -1,0 +1,6 @@
+<thlogic>
+    <attr
+            sel="#topnavId"
+            th:replace="~{fragments/topnav :: topnavFragment}"/>
+
+</thlogic>
