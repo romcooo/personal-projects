@@ -5,8 +5,10 @@ import com.romco.bracketeer.model.tournament.Tournament;
 
 import java.util.List;
 
-public interface MainService {
-    void createNewTournament();
+public interface TournamentService {
+    int createNewTournament();
+    Tournament getTournament();
+    List<Participant> getParticipants();
     Participant addPlayer(String name);
     String removePlayer(int id);
     void setResult(int roundId, int playerId, int gamesWon, int gamesLost);

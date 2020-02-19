@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 public abstract class Participant implements Comparable<Participant> {
-    protected static int idCounter;
+    protected static int idCounter = 1;
     protected Integer id;
     protected String name;
     protected double score;
@@ -24,6 +24,10 @@ public abstract class Participant implements Comparable<Participant> {
     
     public Integer getId() {
         return id;
+    }
+    
+    public String getName() {
+        return name;
     }
     
     public double getScore() {

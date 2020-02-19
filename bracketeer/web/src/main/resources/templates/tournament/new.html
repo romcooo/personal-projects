@@ -1,8 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <link rel="stylesheet" type="text/css" href="/css/queries.css">
+    
+    
+<!--    for brackets:-->
     <link rel="stylesheet" type="text/css" href="../../static/css/style.css">
     <link rel="stylesheet" type="text/css" href="../../static/css/queries.css">
     
@@ -20,33 +25,39 @@
     
     <script>
         $(function(){
-          $("#navbars-placeholder").load("../navbars.html");
+            $("#navbars-placeholder").load("../../static/navbars.html");
+<!--          $("#navbars-placeholder").load("/navbars.html"); -->
         });
     </script>
     
     <div class="main" align="center">
         <h1 id="title">New Tournament</h1>
-        <table bor>
-            <tr>
-                <th>ID</th>
-                <th>Name</th>
-            </tr>
-            <tr>
-                <td>0</td>
-                <td>example</td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>
-                    <form id="new-tournament-players-form"
-                          action="addPlayer"
-                          method="POST">
-                        <label id="add-player" for="player">Enter a new player</label>
-                        <input id="player" type="string" name="player"/>
-                        <input id="add-button" type="button" value="Add"/>
-                    </form>
-                </td>
-            </tr>
+        <table class="player-table" cellspacing="0">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th class="table-col-name">Name</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                <tr th:each="participant : ${participants}">
+                    <td th:text="${participant.id}">id</td>
+                    <td class="table-col-name" th:text="${participant.name}">name</td>
+                </tr>
+                <tr>
+                    <td>#</td>
+                    <td>
+                        <form id="new-tournament-players-form"
+                              action="/tournament/addPlayer"
+                              method="POST">
+                            <label id="add-player" for="playerName"></label>
+                            <input id="playerName" type="text" name="playerName"/>
+                            <input id="add-button" type="submit" value="Add"/>
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
         </table>
     </div>
 </body>

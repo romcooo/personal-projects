@@ -4,9 +4,13 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="stylesheet" type="text/css" href="../static/css/style.css">
-    <link rel="stylesheet" type="text/css" href="../static/css/queries.css">
-    
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <link rel="stylesheet" type="text/css" href="/css/queries.css">
+
+<!--    direct path for brackets:-->
+    <link rel="stylesheet" type="text/css" href="../../static/css/style.css">
+    <link rel="stylesheet" type="text/css" href="../../static/css/queries.css">
+
     <link href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,400i&display=swap" rel="stylesheet">
     
     <title>Bracketeer</title>
@@ -21,7 +25,8 @@
     
     <script>
         $(function(){
-          $("#navbars-placeholder").load("navbars.html");
+            $("#navbars-placeholder").load("/navbars.html");
+<!--            $("#navbars-placeholder").load("navbars.html");-->
         });
     </script>
     
@@ -44,7 +49,6 @@
 -->
 
     <div class="main">
-        
         
         <h2>Bracketeer</h2>
         <p>This sidebar is of full height (100%) and always shown.</p>

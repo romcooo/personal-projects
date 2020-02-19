@@ -10,34 +10,55 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Slf4j
 @Service
-public class MainServiceImpl implements MainService {
-
+public class TournamentServiceImpl implements TournamentService {
+    
     // == fields
     Tournament tournament;
-
+    
     // == constructors
+    
     @Autowired
-    public MainServiceImpl() {
+    public TournamentServiceImpl() {
     }
-
+    
     // == methods
-    
     @Override
-    public void createNewTournament() {
+    public int createNewTournament() {
         this.tournament = new TournamentImpl(TournamentFormat.SWISS);
+        return tournament.getId();
     }
     
     @Override
-    public Participant addPlayer(String name) {
-        Participant participant = new Player(name);
+    public Tournament getTournament() {
+        return tournament;
+    }
+    
+    @Override
+    public Participant addPlayer(String playerName) {
+        if (this.tournament == null) {
+            createNewTournament();
+        }
+        
+        Participant participant = new Player(playerName);
         if (tournament.addParticipant(participant)) {
             return participant;
         } else {
             return participant;
         }
         
+    }
+    
+    @Override
+    public List<Participant> getParticipants() {
+        if (tournament == null) {
+            return new ArrayList<>();
+        }
+        return tournament.getParticipants();
     }
     
     @Override

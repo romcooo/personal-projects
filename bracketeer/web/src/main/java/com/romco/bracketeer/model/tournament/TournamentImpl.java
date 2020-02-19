@@ -12,6 +12,8 @@ import java.util.*;
 @Slf4j
 @Component
 public class TournamentImpl implements Tournament {
+    private static int idCounter;
+    private final int id;
     private String name;
     private List<Participant> participants;
     private Map<Participant, Double> startingParticipantScores;
@@ -21,6 +23,7 @@ public class TournamentImpl implements Tournament {
     private RuleSet ruleSet;
 
     private TournamentImpl() {
+        this.id = idCounter++;
         this.name = "";
         this.participants = new ArrayList<>();
         this.startingParticipantScores = new HashMap<>();
@@ -48,6 +51,10 @@ public class TournamentImpl implements Tournament {
 //        return count;
 //    }
     
+    
+    public int getId() {
+        return id;
+    }
     
     public String getName() {
         return name;

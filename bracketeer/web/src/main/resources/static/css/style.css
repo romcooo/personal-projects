@@ -136,11 +136,17 @@ body {
     color: #ddd;
     padding: 10px 25px;
 /*    background-image: url(../img/bracket_aerial.jpg);*/
-    
     background-image: linear-gradient(
         rgba(0, 0, 0, 0.8),
         rgba(0, 0, 0, 0.8)),
-        url(../../img/bracket_aerial.jpg);
+        url(../img/bracket_aerial.jpg);
+    
+/*
+    background-image: linear-gradient(
+        rgba(0, 0, 0, 0.8),
+        rgba(0, 0, 0, 0.8)),
+        url(/img/bracket_aerial.jpg);
+*/
     
     background-size: cover;
     
@@ -148,4 +154,25 @@ body {
     
     height: 100vh; 
     
+}
+
+.player-table {
+/*    if the gaps (cellspacing=0) should be done in css then its this:*/
+/*    border-spacing: 0;*/
+    
+    border: 2px solid #ecf6fe;
+}
+
+.player-table th, td {
+    min-width: 50px;
+    border: 1px solid #ecf6fe;
+}
+
+.player-table td {
+    text-align: right;
+    padding: 3px 20px;
+}
+
+.table-col-name {
+    width: 85%;
 }
