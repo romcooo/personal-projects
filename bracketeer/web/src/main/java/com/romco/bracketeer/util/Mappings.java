@@ -11,10 +11,8 @@ public final class Mappings {
         public static final String NEW = BASE + "new";
         public static final String ADD_PLAYER = BASE + "addPlayer";
         public static final String REDIRECT_ADD_PLAYER = REDIRECT + ADD_PLAYER;
-    
-        public static class Test {
-            public static final String BASE = Tournament.BASE + "new/";
-            public static final String TEST = "test";
-        }
+        public static final String SAVE = NEW + "save";
+        public static final String EXISTING = BASE + "{tournamentCode}/";
+        public static final String REDIRECT_EXISTING = REDIRECT + EXISTING;
     }
 }

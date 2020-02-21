@@ -19,46 +19,100 @@
 </head>
     
 <body>
+    
     <div id="navbars-placeholder">
-        Topnav bar
+        navbars
     </div>
     
+<!--    <script>-->
+<!--        $(function(){-->
+<!--            $("#navbars-placeholder").load("../../static/navbars.html");-->
+<!--    $("#navbars-placeholder").load("/navbars.html");-->
+<!--        });-->
+<!--    </script>-->
+
     <script>
         $(function(){
-            $("#navbars-placeholder").load("../../static/navbars.html");
-<!--          $("#navbars-placeholder").load("/navbars.html"); -->
+    $("#navbars-placeholder").load("/navbars.html");
         });
     </script>
     
     <div class="main" align="center">
         <h1 id="title">New Tournament</h1>
+        
+        <div class="options">
+            <ul>
+                <li>Tournament Style:
+                    <div class="dropdown">
+                        Swiss
+<!--                        <i class="fa fa-caret-down"></i>-->
+<!--
+                        
+                        <select class="selection">
+                                <option value="SWISS">Swiss</option>
+                                <option value="ROUND_ROBIN">Round Robin</option>
+                                <option value="SINGLE_ELIMINATION">Single Elim</option>
+                                <option value="DOUBLE_ELIMINATION">Double Elim</option>
+                        </select>
+-->
+                        
+                        <div class="dropdown-content">
+                            <a>Swiss</a>
+                            <a>Round Robin</a>
+                            <a>Single Elim</a>
+                            <a>Double Elim</a>
+                        </div>
+                    </div>
+                </li>
+                <li>item 2</li>
+            </ul>
+        </div>
+        
         <table class="player-table" cellspacing="0">
             <thead>
                 <tr>
-                    <th>ID</th>
+                    <th class="table-col-id">ID</th>
                     <th class="table-col-name">Name</th>
+                    <th>Operation</th>
                 </tr>
             </thead>
             <tbody>
 
                 <tr th:each="participant : ${participants}">
-                    <td th:text="${participant.id}">id</td>
-                    <td class="table-col-name" th:text="${participant.name}">name</td>
+                    <td class="table-col-id" th:text="${participant.id}">ex</td>
+                    <td class="table-player-name" th:text="${participant.name}">example</td>
+                    <td class="table-col-operation">
+                        <button class="player-remove-button generic-button"
+                           href="/tournament/removePlayer?id=${participant.id}">Remove</button></td>
+                    
                 </tr>
                 <tr>
-                    <td>#</td>
-                    <td>
-                        <form id="new-tournament-players-form"
-                              action="/tournament/addPlayer"
-                              method="POST">
-                            <label id="add-player" for="playerName"></label>
-                            <input id="playerName" type="text" name="playerName"/>
-                            <input id="add-button" type="submit" value="Add"/>
-                        </form>
+                    <td class="table-col-id">#</td>
+                    <td class="new-tournament-players-td"
+                        colspan="2">
+                            <form class="new-tournament-players-form"
+                                  action="/tournament/addPlayer"
+                                  method="POST">
+    <!--                            <label id="add-player" for="playerName"></label>-->
+                                <input id="playerName" class="form-player-name" type="text" name="playerName"/>
+                                <input id="add-button" class="player-add-button generic-button" type="submit" value="Add"/>
+                            </form>
                     </td>
+                    
                 </tr>
             </tbody>
         </table>
+        
+        <div class="tournament-submit-buttons">
+            <form id="save-new-tournament-button"
+                  class="save"
+                  action="/tournament/new/save"
+                  method="post">
+                <input type="submit">
+            <button>Save</button>
+            </form>
+            <a class="generate">Generate first round pairings</a>
+        </div>
     </div>
 </body>
 </html>

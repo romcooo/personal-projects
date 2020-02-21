@@ -8,7 +8,7 @@ dark:
     darker: #222;
 
 light:
-    base: #ecf6fe
+    base: #ecf6fe;
 */
 
 
@@ -20,6 +20,11 @@ body {
     font-weight: 300;
 
     background-color: #333;
+    transition: color 0.25s;
+}
+
+body a:hover {
+    color: #289df6;
     transition: color 0.25s;
 }
 
@@ -73,8 +78,8 @@ body {
 }
 
 .topnav .right:hover {
-    
-    color: #289df6;
+/*    no need because inherited from "body a"*/
+/*    color: #289df6;*/
 }
 
 
@@ -111,7 +116,8 @@ body {
 }
 
 .sidenav a:hover {
-    color: #289df6;
+/*    no need because inherited from "body a"*/
+/*    color: #289df6;*/
 }
 
 .sidenav .subside {
@@ -123,7 +129,7 @@ body {
     
 }
 
-/* == MAIN BODY & HEADERS == */
+/* == COMMON MAIN BODY & HEADERS == */
 
 .main h2 {
 /*    text-transform: uppercase;*/
@@ -133,7 +139,7 @@ body {
 .main {
     margin-left: 200px; /* Same as the width of the sidenav */
     font-size: 30px;
-    color: #ddd;
+    color: #ecf6fe;;
     padding: 10px 25px;
 /*    background-image: url(../img/bracket_aerial.jpg);*/
     background-image: linear-gradient(
@@ -156,23 +162,226 @@ body {
     
 }
 
+/* ==== NEW TOURNAMENT ==== */
+
+/* == OPTIONS */
+
+.options ul {
+    list-style: none;
+/*    list-style-type: none;*/
+    
+    text-align: left;
+    padding: 5px 100px 5px 100px
+}
+
+.options li {
+/*    float: left;*/
+    
+    display: inline-block;
+/*    text-align: left;*/
+    padding: 16px;
+    text-decoration: none;
+}
+
+.options li a {
+}
+
+
+/* == DROPDOWN CONTAINERS*/
+.dropdown {
+    display: inline-block;
+    padding: 0 0 0 15px;
+/*  overflow: hidden;*/
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+/* Dropdown content (hidden by default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+  float: none;
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+
+/* == COMMON PARTS*/
+/* == BUTTONS */
+.generic-button:hover {
+    color:  #289df6;
+    transition: color 0.25s;
+}
+
+/* == PLAYER TABLE*/
+
 .player-table {
 /*    if the gaps (cellspacing=0) should be done in css then its this:*/
 /*    border-spacing: 0;*/
-    
     border: 2px solid #ecf6fe;
+    width: 65%;
+    
+/*    implicit inheritance*/
+/*    color: inherit;*/
+    
 }
 
 .player-table th, td {
-    min-width: 50px;
+/*    min-width: 50px;*/
     border: 1px solid #ecf6fe;
 }
 
 .player-table td {
+    margin: 0;
+    padding: 0;
     text-align: right;
-    padding: 3px 20px;
 }
 
-.table-col-name {
-    width: 85%;
+.player-table .table-col-id {
+    width: 10%;
+    
+    text-align: center;
 }
+
+.player-table .table-col-name {
+    margin: 0;
+    padding: 0;
+    
+    border-right: 1px solid #ecf6fe;
+    
+    width: 75%;
+
+}
+
+.player-table .table-col-operation {
+/*    margin: 0;*/
+/*    padding: 0;*/
+    border-left: 1px solid #ecf6fe;
+    
+    width: 15%;
+    
+    text-align: center;
+    
+}
+
+
+.player-table .table-player-name {
+    
+/*    float: left;*/
+    
+    color: inherit;
+    background-color: transparent;
+    
+    text-align: right;
+    
+    
+    display: inline-block;
+    width: 100%;
+    height: 42px;
+/*    height: 100%;*/
+    border-right: 1px solid #ecf6fe;
+}
+
+
+.player-remove-button {
+    margin: 0 0;
+    padding: 0 0;
+    border: 0;
+
+    
+    font-size: 65%;
+    color: inherit;
+    background-color: transparent;
+    
+/*    would be 20% but there is 1px border */
+/*    margin-left: 2%;*/
+    height: 42px;
+    
+}
+
+
+
+.player-table .new-tournament-players-td {
+    margin: 0;
+    padding: 0;
+}
+
+.new-tournament-players-form {
+    border: none;
+    background-color: transparent;
+}
+
+
+.form-player-name {
+    margin: 0 0;
+    padding: 0 2.5%;
+    border: 0;
+    
+    float: left;
+    
+    color: inherit;
+    background-color: transparent;
+    
+    text-align: right;
+    
+    
+    display: inline-block;
+    width: 75%;
+    height: 42px;
+/*    height: 100%;*/
+    
+    border-right: 1px solid #ecf6fe;
+}
+
+.player-add-button {
+    margin: 0 0;
+    padding: 0 0;
+    border: 0;
+    
+    float: right;
+    
+    font-size: 65%;
+    color: inherit;
+    background-color: transparent;
+    
+    display: inline-block;
+/*    would be 20% but there is 1px border */
+    width: 19%;
+    height: 42px;
+    
+/*    border-left: 1px solid #ecf6fe;*/
+}
+
+
+
+.tournament-submit-buttons form {
+    display: inline-block;
+    margin: 15px;
+    padding: 5px;
+}
+
+.tournament-submit-buttons a {
+    display: inline-block;
+    margin: 15px;
+    padding: 5px;
+}
+
+
+
+
+
+
+
+

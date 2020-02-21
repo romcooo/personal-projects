@@ -1,5 +1,6 @@
 package com.romco.bracketeer.service;
 
+import com.romco.bracketeer.model.MockDataModel;
 import com.romco.bracketeer.model.matcher.TournamentFormat;
 import com.romco.bracketeer.model.participant.Participant;
 import com.romco.bracketeer.model.participant.Player;
@@ -18,6 +19,7 @@ import java.util.List;
 public class TournamentServiceImpl implements TournamentService {
     
     // == fields
+    MockDataModel mockDataModel = new MockDataModel();
     Tournament tournament;
     
     // == constructors
@@ -37,7 +39,18 @@ public class TournamentServiceImpl implements TournamentService {
     public Tournament getTournament() {
         return tournament;
     }
-    
+
+    public Tournament getTournamentByCode(int code) {
+        log.info("Getting tournament by code: {}", code);
+        tournament = mockDataModel.getByCode(code);
+        return tournament;
+    }
+
+    @Override
+    public int saveTournament() {
+        return tournament.getId();
+    }
+
     @Override
     public Participant addPlayer(String playerName) {
         if (this.tournament == null) {
