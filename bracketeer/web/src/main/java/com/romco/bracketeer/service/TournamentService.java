@@ -12,7 +12,7 @@ public interface TournamentService {
     Tournament getTournamentByCode(int code);
     List<Participant> getParticipants();
     Participant addPlayer(String name);
-    String removePlayer(int id);
+    String removePlayer(String id);
     void setResult(int roundId, int playerId, int gamesWon, int gamesLost);
     void generateNextRound();
 }

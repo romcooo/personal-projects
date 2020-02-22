@@ -44,6 +44,7 @@ public class TournamentController {
         return Mappings.Tournament.NEW;
     }
 
+    // == ADD PLAYER
     @GetMapping(Mappings.Tournament.ADD_PLAYER)
     public String addPlayer(Model model) {
         log.info("In GET addPlayer");
@@ -56,6 +57,22 @@ public class TournamentController {
         log.info("In addPlayer, input: {}", playerName);
         service.addPlayer(playerName);
         return Mappings.Tournament.REDIRECT_ADD_PLAYER;
+    }
+
+    // == REMOVE PLAYER
+
+    @GetMapping(Mappings.Tournament.REMOVE_PLAYER)
+    public String removePlayer(Model model) {
+        log.info("In GET removePlayer");
+        model.addAttribute("participants", participants());
+        return Mappings.Tournament.NEW;
+    }
+
+    @PostMapping(Mappings.Tournament.REMOVE_PLAYER)
+    public String removePlayer(@RequestParam(name = "id") String playerId) {
+        log.info("In POST removePlayer with id {}", playerId);
+        service.removePlayer(playerId);
+        return Mappings.Tournament.REDIRECT_REMOVE_PLAYER;
     }
 
     @PostMapping(Mappings.Tournament.SAVE)

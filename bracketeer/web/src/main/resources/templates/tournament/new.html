@@ -73,30 +73,45 @@
                 <tr>
                     <th class="table-col-id">ID</th>
                     <th class="table-col-name">Name</th>
-                    <th>Operation</th>
+                    <th class="table-col-operation">Action</th>
                 </tr>
             </thead>
             <tbody>
 
-                <tr th:each="participant : ${participants}">
-                    <td class="table-col-id" th:text="${participant.id}">ex</td>
+                <tr th:block th:each="participant, iterStat : ${participants}">
+                    <td id="idField" class="table-col-id" th:text="${participant.id}">ex</td>
                     <td class="table-player-name" th:text="${participant.name}">example</td>
                     <td class="table-col-operation">
-                        <button class="player-remove-button generic-button"
-                           href="/tournament/removePlayer?id=${participant.id}">Remove</button></td>
-                    
+                        <form id="newTournamentRemovePlayerForm"
+                              th:action="@{/tournament/removePlayer?id={id}(id=${iterStat.index})}"
+                              method="post">
+                            <button class="player-remove-button table-action-button generic-button"
+                                    form="newTournamentRemovePlayerForm"
+                                    type="submit">Remove</button>
+                        </form>
+                    </td>
                 </tr>
                 <tr>
                     <td class="table-col-id">#</td>
-                    <td class="new-tournament-players-td"
-                        colspan="2">
-                            <form class="new-tournament-players-form"
+                    <td class="new-tournament-players-td">
+                            <form id="newTournamentAddPlayerForm"
+                                  class="new-tournament-players-form"
                                   action="/tournament/addPlayer"
                                   method="POST">
     <!--                            <label id="add-player" for="playerName"></label>-->
-                                <input id="playerName" class="form-player-name" type="text" name="playerName"/>
-                                <input id="add-button" class="player-add-button generic-button" type="submit" value="Add"/>
+                                <input id="playerName"
+                                       class="form-player-name"
+                                       type="text"
+                                       name="playerName"
+                                       autofocus="autofocus"/>
+<!--                                <input id="add-button table-action-button" class="player-add-button generic-button" type="submit" value="Add"/>-->
                             </form>
+                    </td>
+                    <td class="table-col-operation">
+                        <button class="player-add-button generic-button"
+                                type="submit" 
+                                form="newTournamentAddPlayerForm"
+                                value="Submit">Add</button>
                     </td>
                     
                 </tr>

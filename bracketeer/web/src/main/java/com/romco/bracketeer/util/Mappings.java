@@ -9,10 +9,16 @@ public final class Mappings {
     public static class Tournament {
         public static final String BASE = "tournament/";
         public static final String NEW = BASE + "new";
+
         public static final String ADD_PLAYER = BASE + "addPlayer";
         public static final String REDIRECT_ADD_PLAYER = REDIRECT + ADD_PLAYER;
+
+        public static final String REMOVE_PLAYER = BASE + "removePlayer";
+        public static final String REDIRECT_REMOVE_PLAYER = REDIRECT + REMOVE_PLAYER;
+
         public static final String SAVE = NEW + "save";
-        public static final String EXISTING = BASE + "{tournamentCode}/";
+
+        public static final String EXISTING = BASE + "{tournamentCode}";
         public static final String REDIRECT_EXISTING = REDIRECT + EXISTING;
     }
 }

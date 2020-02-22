@@ -169,9 +169,9 @@ body a:hover {
 .options ul {
     list-style: none;
 /*    list-style-type: none;*/
+    padding: 5px 100px 5px 100px;
     
     text-align: left;
-    padding: 5px 100px 5px 100px
 }
 
 .options li {
@@ -210,11 +210,13 @@ body a:hover {
 
 /* Links inside the dropdown */
 .dropdown-content a {
-  float: none;
-  color: black;
   padding: 12px 16px;
-  text-decoration: none;
+    
   display: block;
+  float: none;
+    
+  color: black;
+  text-decoration: none;
   text-align: left;
 }
 
@@ -233,26 +235,23 @@ body a:hover {
     border: 2px solid #ecf6fe;
     width: 65%;
     
-/*    implicit inheritance*/
-/*    color: inherit;*/
-    
 }
 
 .player-table th, td {
-/*    min-width: 50px;*/
     border: 1px solid #ecf6fe;
 }
 
 .player-table td {
     margin: 0;
     padding: 0;
+    
     text-align: right;
 }
 
 .player-table .table-col-id {
-    width: 10%;
-    
     text-align: center;
+    
+    width: 10%;
 }
 
 .player-table .table-col-name {
@@ -266,83 +265,59 @@ body a:hover {
 }
 
 .player-table .table-col-operation {
-/*    margin: 0;*/
-/*    padding: 0;*/
     border-left: 1px solid #ecf6fe;
-    
-    width: 15%;
     
     text-align: center;
     
+    width: 15%;
 }
 
 
 .player-table .table-player-name {
+    padding: 0 2.5%;
+    border-right: 1px solid #ecf6fe;
     
-/*    float: left;*/
+    text-align: right;
     
     color: inherit;
     background-color: transparent;
     
-    text-align: right;
-    
-    
-    display: inline-block;
     width: 100%;
     height: 42px;
-/*    height: 100%;*/
-    border-right: 1px solid #ecf6fe;
+    
 }
 
+.player-table .form-player-name {
+    margin: 0 0;
+    padding: 0 2.5%;
+    border: 0;
+    
+    float: right;
+    
+    text-align: right;
+    
+    color: inherit;
+    background-color: transparent;
+    
+    width: 95%;
+    height: 42px;
+}
 
 .player-remove-button {
     margin: 0 0;
     padding: 0 0;
     border: 0;
 
-    
     font-size: 65%;
+    
     color: inherit;
     background-color: transparent;
     
 /*    would be 20% but there is 1px border */
 /*    margin-left: 2%;*/
+    width: 100%;
     height: 42px;
     
-}
-
-
-
-.player-table .new-tournament-players-td {
-    margin: 0;
-    padding: 0;
-}
-
-.new-tournament-players-form {
-    border: none;
-    background-color: transparent;
-}
-
-
-.form-player-name {
-    margin: 0 0;
-    padding: 0 2.5%;
-    border: 0;
-    
-    float: left;
-    
-    color: inherit;
-    background-color: transparent;
-    
-    text-align: right;
-    
-    
-    display: inline-block;
-    width: 75%;
-    height: 42px;
-/*    height: 100%;*/
-    
-    border-right: 1px solid #ecf6fe;
 }
 
 .player-add-button {
@@ -350,18 +325,13 @@ body a:hover {
     padding: 0 0;
     border: 0;
     
-    float: right;
-    
     font-size: 65%;
+    
     color: inherit;
     background-color: transparent;
     
-    display: inline-block;
-/*    would be 20% but there is 1px border */
-    width: 19%;
+    width: 100%;
     height: 42px;
-    
-/*    border-left: 1px solid #ecf6fe;*/
 }
 
 

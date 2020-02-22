@@ -75,8 +75,9 @@ public class TournamentServiceImpl implements TournamentService {
     }
     
     @Override
-    public String removePlayer(int id) {
-        if (tournament.removeParticipant(id)) {
+    public String removePlayer(String id) {
+        int intId = Integer.parseInt(id);
+        if (tournament.removeParticipant(intId)) {
             return Message.PLAYER_REMOVED;
         } else {
             return Message.PLAYER_DOESNT_EXIST;
