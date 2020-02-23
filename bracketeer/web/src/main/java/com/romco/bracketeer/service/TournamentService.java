@@ -8,8 +8,8 @@ import java.util.List;
 public interface TournamentService {
     int createNewTournament();
     Tournament getTournament();
-    int saveTournament();
-    Tournament getTournamentByCode(int code);
+    String saveTournament();
+    Tournament getTournamentByCode(String code);
     List<Participant> getParticipants();
     Participant addPlayer(String name);
     String removePlayer(String id);

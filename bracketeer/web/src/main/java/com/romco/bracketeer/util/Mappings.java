@@ -16,9 +16,10 @@ public final class Mappings {
         public static final String REMOVE_PLAYER = BASE + "removePlayer";
         public static final String REDIRECT_REMOVE_PLAYER = REDIRECT + REMOVE_PLAYER;
 
-        public static final String SAVE = NEW + "save";
+        public static final String SAVE = NEW + "/save";
 
-        public static final String EXISTING = BASE + "{tournamentCode}";
-        public static final String REDIRECT_EXISTING = REDIRECT + EXISTING;
+        public static final String EXISTING_WITH_ID = BASE + "{id}";
+        public static final String REDIRECT_EXISTING_WITH_ID = REDIRECT + EXISTING_WITH_ID;
+        public static final String EXISTING = BASE + "existing";
     }
 }

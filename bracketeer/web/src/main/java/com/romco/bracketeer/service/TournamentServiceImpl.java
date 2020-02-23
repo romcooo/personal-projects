@@ -40,15 +40,16 @@ public class TournamentServiceImpl implements TournamentService {
         return tournament;
     }
 
-    public Tournament getTournamentByCode(int code) {
+    public Tournament getTournamentByCode(String code) {
         log.info("Getting tournament by code: {}", code);
-        tournament = mockDataModel.getByCode(code);
+        tournament = mockDataModel.getByCode(Integer.parseInt(code));
         return tournament;
     }
 
     @Override
-    public int saveTournament() {
-        return tournament.getId();
+    public String saveTournament() {
+        mockDataModel.addTournament(tournament);
+        return Integer.toString(tournament.getId());
     }
 
     @Override

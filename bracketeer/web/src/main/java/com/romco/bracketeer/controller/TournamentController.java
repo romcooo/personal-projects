@@ -78,16 +78,16 @@ public class TournamentController {
     @PostMapping(Mappings.Tournament.SAVE)
     public String saveNewTournament() {
         log.info("Saving tournament");
-        int code = service.saveTournament();
+        String code = service.saveTournament();
         // redirect to tournament/{code}
-        return Mappings.Tournament.REDIRECT_EXISTING + code;
+        return Mappings.Tournament.REDIRECT_EXISTING_WITH_ID.replace("{id}", code);
     }
 
-    @GetMapping(Mappings.Tournament.EXISTING)
-    public String getTournamentByCode(@PathVariable(value = "tournamentCode") int code, Model model) {
+    @GetMapping(Mappings.Tournament.EXISTING_WITH_ID)
+    public String getTournamentByCode(@PathVariable(value = "id") String code, Model model) {
         log.info("In getTournamentByCode with code {}", code);
         service.getTournamentByCode(code);
         model.addAttribute("participants", participants());
-        return Mappings.Tournament.EXISTING + code;
+        return Mappings.Tournament.EXISTING;
     }
 }

@@ -13,7 +13,7 @@
     
     <link href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,400i&display=swap" rel="stylesheet">
     
-    <title>Bracketeer</title>
+    <title>Bracketeer - New Tournament</title>
     
     <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
 </head>
@@ -82,11 +82,9 @@
                     <td id="idField" class="table-col-id" th:text="${participant.id}">ex</td>
                     <td class="table-player-name" th:text="${participant.name}">example</td>
                     <td class="table-col-operation">
-                        <form id="newTournamentRemovePlayerForm"
-                              th:action="@{/tournament/removePlayer?id={id}(id=${iterStat.index})}"
+                        <form th:action="@{/tournament/removePlayer?id={id}(id=${participant.id})}"
                               method="post">
                             <button class="player-remove-button table-action-button generic-button"
-                                    form="newTournamentRemovePlayerForm"
                                     type="submit">Remove</button>
                         </form>
                     </td>
@@ -119,11 +117,10 @@
         </table>
         
         <div class="tournament-submit-buttons">
-            <form id="save-new-tournament-button"
-                  class="save"
+            <form class="save"
                   action="/tournament/new/save"
                   method="post">
-                <input type="submit">
+<!--                <input type="submit">-->
             <button>Save</button>
             </form>
             <a class="generate">Generate first round pairings</a>
