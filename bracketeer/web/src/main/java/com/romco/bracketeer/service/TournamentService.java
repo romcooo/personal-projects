@@ -1,7 +1,8 @@
 package com.romco.bracketeer.service;
 
-import com.romco.bracketeer.model.participant.Participant;
-import com.romco.bracketeer.model.tournament.Tournament;
+
+import com.romco.domain.participant.Participant;
+import com.romco.domain.tournament.Tournament;
 
 import java.util.List;
 

@@ -1,12 +1,11 @@
-package com.romco.bracketeer.model.tournament;
+package com.romco.domain.tournament;
 
-import com.romco.bracketeer.model.matcher.Matcher;
-import com.romco.bracketeer.model.matcher.TournamentFormat;
-import com.romco.bracketeer.model.participant.Participant;
+import com.romco.domain.matcher.Matcher;
+import com.romco.domain.matcher.TournamentFormat;
+import com.romco.domain.participant.Participant;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
-import javax.servlet.http.Part;
 import java.util.*;
 
 @Slf4j

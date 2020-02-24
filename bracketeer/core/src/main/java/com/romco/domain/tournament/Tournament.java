@@ -1,9 +1,8 @@
-package com.romco.bracketeer.model.tournament;
+package com.romco.domain.tournament;
 
-import com.romco.bracketeer.model.participant.Participant;
+import com.romco.domain.participant.Participant;
 
 import java.util.List;
-import java.util.Map;
 
 public interface Tournament {
     int getId();

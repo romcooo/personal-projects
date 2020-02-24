@@ -1,4 +1,4 @@
-package com.romco.bracketeer.model.matcher;
+package com.romco.domain.matcher;
 
 public enum TournamentFormat {
     SWISS {

@@ -1,8 +1,8 @@
-package com.romco.bracketeer.model.matcher;
+package com.romco.domain.matcher;
 
-import com.romco.bracketeer.model.tournament.Match;
-import com.romco.bracketeer.model.participant.Participant;
-import com.romco.bracketeer.model.tournament.Round;
+import com.romco.domain.tournament.Match;
+import com.romco.domain.participant.Participant;
+import com.romco.domain.tournament.Round;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.*;

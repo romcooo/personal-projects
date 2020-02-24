@@ -1,9 +1,9 @@
-package com.romco.bracketeer.model;
+package com.romco.domain;
 
-import com.romco.bracketeer.model.matcher.TournamentFormat;
-import com.romco.bracketeer.model.participant.Player;
-import com.romco.bracketeer.model.tournament.Standings;
-import com.romco.bracketeer.model.tournament.TournamentImpl;
+import com.romco.domain.matcher.TournamentFormat;
+import com.romco.domain.participant.Player;
+import com.romco.domain.tournament.Standings;
+import com.romco.domain.tournament.TournamentImpl;
 
 public class Main {
     public static void main(String[] args) {

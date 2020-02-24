@@ -1,6 +1,6 @@
-package com.romco.bracketeer.model.participant;
+package com.romco.domain.participant;
 
-import com.romco.bracketeer.model.tournament.Match;
+import com.romco.domain.tournament.Match;
 
 import java.util.ArrayList;
 import java.util.List;

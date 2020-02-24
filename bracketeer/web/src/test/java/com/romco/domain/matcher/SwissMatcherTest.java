@@ -1,10 +1,10 @@
-package com.romco.bracketeer.model.matcher;
+package com.romco.domain.matcher;
 
-import com.romco.bracketeer.model.tournament.Match;
-import com.romco.bracketeer.model.tournament.Round;
-import com.romco.bracketeer.model.tournament.Tournament;
-import com.romco.bracketeer.model.tournament.TournamentImpl;
-import com.romco.bracketeer.model.participant.Player;
+import com.romco.domain.tournament.Match;
+import com.romco.domain.tournament.Round;
+import com.romco.domain.tournament.Tournament;
+import com.romco.domain.tournament.TournamentImpl;
+import com.romco.domain.participant.Player;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 

@@ -1,4 +1,4 @@
-package com.romco.bracketeer.model.tournament;
+package com.romco.domain.tournament;
 
 public enum MatchResult {
     WIN, LOSS, TIE;

@@ -1,4 +1,4 @@
-package com.romco.bracketeer.model;
+package com.romco.domain;
 
 import java.util.HashMap;
 import java.util.Map;

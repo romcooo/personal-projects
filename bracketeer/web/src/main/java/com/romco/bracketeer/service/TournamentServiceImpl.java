@@ -1,11 +1,11 @@
 package com.romco.bracketeer.service;
 
-import com.romco.bracketeer.model.MockDataModel;
-import com.romco.bracketeer.model.matcher.TournamentFormat;
-import com.romco.bracketeer.model.participant.Participant;
-import com.romco.bracketeer.model.participant.Player;
-import com.romco.bracketeer.model.tournament.Tournament;
-import com.romco.bracketeer.model.tournament.TournamentImpl;
+import com.romco.domain.MockDataModel;
+import com.romco.domain.matcher.TournamentFormat;
+import com.romco.domain.participant.Participant;
+import com.romco.domain.participant.Player;
+import com.romco.domain.tournament.Tournament;
+import com.romco.domain.tournament.TournamentImpl;
 import com.romco.bracketeer.util.Message;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

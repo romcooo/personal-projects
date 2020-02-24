@@ -1,7 +1,7 @@
 package com.romco.bracketeer.controller;
 
-import com.romco.bracketeer.model.participant.Participant;
-import com.romco.bracketeer.model.tournament.Tournament;
+import com.romco.domain.participant.Participant;
+import com.romco.domain.tournament.Tournament;
 import com.romco.bracketeer.service.TournamentService;
 import com.romco.bracketeer.util.Mappings;
 import lombok.extern.slf4j.Slf4j;
