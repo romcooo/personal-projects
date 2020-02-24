@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <link rel="stylesheet" type="text/css" href="/css/queries.css">
+    
+    
+<!--    for brackets:-->
+    <link rel="stylesheet" type="text/css" href="../../static/css/style.css">
+    <link rel="stylesheet" type="text/css" href="../../static/css/queries.css">
+    
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,400i&display=swap" rel="stylesheet">
+    
+    <title>Bracketeer - New Tournament</title>
+    
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+</head>
+    
+<body>
+    
+    <div id="navbars-placeholder">
+        navbars
+    </div>
+    
+<!--    <script>-->
+<!--        $(function(){-->
+<!--            $("#navbars-placeholder").load("../../static/navbars.html");-->
+<!--    $("#navbars-placeholder").load("/navbars.html");-->
+<!--        });-->
+<!--    </script>-->
+
+    <script>
+        $(function(){
+    $("#navbars-placeholder").load("/navbars.html");
+        });
+    </script>
+    
+    <div class="main" align="center">
+        <h1 id="title">All Tournaments</h1>
+        
+        
+        <table class="tournament-table" cellspacing="0">
+            <thead>
+                <tr>
+                    <th class="table-col-tournament-id">ID</th>
+                    <th class="table-col-tournament-code">Code</th>
+                    <th class="table-col-tournament-name">Action</th>
+                    <th class="table-col-tournament-type">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                <tr th:block th:each="tournament : ${tournaments}">
+                    <td class="table-col-tournament-id" th:text="${tournament.id}">tId</td>
+                    <td class="table-col-tournament-code" th:text="${tournament.code}">tCode</td>
+                    <td class="table-col-tournament-name" th:text="${tournament.name}">tName</td>
+                    <td class="table-col-tournament-type" th:text="${tournament.type}">tType</td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+</body>
+</html>
