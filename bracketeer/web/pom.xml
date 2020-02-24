@@ -28,12 +28,4 @@
         </plugins>
     </build>
 
-    <dependencies>
-        <dependency>
-            <groupId>com.romco</groupId>
-            <artifactId>core</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-    </dependencies>
-
 </project>

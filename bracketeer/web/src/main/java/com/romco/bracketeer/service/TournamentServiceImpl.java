@@ -1,24 +1,14 @@
 package com.romco.bracketeer.service;
 
-<<<<<<< HEAD
-import com.romco.domain.MockDataModel;
-import com.romco.domain.matcher.TournamentFormat;
-import com.romco.domain.participant.Participant;
-import com.romco.domain.participant.Player;
-import com.romco.domain.tournament.Tournament;
-import com.romco.domain.tournament.TournamentImpl;
-=======
-
->>>>>>> be88e0fe0ef736522434cea5e7abdfdce757de22
 import com.romco.bracketeer.util.Message;
 import com.romco.dao.TournamentDao;
 import com.romco.daoimpl.TournamentDaoImpl;
-import com.romco.domain.util.MockDataModel;
 import com.romco.domain.matcher.TournamentFormat;
 import com.romco.domain.participant.Participant;
 import com.romco.domain.participant.Player;
 import com.romco.domain.tournament.Tournament;
 import com.romco.domain.tournament.TournamentImpl;
+import com.romco.domain.util.MockDataModel;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,7 +22,7 @@ public class TournamentServiceImpl implements TournamentService {
     
     // == fields
     MockDataModel mockDataModel = new MockDataModel();
-    
+
     TournamentDao tournamentDao = new TournamentDaoImpl();
     
     Tournament tournament;

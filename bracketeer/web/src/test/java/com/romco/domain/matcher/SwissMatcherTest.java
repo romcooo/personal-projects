@@ -1,21 +1,11 @@
 package com.romco.domain.matcher;
 
-<<<<<<< HEAD:bracketeer/web/src/test/java/com/romco/domain/matcher/SwissMatcherTest.java
-=======
 
-import com.romco.domain.matcher.Matcher;
-import com.romco.domain.matcher.SwissMatcher;
-import com.romco.domain.matcher.TournamentFormat;
 import com.romco.domain.participant.Player;
->>>>>>> be88e0fe0ef736522434cea5e7abdfdce757de22:bracketeer/web/src/test/java/com/romco/bracketeer/model/matcher/SwissMatcherTest.java
 import com.romco.domain.tournament.Match;
 import com.romco.domain.tournament.Round;
 import com.romco.domain.tournament.Tournament;
 import com.romco.domain.tournament.TournamentImpl;
-<<<<<<< HEAD:bracketeer/web/src/test/java/com/romco/domain/matcher/SwissMatcherTest.java
-import com.romco.domain.participant.Player;
-=======
->>>>>>> be88e0fe0ef736522434cea5e7abdfdce757de22:bracketeer/web/src/test/java/com/romco/bracketeer/model/matcher/SwissMatcherTest.java
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 

@@ -6,22 +6,24 @@ import javax.sql.DataSource;
 import java.util.List;
 
 public interface TournamentDao {
-
-    // Set the data-source that will be required to create a connection to the database
-    void setDataSource(DataSource ds);
-
-    // Retrieve a tournament by id
-    Tournament getTournament(Integer id);
-
-    // Retrieve all the tournaments from the table;
-    List<Tournament> getAllTournaments();
-
-    // Create a record in the tournament table
-    boolean create(Tournament tournament);
-    // Delete passed tournament if exists
+    
+    // set the data-source required to create a connection to the database
+    void setDataSource(DataSource dataSource);
+    
+    // "insert into" - create a record in the tournament table
+    boolean insert(Tournament tournament);
+    
+    // retrieve a single tournament from the table
+    Tournament select(long id);
+    
+    // retrieve all tournaments from the table
+    List<Tournament> selectAll();
+    
+    // delete a tournament
     boolean delete(Tournament tournament);
-    // Update the tournament by id of passed tournament
+    
+    // update an existing tournament (based on id)
     boolean update(Tournament tournament);
-
+    
     void cleanup();
 }

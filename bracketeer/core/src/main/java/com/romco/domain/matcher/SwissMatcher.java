@@ -1,12 +1,7 @@
 package com.romco.domain.matcher;
 
-<<<<<<< HEAD:bracketeer/core/src/main/java/com/romco/domain/matcher/SwissMatcher.java
 import com.romco.domain.tournament.Match;
 import com.romco.domain.participant.Participant;
-=======
-import com.romco.domain.participant.Participant;
-import com.romco.domain.tournament.Match;
->>>>>>> be88e0fe0ef736522434cea5e7abdfdce757de22:bracketeer/core/src2/main/java/com/romco/domain/matcher/SwissMatcher.java
 import com.romco.domain.tournament.Round;
 import lombok.extern.slf4j.Slf4j;
 

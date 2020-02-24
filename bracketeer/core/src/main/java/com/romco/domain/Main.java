@@ -1,9 +1,6 @@
 package com.romco.domain;
 
-<<<<<<< HEAD:bracketeer/core/src/main/java/com/romco/domain/Main.java
-=======
 
->>>>>>> be88e0fe0ef736522434cea5e7abdfdce757de22:bracketeer/core/src2/main/java/com/romco/domain/Main.java
 import com.romco.domain.matcher.TournamentFormat;
 import com.romco.domain.participant.Player;
 import com.romco.domain.tournament.Standings;

@@ -3,10 +3,7 @@ package com.romco.domain.tournament;
 import com.romco.domain.matcher.Matcher;
 import com.romco.domain.matcher.TournamentFormat;
 import com.romco.domain.participant.Participant;
-<<<<<<< HEAD:bracketeer/core/src/main/java/com/romco/domain/tournament/TournamentImpl.java
-=======
 import com.romco.domain.util.CodeGenerator;
->>>>>>> be88e0fe0ef736522434cea5e7abdfdce757de22:bracketeer/core/src2/main/java/com/romco/domain/tournament/TournamentImpl.java
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 

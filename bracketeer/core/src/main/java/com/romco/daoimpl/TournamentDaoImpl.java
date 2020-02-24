@@ -10,9 +10,9 @@ import java.util.List;
 
 @Slf4j
 public class TournamentDaoImpl implements TournamentDao {
-    
+
     private JdbcTemplate jdbcTemplate;
-    
+
     @Override
     public void setDataSource(DataSource dataSource) {
         log.debug("In setDataSource");

@@ -1,15 +1,10 @@
 package com.romco.domain.participant;
 
-<<<<<<< HEAD:bracketeer/core/src/main/java/com/romco/domain/participant/Participant.java
-=======
 
-
->>>>>>> be88e0fe0ef736522434cea5e7abdfdce757de22:bracketeer/core/src2/main/java/com/romco/domain/participant/Participant.java
 import com.romco.domain.tournament.Match;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public abstract class Participant implements Comparable<Participant> {
     protected static long idCounter = 1;

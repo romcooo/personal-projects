@@ -1,10 +1,5 @@
 package com.romco.bracketeer.controller;
 
-<<<<<<< HEAD
-import com.romco.domain.participant.Participant;
-import com.romco.domain.tournament.Tournament;
-=======
->>>>>>> be88e0fe0ef736522434cea5e7abdfdce757de22
 import com.romco.bracketeer.service.TournamentService;
 import com.romco.bracketeer.util.Mappings;
 import com.romco.domain.participant.Participant;

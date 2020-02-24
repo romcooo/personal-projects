@@ -1,8 +1,4 @@
-<<<<<<< HEAD:bracketeer/core/src/main/java/com/romco/domain/MockDataModel.java
-package com.romco.domain;
-=======
 package com.romco.domain.util;
->>>>>>> be88e0fe0ef736522434cea5e7abdfdce757de22:bracketeer/core/src2/main/java/com/romco/domain/util/MockDataModel.java
 
 import com.romco.domain.tournament.Tournament;
 import lombok.extern.slf4j.Slf4j;
