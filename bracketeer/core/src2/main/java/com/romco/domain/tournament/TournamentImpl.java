@@ -1,8 +1,9 @@
-package com.romco.bracketeer.model.tournament;
+package com.romco.domain.tournament;
 
-import com.romco.bracketeer.model.matcher.Matcher;
-import com.romco.bracketeer.model.matcher.TournamentFormat;
-import com.romco.bracketeer.model.participant.Participant;
+import com.romco.domain.matcher.Matcher;
+import com.romco.domain.matcher.TournamentFormat;
+import com.romco.domain.participant.Participant;
+import com.romco.domain.util.CodeGenerator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -13,7 +14,8 @@ import java.util.*;
 @Component
 public class TournamentImpl implements Tournament {
     private static int idCounter;
-    private final int id;
+    private long id;
+    private String code; // business id
     private String name;
     private List<Participant> participants;
     private Map<Participant, Double> startingParticipantScores;
@@ -24,6 +26,7 @@ public class TournamentImpl implements Tournament {
 
     private TournamentImpl() {
         this.id = idCounter++;
+        this.code = CodeGenerator.getCode();
         this.name = "";
         this.participants = new ArrayList<>();
         this.startingParticipantScores = new HashMap<>();
@@ -51,15 +54,32 @@ public class TournamentImpl implements Tournament {
 //        return count;
 //    }
     
-    
-    public int getId() {
+    @Override
+    public long getId() {
         return id;
     }
     
+    @Override
+    public void setId(long id) {
+        this.id = id;
+    }
+    
+    @Override
+    public String getCode() {
+        return code;
+    }
+    
+    @Override
+    public void setCode(String code) {
+        this.code = code;
+    }
+    
+    @Override
     public String getName() {
         return name;
     }
     
+    @Override
     public void setName(String name) {
         this.name = name;
     }
@@ -72,18 +92,19 @@ public class TournamentImpl implements Tournament {
         } else {
             log.info("Adding participant {}", participant);
             participants.add(participant);
+            participant.setCode(participants.size());
             startingParticipantScores.put(participant, 0d);
             startingParticipantByes.put(participant, 0);
             return true;
         }
     }
     
-    // TODO
     @Override
     public boolean removeParticipant(int id) {
         for (Participant participant : this.participants) {
             if (participant.getId() == id) {
                 participants.remove(participant);
+                reconciliateParticipantCodes();
                 return true;
             }
         }
@@ -109,7 +130,8 @@ public class TournamentImpl implements Tournament {
         updateParticipants();
         
         Matcher matcher = type.buildMatcher();
-        Round round = matcher.generateRound(participants);
+        // don't let anyone touch participants outside of this class
+        Round round = matcher.generateRound(Collections.unmodifiableList(participants));
         rounds.add(round);
 
         return round;
@@ -148,12 +170,19 @@ public class TournamentImpl implements Tournament {
         return false;
     }
     
+    private void reconciliateParticipantCodes() {
+        for (int i = 0; i < participants.size(); i++) {
+            Participant participant = participants.get(i);
+            participant.setCode(i+1);
+        }
+    }
+    
     public boolean setMatchResult(int roundNumber,
-                                  int participantId,
+                                  int participantCode,
                                   int gamesWon,
                                   int gamesLost) {
         for (Participant participant : participants) {
-            if (participant.getId() == participantId) {
+            if (participant.getId() == participantCode) {
                 setMatchResult(roundNumber, participant, gamesWon, gamesLost);
                 return true;
             }
@@ -164,7 +193,7 @@ public class TournamentImpl implements Tournament {
     @Override
     public List<Participant> getParticipants() {
         updateParticipants();
-        return participants;
+        return Collections.unmodifiableList(participants);
     }
     
     public Double getParticipantScore(Participant participant) {
@@ -183,11 +212,23 @@ public class TournamentImpl implements Tournament {
     public Integer getParticipantByes(Participant participant) {
         int byes = startingParticipantByes.get(participant);
         for (Round round : rounds) {
-            if(round.getMatch(participant) != null && round.getMatch(participant).isBye()) {
+            if (round.getMatch(participant) != null && round.getMatch(participant).isBye()) {
                 byes++;
             }
         }
         return byes;
+    }
+    
+    public List<Participant> getParticipantPlayedAgainst(Participant participant) {
+        List<Participant> opponents = new ArrayList<>();
+        log.debug("Getting opponents of participant {}", participant);
+        for (Round round : rounds) {
+            if (round.getMatch(participant) != null) {
+                opponents.addAll(round.getMatch(participant).getOthers(participant));
+            }
+        }
+        log.debug("Adding opponents {} for participant {}", opponents, participant);
+        return opponents;
     }
     
     // == private methods
@@ -195,6 +236,7 @@ public class TournamentImpl implements Tournament {
         for (Participant participant : this.participants) {
             participant.setScore(getParticipantScore(participant));
             participant.setNumberOfByes(getParticipantByes(participant));
+            participant.setPlayedAgainst(getParticipantPlayedAgainst(participant));
         }
     }
 }

@@ -1,18 +1,22 @@
-package com.romco.bracketeer.model.matcher;
+package com.romco.domain.matcher;
 
-import com.romco.bracketeer.model.tournament.Match;
-import com.romco.bracketeer.model.participant.Participant;
-import com.romco.bracketeer.model.tournament.Round;
+import com.romco.domain.participant.Participant;
+import com.romco.domain.tournament.Match;
+import com.romco.domain.tournament.Round;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 // package-private because TournamentFormat provides the preferred builder method
 @Slf4j
+public
 class SwissMatcher implements Matcher {
     
     // package-private constructor
-    SwissMatcher() {
+    public SwissMatcher() {
     }
 
 

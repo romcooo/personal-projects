@@ -1,19 +1,22 @@
-package com.romco.bracketeer.model.participant;
+package com.romco.domain.participant;
 
-import com.romco.bracketeer.model.tournament.Match;
+
+
+import com.romco.domain.tournament.Match;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 public abstract class Participant implements Comparable<Participant> {
-    protected static int idCounter = 1;
-    protected Integer id;
+    protected static long idCounter = 1;
+    protected long id;
+    protected int code;
     protected String name;
     protected double score;
     protected int numberOfByes;
     protected List<Participant> playedAgainst;
-    protected Map<Integer, Match> playedMatchesByRoundNumber;
+//    protected Map<Integer, Match> playedMatchesByRoundNumber;
     protected List<Match> playedMatches;
     
     public Participant() {
@@ -22,8 +25,12 @@ public abstract class Participant implements Comparable<Participant> {
         playedMatches = new ArrayList<>();
     }
     
-    public Integer getId() {
+    public long getId() {
         return id;
+    }
+    
+    public int getCode() {
+        return code;
     }
     
     public String getName() {
@@ -32,6 +39,12 @@ public abstract class Participant implements Comparable<Participant> {
     
     public double getScore() {
         return score;
+    }
+    
+    public int setCode(int code) {
+        int previous = this.code;
+        this.code = code;
+        return previous;
     }
     
     public void setScore(double score) {
@@ -69,25 +82,23 @@ public abstract class Participant implements Comparable<Participant> {
         return this.playedAgainst.contains(other);
     }
     
+    public void setPlayedAgainst(List<Participant> opponents) {
+        this.playedAgainst = opponents;
+    }
+    
     public void addPlayedMatch(Match match) {
         this.playedMatches.add(match);
     }
     
     @Override
     public int compareTo(Participant o) {
-        if (id == null) {
-            return name.compareTo(o.name);
-        }
-        return id - o.id;
+        return Long.compare(id, o.id);
     }
     
     @Override
     public boolean equals(Object o) {
         if (o instanceof Participant) {
-            if (id == null) {
-                return (name.equals(((Participant) o).name));
-            }
-            return id == ((Participant) o).id;
+            return id == (((Participant) o).id);
         }
         return false;
     }

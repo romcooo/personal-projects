@@ -1,20 +1,26 @@
-package com.romco.bracketeer.model.tournament;
+package com.romco.domain.tournament;
 
-import com.romco.bracketeer.model.participant.Participant;
+import com.romco.domain.participant.Participant;
 
 import java.util.List;
-import java.util.Map;
 
 public interface Tournament {
-    int getId();
+    long getId();
+    void setId(long id);
+    
+    String getCode();
+    void setCode(String code);
+    
     String getName();
     void setName(String name);
+    
     boolean addParticipant(Participant participant);
     boolean removeParticipant(int id);
-
+    
     List<Participant> getParticipants();
+    
     Round getRound(int n);
-
+    
     Round generateNextRound();
 
     boolean setMatchResult(int roundNumber, Participant participant, int gamesWon, int gamesLost);

@@ -1,12 +1,13 @@
 package com.romco.bracketeer.service;
 
-import com.romco.bracketeer.model.participant.Participant;
-import com.romco.bracketeer.model.tournament.Tournament;
+
+import com.romco.domain.participant.Participant;
+import com.romco.domain.tournament.Tournament;
 
 import java.util.List;
 
 public interface TournamentService {
-    int createNewTournament();
+    String createNewTournament();
     Tournament getTournament();
     String saveTournament();
     Tournament getTournamentByCode(String code);
@@ -15,4 +16,6 @@ public interface TournamentService {
     String removePlayer(String id);
     void setResult(int roundId, int playerId, int gamesWon, int gamesLost);
     void generateNextRound();
+    
+    List<Tournament> getAllTournaments();
 }

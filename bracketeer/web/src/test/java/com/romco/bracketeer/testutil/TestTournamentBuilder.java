@@ -1,11 +1,10 @@
 package com.romco.bracketeer.testutil;
 
-import com.romco.bracketeer.model.tournament.Tournament;
-import com.romco.bracketeer.model.tournament.TournamentImpl;
-import com.romco.bracketeer.model.matcher.TournamentFormat;
-import com.romco.bracketeer.model.participant.Participant;
-import com.romco.bracketeer.model.participant.Player;
-
+import com.romco.domain.matcher.TournamentFormat;
+import com.romco.domain.participant.Participant;
+import com.romco.domain.participant.Player;
+import com.romco.domain.tournament.Tournament;
+import com.romco.domain.tournament.TournamentImpl;
 
 public class TestTournamentBuilder {
     

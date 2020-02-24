@@ -1,9 +1,11 @@
-package com.romco.bracketeer.model.tournament;
+package com.romco.domain.tournament;
 
-import com.romco.bracketeer.model.participant.Participant;
+import com.romco.domain.participant.Participant;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 
 @Slf4j
 public class Standings {

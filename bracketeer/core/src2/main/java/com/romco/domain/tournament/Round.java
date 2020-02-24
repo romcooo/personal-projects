@@ -1,13 +1,13 @@
-package com.romco.bracketeer.model.tournament;
+package com.romco.domain.tournament;
 
-import com.romco.bracketeer.model.participant.Participant;
+import com.romco.domain.participant.Participant;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Round {
-    private static int idSequence = 1;
-    private final int id;
+    private static long idSequence = 1;
+    private final long id;
     List<Match> matches;
     
     public Round() {

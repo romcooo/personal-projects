@@ -1,6 +1,6 @@
-package com.romco.bracketeer.model.tournament;
+package com.romco.domain.tournament;
 
-import com.romco.bracketeer.model.participant.Participant;
+import com.romco.domain.participant.Participant;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
@@ -17,8 +17,8 @@ import java.util.stream.Collectors;
 public class Match {
     public static final String PARTICIPANT_NOT_FOUND_WARN_MESSAGE = "Match doesn't contain the provided participant: {}";
 
-    private static int idSequence = 1;
-    int id;
+    private static long idSequence = 1;
+    private long id;
     private List<Participant> participants;
     private Map<Participant, Integer> scoreMap;
     private int bestOf;

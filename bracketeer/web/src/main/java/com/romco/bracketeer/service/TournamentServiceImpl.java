@@ -1,12 +1,15 @@
 package com.romco.bracketeer.service;
 
-import com.romco.bracketeer.model.MockDataModel;
-import com.romco.bracketeer.model.matcher.TournamentFormat;
-import com.romco.bracketeer.model.participant.Participant;
-import com.romco.bracketeer.model.participant.Player;
-import com.romco.bracketeer.model.tournament.Tournament;
-import com.romco.bracketeer.model.tournament.TournamentImpl;
+
 import com.romco.bracketeer.util.Message;
+import com.romco.dao.TournamentDao;
+import com.romco.daoimpl.TournamentDaoImpl;
+import com.romco.domain.util.MockDataModel;
+import com.romco.domain.matcher.TournamentFormat;
+import com.romco.domain.participant.Participant;
+import com.romco.domain.participant.Player;
+import com.romco.domain.tournament.Tournament;
+import com.romco.domain.tournament.TournamentImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +23,9 @@ public class TournamentServiceImpl implements TournamentService {
     
     // == fields
     MockDataModel mockDataModel = new MockDataModel();
+    
+    TournamentDao tournamentDao = new TournamentDaoImpl();
+    
     Tournament tournament;
     
     // == constructors
@@ -30,9 +36,13 @@ public class TournamentServiceImpl implements TournamentService {
     
     // == methods
     @Override
-    public int createNewTournament() {
+    public String createNewTournament() {
         this.tournament = new TournamentImpl(TournamentFormat.SWISS);
-        return tournament.getId();
+        return tournament.getCode();
+    }
+    
+    public TournamentDao getTournamentDao() {
+        return tournamentDao;
     }
     
     @Override
@@ -49,7 +59,7 @@ public class TournamentServiceImpl implements TournamentService {
     @Override
     public String saveTournament() {
         mockDataModel.addTournament(tournament);
-        return Integer.toString(tournament.getId());
+        return tournament.getCode();
     }
 
     @Override
@@ -95,5 +105,8 @@ public class TournamentServiceImpl implements TournamentService {
         tournament.generateNextRound();
     }
     
-    
+    @Override
+    public List<Tournament> getAllTournaments() {
+        return tournamentDao.selectAll();
+    }
 }

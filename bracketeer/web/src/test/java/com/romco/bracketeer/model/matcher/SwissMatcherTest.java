@@ -1,16 +1,19 @@
 package com.romco.bracketeer.model.matcher;
 
-import com.romco.bracketeer.model.tournament.Match;
-import com.romco.bracketeer.model.tournament.Round;
-import com.romco.bracketeer.model.tournament.Tournament;
-import com.romco.bracketeer.model.tournament.TournamentImpl;
-import com.romco.bracketeer.model.participant.Player;
+
+import com.romco.domain.matcher.Matcher;
+import com.romco.domain.matcher.SwissMatcher;
+import com.romco.domain.matcher.TournamentFormat;
+import com.romco.domain.participant.Player;
+import com.romco.domain.tournament.Match;
+import com.romco.domain.tournament.Round;
+import com.romco.domain.tournament.Tournament;
+import com.romco.domain.tournament.TournamentImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.anyOf;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;

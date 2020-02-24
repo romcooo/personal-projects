@@ -1,6 +1,6 @@
-package com.romco.bracketeer.model;
+package com.romco.domain.util;
 
-import com.romco.bracketeer.model.tournament.Tournament;
+import com.romco.domain.tournament.Tournament;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
