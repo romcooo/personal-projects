@@ -100,6 +100,6 @@ public class TournamentController {
     public String getAllTournaments(Model model) {
         log.info("In getAllTournaments");
         model.addAttribute("tournaments", allTournaments());
-        return "/all";
+        return "tournament/all";
     }
 }

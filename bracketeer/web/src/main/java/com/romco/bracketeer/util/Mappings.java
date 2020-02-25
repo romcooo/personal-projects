@@ -7,8 +7,8 @@ public final class Mappings {
     
     
     public static class Tournament {
-        public static final String BASE = "tournament/";
-        public static final String NEW = BASE + "new";
+        public static final String BASE = "tournament";
+        public static final String NEW = BASE + "new.html";
 
         public static final String ADD_PLAYER = BASE + "addPlayer";
         public static final String REDIRECT_ADD_PLAYER = REDIRECT + ADD_PLAYER;
