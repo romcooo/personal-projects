@@ -14,7 +14,6 @@ public abstract class Participant implements Comparable<Participant> {
     protected double score;
     protected int numberOfByes;
     protected List<Participant> playedAgainst;
-//    protected Map<Integer, Match> playedMatchesByRoundNumber;
     protected List<Match> playedMatches;
     
     public Participant() {

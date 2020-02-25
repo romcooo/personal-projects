@@ -16,6 +16,7 @@ public interface TournamentDao {
     
     // retrieve a single tournament from the table
     Tournament select(long id);
+    Tournament select(String code);
     
     // retrieve all tournaments from the table
     List<Tournament> selectAll();
@@ -26,5 +27,6 @@ public interface TournamentDao {
     // update an existing tournament (based on id)
     boolean update(Tournament tournament);
     
+    // for test purposes
     void cleanup();
 }

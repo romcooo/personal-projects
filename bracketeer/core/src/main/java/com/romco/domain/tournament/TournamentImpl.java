@@ -43,6 +43,24 @@ public class TournamentImpl implements Tournament {
         this.type = type;
     }
     
+    public TournamentImpl(long id,
+                          String code,
+                          String name,
+                          List<Participant> participants,
+                          List<Round> rounds,
+                          TournamentFormat type,
+                          RuleSet ruleSet) {
+        this.id = id;
+        this.code = code;
+        this.name = name;
+        this.participants = participants;
+        this.startingParticipantScores = startingParticipantScores;
+        this.startingParticipantByes = startingParticipantByes;
+        this.rounds = rounds;
+        this.type = type;
+        this.ruleSet = ruleSet;
+    }
+    
     // TODO maybe implement later
 //    public int addParticipants(List<Participant> participants) {
 //        int count = 0;
