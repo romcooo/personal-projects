@@ -20,9 +20,9 @@
         <property name="password" value="devpassword420"/>
     </bean>
 
-<!--    <bean id="tournamentDao" class="com.romco.dao.TournamentDao">-->
-<!--        <property name="dataSource" ref="dataSource"/>-->
-<!--    </bean>-->
+    <bean id="tournamentDao" class="com.romco.daoimpl.TournamentDaoImpl">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
 
 <!--    <context:property-placeholder location="application.properties"/>-->
 </beans>

@@ -10,12 +10,12 @@ import org.springframework.context.annotation.ComponentScan;
 public class BracketeerApplication {
 
 	public static void main(String[] args) {
-//		SpringApplication.run(BracketeerApplication.class, args);
-		ApplicationContext applicationContext = SpringApplication.run(BracketeerApplication.class, args);
+		SpringApplication.run(BracketeerApplication.class, args);
 
-		for (String name : applicationContext.getBeanDefinitionNames()) {
-			System.out.println(name);
-		}
+		//		ApplicationContext applicationContext = SpringApplication.run(BracketeerApplication.class, args);
+//		for (String name : applicationContext.getBeanDefinitionNames()) {
+//			System.out.println(name);
+//		}
 	}
 
 }

@@ -44,16 +44,14 @@
         <table class="tournament-table" cellspacing="0">
             <thead>
                 <tr>
-                    <th class="table-col-tournament-id">ID</th>
                     <th class="table-col-tournament-code">Code</th>
-                    <th class="table-col-tournament-name">Action</th>
-                    <th class="table-col-tournament-type">Action</th>
+                    <th class="table-col-tournament-name">Name</th>
+                    <th class="table-col-tournament-type">Type</th>
                 </tr>
             </thead>
             <tbody>
 
                 <tr th:block th:each="tournament : ${tournaments}">
-                    <td class="table-col-tournament-id" th:text="${tournament.id}">tId</td>
                     <td class="table-col-tournament-code" th:text="${tournament.code}">tCode</td>
                     <td class="table-col-tournament-name" th:text="${tournament.name}">tName</td>
                     <td class="table-col-tournament-type" th:text="${tournament.type}">tType</td>

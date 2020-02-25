@@ -96,7 +96,7 @@ public class TournamentController {
         return Mappings.Tournament.EXISTING;
     }
     
-    @GetMapping("/all")
+    @GetMapping("/tournament/all")
     public String getAllTournaments(Model model) {
         log.info("In getAllTournaments");
         model.addAttribute("tournaments", allTournaments());

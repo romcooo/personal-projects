@@ -11,6 +11,7 @@ import com.romco.domain.tournament.TournamentImpl;
 import com.romco.domain.util.MockDataModel;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -22,9 +23,9 @@ public class TournamentServiceImpl implements TournamentService {
     
     // == fields
     MockDataModel mockDataModel = new MockDataModel();
-
-    TournamentDao tournamentDao = new TournamentDaoImpl();
     
+    @Autowired
+    TournamentDao tournamentDao;
     Tournament tournament;
     
     // == constructors

@@ -84,6 +84,16 @@ public class TournamentImpl implements Tournament {
     }
     
     @Override
+    public TournamentFormat getType() {
+        return type;
+    }
+    
+    @Override
+    public void setType(TournamentFormat type) {
+        this.type = type;
+    }
+    
+    @Override
     public boolean addParticipant(Participant participant) {
         if (participants.contains(participant)) {
             log.info("Tournament already contains participant {}", participant);
@@ -237,5 +247,20 @@ public class TournamentImpl implements Tournament {
             participant.setNumberOfByes(getParticipantByes(participant));
             participant.setPlayedAgainst(getParticipantPlayedAgainst(participant));
         }
+    }
+    
+    @Override
+    public String toString() {
+        return "TournamentImpl{" +
+                "id=" + id +
+                ", code='" + code + '\'' +
+                ", name='" + name + '\'' +
+                ", participants=" + participants +
+                ", startingParticipantScores=" + startingParticipantScores +
+                ", startingParticipantByes=" + startingParticipantByes +
+                ", rounds=" + rounds +
+                ", type=" + type +
+                ", ruleSet=" + ruleSet +
+                '}';
     }
 }

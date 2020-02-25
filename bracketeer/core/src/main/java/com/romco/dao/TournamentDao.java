@@ -1,6 +1,7 @@
 package com.romco.dao;
 
 import com.romco.domain.tournament.Tournament;
+import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
 import java.util.List;
