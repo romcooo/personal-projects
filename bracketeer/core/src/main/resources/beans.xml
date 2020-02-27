@@ -27,7 +27,7 @@
         <property name="password" value="${spring.datasource.password}"/>
     </bean>
 
-<!--    <bean id="tournamentDao" class="com.romco.daoimpl.TournamentDaoImpl">-->
+<!--    <bean id="tournamentDao" class="com.romco.persistence.daoimpl.TournamentDaoImpl">-->
 <!--        <property name="dataSource" ref="dataSource"/>-->
 <!--    </bean>-->
 

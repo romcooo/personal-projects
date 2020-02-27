@@ -2,6 +2,7 @@ package com.romco.domain.participant;
 
 
 import com.romco.domain.tournament.Match;
+import com.romco.domain.tournament.Tournament;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +16,7 @@ public abstract class Participant implements Comparable<Participant> {
     protected int numberOfByes;
     protected List<Participant> playedAgainst;
     protected List<Match> playedMatches;
+    protected Tournament ofTournament;
     
     public Participant() {
         id = idCounter++;
@@ -26,12 +28,20 @@ public abstract class Participant implements Comparable<Participant> {
         return id;
     }
     
+    public void setId(long id) {
+        this.id = id;
+    }
+    
     public int getCode() {
         return code;
     }
     
     public String getName() {
         return name;
+    }
+    
+    public void setName(String name) {
+        this.name = name;
     }
     
     public double getScore() {
@@ -87,6 +97,14 @@ public abstract class Participant implements Comparable<Participant> {
         this.playedMatches.add(match);
     }
     
+    public Tournament getOfTournament() {
+        return ofTournament;
+    }
+    
+    public void setOfTournament(Tournament ofTournament) {
+        this.ofTournament = ofTournament;
+    }
+    
     @Override
     public int compareTo(Participant o) {
         return Long.compare(id, o.id);
@@ -102,8 +120,10 @@ public abstract class Participant implements Comparable<Participant> {
     
     @Override
     public String toString() {
-        return this.getClass().getSimpleName() +
-                "{id=" + id +
-                ", name=" + name + '}';
+        return "Participant{" +
+                "id=" + id +
+                ", code=" + code +
+                ", name='" + name + '\'' +
+                '}';
     }
 }

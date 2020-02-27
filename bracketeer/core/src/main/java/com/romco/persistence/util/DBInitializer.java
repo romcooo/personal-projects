@@ -1,14 +1,24 @@
-package com.romco.database;
+package com.romco.persistence.util;
 
-import com.romco.daoimpl.TournamentDaoImpl;
-import com.romco.domain.matcher.TournamentFormat;
-import com.romco.domain.tournament.RuleSet;
-import com.romco.domain.tournament.Tournament;
-import com.romco.domain.tournament.TournamentImpl;
+import com.romco.persistence.dao.ParticipantDao;
+import com.romco.persistence.dao.TournamentDao;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 
+@Component
 public class DBInitializer {
+    @Autowired
+    TournamentDao tournamentDao;
+    @Autowired
+    ParticipantDao participantDao;
+    
+    @PostConstruct
+    public void initialize() {
+        participantDao.cleanup();
+        tournamentDao.cleanup();
+    }
     
 //    @PostConstruct
 //    public void createSeedData() {

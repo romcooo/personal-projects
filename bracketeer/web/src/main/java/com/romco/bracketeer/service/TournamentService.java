@@ -4,6 +4,7 @@ package com.romco.bracketeer.service;
 import com.romco.domain.participant.Participant;
 import com.romco.domain.tournament.Tournament;
 
+import java.util.Collection;
 import java.util.List;
 
 public interface TournamentService {
@@ -17,5 +18,5 @@ public interface TournamentService {
     void setResult(int roundId, int playerId, int gamesWon, int gamesLost);
     void generateNextRound();
     
-    List<Tournament> getAllTournaments();
+    Collection<Tournament> getAllTournaments();
 }

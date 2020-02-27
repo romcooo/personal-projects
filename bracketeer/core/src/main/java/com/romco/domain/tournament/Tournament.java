@@ -19,7 +19,7 @@ public interface Tournament {
     void setType(TournamentFormat type);
     
     boolean addParticipant(Participant participant);
-    boolean removeParticipant(int id);
+    Participant removeParticipant(long id);
     
     List<Participant> getParticipants();
     

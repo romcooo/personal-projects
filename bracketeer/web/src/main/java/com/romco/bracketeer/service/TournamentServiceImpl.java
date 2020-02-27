@@ -1,8 +1,8 @@
 package com.romco.bracketeer.service;
 
 import com.romco.bracketeer.util.Message;
-import com.romco.dao.TournamentDao;
-import com.romco.daoimpl.TournamentDaoImpl;
+import com.romco.persistence.dao.ParticipantDao;
+import com.romco.persistence.dao.TournamentDao;
 import com.romco.domain.matcher.TournamentFormat;
 import com.romco.domain.participant.Participant;
 import com.romco.domain.participant.Player;
@@ -11,10 +11,10 @@ import com.romco.domain.tournament.TournamentImpl;
 import com.romco.domain.util.MockDataModel;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @Slf4j
@@ -26,6 +26,9 @@ public class TournamentServiceImpl implements TournamentService {
     
     @Autowired
     TournamentDao tournamentDao;
+    @Autowired
+    ParticipantDao participantDao;
+    
     Tournament tournament;
     
     // == constructors
@@ -38,11 +41,8 @@ public class TournamentServiceImpl implements TournamentService {
     @Override
     public String createNewTournament() {
         this.tournament = new TournamentImpl(TournamentFormat.SWISS);
+//        tournamentDao.insert(tournament);
         return tournament.getCode();
-    }
-    
-    public TournamentDao getTournamentDao() {
-        return tournamentDao;
     }
     
     @Override
@@ -52,13 +52,34 @@ public class TournamentServiceImpl implements TournamentService {
 
     public Tournament getTournamentByCode(String code) {
         log.info("Getting tournament by code: {}", code);
-        tournament = mockDataModel.getByCode(Integer.parseInt(code));
+        tournament = tournamentDao.retrieve(code);
+        if (tournament != null) {
+            List<Participant> participants = participantDao.retrieveAllByTournamentId(tournament.getId());
+            for (Participant participant : participants) {
+                participant.setOfTournament(tournament);
+                tournament.addParticipant(participant);
+            }
+        }
         return tournament;
     }
 
     @Override
     public String saveTournament() {
-        mockDataModel.addTournament(tournament);
+        if (tournamentDao.retrieve(tournament.getId()) == null) {
+            tournament.setId(tournamentDao.create(tournament));
+        } else {
+            tournamentDao.update(tournament);
+        }
+        for (Participant participant : tournament.getParticipants()) {
+            log.debug("participant: {}, ofTournament: {}",
+                      participant.toString(),
+                      participant.getOfTournament());
+            if (participantDao.retrieve(participant.getId()) == null) {
+                participantDao.create(participant);
+            } else {
+                participantDao.update(participant);
+            }
+        }
         return tournament.getCode();
     }
 
@@ -67,14 +88,9 @@ public class TournamentServiceImpl implements TournamentService {
         if (this.tournament == null) {
             createNewTournament();
         }
-        
         Participant participant = new Player(playerName);
-        if (tournament.addParticipant(participant)) {
-            return participant;
-        } else {
-            return participant;
-        }
-        
+        tournament.addParticipant(participant);
+        return participant;
     }
     
     @Override
@@ -87,8 +103,9 @@ public class TournamentServiceImpl implements TournamentService {
     
     @Override
     public String removePlayer(String id) {
-        int intId = Integer.parseInt(id);
-        if (tournament.removeParticipant(intId)) {
+        long intId = Long.parseLong(id);
+        Participant participant = tournament.removeParticipant(intId);
+        if (participant != null) {
             return Message.PLAYER_REMOVED;
         } else {
             return Message.PLAYER_DOESNT_EXIST;
@@ -96,8 +113,8 @@ public class TournamentServiceImpl implements TournamentService {
     }
     
     @Override
-    public void setResult(int roundId, int playerId, int gamesWon, int gamesLost) {
-        tournament.setMatchResult(roundId, playerId, gamesWon, gamesLost);
+    public void setResult(int roundId, int playerCode, int gamesWon, int gamesLost) {
+        tournament.setMatchResult(roundId, playerCode, gamesWon, gamesLost);
     }
     
     @Override
@@ -106,7 +123,7 @@ public class TournamentServiceImpl implements TournamentService {
     }
     
     @Override
-    public List<Tournament> getAllTournaments() {
-        return tournamentDao.selectAll();
+    public Collection<Tournament> getAllTournaments() {
+        return tournamentDao.retrieveAll();
     }
 }

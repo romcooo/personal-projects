@@ -1,4 +1,4 @@
-package com.romco.daoimpl;
+package com.romco.persistence.daoimpl;
 
 import com.romco.domain.matcher.TournamentFormat;
 import com.romco.domain.tournament.Tournament;

@@ -17,6 +17,8 @@ public class RuleSet {
     public static final double DEFAULT_POINTS_FOR_TIE = 1;
     public static final int DEFAULT_BEST_OF = 3;
     
+    private int id;
+    
     private int bestOf;
     
     private Map<MatchResult, Double> pointMap;

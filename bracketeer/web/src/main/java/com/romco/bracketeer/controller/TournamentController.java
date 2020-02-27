@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collection;
 import java.util.List;
 
 @Slf4j
@@ -27,7 +28,7 @@ public class TournamentController {
     
     // == model attributes
     @ModelAttribute
-    public List<Tournament> allTournaments() {
+    public Collection<Tournament> allTournaments() {
         return service.getAllTournaments();
     }
     

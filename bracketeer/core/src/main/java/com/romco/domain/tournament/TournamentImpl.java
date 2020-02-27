@@ -43,6 +43,13 @@ public class TournamentImpl implements Tournament {
         this.type = type;
     }
     
+    public TournamentImpl(String code, String name, TournamentFormat type) {
+        this();
+        this.code = code;
+        this.name = name;
+        this.type = type;
+    }
+    
     public TournamentImpl(long id,
                           String code,
                           String name,
@@ -117,25 +124,27 @@ public class TournamentImpl implements Tournament {
             log.info("Tournament already contains participant {}", participant);
             return false;
         } else {
-            log.info("Adding participant {}", participant);
             participants.add(participant);
             participant.setCode(participants.size());
             startingParticipantScores.put(participant, 0d);
             startingParticipantByes.put(participant, 0);
+            participant.setOfTournament(this);
+            log.info("Adding participant {}", participant);
             return true;
         }
     }
     
     @Override
-    public boolean removeParticipant(int id) {
+    public Participant removeParticipant(long id) {
         for (Participant participant : this.participants) {
             if (participant.getId() == id) {
+                participant.setOfTournament(null);
                 participants.remove(participant);
                 reconciliateParticipantCodes();
-                return true;
+                return participant;
             }
         }
-        return false;
+        return null;
     }
 
     public void setStartingScore(Participant participant, double score) {
@@ -209,7 +218,7 @@ public class TournamentImpl implements Tournament {
                                   int gamesWon,
                                   int gamesLost) {
         for (Participant participant : participants) {
-            if (participant.getId() == participantCode) {
+            if (participant.getCode() == participantCode) {
                 setMatchResult(roundNumber, participant, gamesWon, gamesLost);
                 return true;
             }
