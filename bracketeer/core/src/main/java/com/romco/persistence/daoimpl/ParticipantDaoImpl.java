@@ -1,8 +1,8 @@
 package com.romco.persistence.daoimpl;
 
 import com.romco.domain.participant.Participant;
-import com.romco.domain.tournament.Tournament;
 import com.romco.persistence.dao.ParticipantDao;
+import com.romco.persistence.util.NamedParameterJdbcTemplateHolder;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -13,22 +13,24 @@ import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
 
 @Slf4j
 @Repository
 public class ParticipantDaoImpl implements ParticipantDao {
     public static final String TABLE_NAME = "participant";
-    public static final String SELECT_ALL_WHERE = "SELECT * FROM " + TABLE_NAME + " WHERE ";
+    public static final String SELECT_ALL_WHERE = "SELECT id, code, name, tournament_id FROM " + TABLE_NAME + " WHERE ";
     public static final String INSERT = "INSERT INTO " + TABLE_NAME + " (code, name, tournament_id) VALUES ";
     public static final String UPDATE = "UPDATE " + TABLE_NAME + " SET ";
     
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
-    
+
     @Autowired
-    @Override
+//    @Override
     public void setDataSource(DataSource dataSource) {
-        namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
+//        namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
+        namedParameterJdbcTemplate = NamedParameterJdbcTemplateHolder.get();
     }
     
     @Override
@@ -99,7 +101,7 @@ public class ParticipantDaoImpl implements ParticipantDao {
     @Override
     public void cleanup() {
 //        String sqlQuery = "TRUNCATE TABLE " + TABLE_NAME;
-        String sqlQuery = "DELETE FROM " + TABLE_NAME + " WHERE id != -1";
+        String sqlQuery = "DELETE FROM " + TABLE_NAME + " WHERE id > -1";
         namedParameterJdbcTemplate.getJdbcOperations().execute(sqlQuery);
     }
 }

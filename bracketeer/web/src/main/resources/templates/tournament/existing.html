@@ -64,17 +64,17 @@
     <table class="player-table" cellspacing="0">
         <thead>
         <tr>
-            <th class="table-col-id">ID</th>
+            <th class="table-col-id">#</th>
             <th class="table-col-name">Name</th>
-            <th class="table-col-operation">Action</th>
+            <th class="table-col-action">Action</th>
         </tr>
         </thead>
         <tbody>
 
-        <tr th:block th:each="participant : ${participants}">
-            <td id="idField" class="table-col-id" th:text="${participant.id}">ex</td>
+        <tr th:block th:each="participant, iterStat : ${participants}">
+            <td id="idField" class="table-col-id" th:text="${iterStat.count}">ex</td>
             <td class="table-player-name" th:text="${participant.name}">example</td>
-            <td class="table-col-operation">
+            <td class="table-col-action">
                 <form th:action="@{/tournament/removePlayer?id={id}(id=${participant.id})}"
                       method="post">
                     <button class="player-remove-button table-action-button generic-button"
@@ -98,7 +98,7 @@
                     <!--                                <input id="add-button table-action-button" class="player-add-button generic-button" type="submit" value="Add"/>-->
                 </form>
             </td>
-            <td class="table-col-operation">
+            <td class="table-col-action">
                 <button class="player-add-button generic-button"
                         type="submit"
                         form="newTournamentAddPlayerForm"

@@ -1,7 +1,8 @@
 package com.romco.persistence.daoimpl;
 
-import com.romco.persistence.dao.TournamentDao;
 import com.romco.domain.tournament.Tournament;
+import com.romco.persistence.dao.TournamentDao;
+import com.romco.persistence.util.NamedParameterJdbcTemplateHolder;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -29,16 +30,23 @@ public class TournamentDaoImpl implements TournamentDao {
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     @Autowired
-    @Override
+//    @Override
     public void setDataSource(DataSource dataSource) {
-        try {
-            log.debug("In setDataSource: {}", dataSource.getConnection());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-//        jdbcTemplate = new JdbcTemplate(dataSource);
-        namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
+//        namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
+        namedParameterJdbcTemplate = NamedParameterJdbcTemplateHolder.get();
     }
+
+//    @Autowired
+////    @Override
+//    public void setDataSource(DataSource dataSource) {
+//        try {
+//            log.debug("In setDataSource: {}", dataSource.getConnection());
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+////        jdbcTemplate = new JdbcTemplate(dataSource);
+//        namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
+//    }
     
     @Override
     public long create(Tournament tournament) {
@@ -133,7 +141,7 @@ public class TournamentDaoImpl implements TournamentDao {
     @Override
     public void cleanup() {
 //        String sqlQuery = "TRUNCATE TABLE " + TABLE_NAME;
-        String sqlQuery = "DELETE FROM " + TABLE_NAME + " WHERE id != -1";
+        String sqlQuery = "DELETE FROM " + TABLE_NAME + " WHERE id > -1";
         namedParameterJdbcTemplate.getJdbcOperations().execute(sqlQuery);
     }
 }

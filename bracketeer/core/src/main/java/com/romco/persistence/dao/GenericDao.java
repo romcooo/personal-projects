@@ -1,13 +1,10 @@
 package com.romco.persistence.dao;
 
-import javax.sql.DataSource;
 import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
 
 public interface GenericDao<T> {
     
-    void setDataSource(DataSource dataSource);
+//    void setDataSource(DataSource dataSource);
     
     // retrieves by id, can be null if 0 records found
     T retrieve(long id);

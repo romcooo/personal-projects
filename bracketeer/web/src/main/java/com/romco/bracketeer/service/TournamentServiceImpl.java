@@ -106,6 +106,7 @@ public class TournamentServiceImpl implements TournamentService {
         long intId = Long.parseLong(id);
         Participant participant = tournament.removeParticipant(intId);
         if (participant != null) {
+            participantDao.delete(participant);
             return Message.PLAYER_REMOVED;
         } else {
             return Message.PLAYER_DOESNT_EXIST;

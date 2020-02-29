@@ -18,8 +18,12 @@ public final class Mappings {
 
         public static final String SAVE = NEW + "/save";
 
-        public static final String EXISTING_WITH_ID = BASE + "/{id}";
+        public static final String EXISTING_WITH_ID = BASE + "/{code}";
         public static final String REDIRECT_EXISTING_WITH_ID = REDIRECT + EXISTING_WITH_ID;
         public static final String EXISTING = BASE + "/existing";
+
+        public static final String ALL = BASE + "/all";
+
+        public static final String FIND = BASE + "/find";
     }
 }

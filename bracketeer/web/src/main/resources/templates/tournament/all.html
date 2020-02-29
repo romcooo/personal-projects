@@ -47,6 +47,7 @@
                     <th class="table-col-tournament-code">Code</th>
                     <th class="table-col-tournament-name">Name</th>
                     <th class="table-col-tournament-type">Type</th>
+                    <th class="table-col-tournament-action">Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -55,6 +56,13 @@
                     <td class="table-col-tournament-code" th:text="${tournament.code}">tCode</td>
                     <td class="table-col-tournament-name" th:text="${tournament.name}">tName</td>
                     <td class="table-col-tournament-type" th:text="${tournament.type}">tType</td>
+                    <td class="table-col-tournament-action">
+                        <form th:action="@{/tournament/{code}(code=${tournament.code})}"
+                              method="get">
+                            <button class="table-action-button generic-button"
+                                    type="submit">Open</button>
+                        </form>
+                    </td>
                 </tr>
             </tbody>
         </table>
