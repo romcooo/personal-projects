@@ -7,8 +7,10 @@ import java.util.List;
 
 public class Round {
     private static long idSequence = 1;
-    private final long id;
-    List<Match> matches;
+    private long id;
+    private int roundNumber;
+    private List<Match> matches;
+    private Tournament ofTournament;
     
     public Round() {
         this.id = idSequence++;
@@ -18,6 +20,30 @@ public class Round {
     public Round(List<Match> matches) {
         this.id = idSequence++;
         this.matches = matches;
+    }
+    
+    public long getId() {
+        return id;
+    }
+    
+    public void setId(long id) {
+        this.id = id;
+    }
+    
+    public int getRoundNumber() {
+        return roundNumber;
+    }
+    
+    public void setRoundNumber(int roundNumber) {
+        this.roundNumber = roundNumber;
+    }
+    
+    public Tournament getOfTournament() {
+        return ofTournament;
+    }
+    
+    public void setOfTournament(Tournament ofTournament) {
+        this.ofTournament = ofTournament;
     }
     
     public void addMatch(Match toAdd) {

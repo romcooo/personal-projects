@@ -23,7 +23,10 @@ public class Match {
     private Map<Participant, Integer> scoreMap;
     private int bestOf;
     private boolean isBye;
-    private Map <Participant, MatchResult> resultMap;
+    private Map <Participant, MatchResultEnum> resultMap;
+    
+    private List<MatchResult> matchResults;
+    private Round ofRound;
 
     public Match() {
         this.id = idSequence++;
@@ -38,7 +41,7 @@ public class Match {
         participants.add(participant1);
         scoreMap = new HashMap<>(1);
         scoreMap.put(participant1, 1);
-        resultMap.put(participant1, MatchResult.WIN);
+        resultMap.put(participant1, MatchResultEnum.WIN);
         
         this.isBye = true;
     }
@@ -53,6 +56,34 @@ public class Match {
         scoreMap.put(participant2, null);
 
         this.isBye = false;
+    }
+    
+    public long getId() {
+        return id;
+    }
+    
+    public void setId(long id) {
+        this.id = id;
+    }
+    
+    public int getBestOf() {
+        return bestOf;
+    }
+    
+    public void setBestOf(int bestOf) {
+        this.bestOf = bestOf;
+    }
+    
+    public void setBye(boolean bye) {
+        isBye = bye;
+    }
+    
+    public Round getOfRound() {
+        return ofRound;
+    }
+    
+    public void setOfRound(Round ofRound) {
+        this.ofRound = ofRound;
     }
     
     public List<Participant> getOthers(Participant participant) {
@@ -85,18 +116,37 @@ public class Match {
     }
     
     public boolean setMatchScore(Participant participant, int gamesWon, int gamesLost) {
+        // new
+        // if participant is not of this match
+        if (!participants.contains(participant)) {
+            log.warn(PARTICIPANT_NOT_FOUND_WARN_MESSAGE, participant);
+            return false;
+        }
+    
+        // check if participant already has a match
+        for (MatchResult matchResult : matchResults) {
+            if (matchResult.getForParticipant().equals(participant)) {
+                matchResult.setResult(gamesWon, gamesLost);
+                return true;
+            }
+        }
+        MatchResult matchResult = new MatchResult(this, participant, gamesWon, gamesLost);
+        matchResults.add(matchResult);
+        // TODO Rest
+        
+        // old
         if (scoreMap.containsKey(participant) && getOther(participant) != null) {
             scoreMap.put(participant, gamesWon);
             scoreMap.put(this.getOther(participant), gamesLost);
             if (gamesWon > gamesLost) {
-                resultMap.put(participant, MatchResult.WIN);
-                resultMap.put(getOther(participant), MatchResult.LOSS);
+                resultMap.put(participant, MatchResultEnum.WIN);
+                resultMap.put(getOther(participant), MatchResultEnum.LOSS);
             } else if (gamesWon < gamesLost) {
-                resultMap.put(participant, MatchResult.LOSS);
-                resultMap.put(getOther(participant), MatchResult.WIN);
+                resultMap.put(participant, MatchResultEnum.LOSS);
+                resultMap.put(getOther(participant), MatchResultEnum.WIN);
             } else {
-                resultMap.put(participant, MatchResult.TIE);
-                resultMap.put(getOther(participant), MatchResult.TIE);
+                resultMap.put(participant, MatchResultEnum.TIE);
+                resultMap.put(getOther(participant), MatchResultEnum.TIE);
             }
             return true;
         } else {
@@ -104,19 +154,8 @@ public class Match {
             return false;
         }
     }
-
-    public boolean setMatchResultForParticipant(Participant participant, MatchResult matchResultForParticipant) {
-        if (resultMap.containsKey(participant)) {
-            resultMap.put(participant, matchResultForParticipant);
-            // todo put also result for other
-            return true;
-        } else {
-            log.warn(PARTICIPANT_NOT_FOUND_WARN_MESSAGE, participant);
-            return false;
-        }
-    }
     
-    public MatchResult getMatchResultForParticipant(Participant participant) {
+    public MatchResultEnum getMatchResultForParticipant(Participant participant) {
         if (resultMap.containsKey(participant)) {
             return resultMap.get(participant);
         } else {

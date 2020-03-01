@@ -5,5 +5,5 @@ import com.romco.domain.participant.Participant;
 import java.util.List;
 
 public interface ParticipantDao extends GenericDao<Participant> {
-    List<Participant> retrieveAllByTournamentId(long tournamentId);
+    List<Participant> retrieveByTournamentId(long tournamentId);
 }

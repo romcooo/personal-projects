@@ -21,18 +21,18 @@ public class RuleSet {
     
     private int bestOf;
     
-    private Map<MatchResult, Double> pointMap;
+    private Map<MatchResultEnum, Double> pointMap;
 
     public RuleSet(double pointsForWin, double pointsForLoss, double pointsForTie, int bestOf) {
         pointMap = new HashMap<>(3);
-        pointMap.put(MatchResult.WIN, pointsForWin);
-        pointMap.put(MatchResult.LOSS, pointsForLoss);
-        pointMap.put(MatchResult.TIE, pointsForTie);
+        pointMap.put(MatchResultEnum.WIN, pointsForWin);
+        pointMap.put(MatchResultEnum.LOSS, pointsForLoss);
+        pointMap.put(MatchResultEnum.TIE, pointsForTie);
         
         this.bestOf = bestOf;
     }
 
-    public double getPoints(MatchResult result) {
+    public double getPoints(MatchResultEnum result) {
 //        log.debug("getPoints for {} results in {} points.", result, pointMap.get(result));
         return pointMap.get(result);
     }

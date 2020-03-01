@@ -28,25 +28,12 @@ public class TournamentDaoImpl implements TournamentDao {
     
 //    private JdbcTemplate jdbcTemplate;
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
-
+    
     @Autowired
-//    @Override
+    @Override
     public void setDataSource(DataSource dataSource) {
-//        namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
-        namedParameterJdbcTemplate = NamedParameterJdbcTemplateHolder.get();
+        namedParameterJdbcTemplate = NamedParameterJdbcTemplateHolder.get(dataSource);
     }
-
-//    @Autowired
-////    @Override
-//    public void setDataSource(DataSource dataSource) {
-//        try {
-//            log.debug("In setDataSource: {}", dataSource.getConnection());
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-////        jdbcTemplate = new JdbcTemplate(dataSource);
-//        namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
-//    }
     
     @Override
     public long create(Tournament tournament) {
@@ -61,6 +48,7 @@ public class TournamentDaoImpl implements TournamentDao {
         if (namedParameterJdbcTemplate.update(sqlQuery,
                                               source,
                                               keyHolder) == 1) {
+            tournament.setId(keyHolder.getKey().longValue());
             return keyHolder.getKey().longValue();
         } else {
             return -1;

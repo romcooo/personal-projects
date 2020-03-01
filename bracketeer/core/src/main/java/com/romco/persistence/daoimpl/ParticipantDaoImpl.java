@@ -10,6 +10,7 @@ import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
@@ -25,12 +26,11 @@ public class ParticipantDaoImpl implements ParticipantDao {
     public static final String UPDATE = "UPDATE " + TABLE_NAME + " SET ";
     
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
-
+    
     @Autowired
-//    @Override
+    @Override
     public void setDataSource(DataSource dataSource) {
-//        namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
-        namedParameterJdbcTemplate = NamedParameterJdbcTemplateHolder.get();
+        namedParameterJdbcTemplate = NamedParameterJdbcTemplateHolder.get(dataSource);
     }
     
     @Override
@@ -50,7 +50,7 @@ public class ParticipantDaoImpl implements ParticipantDao {
     }
     
     @Override
-    public List<Participant> retrieveAllByTournamentId(long tournamentId) {
+    public List<Participant> retrieveByTournamentId(long tournamentId) {
         String sqlQuery = SELECT_ALL_WHERE + "(tournament_id = :tournamentId)";
         SqlParameterSource source = new MapSqlParameterSource()
                 .addValue("tournamentId", tournamentId);
@@ -79,8 +79,10 @@ public class ParticipantDaoImpl implements ParticipantDao {
                 .addValue("name", participant.getName())
                 .addValue("tournamentId", participant.getOfTournament().getId());
         log.debug("In create, source = {}", source);
-        if (namedParameterJdbcTemplate.update(sqlQuery, source) == 1) {
-            return participant.getId();
+        GeneratedKeyHolder generatedKeyHolder = new GeneratedKeyHolder();
+        if (namedParameterJdbcTemplate.update(sqlQuery, source, generatedKeyHolder) == 1) {
+            participant.setId(generatedKeyHolder.getKey().longValue());
+            return generatedKeyHolder.getKey().longValue();
         } else {
             return -1;
         }
@@ -95,7 +97,9 @@ public class ParticipantDaoImpl implements ParticipantDao {
     
     @Override
     public boolean delete(Participant participant) {
-        return false;
+        String sqlQuery = "DELETE FROM " + TABLE_NAME + " WHERE id = :id";
+        SqlParameterSource source = new MapSqlParameterSource("id", participant.getId());
+        return namedParameterJdbcTemplate.update(sqlQuery, source) == 1;
     }
     
     @Override

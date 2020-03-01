@@ -117,13 +117,14 @@
         </table>
         
         <div class="tournament-submit-buttons">
-            <form class="save"
+            <form id="tournament-save-form"
+                  class="save"
                   action="/tournament/new/save"
                   method="post">
-<!--                <input type="submit">-->
-            <button>Save</button>
+            <a href="javascript:$('#tournament-save-form').submit();">Save</a>
             </form>
             <a class="generate">Generate first round pairings</a>
+            <a>Clear</a>
         </div>
     </div>
 </body>

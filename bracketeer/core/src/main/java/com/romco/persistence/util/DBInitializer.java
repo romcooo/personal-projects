@@ -1,6 +1,7 @@
 package com.romco.persistence.util;
 
 import com.romco.persistence.dao.ParticipantDao;
+import com.romco.persistence.dao.RoundDao;
 import com.romco.persistence.dao.TournamentDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -13,9 +14,12 @@ public class DBInitializer {
     TournamentDao tournamentDao;
     @Autowired
     ParticipantDao participantDao;
+    @Autowired
+    RoundDao roundDao;
     
     @PostConstruct
     public void initialize() {
+        roundDao.cleanup();
         participantDao.cleanup();
         tournamentDao.cleanup();
     }

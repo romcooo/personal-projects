@@ -235,7 +235,7 @@ public class TournamentImpl implements Tournament {
     public Double getParticipantScore(Participant participant) {
         double score = startingParticipantScores.get(participant);
         for (Round round : rounds) {
-            MatchResult result = round.getMatch(participant).getMatchResultForParticipant(participant);
+            MatchResultEnum result = round.getMatch(participant).getMatchResultForParticipant(participant);
             if (result != null) {
                 score += ruleSet.getPoints(result);
                 log.debug("Result for participant {} is {}, score set to {}", participant, result, score);

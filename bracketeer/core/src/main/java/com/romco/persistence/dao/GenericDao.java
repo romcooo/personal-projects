@@ -1,10 +1,14 @@
 package com.romco.persistence.dao;
 
+import com.romco.persistence.util.NamedParameterJdbcTemplateHolder;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import javax.sql.DataSource;
 import java.util.Collection;
 
 public interface GenericDao<T> {
     
-//    void setDataSource(DataSource dataSource);
+    void setDataSource(DataSource dataSource);
     
     // retrieves by id, can be null if 0 records found
     T retrieve(long id);

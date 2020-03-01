@@ -2,6 +2,7 @@ package com.romco.bracketeer.service;
 
 import com.romco.bracketeer.util.Message;
 import com.romco.persistence.dao.ParticipantDao;
+import com.romco.persistence.dao.RoundDao;
 import com.romco.persistence.dao.TournamentDao;
 import com.romco.domain.matcher.TournamentFormat;
 import com.romco.domain.participant.Participant;
@@ -28,6 +29,8 @@ public class TournamentServiceImpl implements TournamentService {
     TournamentDao tournamentDao;
     @Autowired
     ParticipantDao participantDao;
+    @Autowired
+    RoundDao roundDao;
     
     Tournament tournament;
     
@@ -54,7 +57,7 @@ public class TournamentServiceImpl implements TournamentService {
         log.info("Getting tournament by code: {}", code);
         tournament = tournamentDao.retrieve(code);
         if (tournament != null) {
-            List<Participant> participants = participantDao.retrieveAllByTournamentId(tournament.getId());
+            List<Participant> participants = participantDao.retrieveByTournamentId(tournament.getId());
             for (Participant participant : participants) {
                 participant.setOfTournament(tournament);
                 tournament.addParticipant(participant);
@@ -66,7 +69,8 @@ public class TournamentServiceImpl implements TournamentService {
     @Override
     public String saveTournament() {
         if (tournamentDao.retrieve(tournament.getId()) == null) {
-            tournament.setId(tournamentDao.create(tournament));
+//            tournament.setId(tournamentDao.create(tournament)); - id is set in the dao
+            tournamentDao.create(tournament);
         } else {
             tournamentDao.update(tournament);
         }
@@ -120,6 +124,7 @@ public class TournamentServiceImpl implements TournamentService {
     
     @Override
     public void generateNextRound() {
+        
         tournament.generateNextRound();
     }
     

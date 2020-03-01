@@ -346,6 +346,12 @@ body a:hover {
     display: inline-block;
     margin: 15px;
     padding: 5px;
+    
+    text-decoration: none;
+}
+
+.tournament-submit-buttons:active {
+    
 }
 
 
