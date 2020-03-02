@@ -83,7 +83,7 @@
             </td>
         </tr>
         <tr>
-            <td class="table-col-id">#</td>
+            <td class="table-col-id">-</td>
             <td class="new-tournament-players-td">
                 <form id="newTournamentAddPlayerForm"
                       class="new-tournament-players-form"
@@ -114,16 +114,24 @@
               class="save"
               action="/tournament/new/save"
               method="post">
-            <a href="javascript:$('#tournament-save-form').submit();">Save</a>
-            <a>Generate first round pairings</a>
-            <a>Clear</a>
         </form>
+        
+        <form id="tournament-generate-first-round-form"
+              class="generate-form"
+              th:action="@{/tournament/__${tournamentCode}__/round/generate?roundNumber=1}"
+              method="post">
+        </form>
+        
+        <a href="javascript:$('#tournament-save-form').submit();">Save</a>
+        <a href="javascript:$('#tournament-generate-first-round-form').submit();">Generate first round pairings</a>
+        <a>Clear</a>
+        
     </div>
-    
+
     <div class="bottom-note">
         <p>Note: Once you generate the first round, you cannot change the format.</p>
     </div>
-    
+
 </div>
 </body>
 </html>

@@ -15,23 +15,19 @@ import java.util.stream.Collectors;
 @Data
 @AllArgsConstructor
 public class Match {
-    public static final String PARTICIPANT_NOT_FOUND_WARN_MESSAGE = "Match doesn't contain the provided participant: {}";
+    public static final String PARTICIPANT_NOT_FOUND_WARN_MESSAGE
+            = "Match doesn't contain the provided participant: {}";
 
     private long id;
     private List<Participant> participants;
     private int bestOf;
     private boolean isBye;
-
-    private Map<Participant, Integer> scoreMap;
-    private Map<Participant, MatchResultEnum> resultMap;
     
     private Map<Participant, MatchResult> matchResults;
     private Round ofRound;
 
     public Match() {
         participants = new ArrayList<>();
-        resultMap = new HashMap<>();
-        scoreMap = new HashMap<>();
         matchResults = new HashMap<>();
     }
 
@@ -39,9 +35,8 @@ public class Match {
         this();
         
         participants.add(participant1);
-        scoreMap = new HashMap<>(1);
-        scoreMap.put(participant1, 1);
-        resultMap.put(participant1, MatchResultEnum.WIN);
+
+        matchResults.put(participant1, null);
         
         this.isBye = true;
     }
@@ -51,9 +46,9 @@ public class Match {
     
         participants.add(participant1);
         participants.add(participant2);
-        scoreMap = new HashMap<>(2);
-        scoreMap.put(participant1, null);
-        scoreMap.put(participant2, null);
+
+        matchResults.put(participant2, null);
+        matchResults.put(participant2, null);
 
         this.isBye = false;
     }
@@ -91,12 +86,6 @@ public class Match {
                     .filter((p) -> !p.equals(participant))
                     .peek((p) -> log.debug("After filter: " + p))
                     .collect(Collectors.toList());
-        
-//        return scoreMap.keySet()
-//                       .stream()
-//                       .filter((p) -> !p.equals(participant))
-//                       .peek((p) -> log.debug("After filter: " + p))
-//                       .collect(Collectors.toList());
     }
     
     public Participant getOther(Participant participant) {
@@ -116,7 +105,6 @@ public class Match {
     }
     
     public boolean setMatchScore(Participant participant, int gamesWon, int gamesLost) {
-        // new
         // if participant is not of this match
         if (!participants.contains(participant)) {
             log.warn(PARTICIPANT_NOT_FOUND_WARN_MESSAGE, participant);
@@ -127,26 +115,6 @@ public class Match {
         matchResults.put(participant, matchResult);
         matchResults.put(getOther(participant), other);
         return true;
-
-        // old
-//        if (scoreMap.containsKey(participant) && getOther(participant) != null) {
-//            scoreMap.put(participant, gamesWon);
-//            scoreMap.put(this.getOther(participant), gamesLost);
-//            if (gamesWon > gamesLost) {
-//                resultMap.put(participant, MatchResultEnum.WIN);
-//                resultMap.put(getOther(participant), MatchResultEnum.LOSS);
-//            } else if (gamesWon < gamesLost) {
-//                resultMap.put(participant, MatchResultEnum.LOSS);
-//                resultMap.put(getOther(participant), MatchResultEnum.WIN);
-//            } else {
-//                resultMap.put(participant, MatchResultEnum.TIE);
-//                resultMap.put(getOther(participant), MatchResultEnum.TIE);
-//            }
-//            return true;
-//        } else {
-//            log.warn(PARTICIPANT_NOT_FOUND_WARN_MESSAGE, participant);
-//            return false;
-//        }
     }
     
     public MatchResult getMatchResult(Participant participant) {
@@ -156,18 +124,10 @@ public class Match {
             log.warn(PARTICIPANT_NOT_FOUND_WARN_MESSAGE, participant);
             return null;
         }
-
-//        if (resultMap.containsKey(participant)) {
-//            return resultMap.get(participant);
-//        } else {
-//            log.warn(PARTICIPANT_NOT_FOUND_WARN_MESSAGE, participant);
-//            return null;
-//        }
     }
     
     public List<Participant> getParticipants() {
         return new ArrayList<>(participants);
-//        return new ArrayList<>(scoreMap.keySet());
     }
     
     public boolean isBye() {

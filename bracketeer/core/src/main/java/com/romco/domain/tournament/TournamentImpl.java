@@ -154,15 +154,18 @@ public class TournamentImpl implements Tournament {
     @Override
     public Round generateNextRound() {
         log.info("Unsorted participants: {}", participants);
-    
-        updateParticipants();
-        
-        Matcher matcher = type.buildMatcher();
-        // don't let anyone touch participants outside of this class
-        Round round = matcher.generateRound(Collections.unmodifiableList(participants));
-        rounds.add(round);
 
-        return round;
+        return generateRound(rounds.size()+1);
+
+//        updateParticipants();
+//
+//        Matcher matcher = type.buildMatcher();
+//        // don't let anyone touch participants outside of this class
+//        Round round = matcher.generateRound(Collections.unmodifiableList(participants));
+//        round.setRoundNumber(rounds.size()+1);
+//        rounds.add(round);
+//
+//        return round;
     }
 
     @Override
@@ -170,7 +173,10 @@ public class TournamentImpl implements Tournament {
         updateParticipantsForAfterRound(roundNumber - 1);
 
         Matcher matcher = type.buildMatcher();
-        Round round = matcher.generateRound(participants);
+        Round round = matcher.generateRound(Collections.unmodifiableList(participants));
+        round.setRoundNumber(rounds.size()+1);
+        rounds.add(round);
+
         return round;
     }
 
@@ -260,6 +266,7 @@ public class TournamentImpl implements Tournament {
 //        }
 //        log.debug("Score of participant {} is {}", participant, score);
 //        return score;
+        log.debug("In getParticipantScore, rounds: {}", rounds);
         return getParticipantScoreAfterRound(participant, rounds.size());
     }
 

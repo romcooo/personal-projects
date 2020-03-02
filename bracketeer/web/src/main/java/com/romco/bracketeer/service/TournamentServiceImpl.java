@@ -44,7 +44,6 @@ public class TournamentServiceImpl implements TournamentService {
     @Override
     public String createNewTournament() {
         this.tournament = new TournamentImpl(TournamentFormat.SWISS);
-//        tournamentDao.insert(tournament);
         return tournament.getCode();
     }
     
@@ -124,8 +123,8 @@ public class TournamentServiceImpl implements TournamentService {
     
     @Override
     public void generateRound(int n) {
-        
-        tournament.generateNextRound();
+//        tournament.generateNextRound();
+        tournament.generateRound(n);
     }
     
     @Override

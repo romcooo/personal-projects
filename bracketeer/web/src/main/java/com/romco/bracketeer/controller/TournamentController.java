@@ -2,7 +2,9 @@ package com.romco.bracketeer.controller;
 
 import com.romco.bracketeer.service.TournamentService;
 import com.romco.bracketeer.util.Mappings;
+import com.romco.bracketeer.util.ViewNames;
 import com.romco.domain.participant.Participant;
+import com.romco.domain.tournament.Round;
 import com.romco.domain.tournament.Tournament;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,19 +29,26 @@ public class TournamentController {
     }
 
     // == model attributes
-    @ModelAttribute
+//    @ModelAttribute //-- idk I guess this is not really necessary :D
     public Collection<Tournament> allTournaments() {
         return service.getAllTournaments();
     }
-
-    @ModelAttribute
     public List<Participant> participants() {
         return service.getParticipants();
     }
-
-    @ModelAttribute
     public Tournament tournament() {
         return service.getTournament();
+    }
+    @ModelAttribute
+    public String tournamentCode() {
+        if (service.getTournament() != null) {
+            String value = service.getTournament().getCode();
+            if (value != null) {
+                return value;
+            }
+        }
+        log.warn("Tournament code is not available, returning -1.");
+        return "-1";
     }
 
     // == request methods
@@ -50,31 +59,29 @@ public class TournamentController {
         log.info("in newTournament, mapping: {}", Mappings.Tournament.NEW);
         service.createNewTournament();
         model.addAttribute("participants", participants());
-        return Mappings.Tournament.NEW;
+        return ViewNames.Tournament.SETUP;
     }
 
-    // == ADD PLAYER
-    @GetMapping(Mappings.Tournament.ADD_PLAYER)
-    public String addPlayer(Model model) {
-        log.info("In GET addPlayer");
+    // == SETUP OF TOURNAMENT
+    @GetMapping(Mappings.Tournament.SETUP)
+    public String tournamentSetup(Model model) {
+        log.info("In GET newTournamentSetup");
         model.addAttribute("participants", participants());
-        return Mappings.Tournament.NEW;
+//        if (tournament().getCode() != null) {
+//            log.info("code is not null ");
+//            model.addAttribute("tournamentCode", tournament().getCode());
+//        } else {
+//            model.addAttribute("tournamentCode", "1");
+//        }
+        return ViewNames.Tournament.SETUP;
     }
 
+    // == ADD/REMOVE PLAYERS
     @PostMapping(Mappings.Tournament.ADD_PLAYER)
     public String addPlayer(@RequestParam String playerName) {
         log.info("In addPlayer, input: {}", playerName);
         service.addPlayer(playerName);
         return Mappings.Tournament.REDIRECT_ADD_PLAYER;
-    }
-
-    // == REMOVE PLAYER
-
-    @GetMapping(Mappings.Tournament.REMOVE_PLAYER)
-    public String removePlayer(Model model) {
-        log.info("In GET removePlayer");
-        model.addAttribute("participants", participants());
-        return Mappings.Tournament.NEW;
     }
 
     @PostMapping(Mappings.Tournament.REMOVE_PLAYER)
@@ -84,48 +91,63 @@ public class TournamentController {
         return Mappings.Tournament.REDIRECT_REMOVE_PLAYER;
     }
 
-    // == save tournament and retrieve existing by code
-
+    // == save tournament and retrieve existing by code=
     @PostMapping(Mappings.Tournament.SAVE)
     public String saveNewTournament() {
         log.info("Saving tournament");
-        String code = service.saveTournament();
+        String tournamentCode = service.saveTournament();
         // redirect to tournament/{code}
-        return Mappings.Tournament.REDIRECT_EXISTING_WITH_CODE.replace("{code}", code);
+        return Mappings.Tournament.REDIRECT_EXISTING_WITH_CODE.replace("{tournamentCode}", tournamentCode);
     }
 
     @GetMapping(Mappings.Tournament.EXISTING_WITH_CODE)
-    public String getTournamentByCode(@PathVariable(value = "code") String code, Model model) {
-        log.info("In getTournamentByCode with code {}", code);
-        service.getTournamentByCode(code);
+    public String getTournamentByCode(@PathVariable(value = "tournamentCode") String tournamentCode, Model model) {
+        log.info("In getTournamentByCode with tournamentCode {}", tournamentCode);
+        service.getTournamentByCode(tournamentCode);
+
+//        if (tournament().getCode() != null) {
+//            log.info("code is not null ");
+//            model.addAttribute("tournamentCode", tournament().getCode());
+//        }
         model.addAttribute("participants", participants());
-        return Mappings.Tournament.EXISTING;
-        // honestly IDK why like this the "code" stays in the url after the redirect... but it does so it's fine as is
-//        return Mappings.Tournament.REDIRECT_EXISTING_WITH_CODE.replace("{code}", code);
+        return ViewNames.Tournament.SETUP;
     }
 
     // == GENERATE ROUNDS
     @PostMapping(Mappings.Tournament.Round.GENERATE)
-    public String generateRound(@RequestParam(value = "number") int number, Model model) {
-        log.info("In generateRound for number {}", number);
-        service.generateRound(number);
+    public String generateRound(@RequestParam(value = "roundNumber") int roundNumber,
+                                @PathVariable(value = "tournamentCode") String tournamentCode,
+                                Model model) {
+        log.info("In generateRound for roundNumber {}", roundNumber);
+        service.saveTournament();
+        service.generateRound(roundNumber);
         model.addAttribute("tournament", tournament());
-        return Mappings.Tournament.Round.WITH_NUMBER.replace("{number}", Integer.toString(number));
+        return Mappings.Tournament.Round.REDIRECT_WITH_NUMBER
+                .replace("{roundNumber}", Integer.toString(roundNumber))
+                .replace("{tournamentCode}", tournament().getCode());
+    }
+
+    // == ROUNDS
+    @GetMapping(Mappings.Tournament.Round.WITH_NUMBER)
+    public String getRound(@PathVariable(value = "roundNumber") int roundNumber, Model model) {
+        log.info("In getRound with roundNumber {}", roundNumber);
+        Round round = service.getTournament().getRound(roundNumber);
+        model.addAttribute("round", round);
+        return ViewNames.Tournament.ROUND;
     }
 
     // == ALL TOURNAMENTS AND FIND TOURNAMENT
-
     @GetMapping(Mappings.Tournament.ALL)
     public String getAllTournaments(Model model) {
         log.info("In getAllTournaments");
         model.addAttribute("tournaments", allTournaments());
-        return Mappings.Tournament.ALL;
+        return ViewNames.Tournament.ALL;
     }
 
     @GetMapping(Mappings.Tournament.FIND)
     public String findTournament() {
         log.info("In findTournament");
-        return Mappings.Tournament.FIND;
+        return ViewNames.Tournament.FIND;
     }
 
 

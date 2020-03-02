@@ -1,0 +1,15 @@
+.pairing-table {
+/*    if the gaps (cellspacing=0) should be done in css then its this:*/
+/*    border-spacing: 0;*/
+    border: 2px solid #ecf6fe;
+    width: 65%;
+    text-align: center;
+    
+}
+
+.pairing-table-col-score,
+.pairing-table-col-score-divider {
+    border-left: none;
+    border-right: none;
+}
+

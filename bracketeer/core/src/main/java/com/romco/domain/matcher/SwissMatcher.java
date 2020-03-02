@@ -19,8 +19,6 @@ class SwissMatcher implements Matcher {
     public SwissMatcher() {
     }
 
-
-
     @Override
     public Round generateRound(List<Participant> participants) {
         if (participants.isEmpty()) {

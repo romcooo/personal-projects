@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <link rel="stylesheet" type="text/css" href="/css/queries.css">
+    <link rel="stylesheet" type="text/css" href="/css/round.css">
+
+
+    <!--    for brackets:-->
+    <link rel="stylesheet" type="text/css" href="../../static/css/style.css">
+    <link rel="stylesheet" type="text/css" href="../../static/css/queries.css">
+    <link rel="stylesheet" type="text/css" href="../../static/css/round.css">
+
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,400i&display=swap" rel="stylesheet">
+
+    <title>Bracketeer - Existing Tournament</title>
+
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+</head>
+
+<body>
+
+<div id="navbars-placeholder">
+    navbars
+</div>
+
+<script>
+        $(function(){
+    $("#navbars-placeholder").load("/navbars.html");
+        });
+    </script>
+
+<div class="main" align="center">
+    <h1 id="title" th:text="'Round #'+${round.roundNumber}">Round #</h1>
+
+<!--    todo add class pairing-table and change this to it-->
+    <table class="pairing-table" cellspacing="0">
+        
+        <thead>
+        <tr>
+            <th class="pairing-table-h-match-number">#</th>
+            <th class="pairing-table-h-name">Player 1</th>
+            <th class="pairing-table-h-score"></th>
+            <th class="pairing-table-h-score"></th>
+            <th class="pairing-table-h-score"></th>
+            <th class="pairing-table-h-name">Player 2</th>
+            <th class="pairing-table-h-action">Action</th>
+        </tr>
+        </thead>
+        
+        <tbody>
+        <tr th:block th:each="match, iterStat : ${round.matches}">
+            <td class="pairing-table-col-name" th:text="${iterStat.count}">1</td>
+            <td class="pairing-table-col-name" th:text="${match.participants[0].name}">p1Name</td>
+            <td class="pairing-table-col-score">0</td>
+            <td class="pairing-table-col-score-divider">:</td>
+            <td class="pairing-table-col-score">0</td>
+            <td class="pairing-table-col-name" th:text="${match.participants[1].name}">p2Name</td>
+            <td class="pairing-table-col-action">
+<!--                <form th:action="@{/tournament/removePlayer?id={id}(id=${participant.id})}"-->
+<!--                      method="post">-->
+<!--                    <button class="player-remove-button table-action-button generic-button"-->
+<!--                            type="submit">Save</button>-->
+<!--                </form>-->
+            </td>
+        </tr>
+        </tbody>
+        
+    </table>
+
+    <!--              TODO action needs to be updated to something like /tournament/{t}/round/{r}/save-->
+    <div class="tournament-submit-buttons">
+        <form id="tournament-save-form"
+              class="save"
+              action="/tournament/new/save"
+              method="post">
+            <a href="javascript:$('#tournament-save-form').submit();">Save</a>
+            <a>Generate next round pairings</a>
+            <a>Clear</a>
+        </form>
+    </div>
+
+    <div class="bottom-note">
+        <p>Note: If you generate the next round after it has been previously generated, you will lose that data.</p>
+    </div>
+
+</div>
+</body>
+</html>

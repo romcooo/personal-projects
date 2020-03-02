@@ -1,0 +1,129 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">-->
+<!--<head>-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1">-->
+
+<!--    <link rel="stylesheet" type="text/css" href="/css/style.css">-->
+<!--    <link rel="stylesheet" type="text/css" href="/css/queries.css">-->
+
+
+<!--    &lt;!&ndash;    for brackets:&ndash;&gt;-->
+<!--    <link rel="stylesheet" type="text/css" href="../../static/css/style.css">-->
+<!--    <link rel="stylesheet" type="text/css" href="../../static/css/queries.css">-->
+
+<!--    <link href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,400i&display=swap" rel="stylesheet">-->
+
+<!--    <title>Bracketeer - Existing Tournament</title>-->
+
+<!--    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>-->
+<!--</head>-->
+
+<!--<body>-->
+
+<!--<div id="navbars-placeholder">-->
+<!--    navbars-->
+<!--</div>-->
+
+<!--<script>-->
+<!--        $(function(){-->
+<!--    $("#navbars-placeholder").load("/navbars.html");-->
+<!--        });-->
+<!--    </script>-->
+
+<!--<div class="main" align="center">-->
+<!--    <h1 id="title">New Tournament</h1>-->
+
+<!--    <div class="options">-->
+<!--        <ul>-->
+<!--            <li>Tournament Style:-->
+<!--                <div class="dropdown">-->
+<!--                    Swiss-->
+<!--                    &lt;!&ndash;                        <i class="fa fa-caret-down"></i>&ndash;&gt;-->
+<!--                    &lt;!&ndash;-->
+
+<!--                                            <select class="selection">-->
+<!--                                                    <option value="SWISS">Swiss</option>-->
+<!--                                                    <option value="ROUND_ROBIN">Round Robin</option>-->
+<!--                                                    <option value="SINGLE_ELIMINATION">Single Elim</option>-->
+<!--                                                    <option value="DOUBLE_ELIMINATION">Double Elim</option>-->
+<!--                                            </select>-->
+<!--                    &ndash;&gt;-->
+
+<!--                    <div class="dropdown-content">-->
+<!--                        <a>Swiss</a>-->
+<!--                        <a>Round Robin</a>-->
+<!--                        <a>Single Elim</a>-->
+<!--                        <a>Double Elim</a>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </li>-->
+<!--            <li>item 2</li>-->
+<!--        </ul>-->
+<!--    </div>-->
+
+<!--    <table class="player-table" cellspacing="0">-->
+<!--        <thead>-->
+<!--        <tr>-->
+<!--            <th class="table-col-id">#</th>-->
+<!--            <th class="table-col-name">Name</th>-->
+<!--            <th class="table-col-action">Action</th>-->
+<!--        </tr>-->
+<!--        </thead>-->
+<!--        <tbody>-->
+
+<!--        <tr th:block th:each="participant, iterStat : ${participants}">-->
+<!--            <td id="idField" class="table-col-id" th:text="${iterStat.count}">ex</td>-->
+<!--            <td class="table-player-name" th:text="${participant.name}">example</td>-->
+<!--            <td class="table-col-action">-->
+<!--                <form th:action="@{/tournament/removePlayer?id={id}(id=${participant.id})}"-->
+<!--                      method="post">-->
+<!--                    <button class="player-remove-button table-action-button generic-button"-->
+<!--                            type="submit">Remove</button>-->
+<!--                </form>-->
+<!--            </td>-->
+<!--        </tr>-->
+<!--        <tr>-->
+<!--            <td class="table-col-id">#</td>-->
+<!--            <td class="new-tournament-players-td">-->
+<!--                <form id="newTournamentAddPlayerForm"-->
+<!--                      class="new-tournament-players-form"-->
+<!--                      action="/tournament/addPlayer"-->
+<!--                      method="POST">-->
+<!--                    &lt;!&ndash;                            <label id="add-player" for="playerName"></label>&ndash;&gt;-->
+<!--                    <input id="playerName"-->
+<!--                           class="form-player-name"-->
+<!--                           type="text"-->
+<!--                           name="playerName"-->
+<!--                           autofocus="autofocus"/>-->
+<!--                    &lt;!&ndash;                                <input id="add-button table-action-button" class="player-add-button generic-button" type="submit" value="Add"/>&ndash;&gt;-->
+<!--                </form>-->
+<!--            </td>-->
+<!--            <td class="table-col-action">-->
+<!--                <button class="player-add-button generic-button"-->
+<!--                        type="submit"-->
+<!--                        form="newTournamentAddPlayerForm"-->
+<!--                        value="Submit">Add</button>-->
+<!--            </td>-->
+
+<!--        </tr>-->
+<!--        </tbody>-->
+<!--    </table>-->
+
+<!--    <div class="tournament-submit-buttons">-->
+<!--        <form id="tournament-save-form"-->
+<!--              class="save"-->
+<!--              action="/tournament/new/save"-->
+<!--              method="post">-->
+<!--            <a href="javascript:$('#tournament-save-form').submit();">Save</a>-->
+<!--            <a>Generate first round pairings</a>-->
+<!--            <a>Clear</a>-->
+<!--        </form>-->
+<!--    </div>-->
+<!--    -->
+<!--    <div class="bottom-note">-->
+<!--        <p>Note: Once you generate the first round, you cannot change the format.</p>-->
+<!--    </div>-->
+<!--    -->
+<!--</div>-->
+<!--</body>-->
+<!--</html>-->
