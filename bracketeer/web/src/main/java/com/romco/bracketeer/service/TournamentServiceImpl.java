@@ -123,7 +123,7 @@ public class TournamentServiceImpl implements TournamentService {
     }
     
     @Override
-    public void generateNextRound() {
+    public void generateRound(int n) {
         
         tournament.generateNextRound();
     }

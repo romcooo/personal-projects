@@ -43,6 +43,8 @@ public class TournamentController {
     }
 
     // == request methods
+
+    // == NEW TOURNAMENT
     @GetMapping(Mappings.Tournament.NEW)
     public String newTournament(Model model) {
         log.info("in newTournament, mapping: {}", Mappings.Tournament.NEW);
@@ -82,21 +84,36 @@ public class TournamentController {
         return Mappings.Tournament.REDIRECT_REMOVE_PLAYER;
     }
 
+    // == save tournament and retrieve existing by code
+
     @PostMapping(Mappings.Tournament.SAVE)
     public String saveNewTournament() {
         log.info("Saving tournament");
         String code = service.saveTournament();
         // redirect to tournament/{code}
-        return Mappings.Tournament.REDIRECT_EXISTING_WITH_ID.replace("{code}", code);
+        return Mappings.Tournament.REDIRECT_EXISTING_WITH_CODE.replace("{code}", code);
     }
 
-    @GetMapping(Mappings.Tournament.EXISTING_WITH_ID)
+    @GetMapping(Mappings.Tournament.EXISTING_WITH_CODE)
     public String getTournamentByCode(@PathVariable(value = "code") String code, Model model) {
         log.info("In getTournamentByCode with code {}", code);
         service.getTournamentByCode(code);
         model.addAttribute("participants", participants());
         return Mappings.Tournament.EXISTING;
+        // honestly IDK why like this the "code" stays in the url after the redirect... but it does so it's fine as is
+//        return Mappings.Tournament.REDIRECT_EXISTING_WITH_CODE.replace("{code}", code);
     }
+
+    // == GENERATE ROUNDS
+    @PostMapping(Mappings.Tournament.Round.GENERATE)
+    public String generateRound(@RequestParam(value = "number") int number, Model model) {
+        log.info("In generateRound for number {}", number);
+        service.generateRound(number);
+        model.addAttribute("tournament", tournament());
+        return Mappings.Tournament.Round.WITH_NUMBER.replace("{number}", Integer.toString(number));
+    }
+
+    // == ALL TOURNAMENTS AND FIND TOURNAMENT
 
     @GetMapping(Mappings.Tournament.ALL)
     public String getAllTournaments(Model model) {

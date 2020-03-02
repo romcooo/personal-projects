@@ -334,7 +334,9 @@ body a:hover {
     height: 42px;
 }
 
-
+.tournament-submit-buttons {
+    
+}
 
 .tournament-submit-buttons form {
     display: inline-block;
@@ -348,11 +350,23 @@ body a:hover {
     padding: 5px;
     
     text-decoration: none;
+    color: inherit;
 }
 
-.tournament-submit-buttons:active {
+.tournament-submit-buttons a:active {
     
 }
+
+.bottom-note {
+    font-size: 60%;
+}
+
+
+
+
+
+
+
 
 
 

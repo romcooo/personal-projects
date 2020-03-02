@@ -22,10 +22,13 @@ public interface Tournament {
     Participant removeParticipant(long id);
     
     List<Participant> getParticipants();
+    List<Participant> getParticipantsForAfterRound(int roundNumber);
     
     Round getRound(int n);
-    
+    List<Round> getRounds();
+
     Round generateNextRound();
+    Round generateRound(int n);
 
     boolean setMatchResult(int roundNumber, Participant participant, int gamesWon, int gamesLost);
     boolean setMatchResult(int roundNumber, int participantId, int gamesWon, int gamesLost);

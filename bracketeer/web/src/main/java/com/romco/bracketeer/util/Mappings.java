@@ -18,12 +18,19 @@ public final class Mappings {
 
         public static final String SAVE = NEW + "/save";
 
-        public static final String EXISTING_WITH_ID = BASE + "/{code}";
-        public static final String REDIRECT_EXISTING_WITH_ID = REDIRECT + EXISTING_WITH_ID;
         public static final String EXISTING = BASE + "/existing";
+        public static final String EXISTING_WITH_CODE = BASE + "/{code}";
+        public static final String REDIRECT_EXISTING_WITH_CODE = REDIRECT + EXISTING_WITH_CODE;
 
         public static final String ALL = BASE + "/all";
-
         public static final String FIND = BASE + "/find";
+
+        public static class Round {
+            public static final String BASE = Tournament.BASE + "/round";
+            public static final String WITH_NUMBER = BASE + "/{number}";
+            public static final String GENERATE = BASE + "/generate";
+
+        }
+
     }
 }
