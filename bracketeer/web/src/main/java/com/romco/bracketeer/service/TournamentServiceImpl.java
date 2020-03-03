@@ -117,7 +117,7 @@ public class TournamentServiceImpl implements TournamentService {
     }
     
     @Override
-    public void setResult(int roundId, int playerCode, int gamesWon, int gamesLost) {
+    public void setResult(int roundId, String playerCode, int gamesWon, int gamesLost) {
         tournament.setMatchResult(roundId, playerCode, gamesWon, gamesLost);
     }
     

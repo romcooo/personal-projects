@@ -10,7 +10,7 @@ import java.util.List;
 public abstract class Participant implements Comparable<Participant> {
     protected static long idCounter = 1;
     protected long id;
-    protected int code;
+    protected String code;
     protected String name;
     protected double score;
     protected int numberOfByes;
@@ -32,7 +32,7 @@ public abstract class Participant implements Comparable<Participant> {
         this.id = id;
     }
     
-    public int getCode() {
+    public String getCode() {
         return code;
     }
     
@@ -48,8 +48,8 @@ public abstract class Participant implements Comparable<Participant> {
         return score;
     }
     
-    public int setCode(int code) {
-        int previous = this.code;
+    public String setCode(String code) {
+        String previous = this.code;
         this.code = code;
         return previous;
     }

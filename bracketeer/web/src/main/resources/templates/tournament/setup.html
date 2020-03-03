@@ -71,8 +71,8 @@
         </thead>
         <tbody>
 
-        <tr th:block th:each="participant, iterStat : ${participants}">
-            <td id="idField" class="table-col-id" th:text="${iterStat.count}">ex</td>
+        <tr th:block th:each="participant, iteration : ${participants}">
+            <td id="idField" class="table-col-id" th:text="${iteration.count}">ex</td>
             <td class="table-player-name" th:text="${participant.name}">example</td>
             <td class="table-col-action">
                 <form th:action="@{/tournament/removePlayer?id={id}(id=${participant.id})}"

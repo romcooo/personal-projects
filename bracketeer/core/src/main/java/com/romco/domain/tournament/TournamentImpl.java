@@ -125,7 +125,7 @@ public class TournamentImpl implements Tournament {
             return false;
         } else {
             participants.add(participant);
-            participant.setCode(participants.size());
+            participant.setCode(Integer.toString(participants.size()));
             startingParticipantScores.put(participant, 0d);
             startingParticipantByes.put(participant, 0);
             participant.setOfTournament(this);
@@ -223,16 +223,16 @@ public class TournamentImpl implements Tournament {
     private void reconcileParticipantCodes() {
         for (int i = 0; i < participants.size(); i++) {
             Participant participant = participants.get(i);
-            participant.setCode(i+1);
+            participant.setCode(Integer.toString(i+1));
         }
     }
     
     public boolean setMatchResult(int roundNumber,
-                                  int participantCode,
+                                  String participantCode,
                                   int gamesWon,
                                   int gamesLost) {
         for (Participant participant : participants) {
-            if (participant.getCode() == participantCode) {
+            if (participant.getCode().equals(participantCode)) {
                 setMatchResult(roundNumber, participant, gamesWon, gamesLost);
                 return true;
             }
@@ -278,8 +278,7 @@ public class TournamentImpl implements Tournament {
             }
             MatchResultEnum result = round
                     .getMatch(participant)
-                    .getMatchResult(participant)
-                    .getResult();
+                    .getMatchResult(participant);
             if (result != null) {
                 score += ruleSet.getPoints(result);
                 log.debug("Result for participant {} is {}, score set to {}", participant, result, score);

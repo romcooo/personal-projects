@@ -13,3 +13,9 @@
     border-right: none;
 }
 
+.pairing-table-col-score-divider {
+    margin: 0;
+    padding: 0;
+/*    font-size: 75%;*/
+}
+

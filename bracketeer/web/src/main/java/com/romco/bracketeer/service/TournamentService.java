@@ -15,7 +15,7 @@ public interface TournamentService {
     List<Participant> getParticipants();
     Participant addPlayer(String name);
     String removePlayer(String id);
-    void setResult(int roundId, int playerId, int gamesWon, int gamesLost);
+    void setResult(int roundId, String playerCode, int gamesWon, int gamesLost);
     void generateRound(int n);
     
     Collection<Tournament> getAllTournaments();

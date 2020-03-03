@@ -43,7 +43,7 @@
             <th class="pairing-table-h-match-number">#</th>
             <th class="pairing-table-h-name">Player 1</th>
             <th class="pairing-table-h-score"></th>
-            <th class="pairing-table-h-score"></th>
+            <th class="pairing-table-h-score-divider"></th>
             <th class="pairing-table-h-score"></th>
             <th class="pairing-table-h-name">Player 2</th>
             <th class="pairing-table-h-action">Action</th>
@@ -51,32 +51,35 @@
         </thead>
         
         <tbody>
-        <tr th:block th:each="match, iterStat : ${round.matches}">
-            <td class="pairing-table-col-name" th:text="${iterStat.count}">1</td>
-            <td class="pairing-table-col-name" th:text="${match.participants[0].name}">p1Name</td>
-            <td class="pairing-table-col-score">0</td>
+        <tr th:block th:each="match, iteration : ${round.matches}">
+            <td class="pairing-table-col-match-number" th:text="${iteration.count}">1</td>
+            <td class="pairing-table-col-name" th:id th:text="${match.participants[0].name}">p1Name</td>
+            <td class="pairing-table-col-score" contenteditable="true" id="qwetest"
+                th:text="${match.matchResultsForParticipant.get(match.participants[0]).gamesWon}">0</td>
             <td class="pairing-table-col-score-divider">:</td>
-            <td class="pairing-table-col-score">0</td>
+            <td class="pairing-table-col-score" contenteditable="true"
+                th:text="${match.matchResultsForParticipant.get(match.participants[1]).gamesWon}">0</td>
             <td class="pairing-table-col-name" th:text="${match.participants[1].name}">p2Name</td>
             <td class="pairing-table-col-action">
-<!--                <form th:action="@{/tournament/removePlayer?id={id}(id=${participant.id})}"-->
-<!--                      method="post">-->
-<!--                    <button class="player-remove-button table-action-button generic-button"-->
-<!--                            type="submit">Save</button>-->
-<!--                </form>-->
+                <form id="pairings-save-form-single-match"
+                      class="save"
+                      th:action="@{/tournament/__${tournamentCode}__/round/__${round.roundNumber}__/result?participant1=__${match.participants[0].code}__&gamesWon=__${qwetest}__}"
+                      method="post">
+                    <a href="javascript:$('#pairings-save-form-single-match').submit();">Save</a>
+                </form>
             </td>
         </tr>
         </tbody>
         
     </table>
 
-    <!--              TODO action needs to be updated to something like /tournament/{t}/round/{r}/save-->
     <div class="tournament-submit-buttons">
-        <form id="tournament-save-form"
+        <form id="pairings-save-form"
               class="save"
-              action="/tournament/new/save"
-              method="post">
-            <a href="javascript:$('#tournament-save-form').submit();">Save</a>
+              th:action="@{/tournament/__${tournamentCode}__/round/__${round.roundNumber}__/results/save}"
+              method="post"
+              th:object="${round}">
+            <a href="javascript:$('#pairings-save-form').submit();">Save All Results</a>
             <a>Generate next round pairings</a>
             <a>Clear</a>
         </form>

@@ -5,10 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -22,13 +19,12 @@ public class Match {
     private List<Participant> participants;
     private int bestOf;
     private boolean isBye;
-    
-    private Map<Participant, MatchResult> matchResults;
+    private Map<Participant, MatchResult> matchResultsForParticipant;
     private Round ofRound;
 
     public Match() {
         participants = new ArrayList<>();
-        matchResults = new HashMap<>();
+        matchResultsForParticipant = new HashMap<>();
     }
 
     public Match(Participant participant1) {
@@ -36,7 +32,8 @@ public class Match {
         
         participants.add(participant1);
 
-        matchResults.put(participant1, null);
+        MatchResult matchResult1 = new MatchResult(this, participant1, 0);
+        matchResultsForParticipant.put(participant1, matchResult1);
         
         this.isBye = true;
     }
@@ -47,12 +44,28 @@ public class Match {
         participants.add(participant1);
         participants.add(participant2);
 
-        matchResults.put(participant2, null);
-        matchResults.put(participant2, null);
+        MatchResult matchResult1 = new MatchResult(this, participant1, 0);
+        MatchResult matchResult2 = new MatchResult(this, participant2, 0);
+
+        matchResultsForParticipant.put(participant1, matchResult1);
+        matchResultsForParticipant.put(participant2, matchResult2);
+
+//        log.info("In Match constructor, match: {}", getMatchResultsForParticipant().get(participant1).getGamesWon());
 
         this.isBye = false;
     }
-    
+
+    public boolean setWinsByParticipantCode(String participantCode, int gamesWon) {
+        for (Participant participant : participants) {
+            if (participant.getCode().equals(participantCode)) {
+                matchResultsForParticipant.get(participant).setGamesWon(gamesWon);
+                return true;
+            }
+        }
+        log.warn(PARTICIPANT_NOT_FOUND_WARN_MESSAGE, participantCode);
+        return false;
+    }
+
     public long getId() {
         return id;
     }
@@ -80,7 +93,11 @@ public class Match {
     public void setOfRound(Round ofRound) {
         this.ofRound = ofRound;
     }
-    
+
+    public Map<Participant, MatchResult> getMatchResultsForParticipant() {
+        return matchResultsForParticipant;
+    }
+
     public List<Participant> getOthers(Participant participant) {
         return participants.stream()
                     .filter((p) -> !p.equals(participant))
@@ -103,27 +120,52 @@ public class Match {
         
         return others.get(0);
     }
-    
+
+    public boolean setMatchScore(Participant participant, int gamesWon) {
+        if (!participants.contains(participant)) {
+            log.warn(PARTICIPANT_NOT_FOUND_WARN_MESSAGE, participant);
+            return false;
+        }
+        MatchResult matchResult = new MatchResult(this, participant, gamesWon);
+        matchResultsForParticipant.put(participant, matchResult);
+        return true;
+    }
+
     public boolean setMatchScore(Participant participant, int gamesWon, int gamesLost) {
         // if participant is not of this match
         if (!participants.contains(participant)) {
             log.warn(PARTICIPANT_NOT_FOUND_WARN_MESSAGE, participant);
             return false;
         }
-        MatchResult matchResult = new MatchResult(this, participant, gamesWon, gamesLost);
-        MatchResult other = new MatchResult(this, getOther(participant), gamesLost, gamesWon);
-        matchResults.put(participant, matchResult);
-        matchResults.put(getOther(participant), other);
+        MatchResult matchResult = new MatchResult(this, participant, gamesWon);
+        MatchResult other = new MatchResult(this, getOther(participant), gamesLost);
+        matchResultsForParticipant.put(participant, matchResult);
+        matchResultsForParticipant.put(getOther(participant), other);
         return true;
     }
     
-    public MatchResult getMatchResult(Participant participant) {
-        if (matchResults.containsKey(participant)) {
-            return matchResults.get(participant);
-        } else {
+    public MatchResultEnum getMatchResult(Participant participant) {
+        if (!matchResultsForParticipant.containsKey(participant)) {
             log.warn(PARTICIPANT_NOT_FOUND_WARN_MESSAGE, participant);
             return null;
         }
+        MatchResultEnum matchResultEnum;
+        int gamesWon = matchResultsForParticipant.get(participant).getGamesWon();
+        if (matchResultsForParticipant.values()
+                                      .stream()
+                                      .filter((r) -> r.getForParticipant() != participant)
+                                      .anyMatch((r1) -> r1.getGamesWon() > gamesWon)) {
+            matchResultEnum = MatchResultEnum.LOSS;
+        } else if (matchResultsForParticipant
+                .values()
+                .stream()
+                .filter((r) -> r.getForParticipant() != participant)
+                .anyMatch((r1) -> r1.getGamesWon() == gamesWon)) {
+            matchResultEnum = MatchResultEnum.TIE;
+        } else {
+            matchResultEnum = MatchResultEnum.WIN;
+        }
+        return matchResultEnum;
     }
     
     public List<Participant> getParticipants() {

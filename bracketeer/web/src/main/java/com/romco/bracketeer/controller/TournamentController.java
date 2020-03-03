@@ -39,7 +39,7 @@ public class TournamentController {
     public Tournament tournament() {
         return service.getTournament();
     }
-    @ModelAttribute
+    @ModelAttribute("tournamentCode")
     public String tournamentCode() {
         if (service.getTournament() != null) {
             String value = service.getTournament().getCode();
