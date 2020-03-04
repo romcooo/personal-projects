@@ -136,6 +136,37 @@ public class TournamentController {
         return ViewNames.Tournament.ROUND;
     }
 
+    // == MATCH RESULTS
+    @PostMapping(Mappings.Tournament.Round.Match.RESULT)
+    public String postMatchResult(
+            @PathVariable(value = "roundNumber") int roundNumber,
+            @PathVariable(value = "matchNumber") int matchNumber,
+            @RequestParam(value = "participant1Score") int participant1Score,
+            @RequestParam(value = "participant2Score") int participant2Score,
+            Model model) {
+        String participant1Code = tournament().getRound(roundNumber)
+                                              .getMatch(matchNumber - 1)
+                                              .getParticipants()
+                                              .get(0)
+                                              .getCode();
+        String participant2Code = tournament().getRound(roundNumber)
+                                              .getMatch(matchNumber - 1)
+                                              .getParticipants()
+                                              .get(1)
+                                              .getCode();
+        service.getTournament().setMatchResult(roundNumber, participant1Code, participant1Score);
+        service.getTournament().setMatchResult(roundNumber, participant2Code, participant2Score);
+
+        log.info("In postMatchResult for roundNumber {}, matchNumber {}, scores are {} : {}",
+                 roundNumber,
+                 matchNumber,
+                 participant1Score,
+                 participant2Score);
+
+//        return ViewNames.Tournament.ROUND;
+        return Mappings.Tournament.Round.REDIRECT_WITH_NUMBER;
+    }
+
     // == ALL TOURNAMENTS AND FIND TOURNAMENT
     @GetMapping(Mappings.Tournament.ALL)
     public String getAllTournaments(Model model) {

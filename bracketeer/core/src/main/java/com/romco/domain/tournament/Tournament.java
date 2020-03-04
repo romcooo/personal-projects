@@ -20,11 +20,12 @@ public interface Tournament {
     
     boolean addParticipant(Participant participant);
     Participant removeParticipant(long id);
-    
+
+
     List<Participant> getParticipants();
     List<Participant> getParticipantsForAfterRound(int roundNumber);
     
-    Round getRound(int n);
+    Round getRound(int roundNumber);
     List<Round> getRounds();
 
     Round generateNextRound();
@@ -32,5 +33,9 @@ public interface Tournament {
 
     boolean setMatchResult(int roundNumber, Participant participant, int gamesWon, int gamesLost);
     boolean setMatchResult(int roundNumber, String participantCode, int gamesWon, int gamesLost);
+    boolean setMatchResult(int roundNumber,
+                           String participantCode,
+                           int gamesWon);
+
     void setStartingScore(Participant participant, double by);
 }

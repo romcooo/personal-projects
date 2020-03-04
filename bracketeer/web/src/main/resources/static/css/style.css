@@ -361,9 +361,14 @@ body a:hover {
     font-size: 60%;
 }
 
-
-
-
+.clickable {
+    
+    display: inline-block;
+    padding: 4px;
+    
+    text-decoration: none;
+    color: inherit;
+} 
 
 
 

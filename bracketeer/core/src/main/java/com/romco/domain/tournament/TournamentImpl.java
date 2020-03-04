@@ -182,14 +182,14 @@ public class TournamentImpl implements Tournament {
 
     /**
      * Returns round of specified number (first index is 0)
-     * @param n - number of round
+     * @param roundNumber - number of round
      * @return - nth round
      */
     @Override
-    public Round getRound(int n) {
-        Optional<Round> round = rounds.stream().filter((r) -> r.getRoundNumber() == n).findFirst();
+    public Round getRound(int roundNumber) {
+        Optional<Round> round = rounds.stream().filter((r) -> r.getRoundNumber() == roundNumber).findFirst();
         if (round.isEmpty()) {
-            log.info("round of number {} doesn't exist", n);
+            log.info("round of number {} doesn't exist", roundNumber);
             return null;
         }
         return round.get();
@@ -205,28 +205,27 @@ public class TournamentImpl implements Tournament {
         return participants.get(n);
     }
 
-    @Override
-    public boolean setMatchResult(int roundNumber,
-                                  Participant participant,
-                                  int gamesWon,
-                                  int gamesLost) {
-
-        Match match = rounds.get(roundNumber).getMatch(participant);
-        
-        match.setMatchScore(participant,
-                            gamesWon,
-                            gamesLost);
-
-        return false;
-    }
-    
     private void reconcileParticipantCodes() {
         for (int i = 0; i < participants.size(); i++) {
             Participant participant = participants.get(i);
             participant.setCode(Integer.toString(i+1));
         }
     }
-    
+
+    @Override
+    public boolean setMatchResult(int roundNumber,
+                                  Participant participant,
+                                  int gamesWon,
+                                  int gamesLost) {
+        getRound(roundNumber).getMatch(participant)
+                             .setMatchScore(participant,
+                                            gamesWon,
+                                            gamesLost);
+
+        return false;
+    }
+
+    @Override
     public boolean setMatchResult(int roundNumber,
                                   String participantCode,
                                   int gamesWon,
@@ -238,6 +237,21 @@ public class TournamentImpl implements Tournament {
             }
         }
         return false;
+    }
+
+    @Override
+    public boolean setMatchResult(int roundNumber,
+                                  String participantCode,
+                                  int gamesWon) {
+
+            for (Participant participant : participants) {
+                if (participant.getCode().equals(participantCode)) {
+                    getRound(roundNumber).getMatch(participant)
+                                         .setMatchScore(participant, gamesWon);
+                    return true;
+                }
+            }
+            return false;
     }
 
     @Override

@@ -37,11 +37,12 @@ class SwissMatcher implements Matcher {
             toPairList.sort(Comparator.comparingDouble(Participant::getScore).reversed());
             log.debug("After sorting: " + toPairList.toString());
         }
-        
+
         Round round = new Round();
-        
+
+        int matchCount = 1;
         // first need to check a bye
-            if (toPairList.size() % 2 == 1) {
+        if (toPairList.size() % 2 == 1) {
             int acceptableNumberOfByes = 0;
             for (int i = toPairList.size() - 1; i >= 0; i--) {
                 Participant participant = toPairList.get(i);
@@ -49,10 +50,13 @@ class SwissMatcher implements Matcher {
                     // create the bye match, then remove the participant
                     log.info("assigning bye to participant {}", participant);
                     Match match = new Match(participant);
-    
+
+                    match.setMatchNumber(matchCount);
+                    matchCount++;
+
                     participant.addPlayedMatch(match);
                     round.addMatch(match);
-                    
+
                     toPairList.remove(i);
                     break;
                 } else if (i == 0) {
@@ -94,6 +98,8 @@ class SwissMatcher implements Matcher {
                     log.info("matching {} with {}", current, next);
                     
                     Match match = new Match(current, next);
+                    match.setMatchNumber(matchCount);
+                    matchCount++;
                     log.debug(match.toString());
                     round.addMatch(match);
     

@@ -54,23 +54,33 @@
         <tr th:block th:each="match, iteration : ${round.matches}">
             <td class="pairing-table-col-match-number" th:text="${iteration.count}">1</td>
             <td class="pairing-table-col-name" th:id th:text="${match.participants[0].name}">p1Name</td>
-            <td class="pairing-table-col-score" contenteditable="true" id="qwetest"
-                th:text="${match.matchResultsForParticipant.get(match.participants[0]).gamesWon}">0</td>
+            <td class="pairing-table-col-score" contenteditable="true">
+                <input class="pairing-table-score-input"
+                       th:form="'pairings-save-form-single-match-' + ${iteration.count}"
+                       name="participant1Score"
+                       th:value="${match.matchResultsForParticipant.get(match.participants[0]).gamesWon}">
+            </td>
             <td class="pairing-table-col-score-divider">:</td>
-            <td class="pairing-table-col-score" contenteditable="true"
-                th:text="${match.matchResultsForParticipant.get(match.participants[1]).gamesWon}">0</td>
+            <td class="pairing-table-col-score" contenteditable="true">
+                <input class="pairing-table-score-input"
+                       th:form="'pairings-save-form-single-match-' + ${iteration.count}"
+                       name="participant2Score"
+                       th:value="${match.matchResultsForParticipant.get(match.participants[1]).gamesWon}">
+            </td>
+            
             <td class="pairing-table-col-name" th:text="${match.participants[1].name}">p2Name</td>
             <td class="pairing-table-col-action">
-                <form id="pairings-save-form-single-match"
+                <form th:id="'pairings-save-form-single-match-' + ${iteration.count}"
                       class="save"
-                      th:action="@{/tournament/__${tournamentCode}__/round/__${round.roundNumber}__/result?participant1=__${match.participants[0].code}__&gamesWon=__${qwetest}__}"
+                      th:action="@{/tournament/__${tournamentCode}__/round/__${round.roundNumber}__/match/__${match.matchNumber}__/result}"
                       method="post">
-                    <a href="javascript:$('#pairings-save-form-single-match').submit();">Save</a>
+                    <a class="clickable" th:href="'javascript:$(\'#pairings-save-form-single-match-' + ${iteration.count} + '\').submit();'">Save</a>
+<!--                    <a href="javascript:$('#pairings-save-form-single-match').submit();">Save</a>    -->
                 </form>
             </td>
         </tr>
         </tbody>
-        
+
     </table>
 
     <div class="tournament-submit-buttons">

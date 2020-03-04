@@ -19,3 +19,25 @@
 /*    font-size: 75%;*/
 }
 
+.pairing-table-score-input {
+    text-align: center;
+    font-size: inherit;
+    color: inherit;
+    background-color: transparent;
+    border: none;
+    margin: 0;
+    padding: 0;
+    width: 50px;
+    display: block;
+    resize: none;
+    
+}
+
+.pairing-table a {
+    
+    
+    display: inline-block;
+    
+    text-decoration: none;
+    color: inherit;
+}

@@ -1,10 +1,12 @@
 package com.romco.domain.tournament;
 
 import com.romco.domain.participant.Participant;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 public class Round {
     private static long idSequence = 1;
     private long id;
@@ -60,6 +62,16 @@ public class Round {
                 return match;
             }
         }
+        return null;
+    }
+
+    public Match getMatchByMatchNumber(int matchNumber) {
+        for (Match match : matches) {
+            if (match.getMatchNumber() == matchNumber) {
+                return match;
+            }
+        }
+        log.warn("No match with matchNumber {} found", matchNumber);
         return null;
     }
     

@@ -5,7 +5,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -16,6 +19,7 @@ public class Match {
             = "Match doesn't contain the provided participant: {}";
 
     private long id;
+    private int matchNumber;
     private List<Participant> participants;
     private int bestOf;
     private boolean isBye;
@@ -35,7 +39,7 @@ public class Match {
         MatchResult matchResult1 = new MatchResult(this, participant1, 0);
         matchResultsForParticipant.put(participant1, matchResult1);
         
-        this.isBye = true;
+        isBye = true;
     }
     
     public Match(Participant participant1, Participant participant2) {
@@ -52,7 +56,7 @@ public class Match {
 
 //        log.info("In Match constructor, match: {}", getMatchResultsForParticipant().get(participant1).getGamesWon());
 
-        this.isBye = false;
+        isBye = false;
     }
 
     public boolean setWinsByParticipantCode(String participantCode, int gamesWon) {
@@ -73,7 +77,15 @@ public class Match {
     public void setId(long id) {
         this.id = id;
     }
-    
+
+    public int getMatchNumber() {
+        return matchNumber;
+    }
+
+    public void setMatchNumber(int matchNumber) {
+        this.matchNumber = matchNumber;
+    }
+
     public int getBestOf() {
         return bestOf;
     }
