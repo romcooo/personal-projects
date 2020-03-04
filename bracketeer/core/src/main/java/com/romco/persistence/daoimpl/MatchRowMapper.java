@@ -13,7 +13,6 @@ public class MatchRowMapper implements RowMapper<Match> {
         Match match = new Match();
         
         match.setId(rs.getLong("id"));
-        match.setBestOf(rs.getInt("best_of"));
         match.setBye(rs.getBoolean("is_bye"));
     
         return match;

@@ -11,6 +11,7 @@ public class Round {
     private static long idSequence = 1;
     private long id;
     private int roundNumber;
+    private int bestOf;
     private List<Match> matches;
     private Tournament ofTournament;
     
@@ -39,7 +40,15 @@ public class Round {
     public void setRoundNumber(int roundNumber) {
         this.roundNumber = roundNumber;
     }
-    
+
+    public int getBestOf() {
+        return bestOf;
+    }
+
+    public void setBestOf(int bestOf) {
+        this.bestOf = bestOf;
+    }
+
     public Tournament getOfTournament() {
         return ofTournament;
     }

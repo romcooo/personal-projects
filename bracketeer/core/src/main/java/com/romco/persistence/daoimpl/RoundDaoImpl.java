@@ -19,8 +19,8 @@ import java.util.List;
 @Repository
 public class RoundDaoImpl implements RoundDao {
     public static final String TABLE_NAME = "round";
-    public static final String SELECT_ALL_WHERE = "SELECT id, tournament_id, round_number FROM " + TABLE_NAME + " WHERE ";
-    public static final String INSERT = "INSERT INTO " + TABLE_NAME + " (tournament_id, round_number) VALUES ";
+    public static final String SELECT_ALL_WHERE = "SELECT id, tournament_id, round_number, best_of FROM " + TABLE_NAME + " WHERE ";
+    public static final String INSERT = "INSERT INTO " + TABLE_NAME + " (tournament_id, round_number, best_of) VALUES ";
     public static final String UPDATE = "UPDATE " + TABLE_NAME + " SET ";
     
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
@@ -56,10 +56,11 @@ public class RoundDaoImpl implements RoundDao {
 
     @Override
     public long create(Round round) {
-        String sqlQuery = INSERT + "(:tournamentId, :roundNumber)";
+        String sqlQuery = INSERT + "(:tournamentId, :roundNumber, :bestOf)";
         SqlParameterSource source = new MapSqlParameterSource()
                 .addValue("tournamentId", round.getOfTournament().getId())
-                .addValue("roundNumber", round.getRoundNumber());
+                .addValue("roundNumber", round.getRoundNumber())
+                .addValue("bestOf", round.getBestOf());
         GeneratedKeyHolder generatedKeyHolder = new GeneratedKeyHolder();
         log.debug("In create for round {}, source: {}", round, source);
         if (namedParameterJdbcTemplate.update(sqlQuery, source, generatedKeyHolder) == 1) {

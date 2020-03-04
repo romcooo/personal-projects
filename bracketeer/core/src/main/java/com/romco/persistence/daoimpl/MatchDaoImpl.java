@@ -6,7 +6,6 @@ import com.romco.persistence.util.NamedParameterJdbcTemplateHolder;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
-import org.springframework.jdbc.support.GeneratedKeyHolder;
 
 import javax.sql.DataSource;
 import java.util.Collection;
@@ -16,8 +15,8 @@ public class MatchDaoImpl implements MatchDao {
     
     public static final String TABLE_NAME = "match";
     //TODO
-    public static final String SELECT_ALL_WHERE = "SELECT round_id, best_of, result, is_bye FROM " + TABLE_NAME + " WHERE ";
-    public static final String INSERT = "INSERT INTO " + TABLE_NAME + " (round_id, best_of, result, is_bye) VALUES ";
+    public static final String SELECT_ALL_WHERE = "SELECT round_id, result, is_bye FROM " + TABLE_NAME + " WHERE ";
+    public static final String INSERT = "INSERT INTO " + TABLE_NAME + " (round_id, result, is_bye) VALUES ";
     public static final String UPDATE = "UPDATE " + TABLE_NAME + " SET ";
     
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;

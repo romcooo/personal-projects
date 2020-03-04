@@ -21,7 +21,6 @@ public class Match {
     private long id;
     private int matchNumber;
     private List<Participant> participants;
-    private int bestOf;
     private boolean isBye;
     private Map<Participant, MatchResult> matchResultsForParticipant;
     private Round ofRound;
@@ -84,14 +83,6 @@ public class Match {
 
     public void setMatchNumber(int matchNumber) {
         this.matchNumber = matchNumber;
-    }
-
-    public int getBestOf() {
-        return bestOf;
-    }
-    
-    public void setBestOf(int bestOf) {
-        this.bestOf = bestOf;
     }
     
     public void setBye(boolean bye) {

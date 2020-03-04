@@ -1,7 +1,5 @@
 package com.romco.persistence.daoimpl;
 
-import com.romco.domain.participant.Participant;
-import com.romco.domain.participant.Player;
 import com.romco.domain.tournament.Round;
 import org.springframework.jdbc.core.RowMapper;
 
@@ -13,6 +11,7 @@ public class RoundRowMapper implements RowMapper<Round> {
     public Round mapRow(ResultSet rs, int rowNum) throws SQLException {
         Round round = new Round();
         round.setId(rs.getLong("id"));
+        round.setBestOf(rs.getInt("best_of"));
         return round;
     }
 }
