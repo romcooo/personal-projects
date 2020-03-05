@@ -28,11 +28,22 @@
 
 <script>
         $(function(){
-    $("#navbars-placeholder").load("/navbars.html");
+            $("#navbars-placeholder").load("/templates/navbars.html");
+//    $("#navbars-placeholder").load("../../static/navbars.html");
         });
-    </script>
+</script>
 
 <div class="main" align="center">
+    
+    <div id="top-buttons-placeholder">
+        top inner navigation
+        <div class="top-button-bar">
+            <a>Setup</a>
+            <a>Pairings</a>
+            <a>Standings</a>
+        </div>
+    </div>
+    
     <h1 id="title" th:text="'Round #'+${round.roundNumber}">Round #</h1>
 
 <!--    todo add class pairing-table and change this to it-->
@@ -58,14 +69,14 @@
                 <input class="pairing-table-score-input"
                        th:form="'pairings-save-form-single-match-' + ${iteration.count}"
                        name="participant1Score"
-                       th:value="${match.matchResultsForParticipant.get(match.participants[0]).gamesWon}">
+                       th:value="${match.getWinsForParticipant(match.participants[0])}">
             </td>
             <td class="pairing-table-col-score-divider">:</td>
             <td class="pairing-table-col-score" contenteditable="true">
                 <input class="pairing-table-score-input"
                        th:form="'pairings-save-form-single-match-' + ${iteration.count}"
                        name="participant2Score"
-                       th:value="${match.matchResultsForParticipant.get(match.participants[1]).gamesWon}">
+                       th:value="${match.getWinsForParticipant(match.participants[1])}">
             </td>
             
             <td class="pairing-table-col-name" th:text="${match.participants[1].name}">p2Name</td>
@@ -89,10 +100,18 @@
               th:action="@{/tournament/__${tournamentCode}__/round/__${round.roundNumber}__/results/save}"
               method="post"
               th:object="${round}">
-            <a href="javascript:$('#pairings-save-form').submit();">Save All Results</a>
-            <a>Generate next round pairings</a>
-            <a>Clear</a>
         </form>
+        <a href="javascript:$('#pairings-save-form').submit();">Save All Results</a>
+
+        <form id="tournament-generate-round-form"
+              class="generate-form"
+              th:action="@{/tournament/__${tournamentCode}__/round/generate?roundNumber=__${round.roundNumber}+1__}"
+              method="post">
+        </form>
+        <a href="javascript:$('#tournament-generate-round-form').submit();">Generate next round pairings</a>
+
+        <a>Clear</a>
+
     </div>
 
     <div class="bottom-note">

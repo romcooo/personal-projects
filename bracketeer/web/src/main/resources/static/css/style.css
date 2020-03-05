@@ -16,9 +16,12 @@ light:
 body {
     margin: 0 0;
     font-family: 'Ubuntu', sans-serif;
-    background-color: #eee;
+/*    background-color: #eee;*/
     font-weight: 300;
 
+/*    maybe this broke something, tbd*/
+    color: #ecf6fe;
+    
     background-color: #333;
     transition: color 0.25s;
 }
@@ -102,12 +105,13 @@ body a:hover {
     transition: color 0.25s;
 }
 
-.sidenav a:first-child {
-    padding-top: 15px;
+.sidenav>a:first-child {
+    padding-top: 30px;
 }
 
+
 .sidenav a {
-    padding: 5px 5px 10px 20px;
+    padding: 8px 5px 8px 20px;
     text-decoration: none;
     color: #ecf6fe;
     display: block;
@@ -127,6 +131,12 @@ body a:hover {
     font-size: 80%;
 /*    padding: 0 0 0 0;*/
     
+}
+
+.sidenav .subside a:last-child {
+/*    together with .sidenav a padding of 8px, 
+    this adds up to a 30px gap like in .sidenav>a:first-child */
+    margin-bottom: 22px;
 }
 
 /* == COMMON MAIN BODY & HEADERS == */
@@ -362,7 +372,6 @@ body a:hover {
 }
 
 .clickable {
-    
     display: inline-block;
     padding: 4px;
     
@@ -370,7 +379,9 @@ body a:hover {
     color: inherit;
 } 
 
-
+.not-clickable:hover {
+    color: #ecf6fe;
+}
 
 
 

@@ -35,8 +35,8 @@ public class Match {
         
         participants.add(participant1);
 
-        MatchResult matchResult1 = new MatchResult(this, participant1, 0);
-        matchResultsForParticipant.put(participant1, matchResult1);
+//        MatchResult matchResult1 = new MatchResult(this, participant1, 0);
+//        matchResultsForParticipant.put(participant1, matchResult1);
         
         isBye = true;
     }
@@ -47,13 +47,11 @@ public class Match {
         participants.add(participant1);
         participants.add(participant2);
 
-        MatchResult matchResult1 = new MatchResult(this, participant1, 0);
-        MatchResult matchResult2 = new MatchResult(this, participant2, 0);
-
-        matchResultsForParticipant.put(participant1, matchResult1);
-        matchResultsForParticipant.put(participant2, matchResult2);
-
-//        log.info("In Match constructor, match: {}", getMatchResultsForParticipant().get(participant1).getGamesWon());
+//        MatchResult matchResult1 = new MatchResult(this, participant1, 0);
+//        MatchResult matchResult2 = new MatchResult(this, participant2, 0);
+//
+//        matchResultsForParticipant.put(participant1, matchResult1);
+//        matchResultsForParticipant.put(participant2, matchResult2);
 
         isBye = false;
     }
@@ -61,7 +59,9 @@ public class Match {
     public boolean setWinsByParticipantCode(String participantCode, int gamesWon) {
         for (Participant participant : participants) {
             if (participant.getCode().equals(participantCode)) {
-                matchResultsForParticipant.get(participant).setGamesWon(gamesWon);
+    
+                MatchResult matchResult1 = new MatchResult(this, participant, gamesWon);
+                matchResultsForParticipant.put(participant, matchResult1);
                 return true;
             }
         }
@@ -177,5 +177,19 @@ public class Match {
     
     public boolean isBye() {
         return isBye;
+    }
+    
+    public int getWinsForParticipant(Participant participant) {
+        if (!participants.contains(participant)) {
+            log.warn(PARTICIPANT_NOT_FOUND_WARN_MESSAGE, participant);
+            return 0;
+        }
+        
+        if (!matchResultsForParticipant.containsKey(participant)) {
+            log.info("Participant does not yet have a submitted result: {}", participant);
+            return 0;
+        }
+        
+        return matchResultsForParticipant.get(participant).getGamesWon();
     }
 }

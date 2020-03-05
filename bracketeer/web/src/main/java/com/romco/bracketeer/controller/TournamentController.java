@@ -53,6 +53,13 @@ public class TournamentController {
 
     // == request methods
 
+    // == INDEX
+    @GetMapping("/")
+    public String index(Model model) {
+        log.info("index page loaded");
+        return "index";
+    }
+    
     // == NEW TOURNAMENT
     @GetMapping(Mappings.Tournament.NEW)
     public String newTournament(Model model) {

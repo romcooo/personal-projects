@@ -3,7 +3,7 @@ package com.romco.bracketeer.util;
 public final class ViewNames {
     public static final String REDIRECT = "redirect:/";
 
-    public static final String HOME = "/static/index.html";
+    public static final String HOME = "/templates/index.html";
 
 
     public static class Tournament {

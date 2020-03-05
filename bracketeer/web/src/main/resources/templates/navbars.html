@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -25,10 +26,20 @@
 </div>
 
 <div class="sidenav">
-        <a>Tournaments</a>
-        <div class="subside">
-            <a href="/tournament/new">New</a>
-            <a href="/tournament/find">Find Existing</a>
-            <a href="/tournament/all">All</a>
+    <a class="not-clickable">Tournaments</a>
+    <div class="subside">
+        <a href="/tournament/new">New</a>
+        <a href="/tournament/find">Find Existing</a>
+        <a href="/tournament/all">All</a>
+    </div>
+    <div class=sidenav-current>
+        <p th:text="'REPLACED BY THYMELEAF'">This would be replaced by Thymeleaf.</p>
+        <a class="not-clickable">Current</a>
+        <div class="subside subside-current">
+            <a>Standings</a>
+            <a>Pairings</a>
+            <a>List of Players</a>
+            <a>Settings</a>
         </div>
+    </div>
 </div>
