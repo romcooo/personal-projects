@@ -5,42 +5,35 @@
 
     <link rel="stylesheet" type="text/css" href="/css/style.css">
     <link rel="stylesheet" type="text/css" href="/css/queries.css">
-    
-    
+
+
 <!--    for brackets:-->
     <link rel="stylesheet" type="text/css" href="../../static/css/style.css">
     <link rel="stylesheet" type="text/css" href="../../static/css/queries.css">
-    
+
     <link href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,400i&display=swap" rel="stylesheet">
-    
+
     <title>Bracketeer - New Tournament</title>
-    
+
     <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
 </head>
-    
+
 <body>
-    
-    <div id="navbars-placeholder">
-        navbars
+
+    <div th:replace="fragments/navbars.html">
+        Topnav bar fragment
     </div>
-    
-<!--    <script>-->
-<!--        $(function(){-->
-<!--            $("#navbars-placeholder").load("../../static/navbars.html");-->
-<!--    $("#navbars-placeholder").load("/navbars.html");-->
-<!--        });-->
-<!--    </script>-->
 
     <script>
         $(function(){
             $("#navbars-placeholder").load("/templates/navbars.html");
         });
     </script>
-    
+
     <div class="main" align="center">
         <h1 id="title">All Tournaments</h1>
-        
-        
+
+
         <table class="tournament-table" cellspacing="0">
             <thead>
                 <tr>

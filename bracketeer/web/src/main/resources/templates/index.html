@@ -19,8 +19,12 @@
 </head>
     
 <body>
-    <div id="navbars-placeholder">
-        Topnav bar
+<!--    <div id="navbars-placeholder">-->
+<!--        Topnav bar-->
+<!--    </div> -->
+
+    <div th:replace="fragments/navbars.html">
+        Topnav bar fragment
     </div>
     
 <!--    <script>-->
@@ -28,12 +32,6 @@
 <!--            $("#navbars-placeholder").load("/templates/navbars.html");-->
 <!--        });-->
 <!--    </script>-->
-
-    <script>
-        $(function(){
-            $("#navbars-placeholder").load("/templates/navbars.html");
-        });
-    </script>
 
     <div class="main">
         

@@ -19,119 +19,118 @@
 </head>
 
 <body>
+    <div th:replace="fragments/navbars.html">
+        Topnav bar fragment
+    </div>
 
-<div id="navbars-placeholder">
-    navbars
-</div>
+<!--    <script>-->
+<!--        $(function(){-->
+<!--            $("#navbars-placeholder").load("/templates/navbars.html");-->
+<!--        });-->
+<!--    </script>-->
 
-<script>
-        $(function(){
-            $("#navbars-placeholder").load("/templates/navbars.html");
-        });
-    </script>
+    <div class="main" align="center">
+        <h1 id="title">New Tournament</h1>
 
-<div class="main" align="center">
-    <h1 id="title">New Tournament</h1>
+        <div class="options">
+            <ul>
+                <li>Tournament Style:
+                    <div class="dropdown">
+                        Swiss
+                        <!--                        <i class="fa fa-caret-down"></i>-->
+                        <!--
 
-    <div class="options">
-        <ul>
-            <li>Tournament Style:
-                <div class="dropdown">
-                    Swiss
-                    <!--                        <i class="fa fa-caret-down"></i>-->
-                    <!--
+                                                <select class="selection">
+                                                        <option value="SWISS">Swiss</option>
+                                                        <option value="ROUND_ROBIN">Round Robin</option>
+                                                        <option value="SINGLE_ELIMINATION">Single Elim</option>
+                                                        <option value="DOUBLE_ELIMINATION">Double Elim</option>
+                                                </select>
+                        -->
 
-                                            <select class="selection">
-                                                    <option value="SWISS">Swiss</option>
-                                                    <option value="ROUND_ROBIN">Round Robin</option>
-                                                    <option value="SINGLE_ELIMINATION">Single Elim</option>
-                                                    <option value="DOUBLE_ELIMINATION">Double Elim</option>
-                                            </select>
-                    -->
-
-                    <div class="dropdown-content">
-                        <a>Swiss</a>
-                        <a>Round Robin</a>
-                        <a>Single Elim</a>
-                        <a>Double Elim</a>
+                        <div class="dropdown-content">
+                            <a>Swiss</a>
+                            <a>Round Robin</a>
+                            <a>Single Elim</a>
+                            <a>Double Elim</a>
+                        </div>
                     </div>
-                </div>
-            </li>
-            <li>item 2</li>
-        </ul>
+                </li>
+                <li>item 2</li>
+            </ul>
+        </div>
+
+        <table class="player-table" cellspacing="0">
+            <thead>
+            <tr>
+                <th class="table-col-id">#</th>
+                <th class="table-col-name">Name</th>
+                <th class="table-col-action">Action</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            <tr th:block th:each="participant, iteration : ${participants}">
+                <td id="idField" class="table-col-id" th:text="${iteration.count}">ex</td>
+                <td class="table-player-name" th:text="${participant.name}">example</td>
+                <td class="table-col-action">
+                    <form th:action="@{/tournament/removePlayer?id={id}(id=${participant.id})}"
+                          method="post">
+                        <button class="player-remove-button table-action-button generic-button"
+                                type="submit">Remove</button>
+                    </form>
+                </td>
+            </tr>
+            <tr>
+                <td class="table-col-id">-</td>
+                <td class="new-tournament-players-td">
+                    <form id="newTournamentAddPlayerForm"
+                          class="new-tournament-players-form"
+                          action="/tournament/addPlayer"
+                          method="POST">
+                        <!--                            <label id="add-player" for="playerName"></label>-->
+                        <input id="playerName"
+                               class="form-player-name"
+                               type="text"
+                               name="playerName"
+                               autofocus="autofocus"/>
+                        <!--                                <input id="add-button table-action-button" class="player-add-button generic-button" type="submit" value="Add"/>-->
+                    </form>
+                </td>
+                <td class="table-col-action">
+                    <button class="player-add-button generic-button"
+                            type="submit"
+                            form="newTournamentAddPlayerForm"
+                            value="Submit">Add</button>
+                </td>
+
+            </tr>
+            </tbody>
+        </table>
+
+        <div class="tournament-submit-buttons">
+            <form id="tournament-save-form"
+                  class="save"
+                  action="/tournament/new/save"
+                  method="post">
+            </form>
+
+            <form id="tournament-generate-first-round-form"
+                  class="generate-form"
+                  th:action="@{/tournament/__${tournamentCode}__/round/generate?roundNumber=1}"
+                  method="post">
+            </form>
+
+            <a href="javascript:$('#tournament-save-form').submit();">Save</a>
+            <a href="javascript:$('#tournament-generate-first-round-form').submit();">Generate first round pairings</a>
+            <a>Clear</a>
+
+        </div>
+
+        <div class="bottom-note">
+            <p>Note: Once you generate the first round, you cannot change the format.</p>
+        </div>
+
     </div>
-
-    <table class="player-table" cellspacing="0">
-        <thead>
-        <tr>
-            <th class="table-col-id">#</th>
-            <th class="table-col-name">Name</th>
-            <th class="table-col-action">Action</th>
-        </tr>
-        </thead>
-        <tbody>
-
-        <tr th:block th:each="participant, iteration : ${participants}">
-            <td id="idField" class="table-col-id" th:text="${iteration.count}">ex</td>
-            <td class="table-player-name" th:text="${participant.name}">example</td>
-            <td class="table-col-action">
-                <form th:action="@{/tournament/removePlayer?id={id}(id=${participant.id})}"
-                      method="post">
-                    <button class="player-remove-button table-action-button generic-button"
-                            type="submit">Remove</button>
-                </form>
-            </td>
-        </tr>
-        <tr>
-            <td class="table-col-id">-</td>
-            <td class="new-tournament-players-td">
-                <form id="newTournamentAddPlayerForm"
-                      class="new-tournament-players-form"
-                      action="/tournament/addPlayer"
-                      method="POST">
-                    <!--                            <label id="add-player" for="playerName"></label>-->
-                    <input id="playerName"
-                           class="form-player-name"
-                           type="text"
-                           name="playerName"
-                           autofocus="autofocus"/>
-                    <!--                                <input id="add-button table-action-button" class="player-add-button generic-button" type="submit" value="Add"/>-->
-                </form>
-            </td>
-            <td class="table-col-action">
-                <button class="player-add-button generic-button"
-                        type="submit"
-                        form="newTournamentAddPlayerForm"
-                        value="Submit">Add</button>
-            </td>
-
-        </tr>
-        </tbody>
-    </table>
-
-    <div class="tournament-submit-buttons">
-        <form id="tournament-save-form"
-              class="save"
-              action="/tournament/new/save"
-              method="post">
-        </form>
-        
-        <form id="tournament-generate-first-round-form"
-              class="generate-form"
-              th:action="@{/tournament/__${tournamentCode}__/round/generate?roundNumber=1}"
-              method="post">
-        </form>
-        
-        <a href="javascript:$('#tournament-save-form').submit();">Save</a>
-        <a href="javascript:$('#tournament-generate-first-round-form').submit();">Generate first round pairings</a>
-        <a>Clear</a>
-        
-    </div>
-
-    <div class="bottom-note">
-        <p>Note: Once you generate the first round, you cannot change the format.</p>
-    </div>
-
-</div>
 </body>
 </html>

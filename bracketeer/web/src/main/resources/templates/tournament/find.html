@@ -19,16 +19,9 @@
     <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
 </head>
 <body>
-    <div id="navbars-placeholder">
-        navbars
+    <div th:replace="fragments/navbars.html">
+        Topnav bar fragment
     </div>
-    
-<!--    <script>-->
-<!--        $(function(){-->
-<!--            $("#navbars-placeholder").load("../../static/navbars.html");-->
-<!--    $("#navbars-placeholder").load("/navbars.html");-->
-<!--        });-->
-<!--    </script>-->
 
     <script>
         $(function(){

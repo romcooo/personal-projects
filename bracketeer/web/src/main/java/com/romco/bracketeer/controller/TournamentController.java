@@ -36,9 +36,12 @@ public class TournamentController {
     public List<Participant> participants() {
         return service.getParticipants();
     }
+    
+    @ModelAttribute
     public Tournament tournament() {
         return service.getTournament();
     }
+    
     @ModelAttribute("tournamentCode")
     public String tournamentCode() {
         if (service.getTournament() != null) {
@@ -47,8 +50,10 @@ public class TournamentController {
                 return value;
             }
         }
-        log.warn("Tournament code is not available, returning -1.");
-        return "-1";
+//        log.warn("Tournament code is not available, returning -1.");
+//        return "-1";
+        log.warn("Tournament code is not available, returning null.");
+        return null;
     }
 
     // == request methods
@@ -188,5 +193,10 @@ public class TournamentController {
         return ViewNames.Tournament.FIND;
     }
 
+//    @GetMapping("/navbars")
+//    public String navbars() {
+//        log.info("In navbars()");
+//        return "/templates/fragments/navbars.html";
+//    }
 
 }

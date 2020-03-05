@@ -4,6 +4,7 @@ import com.romco.domain.tournament.Match;
 import com.romco.domain.participant.Participant;
 import com.romco.domain.tournament.Round;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -86,7 +87,9 @@ class SwissMatcher implements Matcher {
                                       "logical fault has happened." +
                                       "\nTrying to pair participant: {} " +
                                       "\n withParticipants: {}", current, toPairList);
-                    break;
+                    // TODO fix an error where if this happens it keeps looping forever
+                    throw new RuntimeException("everyone already played with everyone in a swiss tournament");
+//                    break;
                 }
                 Participant next = toPairList.get(i2);
                 log.debug("next: {}", next);

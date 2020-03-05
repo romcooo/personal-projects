@@ -22,102 +22,118 @@
 
 <body>
 
-<div id="navbars-placeholder">
-    navbars
-</div>
+    <div th:replace="fragments/navbars.html">
+        Topnav bar fragment
+    </div>
 
-<script>
-        $(function(){
-            $("#navbars-placeholder").load("/templates/navbars.html");
-//    $("#navbars-placeholder").load("../../static/navbars.html");
-        });
-</script>
+<!--    <script>-->
+<!--                $(function(){-->
+<!--                    $("#navbars-placeholder").load("/templates/navbars.html");-->
+<!--        //    $("#navbars-placeholder").load("../../static/navbars.html");-->
+<!--                });-->
+<!--        -->
+<!--    </script>-->
 
-<div class="main" align="center">
-    
-    <div id="top-buttons-placeholder">
-        top inner navigation
-        <div class="top-button-bar">
-            <a>Setup</a>
-            <a>Pairings</a>
-            <a>Standings</a>
+    <div class="main" align="center">
+
+        <div class="top-buttons">
+<!--
+            <div class="dropdown">
+                <select th:field="${round.roundNumber}">
+                    <option th:each="round : ${tournament.rounds}"
+                            th:value="${round.roundNumber}"
+                            th:text="${round.roundNumber}">roundNumber</option>
+                </select>
+            </div>
+-->
+            <div class="dropdown">
+                Select Round &#x1F863;
+                <div class="dropdown-content">
+                    <a th:each="round : ${tournament.rounds}"
+                       th:value="${round.roundNumber}"
+                       th:text="${round.roundNumber}"
+                       th:href="@{/tournament/{tournamentCode}/round/{roundNumber}
+                                (tournamentCode=${tournamentCode},
+                                roundNumber = ${round.roundNumber})}">a</a>
+                </div>
+            </div>
         </div>
+
+        <h1 id="title" th:text="'Round #'+${round.roundNumber}">Round #</h1>
+
+        <!--    todo add class pairing-table and change this to it-->
+        <table class="pairing-table" cellspacing="0">
+
+            <thead>
+            <tr>
+                <th class="pairing-table-h-match-number">#</th>
+                <th class="pairing-table-h-name">Player 1</th>
+                <th class="pairing-table-h-score"></th>
+                <th class="pairing-table-h-score-divider"></th>
+                <th class="pairing-table-h-score"></th>
+                <th class="pairing-table-h-name">Player 2</th>
+                <th class="pairing-table-h-action">Action</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr th:block th:each="match, iteration : ${round.matches}">
+                <td class="pairing-table-col-match-number" th:text="${iteration.count}">1</td>
+                <td class="pairing-table-col-name" th:id th:text="${match.participants[0].name}">p1Name</td>
+                <td class="pairing-table-col-score" contenteditable="true">
+                    <input class="pairing-table-score-input"
+                           th:form="'pairings-save-form-single-match-' + ${iteration.count}"
+                           name="participant1Score"
+                           th:value="${match.getWinsForParticipant(match.participants[0])}">
+                </td>
+                <td class="pairing-table-col-score-divider">:</td>
+                <td class="pairing-table-col-score" contenteditable="true">
+                    <input class="pairing-table-score-input"
+                           th:form="'pairings-save-form-single-match-' + ${iteration.count}"
+                           name="participant2Score"
+                           th:value="${match.getWinsForParticipant(match.participants[1])}">
+                </td>
+
+                <td class="pairing-table-col-name" th:text="${match.participants[1].name}">p2Name</td>
+                <td class="pairing-table-col-action">
+                    <form th:id="'pairings-save-form-single-match-' + ${iteration.count}"
+                          class="save"
+                          th:action="@{/tournament/__${tournamentCode}__/round/__${round.roundNumber}__/match/__${match.matchNumber}__/result}"
+                          method="post">
+                        <a class="clickable"
+                           th:href="'javascript:$(\'#pairings-save-form-single-match-' + ${iteration.count} + '\').submit();'">Save</a>
+                        <!--                    <a href="javascript:$('#pairings-save-form-single-match').submit();">Save</a>    -->
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+
+        </table>
+
+        <div class="tournament-submit-buttons">
+            <form id="pairings-save-form"
+                  class="save"
+                  th:action="@{/tournament/__${tournamentCode}__/round/__${round.roundNumber}__/results/save}"
+                  method="post"
+                  th:object="${round}">
+            </form>
+            <a href="javascript:$('#pairings-save-form').submit();">Save All Results</a>
+
+            <form id="tournament-generate-round-form"
+                  class="generate-form"
+                  th:action="@{/tournament/__${tournamentCode}__/round/generate?roundNumber=__${round.roundNumber}+1__}"
+                  method="post">
+            </form>
+            <a href="javascript:$('#tournament-generate-round-form').submit();">Generate next round pairings</a>
+
+            <a>Clear</a>
+
+        </div>
+
+        <div class="bottom-note">
+            <p>Note: If you generate the next round after it has been previously generated, you will lose that data.</p>
+        </div>
+
     </div>
-    
-    <h1 id="title" th:text="'Round #'+${round.roundNumber}">Round #</h1>
-
-<!--    todo add class pairing-table and change this to it-->
-    <table class="pairing-table" cellspacing="0">
-        
-        <thead>
-        <tr>
-            <th class="pairing-table-h-match-number">#</th>
-            <th class="pairing-table-h-name">Player 1</th>
-            <th class="pairing-table-h-score"></th>
-            <th class="pairing-table-h-score-divider"></th>
-            <th class="pairing-table-h-score"></th>
-            <th class="pairing-table-h-name">Player 2</th>
-            <th class="pairing-table-h-action">Action</th>
-        </tr>
-        </thead>
-        
-        <tbody>
-        <tr th:block th:each="match, iteration : ${round.matches}">
-            <td class="pairing-table-col-match-number" th:text="${iteration.count}">1</td>
-            <td class="pairing-table-col-name" th:id th:text="${match.participants[0].name}">p1Name</td>
-            <td class="pairing-table-col-score" contenteditable="true">
-                <input class="pairing-table-score-input"
-                       th:form="'pairings-save-form-single-match-' + ${iteration.count}"
-                       name="participant1Score"
-                       th:value="${match.getWinsForParticipant(match.participants[0])}">
-            </td>
-            <td class="pairing-table-col-score-divider">:</td>
-            <td class="pairing-table-col-score" contenteditable="true">
-                <input class="pairing-table-score-input"
-                       th:form="'pairings-save-form-single-match-' + ${iteration.count}"
-                       name="participant2Score"
-                       th:value="${match.getWinsForParticipant(match.participants[1])}">
-            </td>
-            
-            <td class="pairing-table-col-name" th:text="${match.participants[1].name}">p2Name</td>
-            <td class="pairing-table-col-action">
-                <form th:id="'pairings-save-form-single-match-' + ${iteration.count}"
-                      class="save"
-                      th:action="@{/tournament/__${tournamentCode}__/round/__${round.roundNumber}__/match/__${match.matchNumber}__/result}"
-                      method="post">
-                    <a class="clickable" th:href="'javascript:$(\'#pairings-save-form-single-match-' + ${iteration.count} + '\').submit();'">Save</a>
-<!--                    <a href="javascript:$('#pairings-save-form-single-match').submit();">Save</a>    -->
-                </form>
-            </td>
-        </tr>
-        </tbody>
-
-    </table>
-
-    <div class="tournament-submit-buttons">
-        <form id="pairings-save-form"
-              class="save"
-              th:action="@{/tournament/__${tournamentCode}__/round/__${round.roundNumber}__/results/save}"
-              method="post"
-              th:object="${round}">
-        </form>
-        <a href="javascript:$('#pairings-save-form').submit();">Save All Results</a>
-
-        <form id="tournament-generate-round-form"
-              class="generate-form"
-              th:action="@{/tournament/__${tournamentCode}__/round/generate?roundNumber=__${round.roundNumber}+1__}"
-              method="post">
-        </form>
-        <a href="javascript:$('#tournament-generate-round-form').submit();">Generate next round pairings</a>
-
-        <a>Clear</a>
-
-    </div>
-
-    <div class="bottom-note">
-        <p>Note: If you generate the next round after it has been previously generated, you will lose that data.</p>
-    </div>
-
-</div>
 </body>
 </html>
