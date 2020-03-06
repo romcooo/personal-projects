@@ -34,9 +34,9 @@ public interface Tournament {
     Round generateNextRound();
     Round generateRound(int n);
 
-    boolean setMatchResult(int roundNumber, Participant participant, int gamesWon, int gamesLost);
-    boolean setMatchResult(int roundNumber, String participantCode, int gamesWon, int gamesLost);
-    boolean setMatchResult(int roundNumber, String participantCode, int gamesWon);
+    List<MatchResult> setMatchResult(int roundNumber, Participant participant, int gamesWon, int gamesLost);
+    List<MatchResult> setMatchResult(int roundNumber, String participantCode, int gamesWon, int gamesLost);
+    List<MatchResult> setMatchResult(int roundNumber, String participantCode, int gamesWon);
 
     void setStartingScore(Participant participant, double by);
 }

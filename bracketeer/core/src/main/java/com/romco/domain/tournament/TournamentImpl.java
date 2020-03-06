@@ -180,6 +180,7 @@ public class TournamentImpl implements Tournament {
         Matcher matcher = type.buildMatcher();
         Round round = matcher.generateRound(Collections.unmodifiableList(participants));
         round.setRoundNumber(rounds.size()+1);
+        round.setOfTournament(this);
         rounds.add(round);
 
         return round;
@@ -223,47 +224,45 @@ public class TournamentImpl implements Tournament {
     }
 
     @Override
-    public boolean setMatchResult(int roundNumber,
+    public List<MatchResult> setMatchResult(int roundNumber,
                                   Participant participant,
                                   int gamesWon,
                                   int gamesLost) {
-        getRound(roundNumber).getMatch(participant)
-                             .setMatchScore(participant,
-                                            gamesWon,
-                                            gamesLost);
+        return getRound(roundNumber).getMatch(participant)
+                                    .setMatchScore(participant,
+                                                   gamesWon,
+                                                   gamesLost);
 
-        return false;
+//        return Collections.emptyList();
     }
 
     @Override
-    public boolean setMatchResult(int roundNumber,
+    public List<MatchResult> setMatchResult(int roundNumber,
                                   String participantCode,
                                   int gamesWon,
                                   int gamesLost) {
         for (Participant participant : participants) {
             if (participant.getCode().equals(participantCode)) {
-                setMatchResult(roundNumber, participant, gamesWon, gamesLost);
-                return true;
+                return setMatchResult(roundNumber, participant, gamesWon, gamesLost);
             }
         }
-        return false;
+        return Collections.emptyList();
     }
 
     @Override
-    public boolean setMatchResult(int roundNumber,
+    public List<MatchResult> setMatchResult(int roundNumber,
                                   String participantCode,
                                   int gamesWon) {
 
             for (Participant participant : participants) {
                 if (participant.getCode().equals(participantCode)) {
-                    getRound(roundNumber).getMatch(participant)
-                                         .setMatchScore(participant, gamesWon);
-                    return true;
+                    return getRound(roundNumber).getMatch(participant)
+                                                .setMatchScore(participant, gamesWon);
                 }
             }
-            return false;
+        return Collections.emptyList();
     }
-
+    
     @Override
     public List<Participant> getParticipants() {
         updateParticipants();

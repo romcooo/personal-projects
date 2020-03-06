@@ -1,22 +1,17 @@
 package com.romco.bracketeer.service;
 
 import com.romco.bracketeer.util.Message;
-import com.romco.domain.tournament.Match;
-import com.romco.domain.tournament.Round;
+import com.romco.domain.tournament.*;
 import com.romco.persistence.dao.*;
 import com.romco.domain.matcher.TournamentFormat;
 import com.romco.domain.participant.Participant;
 import com.romco.domain.participant.Player;
-import com.romco.domain.tournament.Tournament;
-import com.romco.domain.tournament.TournamentImpl;
 import com.romco.domain.util.MockDataModel;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 @Slf4j
 @Service
@@ -62,8 +57,9 @@ public class TournamentServiceImpl implements TournamentService {
             List<Participant> participants = participantDao.retrieveByTournamentId(tournament.getId());
             for (Participant participant : participants) {
                 participant.setOfTournament(tournament);
+                tournament.addParticipant(participant);
             }
-            tournament.setParticipants(participants);
+//            tournament.setParticipants(participants);
             
             // get rounds and add them to the tournament
             List<Round> rounds = roundDao.retrieveByTournamentId(tournament.getId());
@@ -74,6 +70,18 @@ public class TournamentServiceImpl implements TournamentService {
                 List<Match> matches = matchDao.retrieveByRoundId(round.getId());
                 for (Match match : matches) {
                     match.setOfRound(round);
+                    
+                    Map<MatchResult, Long> matchResults = matchResultDao.retrieveByMatchId(match.getId());
+                    for (MatchResult matchResult : matchResults.keySet()) {
+                        matchResult.setOfMatch(match);
+                        matchResult.setForParticipant(participants.stream()
+                                                                  .filter(participant -> participant.getId() == matchResults.get(matchResult))
+                                                                  .findAny()
+                                                                  .get());
+                        match.addMatchResult(matchResult);
+                    }
+                    
+                    
                 }
                 round.setMatches(matches);
                 
@@ -137,9 +145,14 @@ public class TournamentServiceImpl implements TournamentService {
     
     @Override
     public void setResult(int roundNumber, String participantCode, int gamesWon, int gamesLost) {
-        tournament.setMatchResult(roundNumber, participantCode, gamesWon, gamesLost);
-        // TODO persistence
-        
+        List<MatchResult> matchResults = tournament.setMatchResult(roundNumber, participantCode, gamesWon, gamesLost);
+        if (!matchResults.isEmpty()){
+            // TODO persistence
+            for (MatchResult matchResult : matchResults) {
+                log.debug("in setResult, creating matchResult {}", matchResult);
+                matchResultDao.create(matchResult);
+            }
+        }
     }
     
     @Override
@@ -147,6 +160,10 @@ public class TournamentServiceImpl implements TournamentService {
         Round round = tournament.generateRound(n);
         roundDao.create(round);
         log.debug("Generated and stored round: {}", round);
+        for (Match match : round.getMatches()) {
+            matchDao.create(match);
+            log.debug("Stored match: {}", match);
+        }
     }
     
     @Override

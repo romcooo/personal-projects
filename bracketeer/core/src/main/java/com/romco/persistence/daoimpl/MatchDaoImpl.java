@@ -5,19 +5,22 @@ import com.romco.domain.tournament.Round;
 import com.romco.persistence.dao.MatchDao;
 import com.romco.persistence.util.NamedParameterJdbcTemplateHolder;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
 import java.util.Collection;
 import java.util.List;
 
 @Slf4j
+@Repository
 public class MatchDaoImpl implements MatchDao {
     
-    public static final String TABLE_NAME = "match";
+    public static final String TABLE_NAME = "`match`";
     //TODO
     public static final String SELECT_ALL_WHERE = "SELECT round_id, is_bye, match_number FROM " +
             TABLE_NAME + " WHERE ";
@@ -26,6 +29,7 @@ public class MatchDaoImpl implements MatchDao {
     
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
     
+    @Autowired
     @Override
     public void setDataSource(DataSource dataSource) {
         namedParameterJdbcTemplate = NamedParameterJdbcTemplateHolder.get(dataSource);
@@ -33,7 +37,7 @@ public class MatchDaoImpl implements MatchDao {
     
     @Override
     public List<Match> retrieveByRoundId(long roundId) {
-        String sqlQuery = SELECT_ALL_WHERE + "(round_id = :roundId)";
+        String sqlQuery = SELECT_ALL_WHERE + "round_id = :roundId";
         SqlParameterSource source = new MapSqlParameterSource().addValue("roundId", roundId);
         List<Match> matches = namedParameterJdbcTemplate.query(sqlQuery, source, new MatchRowMapper());
         return matches;

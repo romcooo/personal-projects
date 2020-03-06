@@ -53,6 +53,7 @@ class SwissMatcher implements Matcher {
                     Match match = new Match(participant);
 
                     match.setMatchNumber(matchCount);
+                    match.setOfRound(round);
                     matchCount++;
 
                     participant.addPlayedMatch(match);
@@ -102,7 +103,9 @@ class SwissMatcher implements Matcher {
                     
                     Match match = new Match(current, next);
                     match.setMatchNumber(matchCount);
+                    match.setOfRound(round);
                     matchCount++;
+                    
                     log.debug(match.toString());
                     round.addMatch(match);
     

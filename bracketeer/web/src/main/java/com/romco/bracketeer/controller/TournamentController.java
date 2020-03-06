@@ -30,7 +30,6 @@ public class TournamentController {
     }
 
     // == model attributes
-//    @ModelAttribute //-- idk I guess this is not really necessary :D
     public Collection<Tournament> allTournaments() {
         return service.getAllTournaments();
     }
@@ -117,11 +116,6 @@ public class TournamentController {
     public String getTournamentByCode(@PathVariable(value = "tournamentCode") String tournamentCode, Model model) {
         log.info("In getTournamentByCode with tournamentCode {}", tournamentCode);
         service.getTournamentByCode(tournamentCode);
-
-//        if (tournament().getCode() != null) {
-//            log.info("code is not null ");
-//            model.addAttribute("tournamentCode", tournament().getCode());
-//        }
         model.addAttribute("participants", participants());
         return ViewNames.Tournament.SETUP;
     }
