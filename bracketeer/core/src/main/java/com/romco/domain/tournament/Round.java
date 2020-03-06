@@ -87,4 +87,8 @@ public class Round {
     public List<Match> getMatches() {
         return matches;
     }
+    
+    public void setMatches(List<Match> matches) {
+        this.matches = matches;
+    }
 }

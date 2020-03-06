@@ -12,6 +12,7 @@ public class RoundRowMapper implements RowMapper<Round> {
         Round round = new Round();
         round.setId(rs.getLong("id"));
         round.setBestOf(rs.getInt("best_of"));
+        round.setRoundNumber(rs.getInt("round_number"));
         return round;
     }
 }

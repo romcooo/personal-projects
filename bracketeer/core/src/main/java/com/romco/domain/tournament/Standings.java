@@ -22,7 +22,12 @@ public class Standings {
             log.info(participant + " has score of: " + participant.getScore());
         }
     }
-
-
+    
+    public static List<Participant> getStandings(Tournament tournament, int afterRoundNumber) {
+        List<Participant> participants = new ArrayList<>(tournament.getParticipantsForAfterRound(afterRoundNumber));
+        
+        participants.sort(Comparator.comparingDouble(Participant::getScore).reversed());
+        return participants;
+    }
 
 }

@@ -9,10 +9,13 @@ import lombok.extern.slf4j.Slf4j;
 @Getter
 @Setter
 public class MatchResult {
-    private long id;
+//    private long id;
     private Match ofMatch;
     private Participant forParticipant;
     private int gamesWon;
+    
+    public MatchResult() {
+    }
     
     public MatchResult(Match ofMatch, Participant forParticipant, int gamesWon) {
         this.ofMatch = ofMatch;

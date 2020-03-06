@@ -35,8 +35,8 @@ public class ParticipantDaoImpl implements ParticipantDao {
     
     @Override
     public Participant retrieve(long id) {
-        SqlParameterSource source = new MapSqlParameterSource("id", id);
         String sqlQuery = SELECT_ALL_WHERE + "id = :id";
+        SqlParameterSource source = new MapSqlParameterSource("id", id);
         log.debug("In retrieve, source = {}", source);
         try {
             Participant participant = namedParameterJdbcTemplate.queryForObject(sqlQuery,
@@ -79,10 +79,10 @@ public class ParticipantDaoImpl implements ParticipantDao {
                 .addValue("name", participant.getName())
                 .addValue("tournamentId", participant.getOfTournament().getId());
         log.debug("In create, source = {}", source);
-        GeneratedKeyHolder generatedKeyHolder = new GeneratedKeyHolder();
-        if (namedParameterJdbcTemplate.update(sqlQuery, source, generatedKeyHolder) == 1) {
-            participant.setId(generatedKeyHolder.getKey().longValue());
-            return generatedKeyHolder.getKey().longValue();
+        GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
+        if (namedParameterJdbcTemplate.update(sqlQuery, source, keyHolder) == 1) {
+            participant.setId(keyHolder.getKey().longValue());
+            return keyHolder.getKey().longValue();
         } else {
             return -1;
         }
@@ -90,8 +90,8 @@ public class ParticipantDaoImpl implements ParticipantDao {
     
     @Override
     public boolean update(Participant participant) {
-        SqlParameterSource source = new BeanPropertySqlParameterSource(participant);
         String sqlQuery = UPDATE + "code = :code, name = :name WHERE id = :id";
+        SqlParameterSource source = new BeanPropertySqlParameterSource(participant);
         return namedParameterJdbcTemplate.update(sqlQuery, source) == 1;
     }
     

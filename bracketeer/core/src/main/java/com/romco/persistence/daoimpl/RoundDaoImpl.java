@@ -61,11 +61,11 @@ public class RoundDaoImpl implements RoundDao {
                 .addValue("tournamentId", round.getOfTournament().getId())
                 .addValue("roundNumber", round.getRoundNumber())
                 .addValue("bestOf", round.getBestOf());
-        GeneratedKeyHolder generatedKeyHolder = new GeneratedKeyHolder();
+        GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
         log.debug("In create for round {}, source: {}", round, source);
-        if (namedParameterJdbcTemplate.update(sqlQuery, source, generatedKeyHolder) == 1) {
-            round.setId(generatedKeyHolder.getKey().longValue());
-            return generatedKeyHolder.getKey().longValue();
+        if (namedParameterJdbcTemplate.update(sqlQuery, source, keyHolder) == 1) {
+            round.setId(keyHolder.getKey().longValue());
+            return keyHolder.getKey().longValue();
         } else {
             return -1;
         }

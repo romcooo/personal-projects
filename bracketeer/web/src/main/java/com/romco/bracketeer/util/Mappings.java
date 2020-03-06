@@ -36,6 +36,7 @@ public final class Mappings {
             public static final String WITH_NUMBER = BASE + "/{roundNumber}";
             public static final String REDIRECT_WITH_NUMBER = REDIRECT + WITH_NUMBER;
             public static final String GENERATE = BASE + "/generate";
+            public static final String STANDINGS = WITH_NUMBER + "/standings";
 
             public static class Match {
                 public static final String BASE = Round.WITH_NUMBER + "/match";

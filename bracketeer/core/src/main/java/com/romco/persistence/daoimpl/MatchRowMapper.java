@@ -14,7 +14,8 @@ public class MatchRowMapper implements RowMapper<Match> {
         
         match.setId(rs.getLong("id"));
         match.setBye(rs.getBoolean("is_bye"));
-    
+        match.setMatchNumber(rs.getInt("match_number"));
+        
         return match;
     }
 }

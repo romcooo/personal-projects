@@ -5,6 +5,6 @@ import com.romco.domain.tournament.Round;
 
 import java.util.List;
 
-public interface MatchDao extends GenericDao<Match> {
+public interface MatchDao extends GenericSimplePKDao<Match> {
     List<Match> retrieveByRoundId(long roundId);
 }

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <link rel="stylesheet" type="text/css" href="/css/queries.css">
+    <link rel="stylesheet" type="text/css" href="/css/round.css">
+
+
+    <!--    for brackets:-->
+    <link rel="stylesheet" type="text/css" href="../../static/css/style.css">
+    <link rel="stylesheet" type="text/css" href="../../static/css/queries.css">
+    <link rel="stylesheet" type="text/css" href="../../static/css/standings.css">
+
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,400i&display=swap" rel="stylesheet">
+
+    <title>Bracketeer - Existing Tournament</title>
+
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+</head>
+    
+<body>
+        
+    <div th:replace="fragments/navbars.html">
+        Topnav bar fragment
+    </div>
+        
+    <div class="main" align="center">
+        
+        <div class="top-left-buttons">
+            <div class="dropdown">
+                Select Round &#x1F863;
+                <div class="dropdown-content">
+                    <a th:each="round : ${tournament.rounds}"    
+                       th:value="${round.roundNumber}"
+                       th:text="${round.roundNumber}"
+                       th:href="@{/tournament/{tournamentCode}/round/{roundNumber}/standings
+                                (tournamentCode=${tournamentCode},
+                                roundNumber = ${round.roundNumber})}">Round #</a>
+                
+                </div>
+            </div>
+        </div>
+        
+        <div class="top-right-buttons">
+            <div class="dropdown">
+                Select Round &#x1F863;
+            </div>
+        </div>
+        
+        
+        <h1 class="title" th:text="'Standings after round #'+${round.roundNumber}">Standings after round #</h1>
+        
+        
+        <table class="standings-table" cellspacing="0">
+            
+            <thead>
+                <tr>
+                    <th class="table-h">#</th>
+                    <th class="table-h">Player Name</th>
+                    <th class="table-h">Score</th>
+                    <th class="table-h">Wins</th>
+                    <th class="table-h">Losses</th>
+                    <th class="table-h">Ties</th>
+                </tr>    
+            </thead>
+        
+            <tbody>
+                <tr th:block th:each="participant, iteration : ${participants}">
+                    <td class="standings-table-col-number" th:text="${iteration.count}">1</td>
+                    <td class="standings-table-col-player" th:text="${participant.name}">Player 1</td>
+                    <td class="standings-table-col-score" th:text="${participant.score}">3</td>
+                    <td>N/A</td>
+                    <td>N/A</td>
+                    <td>N/A</td>
+                </tr>
+            </tbody>
+        
+        </table>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+    </div>
+</body>
+    
+</html>
+
+
+
+
+
+
+
+
+
+

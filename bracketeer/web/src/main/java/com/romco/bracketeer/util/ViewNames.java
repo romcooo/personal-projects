@@ -16,7 +16,7 @@ public final class ViewNames {
         public static final String STANDINGS = BASE + "/standings";
 
         public static final String ROUND = BASE + "/round.html";
-
+        
         public static final String ALL = BASE + "/all";
 
         public static final String FIND = BASE + "/find";

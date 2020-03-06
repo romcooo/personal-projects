@@ -1,9 +1,9 @@
 package com.romco.bracketeer.service;
 
 import com.romco.bracketeer.util.Message;
-import com.romco.persistence.dao.ParticipantDao;
-import com.romco.persistence.dao.RoundDao;
-import com.romco.persistence.dao.TournamentDao;
+import com.romco.domain.tournament.Match;
+import com.romco.domain.tournament.Round;
+import com.romco.persistence.dao.*;
 import com.romco.domain.matcher.TournamentFormat;
 import com.romco.domain.participant.Participant;
 import com.romco.domain.participant.Player;
@@ -23,19 +23,21 @@ import java.util.List;
 public class TournamentServiceImpl implements TournamentService {
     
     // == fields
-    MockDataModel mockDataModel = new MockDataModel();
+    Tournament tournament;
     
+    // == DAO
     @Autowired
     TournamentDao tournamentDao;
     @Autowired
     ParticipantDao participantDao;
     @Autowired
     RoundDao roundDao;
-    
-    Tournament tournament;
+    @Autowired
+    MatchDao matchDao;
+    @Autowired
+    MatchResultDao matchResultDao;
     
     // == constructors
-    
     @Autowired
     public TournamentServiceImpl() {
     }
@@ -56,11 +58,28 @@ public class TournamentServiceImpl implements TournamentService {
         log.info("Getting tournament by code: {}", code);
         tournament = tournamentDao.retrieve(code);
         if (tournament != null) {
+            // get participants and add them to the tournament
             List<Participant> participants = participantDao.retrieveByTournamentId(tournament.getId());
             for (Participant participant : participants) {
                 participant.setOfTournament(tournament);
-                tournament.addParticipant(participant);
             }
+            tournament.setParticipants(participants);
+            
+            // get rounds and add them to the tournament
+            List<Round> rounds = roundDao.retrieveByTournamentId(tournament.getId());
+            for (Round round : rounds) {
+                round.setOfTournament(tournament);
+                
+                //get matches and add them to the round
+                List<Match> matches = matchDao.retrieveByRoundId(round.getId());
+                for (Match match : matches) {
+                    match.setOfRound(round);
+                }
+                round.setMatches(matches);
+                
+            }
+            tournament.setRounds(rounds);
+            
         }
         return tournament;
     }
@@ -117,14 +136,17 @@ public class TournamentServiceImpl implements TournamentService {
     }
     
     @Override
-    public void setResult(int roundId, String playerCode, int gamesWon, int gamesLost) {
-        tournament.setMatchResult(roundId, playerCode, gamesWon, gamesLost);
+    public void setResult(int roundNumber, String participantCode, int gamesWon, int gamesLost) {
+        tournament.setMatchResult(roundNumber, participantCode, gamesWon, gamesLost);
+        // TODO persistence
+        
     }
     
     @Override
     public void generateRound(int n) {
-//        tournament.generateNextRound();
-        tournament.generateRound(n);
+        Round round = tournament.generateRound(n);
+        roundDao.create(round);
+        log.debug("Generated and stored round: {}", round);
     }
     
     @Override

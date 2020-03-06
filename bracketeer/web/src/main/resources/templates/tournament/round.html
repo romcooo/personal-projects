@@ -36,7 +36,7 @@
 
     <div class="main" align="center">
 
-        <div class="top-buttons">
+        <div class="top-left-buttons">
 <!--
             <div class="dropdown">
                 <select th:field="${round.roundNumber}">
@@ -54,12 +54,18 @@
                        th:text="${round.roundNumber}"
                        th:href="@{/tournament/{tournamentCode}/round/{roundNumber}
                                 (tournamentCode=${tournamentCode},
-                                roundNumber = ${round.roundNumber})}">a</a>
+                                roundNumber = ${round.roundNumber})}">Round #</a>
                 </div>
             </div>
         </div>
+        
+        <div class="top-right-buttons">
+            <div class="dropdown">
+                Select Round &#x1F863;
+            </div>
+        </div>
 
-        <h1 id="title" th:text="'Round #'+${round.roundNumber}">Round #</h1>
+        <h1 class="title" th:text="'Round #'+${round.roundNumber}">Round #</h1>
 
         <!--    todo add class pairing-table and change this to it-->
         <table class="pairing-table" cellspacing="0">

@@ -146,7 +146,12 @@ public class TournamentImpl implements Tournament {
         }
         return null;
     }
-
+    
+    @Override
+    public void setParticipants(List<Participant> participants) {
+        this.participants = participants;
+    }
+    
     public void setStartingScore(Participant participant, double score) {
         startingParticipantScores.put(participant, score);
     }
@@ -199,6 +204,11 @@ public class TournamentImpl implements Tournament {
     @Override
     public List<Round> getRounds() {
         return rounds;
+    }
+    
+    @Override
+    public void setRounds(List<Round> rounds) {
+        this.rounds = rounds;
     }
     
     public Participant getParticipant(int n) {

@@ -5,6 +5,7 @@ import com.romco.bracketeer.util.Mappings;
 import com.romco.bracketeer.util.ViewNames;
 import com.romco.domain.participant.Participant;
 import com.romco.domain.tournament.Round;
+import com.romco.domain.tournament.Standings;
 import com.romco.domain.tournament.Tournament;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -166,8 +167,9 @@ public class TournamentController {
                                               .getParticipants()
                                               .get(1)
                                               .getCode();
-        service.getTournament().setMatchResult(roundNumber, participant1Code, participant1Score);
-        service.getTournament().setMatchResult(roundNumber, participant2Code, participant2Score);
+        // this is a version of the method that allows to use both scores with only 1 participant,
+        // assuming that it's a duel.
+        service.setResult(roundNumber, participant1Code, participant1Score, participant2Score);
 
         log.info("In postMatchResult for roundNumber {}, matchNumber {}, scores are {} : {}",
                  roundNumber,
@@ -175,10 +177,26 @@ public class TournamentController {
                  participant1Score,
                  participant2Score);
 
-//        return ViewNames.Tournament.ROUND;
         return Mappings.Tournament.Round.REDIRECT_WITH_NUMBER;
     }
 
+    // == STANDINGS AFTER ROUND #
+    @GetMapping(Mappings.Tournament.Round.STANDINGS)
+    public String getStandingsAfterRound(
+            @PathVariable(value = "roundNumber") int roundNumber,
+            Model model) {
+        
+        Round round = service.getTournament().getRound(roundNumber);
+        model.addAttribute("round", round);
+        
+//        List<Participant> participantsAfterRound = service.getTournament().getParticipantsForAfterRound(roundNumber);
+        List<Participant> participantsAfterRound = Standings.getStandings(service.getTournament(), roundNumber);
+        
+        model.addAttribute("participants", participantsAfterRound);
+        
+        return ViewNames.Tournament.STANDINGS;
+    }
+    
     // == ALL TOURNAMENTS AND FIND TOURNAMENT
     @GetMapping(Mappings.Tournament.ALL)
     public String getAllTournaments(Model model) {

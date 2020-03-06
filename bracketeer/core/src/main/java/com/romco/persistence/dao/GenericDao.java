@@ -10,9 +10,6 @@ public interface GenericDao<T> {
     
     void setDataSource(DataSource dataSource);
     
-    // retrieves by id, can be null if 0 records found
-    T retrieve(long id);
-    
     // retrieves all
     Collection<T> retrieveAll();
     

@@ -392,12 +392,20 @@ body a:hover {
 }
 
 
-.top-buttons {
+.top-left-buttons {
 /*    display: block;*/
     margin: 20px 10px;
     padding: 5px 5px;
     float: left;
 
+}
+
+.top-right-buttons {
+/*    display: block;*/
+    margin: 20px 10px;
+    padding: 5px 5px;
+    float: right;
+    visibility: hidden;
 }
 
 /*
@@ -410,5 +418,8 @@ img {
 
 */
 
-
+.title {
+    text-align: center;
+    
+}
 

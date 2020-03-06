@@ -38,11 +38,11 @@ public class TournamentDaoImpl implements TournamentDao {
     @Override
     public long create(Tournament tournament) {
 //        SqlParameterSource source = new BeanPropertySqlParameterSource(tournament);
+        String sqlQuery = INSERT_ALL + "(:code, :name, :type)";
         SqlParameterSource source = new MapSqlParameterSource()
                 .addValue("code", tournament.getCode())
                 .addValue("name", tournament.getName())
                 .addValue("type", tournament.getType().toString());
-        String sqlQuery = INSERT_ALL + "(:code, :name, :type)";
         log.debug("In create, source = {}", source);
         GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
         if (namedParameterJdbcTemplate.update(sqlQuery,
@@ -62,8 +62,8 @@ public class TournamentDaoImpl implements TournamentDao {
     
     @Override
     public Tournament retrieve(long id) {
-        SqlParameterSource source = new MapSqlParameterSource("id", id);
         String sqlQuery = SELECT_ALL_WHERE + "id = :id";
+        SqlParameterSource source = new MapSqlParameterSource("id", id);
         log.debug("In retrieve, source = {}", source);
         try {
             Tournament tournament = namedParameterJdbcTemplate.queryForObject(sqlQuery,
@@ -106,8 +106,8 @@ public class TournamentDaoImpl implements TournamentDao {
     
     @Override
     public boolean delete(Tournament tournament) {
-        SqlParameterSource source = new BeanPropertySqlParameterSource(tournament);
         String sqlQuery = "DELETE FROM tournament where id = :id";
+        SqlParameterSource source = new BeanPropertySqlParameterSource(tournament);
         return namedParameterJdbcTemplate.update(sqlQuery, source) == 1;
 //        Object[] args = new Object[]{tournament.getId()};
 //        String sqlQuery = "DELETE FROM tournament where id = ?";
@@ -115,12 +115,12 @@ public class TournamentDaoImpl implements TournamentDao {
     
     @Override
     public boolean update(Tournament tournament) {
+        String sqlQuery = UPDATE + "code = :code, name = :name, type = :type WHERE id = :id";
         SqlParameterSource source = new MapSqlParameterSource()
                 .addValue("code", tournament.getCode())
                 .addValue("name", tournament.getName())
                 .addValue("type", tournament.getType().toString())
                 .addValue("id", tournament.getId());
-        String sqlQuery = UPDATE + "code = :code, name = :name, type = :type WHERE id = :id";
         return namedParameterJdbcTemplate.update(sqlQuery, source) == 1;
 //        Object[] args = new Object[]{tournament.getId()};
 //        jdbcTemplate.update()
