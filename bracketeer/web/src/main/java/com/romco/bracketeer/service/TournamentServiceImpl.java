@@ -16,6 +16,7 @@ import java.util.*;
 @Slf4j
 @Service
 public class TournamentServiceImpl implements TournamentService {
+    public static final String DEFAULT_TOURNAMENT_NAME = "Tournament Name";
     
     // == fields
     Tournament tournament;
@@ -40,7 +41,7 @@ public class TournamentServiceImpl implements TournamentService {
     // == methods
     @Override
     public String createNewTournament() {
-        this.tournament = new TournamentImpl(TournamentFormat.SWISS);
+        this.tournament = new TournamentImpl(TournamentFormat.SWISS, DEFAULT_TOURNAMENT_NAME);
         return tournament.getCode();
     }
     
@@ -48,50 +49,7 @@ public class TournamentServiceImpl implements TournamentService {
     public Tournament getTournament() {
         return tournament;
     }
-
-    public Tournament getTournamentByCode(String code) {
-        log.info("Getting tournament by code: {}", code);
-        tournament = tournamentDao.retrieve(code);
-        if (tournament != null) {
-            // get participants and add them to the tournament
-            List<Participant> participants = participantDao.retrieveByTournamentId(tournament.getId());
-            for (Participant participant : participants) {
-                participant.setOfTournament(tournament);
-                tournament.addParticipant(participant);
-            }
-//            tournament.setParticipants(participants);
-            
-            // get rounds and add them to the tournament
-            List<Round> rounds = roundDao.retrieveByTournamentId(tournament.getId());
-            for (Round round : rounds) {
-                round.setOfTournament(tournament);
-                
-                //get matches and add them to the round
-                List<Match> matches = matchDao.retrieveByRoundId(round.getId());
-                for (Match match : matches) {
-                    match.setOfRound(round);
-                    
-                    Map<MatchResult, Long> matchResults = matchResultDao.retrieveByMatchId(match.getId());
-                    for (MatchResult matchResult : matchResults.keySet()) {
-                        matchResult.setOfMatch(match);
-                        matchResult.setForParticipant(participants.stream()
-                                                                  .filter(participant -> participant.getId() == matchResults.get(matchResult))
-                                                                  .findAny()
-                                                                  .get());
-                        match.addMatchResult(matchResult);
-                    }
-                    
-                    
-                }
-                round.setMatches(matches);
-                
-            }
-            tournament.setRounds(rounds);
-            
-        }
-        return tournament;
-    }
-
+    
     @Override
     public String saveTournament() {
         if (tournamentDao.retrieve(tournament.getId()) == null) {
@@ -112,15 +70,64 @@ public class TournamentServiceImpl implements TournamentService {
         }
         return tournament.getCode();
     }
-
+    
     @Override
-    public Participant addPlayer(String playerName) {
-        if (this.tournament == null) {
-            createNewTournament();
+    public Tournament getTournamentByCode(String code) {
+        log.info("Getting tournament by code: {}", code);
+        tournament = tournamentDao.retrieve(code);
+        if (tournament != null) {
+            // get participants and add them to the tournament
+            List<Participant> participants = participantDao.retrieveByTournamentId(tournament.getId());
+            for (Participant participant : participants) {
+                participant.setOfTournament(tournament);
+                tournament.addParticipant(participant);
+            }
+//            tournament.setParticipants(participants);
+            
+            // get rounds and add them to the tournament
+            List<Round> rounds = roundDao.retrieveByTournamentId(tournament.getId());
+            for (Round round : rounds) {
+                round.setOfTournament(tournament);
+                // TODO there is a bug somewhere here
+                //  -> if you re-open a tournament, you can't open the last round pairings
+                //get matches and add them to the round
+                List<Match> matches = matchDao.retrieveByRoundId(round.getId());
+                for (Match match : matches) {
+                    match.setOfRound(round);
+                    
+                    Map<MatchResult, Long> matchResults = matchResultDao.retrieveByMatchId(match.getId());
+                    for (MatchResult matchResult : matchResults.keySet()) {
+                        matchResult.setOfMatch(match);
+                        
+                        Participant ofMatch = participants.stream()
+                                                          .filter(participant -> participant.getId() == matchResults.get(matchResult))
+                                                          .findAny()
+                                                          .get();
+                        match.addParticipant(ofMatch);
+                        matchResult.setForParticipant(ofMatch);
+                        
+//                        matchResult.setForParticipant(participants.stream()
+//                                                                  .filter(participant -> participant.getId() == matchResults.get(matchResult))
+//                                                                  .findAny()
+//                                                                  .get());
+                        match.addMatchResult(matchResult);
+                    }
+                    
+                    
+                }
+                round.setMatches(matches);
+                
+            }
+            tournament.setRounds(rounds);
+            
         }
-        Participant participant = new Player(playerName);
-        tournament.addParticipant(participant);
-        return participant;
+        return tournament;
+    }
+    
+    @Override
+    public void setTournamentName(String tournamentName) {
+        log.info("In setTournamentName, tournamentName = {}", tournamentName);
+        tournament.setName(tournamentName);
     }
     
     @Override
@@ -129,6 +136,16 @@ public class TournamentServiceImpl implements TournamentService {
             return new ArrayList<>();
         }
         return tournament.getParticipants();
+    }
+    
+    @Override
+    public Participant addPlayer(String playerName) {
+        if (this.tournament == null) {
+            createNewTournament();
+        }
+        Participant participant = new Player(playerName);
+        tournament.addParticipant(participant);
+        return participant;
     }
     
     @Override
@@ -147,7 +164,6 @@ public class TournamentServiceImpl implements TournamentService {
     public void setResult(int roundNumber, String participantCode, int gamesWon, int gamesLost) {
         List<MatchResult> matchResults = tournament.setMatchResult(roundNumber, participantCode, gamesWon, gamesLost);
         if (!matchResults.isEmpty()){
-            // TODO persistence
             for (MatchResult matchResult : matchResults) {
                 log.debug("in setResult, creating matchResult {}", matchResult);
                 matchResultDao.create(matchResult);
@@ -158,10 +174,15 @@ public class TournamentServiceImpl implements TournamentService {
     @Override
     public void generateRound(int n) {
         Round round = tournament.generateRound(n);
-        roundDao.create(round);
+        round.setId(roundDao.create(round));
         log.debug("Generated and stored round: {}", round);
         for (Match match : round.getMatches()) {
-            matchDao.create(match);
+            match.setId(matchDao.create(match));
+            
+            for (MatchResult matchResult : match.getMatchResults()) {
+            
+            }
+            
             log.debug("Stored match: {}", match);
         }
     }

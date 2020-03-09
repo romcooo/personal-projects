@@ -37,7 +37,7 @@ public class TournamentController {
         return service.getParticipants();
     }
     
-    @ModelAttribute
+    @ModelAttribute("tournament")
     public Tournament tournament() {
         return service.getTournament();
     }
@@ -70,6 +70,9 @@ public class TournamentController {
     public String newTournament(Model model) {
         log.info("in newTournament, mapping: {}", Mappings.Tournament.NEW);
         service.createNewTournament();
+        // for some reason, tournament needs to be added, otherwise some values are strangely cached on the template
+        // specifically, the tournament name bugs out of you change it, then go to all then back to new
+        model.addAttribute("tournament", tournament());
         model.addAttribute("participants", participants());
         return ViewNames.Tournament.SETUP;
     }
@@ -87,10 +90,19 @@ public class TournamentController {
 //        }
         return ViewNames.Tournament.SETUP;
     }
+    
+    @PostMapping(Mappings.Tournament.SETUP)
+    public String tournamentSetup(@RequestParam(name = "tournamentName", required = false) String tournamentName) {
+        log.info("In setName, input: {}", tournamentName);
+        if (tournamentName != null) {
+            service.setTournamentName(tournamentName);
+        }
+        return Mappings.Tournament.REDIRECT_TO_SETUP;
+    }
 
     // == ADD/REMOVE PLAYERS
     @PostMapping(Mappings.Tournament.ADD_PLAYER)
-    public String addPlayer(@RequestParam String playerName) {
+    public String addPlayer(@RequestParam(name = "playerName") String playerName) {
         log.info("In addPlayer, input: {}", playerName);
         service.addPlayer(playerName);
         return Mappings.Tournament.REDIRECT_ADD_PLAYER;
@@ -161,15 +173,14 @@ public class TournamentController {
                                               .getParticipants()
                                               .get(1)
                                               .getCode();
-        // this is a version of the method that allows to use both scores with only 1 participant,
-        // assuming that it's a duel.
-        service.setResult(roundNumber, participant1Code, participant1Score, participant2Score);
-
         log.info("In postMatchResult for roundNumber {}, matchNumber {}, scores are {} : {}",
                  roundNumber,
                  matchNumber,
                  participant1Score,
                  participant2Score);
+        // this is a version of the method that allows to use both scores with only 1 participant,
+        // assuming that it's a duel.
+        service.setResult(roundNumber, participant1Code, participant1Score, participant2Score);
 
         return Mappings.Tournament.Round.REDIRECT_WITH_NUMBER;
     }
@@ -205,10 +216,6 @@ public class TournamentController {
         return ViewNames.Tournament.FIND;
     }
 
-//    @GetMapping("/navbars")
-//    public String navbars() {
-//        log.info("In navbars()");
-//        return "/templates/fragments/navbars.html";
-//    }
+    
 
 }

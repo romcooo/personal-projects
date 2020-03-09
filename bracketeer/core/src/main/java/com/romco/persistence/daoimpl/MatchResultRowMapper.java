@@ -5,6 +5,8 @@ import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.AbstractMap;
+import java.util.Map;
 
 public class MatchResultRowMapper implements RowMapper<MatchResult> {
     @Override
@@ -14,7 +16,10 @@ public class MatchResultRowMapper implements RowMapper<MatchResult> {
 //        matchResult.setForParticipant(rs.getLong("participant_id"));
 //        matchResult.setOfMatch(rs.getLong("match_id"));
         matchResult.setGamesWon(rs.getInt("games_won"));
+//        Map.Entry<MatchResult, Long> entry = new AbstractMap.SimpleEntry<>(matchResult,
+//                                                                           rs.getLong("participant_id"));
         
+//        return entry;
         return matchResult;
     }
 }

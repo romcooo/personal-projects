@@ -225,6 +225,13 @@ body a:hover {
     z-index: 1;
 }
 
+.dropdown-content {
+    border-radius: 10px;
+    
+    color: #ecf6fe;
+    background-color: rgba(2, 27, 46, 0.98);
+}
+
 /* Links inside the dropdown */
 .dropdown-content a {
     padding: 12px 16px;
@@ -232,10 +239,13 @@ body a:hover {
     display: block;
     float: none;
     
-  
-    color: #ecf6fe;
     text-decoration: none;
     text-align: left;
+    border-bottom: 1px solid #ecf6fe;
+}
+
+.dropdown-content a:last-child {
+    border-bottom: none;
 }
 
 /* == COMMON PARTS*/
@@ -420,6 +430,22 @@ img {
 
 .title {
     text-align: center;
+}
+
+.title .generic-input {
     
 }
 
+.generic-input {
+    text-align: center;
+    font-size: inherit;
+    color: inherit;
+    background-color: transparent;
+    border: none;
+    margin: 0;
+    padding: 0;
+    width: 80%;
+    display: block;
+    resize: none;
+    
+}

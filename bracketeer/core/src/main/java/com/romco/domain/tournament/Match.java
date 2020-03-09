@@ -122,6 +122,8 @@ public class Match {
             return null;
         }
         
+        log.debug("In getOther, participant: {}, other: {}", participant, others.get(0));
+        
         return others.get(0);
     }
 
@@ -144,19 +146,26 @@ public class Match {
             log.warn(PARTICIPANT_NOT_FOUND_WARN_MESSAGE, participant);
             return Collections.emptyList();
         }
+        Participant otherParticipant = getOther(participant);
         MatchResult matchResult = new MatchResult(this, participant, gamesWon);
-        MatchResult other = new MatchResult(this, getOther(participant), gamesLost);
+        MatchResult otherMatchResult = new MatchResult(this, otherParticipant, gamesLost);
+        log.debug("In setMatchScore, creating matchResults: {} and {}", matchResult, otherMatchResult);
         matchResultsForParticipant.put(participant, matchResult);
-        matchResultsForParticipant.put(getOther(participant), other);
+        matchResultsForParticipant.put(otherParticipant, otherMatchResult);
         List<MatchResult> matchResults = new ArrayList<>();
         matchResults.add(matchResult);
-        matchResults.add(other);
+        matchResults.add(otherMatchResult);
         return matchResults;
     }
     
     public MatchResultEnum getMatchResult(Participant participant) {
         if (!matchResultsForParticipant.containsKey(participant)) {
             log.warn(PARTICIPANT_NOT_FOUND_WARN_MESSAGE, participant);
+            return null;
+        }
+        // if the other entry is null, this means that no result is present yet
+        // the null should be handled in the calling method
+        if (matchResultsForParticipant.get(participant) == null) {
             return null;
         }
         MatchResultEnum matchResultEnum;
@@ -179,6 +188,7 @@ public class Match {
     }
     
     public List<Participant> getParticipants() {
+        log.debug("in getParticipants: {}", matchResultsForParticipant.keySet());
         return new ArrayList<>(matchResultsForParticipant.keySet());
     }
     
@@ -202,5 +212,16 @@ public class Match {
     
     public void addMatchResult(MatchResult matchResult) {
         matchResultsForParticipant.put(matchResult.getForParticipant(), matchResult);
+    }
+    
+    public void addParticipant(Participant participant) {
+        this.matchResultsForParticipant.put(participant, null);
+    }
+    
+    @Override
+    public String toString() {
+        return "Match{" +
+                "id=" + id +
+                '}';
     }
 }

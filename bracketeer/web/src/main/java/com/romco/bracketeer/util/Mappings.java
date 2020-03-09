@@ -10,7 +10,12 @@ public final class Mappings {
         public static final String BASE = "tournament";
         public static final String NEW = BASE + "/new";
 
+        
         public static final String SETUP = BASE + "/setup";
+        public static final String REDIRECT_TO_SETUP = REDIRECT + SETUP;
+        public static class Setup {
+            public static final String SET_NAME = SETUP + "/setName";
+        }
 
         public static final String ADD_PLAYER = BASE + "/addPlayer";
         public static final String REDIRECT_ADD_PLAYER = REDIRECT + SETUP;

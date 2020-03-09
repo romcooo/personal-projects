@@ -1,12 +1,13 @@
 package com.romco.persistence.daoimpl;
 
-import com.romco.domain.participant.Participant;
 import com.romco.domain.tournament.MatchResult;
 import com.romco.persistence.dao.MatchResultDao;
 import com.romco.persistence.util.NamedParameterJdbcTemplateHolder;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
@@ -14,6 +15,8 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -23,10 +26,10 @@ import java.util.Map;
 @Repository
 public class MatchResultDaoImpl implements MatchResultDao {
     public static final String TABLE_NAME = "match_result";
-//    public static final String ALL_COLUMNS = "participant_id, match_id, games_won, result";
+    //    public static final String ALL_COLUMNS = "participant_id, match_id, games_won, result";
     public static final String SELECT_ALL_WHERE =
-        "SELECT (participant_id, match_id, games_won) " +
-        "FROM " + TABLE_NAME + " WHERE ";
+            "SELECT participant_id, match_id, games_won " +
+                    "FROM " + TABLE_NAME + " WHERE ";
     public static final String INSERT = "INSERT INTO " + TABLE_NAME +
             " (participant_id, match_id, games_won) VALUES ";
     public static final String UPDATE = "UPDATE " + TABLE_NAME + " SET ";
@@ -39,6 +42,44 @@ public class MatchResultDaoImpl implements MatchResultDao {
         namedParameterJdbcTemplate = NamedParameterJdbcTemplateHolder.get(dataSource);
     }
     
+    // TODO
+    @Override
+    public Collection<MatchResult> retrieveAll() {
+        return null;
+    }
+    
+    @Override
+    public long create(MatchResult matchResult) {
+        String sqlQuery = INSERT + "(:participantId, :matchId, :gamesWon)";
+        SqlParameterSource source = new MapSqlParameterSource()
+                .addValue("participantId", matchResult.getForParticipant().getId())
+                .addValue("matchId", matchResult.getOfMatch().getId())
+                .addValue("gamesWon", matchResult.getGamesWon());
+        GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
+        log.debug("In create, matchResult is {}", matchResult);
+        if (namedParameterJdbcTemplate.update(sqlQuery, source) == 1) {
+            return 0;
+        } else {
+            return -1;
+        }
+    }
+    
+    @Override
+    public boolean update(MatchResult matchResult) {
+        return false;
+    }
+    
+    @Override
+    public boolean delete(MatchResult matchResult) {
+        return false;
+    }
+    
+    @Override
+    public void cleanup() {
+        String sqlQuery = "DELETE FROM " + TABLE_NAME + " WHERE participant_id > -1";
+        namedParameterJdbcTemplate.getJdbcOperations().execute(sqlQuery);
+    }
+    
     @Override
     public Map<MatchResult, Long> retrieveByMatchId(long matchId) {
         String sqlQuery = SELECT_ALL_WHERE + "(match_id = :matchId)";
@@ -49,19 +90,25 @@ public class MatchResultDaoImpl implements MatchResultDao {
         // set the matchResult.forParticipant properly based on the returned id.
         Map<MatchResult, Long> resultParticipantMap = new HashMap<>();
         try {
-            Map<String, Object> columnMap = namedParameterJdbcTemplate.getJdbcOperations().queryForMap(sqlQuery);
-            log.debug("in retrieveByMatchId, keyset: {}, values: {}", columnMap.keySet(), columnMap.values());
-            for (String column : columnMap.keySet()) {
-                MatchResult matchResult = new MatchResult();
-                if (column.equals("participant_id")) {
-                    log.debug("in retrieveByMatchId with column participant_id = {}", columnMap.get(column));
-                    resultParticipantMap.put(matchResult, (Long) columnMap.get(column));
-                } else if (column.equals("games_won")) {
-                    log.debug("in retrieveByMatchId with column games_won = {}", columnMap.get(column));
-                    matchResult.setGamesWon((Integer) columnMap.get(column));
-                }
-            }
+            resultParticipantMap = namedParameterJdbcTemplate.query(sqlQuery, source, new MatchResultMapResultSetExtractor());
+            log.debug("in retrieveByMatchId, resultMap = {}", resultParticipantMap);
             return resultParticipantMap;
+
+//            Map<String, Object> columnMap = namedParameterJdbcTemplate.queryForMap(sqlQuery, source);
+//            Map<MatchResult, Long> resultMap = namedParameterJdbcTemplate.queryForMap(sqlQuery, source, new MatchResultRowMapper());
+
+//            log.debug("in retrieveByMatchId, keyset: {}, values: {}", columnMap.keySet(), columnMap.values());
+//            for (String column : columnMap.keySet()) {
+//                MatchResult matchResult = new MatchResult();
+//                if (column.equals("participant_id")) {
+//                    log.debug("in retrieveByMatchId with column participant_id = {}", columnMap.get(column));
+//                    resultParticipantMap.put(matchResult, (Long) columnMap.get(column));
+//                } else if (column.equals("games_won")) {
+//                    log.debug("in retrieveByMatchId with column games_won = {}", columnMap.get(column));
+//                    matchResult.setGamesWon((Integer) columnMap.get(column));
+//                }
+//            }
+//            return resultParticipantMap;
         } catch (EmptyResultDataAccessException e) {
             log.debug("Retrieve yielded 0 results for matchId {}, returning null.", matchId);
             return null;
@@ -85,43 +132,5 @@ public class MatchResultDaoImpl implements MatchResultDao {
                       matchId);
             return null;
         }
-    }
-    
-    // TODO
-    @Override
-    public Collection<MatchResult> retrieveAll() {
-        return null;
-    }
-    
-    @Override
-    public long create(MatchResult matchResult) {
-        String sqlQuery = INSERT + "(:participantId, :matchId, :gamesWon)";
-        SqlParameterSource source = new MapSqlParameterSource()
-                .addValue("participantId", matchResult.getForParticipant().getId())
-                .addValue("matchId", matchResult.getOfMatch().getId())
-                .addValue("gamesWon", matchResult.getGamesWon());
-        GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
-        if (namedParameterJdbcTemplate.update(sqlQuery,
-                                              source,
-                                              keyHolder) == 1) {
-            return keyHolder.getKey().longValue();
-        } else {
-            return -1;
-        }
-    }
-    
-    @Override
-    public boolean update(MatchResult matchResult) {
-        return false;
-    }
-    
-    @Override
-    public boolean delete(MatchResult matchResult) {
-        return false;
-    }
-    
-    @Override
-    public void cleanup() {
-    
     }
 }

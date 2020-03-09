@@ -91,4 +91,11 @@ public class Round {
     public void setMatches(List<Match> matches) {
         this.matches = matches;
     }
+    
+    @Override
+    public String toString() {
+        return "Round{" +
+                "roundNumber=" + roundNumber +
+                '}';
+    }
 }

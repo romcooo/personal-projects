@@ -22,7 +22,7 @@ public class MatchDaoImpl implements MatchDao {
     
     public static final String TABLE_NAME = "`match`";
     //TODO
-    public static final String SELECT_ALL_WHERE = "SELECT round_id, is_bye, match_number FROM " +
+    public static final String SELECT_ALL_WHERE = "SELECT id, round_id, is_bye, match_number FROM " +
             TABLE_NAME + " WHERE ";
     public static final String INSERT = "INSERT INTO " + TABLE_NAME + " (round_id, is_bye, match_number) VALUES ";
     public static final String UPDATE = "UPDATE " + TABLE_NAME + " SET ";
@@ -89,6 +89,7 @@ public class MatchDaoImpl implements MatchDao {
     // TODO
     @Override
     public void cleanup() {
-    
+        String sqlQuery = "DELETE FROM " + TABLE_NAME + " WHERE id > -1";
+        namedParameterJdbcTemplate.getJdbcOperations().execute(sqlQuery);
     }
 }

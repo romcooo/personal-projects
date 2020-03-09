@@ -30,7 +30,22 @@
 <!--    </script>-->
 
     <div class="main" align="center">
-        <h1 class="title" >New Tournament</h1>
+        <h1 class="title">
+            <form id="tournament-name-form"
+                  action="/tournament/setup"
+                  method="post">
+                <input id="tournamentNameInput"
+                       class="generic-input"
+                       name="tournamentName"
+                       contenteditable="true"
+                       th:value="${tournament?.name} ?: 'Tournament Name'">
+                <script>
+                $("#tournamentNameInput").blur(function() {
+                    $("#tournament-name-form").submit();
+                });
+                </script>
+            </form>
+        </h1>
 
         <div class="options">
             <ul>
