@@ -1,17 +1,10 @@
-select * from tournament;
-select * from participant;
-select * from round;
-select * from `match`;
-select * from match_result;
-select * from rule_set;
+--
+DELETE FROM match_result where match_id < 0;
+DELETE FROM participant where id < 0;
+DELETE FROM `match` where id < 0;
+DELETE FROM round where id < 0;
+DELETE FROM tournament where id < 0;
 
-select * 
-from tournament t
-left join participant p on p.tournament_id = t.id
-left join round r on r.tournament_id = t.id
-left join `match` m on m.round_id = r.id
-left join match_result mr on mr.match_id = m.id
-where t.id = -1;
 
 INSERT INTO `bracketeer`.`tournament`
 (`id`,`code`,`name`,`type`)
@@ -66,10 +59,3 @@ INSERT INTO `bracketeer`.`match_result`
 (`participant_id`, `match_id`, `games_won`)
 VALUES
 (-4, -2, 2);
-
-DELETE FROM tournament where id < 0;
-DELETE FROM round where id < 0;
-DELETE FROM `match` where id < 0;
-DELETE FROM participant where id < 0;
-DELETE FROM match_result where match_id < 0;
-
