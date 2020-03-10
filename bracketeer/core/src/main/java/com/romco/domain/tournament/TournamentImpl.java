@@ -16,11 +16,11 @@ public class TournamentImpl implements Tournament {
     private long id;
     private String code; // business id
     private String name;
+    private TournamentFormat type;
     private List<Participant> participants;
     private Map<Participant, Double> startingParticipantScores;
     private Map<Participant, Integer> startingParticipantByes;
     private List<Round> rounds;
-    private TournamentFormat type;
     private RuleSet ruleSet;
 
     private TournamentImpl() {
@@ -222,7 +222,7 @@ public class TournamentImpl implements Tournament {
                                   Participant participant,
                                   int gamesWon,
                                   int gamesLost) {
-        return getRound(roundNumber).getMatch(participant)
+        return getRound(roundNumber).getMatchByParticipant(participant)
                                     .setMatchScore(participant,
                                                    gamesWon,
                                                    gamesLost);
@@ -251,7 +251,7 @@ public class TournamentImpl implements Tournament {
 
             for (Participant participant : participants) {
                 if (participant.getCode().equals(participantCode)) {
-                    return getRound(roundNumber).getMatch(participant)
+                    return getRound(roundNumber).getMatchByParticipant(participant)
                                                 .setMatchScore(participant, gamesWon);
                 }
             }
@@ -281,7 +281,7 @@ public class TournamentImpl implements Tournament {
             if (round.getRoundNumber() > roundNumber) {
                 continue;
             }
-            Match match = round.getMatch(participant);
+            Match match = round.getMatchByParticipant(participant);
             if (match != null) {
                 MatchResultEnum result = match.getMatchResult(participant);
                 if (result != null) {
@@ -305,7 +305,7 @@ public class TournamentImpl implements Tournament {
                 continue;
             }
 
-            if (round.getMatch(participant) != null && round.getMatch(participant).isBye()) {
+            if (round.getMatchByParticipant(participant) != null && round.getMatchByParticipant(participant).isBye()) {
                 byes++;
             }
         }
@@ -323,8 +323,8 @@ public class TournamentImpl implements Tournament {
             if (round.getRoundNumber() > roundNumber) {
                 continue;
             }
-            if (round.getMatch(participant) != null) {
-                opponents.addAll(round.getMatch(participant).getOthers(participant));
+            if (round.getMatchByParticipant(participant) != null) {
+                opponents.addAll(round.getMatchByParticipant(participant).getOthers(participant));
             }
         }
         log.debug("Adding opponents {} for participant {}", opponents, participant);

@@ -1,10 +1,7 @@
 package com.romco.domain.tournament;
 
 import com.romco.domain.participant.Participant;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.*;
@@ -115,8 +112,6 @@ public class Match {
             log.warn(PARTICIPANT_NOT_FOUND_WARN_MESSAGE, participant);
             return Collections.emptyList();
         }
-//        MatchResult matchResult = new MatchResult(this, participant, gamesWon);
-//        matchResultsForParticipant.put(participant, matchResult);
         
         MatchResult matchResult = matchResultsForParticipant.get(participant);
         matchResult.setGamesWon(gamesWon);
@@ -133,20 +128,16 @@ public class Match {
             return Collections.emptyList();
         }
         Participant otherParticipant = getOther(participant);
-        
-        
-//        MatchResult matchResult = new MatchResult(this, participant, gamesWon);
-//        MatchResult otherMatchResult = new MatchResult(this, otherParticipant, gamesLost);
+
         MatchResult matchResult = matchResultsForParticipant.get(participant);
         matchResult.setGamesWon(gamesWon);
         MatchResult otherMatchResult = matchResultsForParticipant.get(otherParticipant);
         otherMatchResult.setGamesWon(gamesLost);
         log.debug("In setMatchScore, creating matchResults: {} and {}", matchResult, otherMatchResult);
         
-//        matchResultsForParticipant.put(participant, matchResult);
-//        matchResultsForParticipant.put(otherParticipant, otherMatchResult);
-        
         List<MatchResult> matchResults = new ArrayList<>();
+        // the order of the elements should be kept so that
+        // the first result is the one with input participant
         matchResults.add(matchResult);
         matchResults.add(otherMatchResult);
         return matchResults;
@@ -192,20 +183,20 @@ public class Match {
         return isBye;
     }
     
-    public int getWinsForParticipant(Participant participant) {
-        if (!matchResultsForParticipant.containsKey(participant)) {
-            log.warn(PARTICIPANT_NOT_FOUND_WARN_MESSAGE, participant);
-            return 0;
-        }
-        
-        if (matchResultsForParticipant.get(participant) == null
-                || matchResultsForParticipant.get(participant).getGamesWon() == null) {
-            log.info("Participant does not yet have a submitted result: {}", participant);
-            return 0;
-        }
-        
-        return matchResultsForParticipant.get(participant).getGamesWon();
-    }
+//    public int getWinsForParticipant(Participant participant) {
+//        if (!matchResultsForParticipant.containsKey(participant)) {
+//            log.warn(PARTICIPANT_NOT_FOUND_WARN_MESSAGE, participant);
+//            return 0;
+//        }
+//
+//        if (matchResultsForParticipant.get(participant) == null
+//                || matchResultsForParticipant.get(participant).getGamesWon() == null) {
+//            log.info("Participant does not yet have a submitted result: {}", participant);
+//            return 0;
+//        }
+//
+//        return matchResultsForParticipant.get(participant).getGamesWon();
+//    }
     
     public void addMatchResult(MatchResult matchResult) {
         matchResultsForParticipant.put(matchResult.getForParticipant(), matchResult);

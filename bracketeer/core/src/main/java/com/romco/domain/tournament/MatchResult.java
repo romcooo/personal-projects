@@ -1,15 +1,12 @@
 package com.romco.domain.tournament;
 
 import com.romco.domain.participant.Participant;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@Getter
-@Setter
+@Data
 public class MatchResult {
-//    private long id;
     private Match ofMatch;
     private Participant forParticipant;
     private Integer gamesWon;
@@ -21,11 +18,6 @@ public class MatchResult {
         this.ofMatch = ofMatch;
         this.forParticipant = forParticipant;
         this.gamesWon = gamesWon;
-    }
-
-    public Integer getGamesWon() {
-        log.debug("In getGamesWon for matchResult {}", this);
-        return gamesWon;
     }
     
     @Override
