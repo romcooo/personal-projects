@@ -36,6 +36,7 @@
                     <a th:each="round : ${tournament.rounds}"    
                        th:value="${round.roundNumber}"
                        th:text="${round.roundNumber}"
+                       href="#"
                        th:href="@{/tournament/{tournamentCode}/round/{roundNumber}/standings
                                 (tournamentCode=${tournamentCode},
                                 roundNumber = ${round.roundNumber})}">Round #</a>

@@ -122,8 +122,6 @@ public class TournamentDaoImpl implements TournamentDao {
                 .addValue("type", tournament.getType().toString())
                 .addValue("id", tournament.getId());
         return namedParameterJdbcTemplate.update(sqlQuery, source) == 1;
-//        Object[] args = new Object[]{tournament.getId()};
-//        jdbcTemplate.update()
     }
     
     @Override

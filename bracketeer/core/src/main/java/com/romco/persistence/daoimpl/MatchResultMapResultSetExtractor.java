@@ -17,7 +17,11 @@ public class MatchResultMapResultSetExtractor implements ResultSetExtractor<Map<
         HashMap<MatchResult, Long> resultMap = new HashMap<>();
         while (rs.next()) {
             MatchResult matchResult = new MatchResult();
-            matchResult.setGamesWon(rs.getInt("games_won"));
+            int gamesWon = rs.getInt("games_won");
+            // leave null if it was null in DB - this indicates that the game was not yet played.
+            if (!rs.wasNull()) {
+                matchResult.setGamesWon(gamesWon);
+            }
             resultMap.put(matchResult, rs.getLong("participant_id"));
         }
         log.debug("In retrieveByMatchId.extractData, resultMap: {}, resultSet: {}", resultMap, rs);

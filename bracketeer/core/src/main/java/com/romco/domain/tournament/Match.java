@@ -3,6 +3,8 @@ package com.romco.domain.tournament;
 import com.romco.domain.participant.Participant;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.*;
@@ -10,50 +12,30 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @Data
-@AllArgsConstructor
 public class Match {
     public static final String PARTICIPANT_NOT_FOUND_WARN_MESSAGE
             = "Match doesn't contain the provided participant: {}";
 
     private long id;
+    private Round ofRound;
     private int matchNumber;
-//    private List<Participant> participants;
     private boolean isBye;
     private Map<Participant, MatchResult> matchResultsForParticipant;
-    private List<MatchResult> matchResults;
-    private Round ofRound;
 
     public Match() {
-//        participants = new ArrayList<>();
         matchResultsForParticipant = new HashMap<>();
     }
 
     public Match(Participant participant1) {
         this();
-        matchResultsForParticipant.put(participant1, null);
-//        participants.add(participant1);
-
-//        MatchResult matchResult1 = new MatchResult(this, participant1, 0);
-//        matchResultsForParticipant.put(participant1, matchResult1);
-    
+        addParticipant(participant1);
         isBye = true;
     }
     
     public Match(Participant participant1, Participant participant2) {
         this();
-
-        matchResultsForParticipant.put(participant1, null);
-        matchResultsForParticipant.put(participant2, null);
-
-//        participants.add(participant1);
-//        participants.add(participant2);
-
-//        MatchResult matchResult1 = new MatchResult(this, participant1, 0);
-//        MatchResult matchResult2 = new MatchResult(this, participant2, 0);
-//
-//        matchResultsForParticipant.put(participant1, matchResult1);
-//        matchResultsForParticipant.put(participant2, matchResult2);
-
+        addParticipant(participant1);
+        addParticipant(participant2);
         isBye = false;
     }
 
@@ -133,10 +115,14 @@ public class Match {
             log.warn(PARTICIPANT_NOT_FOUND_WARN_MESSAGE, participant);
             return Collections.emptyList();
         }
-        MatchResult matchResult = new MatchResult(this, participant, gamesWon);
-        matchResultsForParticipant.put(participant, matchResult);
+//        MatchResult matchResult = new MatchResult(this, participant, gamesWon);
+//        matchResultsForParticipant.put(participant, matchResult);
+        
+        MatchResult matchResult = matchResultsForParticipant.get(participant);
+        matchResult.setGamesWon(gamesWon);
     
         List<MatchResult> matchResults = new ArrayList<>();
+        matchResults.add(matchResult);
         return matchResults;
     }
 
@@ -147,11 +133,19 @@ public class Match {
             return Collections.emptyList();
         }
         Participant otherParticipant = getOther(participant);
-        MatchResult matchResult = new MatchResult(this, participant, gamesWon);
-        MatchResult otherMatchResult = new MatchResult(this, otherParticipant, gamesLost);
+        
+        
+//        MatchResult matchResult = new MatchResult(this, participant, gamesWon);
+//        MatchResult otherMatchResult = new MatchResult(this, otherParticipant, gamesLost);
+        MatchResult matchResult = matchResultsForParticipant.get(participant);
+        matchResult.setGamesWon(gamesWon);
+        MatchResult otherMatchResult = matchResultsForParticipant.get(otherParticipant);
+        otherMatchResult.setGamesWon(gamesLost);
         log.debug("In setMatchScore, creating matchResults: {} and {}", matchResult, otherMatchResult);
-        matchResultsForParticipant.put(participant, matchResult);
-        matchResultsForParticipant.put(otherParticipant, otherMatchResult);
+        
+//        matchResultsForParticipant.put(participant, matchResult);
+//        matchResultsForParticipant.put(otherParticipant, otherMatchResult);
+        
         List<MatchResult> matchResults = new ArrayList<>();
         matchResults.add(matchResult);
         matchResults.add(otherMatchResult);
@@ -165,9 +159,11 @@ public class Match {
         }
         // if the other entry is null, this means that no result is present yet
         // the null should be handled in the calling method
-        if (matchResultsForParticipant.get(participant) == null) {
+        if (matchResultsForParticipant.get(participant) == null
+                || matchResultsForParticipant.get(participant).getGamesWon() == null) {
             return null;
         }
+        
         MatchResultEnum matchResultEnum;
         int gamesWon = matchResultsForParticipant.get(participant).getGamesWon();
         if (matchResultsForParticipant.values()
@@ -197,12 +193,13 @@ public class Match {
     }
     
     public int getWinsForParticipant(Participant participant) {
-//        if (!participants.contains(participant)) {
-//            log.warn(PARTICIPANT_NOT_FOUND_WARN_MESSAGE, participant);
-//            return 0;
-//        }
+        if (!matchResultsForParticipant.containsKey(participant)) {
+            log.warn(PARTICIPANT_NOT_FOUND_WARN_MESSAGE, participant);
+            return 0;
+        }
         
-        if (!matchResultsForParticipant.containsKey(participant) || matchResultsForParticipant.get(participant) == null) {
+        if (matchResultsForParticipant.get(participant) == null
+                || matchResultsForParticipant.get(participant).getGamesWon() == null) {
             log.info("Participant does not yet have a submitted result: {}", participant);
             return 0;
         }
@@ -215,7 +212,8 @@ public class Match {
     }
     
     public void addParticipant(Participant participant) {
-        this.matchResultsForParticipant.put(participant, null);
+        MatchResult matchResult = new MatchResult(this, participant, null);
+        this.matchResultsForParticipant.put(participant, matchResult);
     }
     
     @Override

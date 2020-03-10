@@ -7,7 +7,7 @@ import com.romco.domain.tournament.Tournament;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Participant implements Comparable<Participant> {
+public class Participant implements Comparable<Participant> {
     protected static long idCounter = 1;
     protected long id;
     protected String code;

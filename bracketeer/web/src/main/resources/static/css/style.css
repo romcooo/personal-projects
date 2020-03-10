@@ -68,7 +68,7 @@ body a:hover {
     transition: inherit;
 }
 
-.topnav .home-button:hover {
+.topnav .home-button:hover, .home-button:active {
 /*    color: #097bd1;*/
     color: #289df6;
 }
@@ -80,7 +80,7 @@ body a:hover {
     transition: inherit;
 }
 
-.topnav .right:hover {
+.topnav .right:hover, .right:active {
 /*    no need because inherited from "body a"*/
 /*    color: #289df6;*/
 }
@@ -141,36 +141,37 @@ body a:hover {
 
 /* == COMMON MAIN BODY & HEADERS == */
 
-.main h2 {
-/*    text-transform: uppercase;*/
-    text-align: center;
-}
-
 .main {
     margin-left: 200px; /* Same as the width of the sidenav */
-    font-size: 30px;
-    color: #ecf6fe;;
     padding: 10px 25px;
+
+    font-size: 25px;
+    line-height: 150%;
+    color: #ecf6fe;
+
 /*    background-image: url(../img/bracket_aerial.jpg);*/
     background-image: linear-gradient(
         rgba(0, 0, 0, 0.8),
         rgba(0, 0, 0, 0.8)),
         url(../img/bracket_aerial.jpg);
     
-/*
-    background-image: linear-gradient(
-        rgba(0, 0, 0, 0.8),
-        rgba(0, 0, 0, 0.8)),
-        url(/img/bracket_aerial.jpg);
-*/
-    
     background-size: cover;
-    
     background-position: center;
     
     height: 100vh; 
     
 }
+
+.main h1, h2 {
+/*    text-transform: uppercase;*/
+    font-size: 50px;
+    text-align: center;
+}
+
+.main p {
+    
+}
+
 
 /* ==== NEW TOURNAMENT ==== */
 
@@ -208,29 +209,48 @@ body a:hover {
     transition: inherit;
 }
 
+.dropdown:hover {
+/*
+    transition: color 0.25s;
+    color: #289df6;
+*/
+}
+
 .dropdown:hover .dropdown-content {
-    display: block;
+/*    display: block;*/
+    height: auto;
+    visibility: visible;
+    opacity: 1;
+/*    transition: opacity 1s;*/
 }
 
 /* Dropdown content (hidden by default) */
 .dropdown-content {
     margin: 1px;
-    display: none;
+    
+/*    display: none;*/
+    display: block;
+/*    height: 0px;*/
+    visibility: hidden;
+    opacity: 0;
+    overflow: hidden;
+    transition: visibility 0.25s, opacity 0.25s linear;
+    
     position: absolute;
-    color: #ecf6fe;
-    background-color: rgba(236, 246, 254, 0.18);
-    border-radius: 8px;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
-}
-
-.dropdown-content {
-    border-radius: 10px;
     
     color: #ecf6fe;
+/*    background-color: rgba(236, 246, 254, 0.18);*/
     background-color: rgba(2, 27, 46, 0.98);
+    
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    
+    z-index: 1;
+    border-radius: 10px;
 }
+
+
+
 
 /* Links inside the dropdown */
 .dropdown-content a {
@@ -248,10 +268,14 @@ body a:hover {
     border-bottom: none;
 }
 
+.dropdown-content a:link, a:visited  {
+    color: #ecf6fe;
+}
+
 /* == COMMON PARTS*/
 /* == BUTTONS */
-.generic-button:hover {
-    color:  #289df6;
+.generic-button:hover, .generic-button:active {
+    color: #289df6;
     transition: color 0.25s;
 }
 
@@ -445,6 +469,52 @@ img {
     margin: 0;
     padding: 0;
     width: 80%;
+    display: block;
+    resize: none;
+    
+}
+
+.tournament-table {
+    width: 75%;
+    text-align: right;
+}
+
+.tournament-table thead {
+    text-align: center;
+}
+
+.tournament-table tbody tr td {
+    padding: 0 2%;
+}
+
+
+.tournament-table .col-code {
+    width: 25%;
+}
+
+.tournament-table .col-name {
+    width: 35%;
+}
+
+.tournament-table .col-type {
+    width: 25%;
+}
+
+.tournament-table .col-action {
+    width: 15%;
+}
+
+
+/* make a generic table-action-button and only specify a couple of attributes here*/
+.open-tournament-button{
+    text-align: center;
+    font-size: inherit;
+    color: inherit;
+    background-color: transparent;
+    border: none;
+    margin: 0;
+    padding: 2px;
+    width: 100%;
     display: block;
     resize: none;
     

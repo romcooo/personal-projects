@@ -66,7 +66,13 @@ public class MatchResultDaoImpl implements MatchResultDao {
     
     @Override
     public boolean update(MatchResult matchResult) {
-        return false;
+        String sqlQuery = UPDATE + "games_won = :gamesWon " +
+                "WHERE match_id = :matchId AND participant_id = :participantId";
+        SqlParameterSource source = new MapSqlParameterSource()
+                .addValue("gamesWon", matchResult.getGamesWon())
+                .addValue("matchId", matchResult.getOfMatch().getId())
+                .addValue("participantId", matchResult.getForParticipant().getId());
+        return namedParameterJdbcTemplate.update(sqlQuery, source) == 1;
     }
     
     @Override
@@ -88,27 +94,11 @@ public class MatchResultDaoImpl implements MatchResultDao {
         
         // In this case, we need to return the participant id along with the matchResult so that the service can
         // set the matchResult.forParticipant properly based on the returned id.
-        Map<MatchResult, Long> resultParticipantMap = new HashMap<>();
+        Map<MatchResult, Long> resultParticipantMap;
         try {
             resultParticipantMap = namedParameterJdbcTemplate.query(sqlQuery, source, new MatchResultMapResultSetExtractor());
             log.debug("in retrieveByMatchId, resultMap = {}", resultParticipantMap);
             return resultParticipantMap;
-
-//            Map<String, Object> columnMap = namedParameterJdbcTemplate.queryForMap(sqlQuery, source);
-//            Map<MatchResult, Long> resultMap = namedParameterJdbcTemplate.queryForMap(sqlQuery, source, new MatchResultRowMapper());
-
-//            log.debug("in retrieveByMatchId, keyset: {}, values: {}", columnMap.keySet(), columnMap.values());
-//            for (String column : columnMap.keySet()) {
-//                MatchResult matchResult = new MatchResult();
-//                if (column.equals("participant_id")) {
-//                    log.debug("in retrieveByMatchId with column participant_id = {}", columnMap.get(column));
-//                    resultParticipantMap.put(matchResult, (Long) columnMap.get(column));
-//                } else if (column.equals("games_won")) {
-//                    log.debug("in retrieveByMatchId with column games_won = {}", columnMap.get(column));
-//                    matchResult.setGamesWon((Integer) columnMap.get(column));
-//                }
-//            }
-//            return resultParticipantMap;
         } catch (EmptyResultDataAccessException e) {
             log.debug("Retrieve yielded 0 results for matchId {}, returning null.", matchId);
             return null;

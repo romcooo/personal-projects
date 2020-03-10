@@ -166,7 +166,7 @@ public class TournamentServiceImpl implements TournamentService {
         if (!matchResults.isEmpty()){
             for (MatchResult matchResult : matchResults) {
                 log.debug("in setResult, creating matchResult {}", matchResult);
-                matchResultDao.create(matchResult);
+                matchResultDao.update(matchResult);
             }
         }
     }
@@ -179,8 +179,9 @@ public class TournamentServiceImpl implements TournamentService {
         for (Match match : round.getMatches()) {
             match.setId(matchDao.create(match));
             
-            for (MatchResult matchResult : match.getMatchResults()) {
-            
+            for (Participant participant : match.getMatchResultsForParticipant().keySet()) {
+                matchResultDao.create(match.getMatchResultsForParticipant().get(participant));
+                log.debug("Stored match result: {}", match.getMatchResultsForParticipant().get(participant));
             }
             
             log.debug("Stored match: {}", match);

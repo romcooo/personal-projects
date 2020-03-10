@@ -27,32 +27,33 @@
     <div class="main" align="center">
         <h1 id="title">All Tournaments</h1>
 
+        <div>       
+            <table class="tournament-table" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th class="col-code">Code</th>
+                        <th class="col-name">Name</th>
+                        <th class="col-type">Type</th>
+                        <th class="col-action">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
 
-        <table class="tournament-table" cellspacing="0">
-            <thead>
-                <tr>
-                    <th class="table-col-tournament-code">Code</th>
-                    <th class="table-col-tournament-name">Name</th>
-                    <th class="table-col-tournament-type">Type</th>
-                    <th class="table-col-tournament-action">Action</th>
-                </tr>
-            </thead>
-            <tbody>
-
-                <tr th:block th:each="tournament : ${tournaments}">
-                    <td class="table-col-tournament-code" th:text="${tournament.code}">tCode</td>
-                    <td class="table-col-tournament-name" th:text="${tournament.name}">tName</td>
-                    <td class="table-col-tournament-type" th:text="${tournament.type}">tType</td>
-                    <td class="table-col-tournament-action">
-                        <form th:action="@{/tournament/{code}(code=${tournament.code})}"
-                              method="get">
-                            <button class="table-action-button generic-button"
-                                    type="submit">Open</button>
-                        </form>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+                    <tr th:block th:each="tournament : ${tournaments}">
+                        <td class="col-code" th:text="${tournament.code}">tCode</td>
+                        <td class="col-name" th:text="${tournament.name}">tName</td>
+                        <td class="col-type" th:text="${tournament.type}">tType</td>
+                        <td class="col-action">
+                            <form th:action="@{/tournament/{code}(code=${tournament.code})}"
+                                  method="get">
+                                <button class="open-tournament-button table-action-button generic-button"
+                                        type="submit">Open</button>
+                            </form>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
 
     </div>
 </body>

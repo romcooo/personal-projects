@@ -12,18 +12,18 @@ public class MatchResult {
 //    private long id;
     private Match ofMatch;
     private Participant forParticipant;
-    private int gamesWon = 0;
+    private Integer gamesWon;
     
     public MatchResult() {
     }
     
-    public MatchResult(Match ofMatch, Participant forParticipant, int gamesWon) {
+    public MatchResult(Match ofMatch, Participant forParticipant, Integer gamesWon) {
         this.ofMatch = ofMatch;
         this.forParticipant = forParticipant;
         this.gamesWon = gamesWon;
     }
 
-    public int getGamesWon() {
+    public Integer getGamesWon() {
         log.debug("In getGamesWon for matchResult {}", this);
         return gamesWon;
     }
