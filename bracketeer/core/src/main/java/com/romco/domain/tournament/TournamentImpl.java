@@ -4,6 +4,8 @@ import com.romco.domain.matcher.Matcher;
 import com.romco.domain.matcher.TournamentFormat;
 import com.romco.domain.participant.Participant;
 import com.romco.domain.util.CodeGenerator;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -11,17 +13,22 @@ import java.util.*;
 
 @Slf4j
 @Component
+@Getter
+@Setter
 public class TournamentImpl implements Tournament {
     private static int idCounter;
+
     private long id;
     private String code; // business id
     private String name;
     private TournamentFormat type;
-    private List<Participant> participants;
-    private Map<Participant, Double> startingParticipantScores;
-    private Map<Participant, Integer> startingParticipantByes;
+
     private List<Round> rounds;
     private RuleSet ruleSet;
+    private Map<Participant, Integer> startingParticipantByes;
+    private Map<Participant, Double> startingParticipantScores;
+
+    private List<Participant> participants;
 
     private TournamentImpl() {
         this.id = idCounter++;
@@ -82,47 +89,7 @@ public class TournamentImpl implements Tournament {
 //        }
 //        return count;
 //    }
-    
-    @Override
-    public long getId() {
-        return id;
-    }
-    
-    @Override
-    public void setId(long id) {
-        this.id = id;
-    }
-    
-    @Override
-    public String getCode() {
-        return code;
-    }
-    
-    @Override
-    public void setCode(String code) {
-        this.code = code;
-    }
-    
-    @Override
-    public String getName() {
-        return name;
-    }
-    
-    @Override
-    public void setName(String name) {
-        this.name = name;
-    }
-    
-    @Override
-    public TournamentFormat getType() {
-        return type;
-    }
-    
-    @Override
-    public void setType(TournamentFormat type) {
-        this.type = type;
-    }
-    
+
     @Override
     public boolean addParticipant(Participant participant) {
         if (participants.contains(participant)) {
@@ -151,7 +118,13 @@ public class TournamentImpl implements Tournament {
         }
         return null;
     }
-    
+
+    @Override
+    public List<Participant> getParticipants() {
+        updateParticipants();
+        return Collections.unmodifiableList(participants);
+    }
+
     @Override
     public void setParticipants(List<Participant> participants) {
         this.participants = participants;
@@ -197,27 +170,6 @@ public class TournamentImpl implements Tournament {
     }
 
     @Override
-    public List<Round> getRounds() {
-        return rounds;
-    }
-    
-    @Override
-    public void setRounds(List<Round> rounds) {
-        this.rounds = rounds;
-    }
-    
-    public Participant getParticipant(int n) {
-        return participants.get(n);
-    }
-
-    private void reconcileParticipantCodes() {
-        for (int i = 0; i < participants.size(); i++) {
-            Participant participant = participants.get(i);
-            participant.setCode(Integer.toString(i+1));
-        }
-    }
-
-    @Override
     public List<MatchResult> setMatchResult(int roundNumber,
                                   Participant participant,
                                   int gamesWon,
@@ -257,12 +209,7 @@ public class TournamentImpl implements Tournament {
             }
         return Collections.emptyList();
     }
-    
-    @Override
-    public List<Participant> getParticipants() {
-        updateParticipants();
-        return Collections.unmodifiableList(participants);
-    }
+
 
     @Override
     public List<Participant> getParticipantsForAfterRound(int roundNumber) {
@@ -293,7 +240,7 @@ public class TournamentImpl implements Tournament {
         log.debug("Score of participant {} is {} after round {}", participant, score, roundNumber);
         return score;
     }
-    
+
     public Integer getParticipantByes(Participant participant) {
         return getParticipantByesAfterRound(participant, rounds.size());
     }
@@ -311,7 +258,7 @@ public class TournamentImpl implements Tournament {
         }
         return byes;
     }
-    
+
     public List<Participant> getParticipantPlayedAgainst(Participant participant) {
         return getParticipantPlayedAgainstForAfterRound(participant, rounds.size());
     }
@@ -340,7 +287,6 @@ public class TournamentImpl implements Tournament {
             participant.setPlayedAgainst(getParticipantPlayedAgainst(participant));
         }
     }
-
     private void updateParticipantsForAfterRound(int roundNumber) {
         for (Participant participant : participants) {
             participant.setScore(getParticipantScoreAfterRound(participant, roundNumber));
@@ -348,7 +294,13 @@ public class TournamentImpl implements Tournament {
             participant.setPlayedAgainst(getParticipantPlayedAgainstForAfterRound(participant, roundNumber));
         }
     }
-    
+    private void reconcileParticipantCodes() {
+        for (int i = 0; i < participants.size(); i++) {
+            Participant participant = participants.get(i);
+            participant.setCode(Integer.toString(i+1));
+        }
+    }
+
     @Override
     public String toString() {
         return "TournamentImpl{" +
