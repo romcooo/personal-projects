@@ -20,11 +20,9 @@ public interface Tournament {
     
     boolean addParticipant(Participant participant);
     Participant removeParticipant(long id);
-    void setParticipants(List<Participant> participants);
-
 
     List<Participant> getParticipants();
-    List<Participant> getParticipantsForAfterRound(int roundNumber);
+    List<Participant> getParticipantsAfterRound(int roundNumber);
     
     Round getRound(int roundNumber);
     List<Round> getRounds();

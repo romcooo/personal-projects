@@ -15,7 +15,7 @@ public class Standings {
     }
 
     public static void printStandings(Tournament tournament, int afterRoundNumber) {
-        List<Participant> participants = new ArrayList<>(tournament.getParticipantsForAfterRound(afterRoundNumber));
+        List<Participant> participants = new ArrayList<>(tournament.getParticipantsAfterRound(afterRoundNumber));
         
         participants.sort(Comparator.comparingDouble(Participant::getScore).reversed());
         for (Participant participant : participants) {
@@ -24,7 +24,7 @@ public class Standings {
     }
     
     public static List<Participant> getStandings(Tournament tournament, int afterRoundNumber) {
-        List<Participant> participants = new ArrayList<>(tournament.getParticipantsForAfterRound(afterRoundNumber));
+        List<Participant> participants = new ArrayList<>(tournament.getParticipantsAfterRound(afterRoundNumber));
         
         participants.sort(Comparator.comparingDouble(Participant::getScore).reversed());
         return participants;

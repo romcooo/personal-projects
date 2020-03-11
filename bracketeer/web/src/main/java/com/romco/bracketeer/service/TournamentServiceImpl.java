@@ -1,17 +1,19 @@
 package com.romco.bracketeer.service;
 
 import com.romco.bracketeer.util.Message;
-import com.romco.domain.tournament.*;
-import com.romco.persistence.dao.*;
 import com.romco.domain.matcher.TournamentFormat;
 import com.romco.domain.participant.Participant;
 import com.romco.domain.participant.Player;
-import com.romco.domain.util.MockDataModel;
+import com.romco.domain.tournament.*;
+import com.romco.persistence.dao.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @Service
@@ -98,18 +100,12 @@ public class TournamentServiceImpl implements TournamentService {
                     Map<MatchResult, Long> matchResults = matchResultDao.retrieveByMatchId(match.getId());
                     for (MatchResult matchResult : matchResults.keySet()) {
                         matchResult.setOfMatch(match);
-                        
                         Participant ofMatch = participants.stream()
                                                           .filter(participant -> participant.getId() == matchResults.get(matchResult))
                                                           .findAny()
                                                           .get();
-                        match.addParticipant(ofMatch);
                         matchResult.setForParticipant(ofMatch);
-                        
-//                        matchResult.setForParticipant(participants.stream()
-//                                                                  .filter(participant -> participant.getId() == matchResults.get(matchResult))
-//                                                                  .findAny()
-//                                                                  .get());
+                        match.addParticipant(ofMatch);
                         match.addMatchResult(matchResult);
                     }
                     

@@ -13,17 +13,15 @@ public interface TournamentService {
     Tournament getTournament();
     String saveTournament();
     Tournament getTournamentByCode(String code);
-    
     void setTournamentName(String tournamentName);
-    
+
+    Collection<Tournament> getAllTournaments();
+
     List<Participant> getParticipants();
     Participant addPlayer(String name);
     String removePlayer(String id);
-    
-    void setResult(int roundNumber, String participantCode, int gamesWon, int gamesLost);
+
     void generateRound(int n);
-    
-    
-    
-    Collection<Tournament> getAllTournaments();
+
+    void setResult(int roundNumber, String participantCode, int gamesWon, int gamesLost);
 }

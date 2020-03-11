@@ -50,13 +50,11 @@ public class TournamentController {
                 return value;
             }
         }
-//        log.warn("Tournament code is not available, returning -1.");
-//        return "-1";
         log.warn("Tournament code is not available, returning null.");
         return null;
     }
 
-    // == request methods
+    // == request handlers
 
     // == INDEX
     @GetMapping("/")
@@ -82,12 +80,6 @@ public class TournamentController {
     public String tournamentSetup(Model model) {
         log.info("In GET newTournamentSetup");
         model.addAttribute("participants", participants());
-//        if (tournament().getCode() != null) {
-//            log.info("code is not null ");
-//            model.addAttribute("tournamentCode", tournament().getCode());
-//        } else {
-//            model.addAttribute("tournamentCode", "1");
-//        }
         return ViewNames.Tournament.SETUP;
     }
     
@@ -100,20 +92,21 @@ public class TournamentController {
         return Mappings.Tournament.REDIRECT_TO_SETUP;
     }
 
-    // == ADD/REMOVE PLAYERS
-    @PostMapping(Mappings.Tournament.ADD_PLAYER)
-    public String addPlayer(@RequestParam(name = "playerName") String playerName) {
-        log.info("In addPlayer, input: {}", playerName);
-        service.addPlayer(playerName);
-        return Mappings.Tournament.REDIRECT_ADD_PLAYER;
-    }
-
-    @PostMapping(Mappings.Tournament.REMOVE_PLAYER)
-    public String removePlayer(@RequestParam(name = "id") String playerId) {
-        log.info("In POST removePlayer with id {}", playerId);
-        service.removePlayer(playerId);
-        return Mappings.Tournament.REDIRECT_REMOVE_PLAYER;
-    }
+    // moved to ParticipantController
+//    // == ADD/REMOVE PLAYERS
+//    @PostMapping(Mappings.Tournament.ADD_PLAYER)
+//    public String addPlayer(@RequestParam(name = "playerName") String playerName) {
+//        log.info("In addPlayer, input: {}", playerName);
+//        service.addPlayer(playerName);
+//        return Mappings.Tournament.REDIRECT_ADD_PLAYER;
+//    }
+//
+//    @PostMapping(Mappings.Tournament.REMOVE_PLAYER)
+//    public String removePlayer(@RequestParam(name = "id") String playerId) {
+//        log.info("In POST removePlayer with id {}", playerId);
+//        service.removePlayer(playerId);
+//        return Mappings.Tournament.REDIRECT_REMOVE_PLAYER;
+//    }
 
     // == save tournament and retrieve existing by code=
     @PostMapping(Mappings.Tournament.SAVE)
