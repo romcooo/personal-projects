@@ -183,7 +183,7 @@ public class Match {
         return isBye;
     }
 
-    // it is used by Thymeleaf! don't get fooled by the IDE suggestion
+    // DO NOT REMOVE, it is used by Thymeleaf! don't get fooled by the IDE suggestion that it's not used.
     public int getWinsForParticipant(Participant participant) {
         if (!matchResultsForParticipant.containsKey(participant)) {
             log.warn(PARTICIPANT_NOT_FOUND_WARN_MESSAGE, participant);

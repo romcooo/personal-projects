@@ -26,14 +26,14 @@ public class ParticipantController {
     public String addPlayer(@RequestParam(name = "playerName") String playerName) {
         log.info("In addPlayer, input: {}", playerName);
         service.addPlayer(playerName);
-        return Mappings.Tournament.REDIRECT_ADD_PLAYER;
+        return Mappings.Tournament.REDIRECT_TO_SETUP;
     }
 
     @PostMapping(Mappings.Tournament.REMOVE_PLAYER)
     public String removePlayer(@RequestParam(name = "id") String playerId) {
         log.info("In POST removePlayer with id {}", playerId);
         service.removePlayer(playerId);
-        return Mappings.Tournament.REDIRECT_REMOVE_PLAYER;
+        return Mappings.Tournament.REDIRECT_TO_SETUP;
     }
 
 }
