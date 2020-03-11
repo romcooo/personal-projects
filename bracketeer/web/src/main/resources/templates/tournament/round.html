@@ -90,14 +90,16 @@
                     <input class="pairing-table-score-input"
                            th:form="'pairings-save-form-single-match-' + ${iteration.count}"
                            name="participant1Score"
-                           th:value="${match.getWinsForParticipant(match.participants[0])}">
+                           th:value="${match.getMatchResultsForParticipant().get(match.participants[0]).getGamesWon()}"
+                           th:placeholder="'_'">
                 </td>
                 <td class="pairing-table-col-score-divider">:</td>
                 <td class="pairing-table-col-score" contenteditable="true">
                     <input class="pairing-table-score-input"
                            th:form="'pairings-save-form-single-match-' + ${iteration.count}"
                            name="participant2Score"
-                           th:value="${match.getWinsForParticipant(match.participants[1])}">
+                           th:value="${match.getMatchResultsForParticipant().get(match.participants[1]).getGamesWon()}"
+                           th:placeholder="'_'">
                 </td>
 
                 <td class="pairing-table-col-name" th:text="${match.participants[1].name}">p2Name</td>

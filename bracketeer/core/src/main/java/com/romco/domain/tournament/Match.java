@@ -183,21 +183,21 @@ public class Match {
         return isBye;
     }
 
-    // DO NOT REMOVE, it is used by Thymeleaf! don't get fooled by the IDE suggestion that it's not used.
-    public int getWinsForParticipant(Participant participant) {
-        if (!matchResultsForParticipant.containsKey(participant)) {
-            log.warn(PARTICIPANT_NOT_FOUND_WARN_MESSAGE, participant);
-            return 0;
-        }
-
-        if (matchResultsForParticipant.get(participant) == null
-                || matchResultsForParticipant.get(participant).getGamesWon() == null) {
-            log.info("Participant does not yet have a submitted result: {}", participant);
-            return 0;
-        }
-
-        return matchResultsForParticipant.get(participant).getGamesWon();
-    }
+//
+//    public int getWinsForParticipant(Participant participant) {
+//        if (!matchResultsForParticipant.containsKey(participant)) {
+//            log.warn(PARTICIPANT_NOT_FOUND_WARN_MESSAGE, participant);
+//            return 0;
+//        }
+//
+//        if (matchResultsForParticipant.get(participant) == null
+//                || matchResultsForParticipant.get(participant).getGamesWon() == null) {
+//            log.info("Participant does not yet have a submitted result: {}", participant);
+//            return 0;
+//        }
+//
+//        return matchResultsForParticipant.get(participant).getGamesWon();
+//    }
     
     public void addMatchResult(MatchResult matchResult) {
         matchResultsForParticipant.put(matchResult.getForParticipant(), matchResult);

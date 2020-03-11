@@ -46,7 +46,7 @@ public class RoundController {
     }
 
     // == request handlers
-    // == GENERATE ROUNDS
+    // == ROUNDS
     @PostMapping(Mappings.Tournament.Round.GENERATE)
     public String generateRound(@RequestParam(value = "roundNumber") int roundNumber,
                                 @PathVariable(value = "tournamentCode") String tournamentCode,
@@ -60,7 +60,6 @@ public class RoundController {
                 .replace("{tournamentCode}", tournament().getCode());
     }
 
-    // == ROUNDS
     @GetMapping(Mappings.Tournament.Round.WITH_NUMBER)
     public String getRound(@PathVariable(value = "roundNumber") int roundNumber, Model model) {
         log.info("In getRound with roundNumber {}", roundNumber);

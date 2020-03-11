@@ -53,13 +53,6 @@ public class TournamentController {
     }
 
     // == request handlers
-
-    // == INDEX
-    @GetMapping("/")
-    public String index(Model model) {
-        log.info("index page loaded");
-        return "index";
-    }
     
     // == NEW TOURNAMENT
     @GetMapping(Mappings.Tournament.NEW)
@@ -90,22 +83,6 @@ public class TournamentController {
         return Mappings.Tournament.REDIRECT_TO_SETUP;
     }
 
-    // moved to ParticipantController
-//    // == ADD/REMOVE PLAYERS
-//    @PostMapping(Mappings.Tournament.ADD_PLAYER)
-//    public String addPlayer(@RequestParam(name = "playerName") String playerName) {
-//        log.info("In addPlayer, input: {}", playerName);
-//        service.addPlayer(playerName);
-//        return Mappings.Tournament.REDIRECT_ADD_PLAYER;
-//    }
-//
-//    @PostMapping(Mappings.Tournament.REMOVE_PLAYER)
-//    public String removePlayer(@RequestParam(name = "id") String playerId) {
-//        log.info("In POST removePlayer with id {}", playerId);
-//        service.removePlayer(playerId);
-//        return Mappings.Tournament.REDIRECT_REMOVE_PLAYER;
-//    }
-
     // == save tournament and retrieve existing by code=
     @PostMapping(Mappings.Tournament.SAVE)
     public String saveNewTournament() {
@@ -122,76 +99,6 @@ public class TournamentController {
         model.addAttribute("participants", participants());
         return ViewNames.Tournament.SETUP;
     }
-
-//    // == GENERATE ROUNDS
-//    @PostMapping(Mappings.Tournament.Round.GENERATE)
-//    public String generateRound(@RequestParam(value = "roundNumber") int roundNumber,
-//                                @PathVariable(value = "tournamentCode") String tournamentCode,
-//                                Model model) {
-//        log.info("In generateRound for roundNumber {}", roundNumber);
-//        service.saveTournament();
-//        service.generateRound(roundNumber);
-//        model.addAttribute("tournament", tournament());
-//        return Mappings.Tournament.Round.REDIRECT_WITH_NUMBER
-//                .replace("{roundNumber}", Integer.toString(roundNumber))
-//                .replace("{tournamentCode}", tournament().getCode());
-//    }
-//
-//    // == ROUNDS
-//    @GetMapping(Mappings.Tournament.Round.WITH_NUMBER)
-//    public String getRound(@PathVariable(value = "roundNumber") int roundNumber, Model model) {
-//        log.info("In getRound with roundNumber {}", roundNumber);
-//        Round round = service.getTournament().getRound(roundNumber);
-//        model.addAttribute("round", round);
-//        return ViewNames.Tournament.ROUND;
-//    }
-//
-//    // == MATCH RESULTS
-//    @PostMapping(Mappings.Tournament.Round.Match.RESULT)
-//    public String postMatchResult(
-//            @PathVariable(value = "roundNumber") int roundNumber,
-//            @PathVariable(value = "matchNumber") int matchNumber,
-//            @RequestParam(value = "participant1Score") int participant1Score,
-//            @RequestParam(value = "participant2Score") int participant2Score,
-//            Model model) {
-//        String participant1Code = tournament().getRound(roundNumber)
-//                                              .getMatch(matchNumber - 1)
-//                                              .getParticipants()
-//                                              .get(0)
-//                                              .getCode();
-//        String participant2Code = tournament().getRound(roundNumber)
-//                                              .getMatch(matchNumber - 1)
-//                                              .getParticipants()
-//                                              .get(1)
-//                                              .getCode();
-//        log.info("In postMatchResult for roundNumber {}, matchNumber {}, scores are {} : {}",
-//                 roundNumber,
-//                 matchNumber,
-//                 participant1Score,
-//                 participant2Score);
-//        // this is a version of the method that allows to use both scores with only 1 participant,
-//        // assuming that it's a duel.
-//        service.setResult(roundNumber, participant1Code, participant1Score, participant2Score);
-//
-//        return Mappings.Tournament.Round.REDIRECT_WITH_NUMBER;
-//    }
-//
-//    // == STANDINGS AFTER ROUND #
-//    @GetMapping(Mappings.Tournament.Round.STANDINGS)
-//    public String getStandingsAfterRound(
-//            @PathVariable(value = "roundNumber") int roundNumber,
-//            Model model) {
-//
-//        Round round = service.getTournament().getRound(roundNumber);
-//        model.addAttribute("round", round);
-//
-////        List<Participant> participantsAfterRound = service.getTournament().getParticipantsForAfterRound(roundNumber);
-//        List<Participant> participantsAfterRound = Standings.getStandings(service.getTournament(), roundNumber);
-//
-//        model.addAttribute("participants", participantsAfterRound);
-//
-//        return ViewNames.Tournament.STANDINGS;
-//    }
     
     // == ALL TOURNAMENTS AND FIND TOURNAMENT
     @GetMapping(Mappings.Tournament.ALL)
