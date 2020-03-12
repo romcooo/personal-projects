@@ -78,17 +78,17 @@
         <table class="player-table" cellspacing="0">
             <thead>
             <tr>
-                <th class="table-col-id">#</th>
-                <th class="table-col-name">Name</th>
-                <th class="table-col-action">Action</th>
+                <th class="col-id">#</th>
+                <th class="h-col-player-name">Name</th>
+                <th class="col-action">Action</th>
             </tr>
             </thead>
             <tbody>
 
             <tr th:block th:each="participant, iteration : ${participants}">
-                <td id="idField" class="table-col-id" th:text="${iteration.count}">ex</td>
-                <td class="table-player-name" th:text="${participant.name}">example</td>
-                <td class="table-col-action">
+                <td class="col-id" id="idField" th:text="${iteration.count}">ex</td>
+                <td class="col-player-name" th:text="${participant.name}">example</td>
+                <td class="col-action">
                     <form th:action="@{/tournament/removePlayer?id={id}(id=${participant.id})}"
                           method="post">
                         <button class="player-remove-button table-action-button generic-button"
@@ -97,10 +97,10 @@
                 </td>
             </tr>
             <tr>
-                <td class="table-col-id">-</td>
-                <td class="new-tournament-players-td">
+                <td class="col-id">-</td>
+                <td class="col-player-name">
                     <form id="newTournamentAddPlayerForm"
-                          class="new-tournament-players-form"
+                          class="form-player-name"
                           action="/tournament/addPlayer"
                           method="POST">
                         <!--                            <label id="add-player" for="playerName"></label>-->
@@ -112,7 +112,7 @@
                         <!--                                <input id="add-button table-action-button" class="player-add-button generic-button" type="submit" value="Add"/>-->
                     </form>
                 </td>
-                <td class="table-col-action">
+                <td class="col-action">
                     <button class="player-add-button generic-button"
                             type="submit"
                             form="newTournamentAddPlayerForm"

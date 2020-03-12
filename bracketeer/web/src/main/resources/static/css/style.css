@@ -40,10 +40,6 @@ body a:hover {
     
 /*    can't inherit because it's in a separate html file */
     transition: color 0.25s;
-/*
-    display: flex;
-    align-items: center;
-*/
 }
 
 .topnav a {
@@ -52,17 +48,10 @@ body a:hover {
     font-size: 20px;
 }
 
-/*.topnav a:hover {*/
-/*    background-color: #ddd;*/
-/*    color: #000;*/
-/*}*/
-
 .topnav .home-button {
     position: absolute;
     font-size: 40px;
     padding: 21px 80px;
-/*    background-color: #222;*/
-/*    color: #289df6;*/
     color: #097bd1;
     
     transition: inherit;
@@ -99,7 +88,6 @@ body a:hover {
     background-color: #222;
     overflow-x: hidden;
     font-size: 25px;
-/*    padding-top: px;*/
     
 /*    can't inherit because it's in a separate html file */
     transition: color 0.25s;
@@ -147,9 +135,8 @@ body a:hover {
 
     font-size: 25px;
     line-height: 150%;
+    
     color: #ecf6fe;
-
-/*    background-image: url(../img/bracket_aerial.jpg);*/
     background-image: linear-gradient(
         rgba(0, 0, 0, 0.8),
         rgba(0, 0, 0, 0.8)),
@@ -300,13 +287,13 @@ body a:hover {
     text-align: right;
 }
 
-.player-table .table-col-id {
+.player-table .col-id {
     text-align: center;
     
     width: 10%;
 }
 
-.player-table .table-col-name {
+.player-table .h-col-player-name {
     margin: 0;
     padding: 0;
     
@@ -316,7 +303,7 @@ body a:hover {
 
 }
 
-.player-table .table-col-action {
+.player-table .col-action {
     border-left: 1px solid #ecf6fe;
     
     text-align: center;
@@ -325,7 +312,7 @@ body a:hover {
 }
 
 
-.player-table .table-player-name {
+.player-table .col-player-name {
     padding: 0 2.5%;
     border-right: 1px solid #ecf6fe;
     
@@ -334,24 +321,26 @@ body a:hover {
     color: inherit;
     background-color: transparent;
     
-    width: 100%;
+    width: 75%;
     height: 42px;
     
 }
 
 .player-table .form-player-name {
-    margin: 0 0;
-    padding: 0 2.5%;
     border: 0;
     
     float: right;
+    
+    font-family: 'Ubuntu', sans-serif;
+    font-weight: 300;
+    font-size: 90%;
     
     text-align: right;
     
     color: inherit;
     background-color: transparent;
     
-    width: 95%;
+    width: 100%;
     height: 42px;
 }
 

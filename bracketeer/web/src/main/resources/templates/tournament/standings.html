@@ -70,9 +70,9 @@
         
             <tbody>
                 <tr th:block th:each="participant, iteration : ${participants}">
-                    <td class="standings-table-col-number" th:text="${iteration.count}">1</td>
-                    <td class="standings-table-col-player" th:text="${participant.name}">Player 1</td>
-                    <td class="standings-table-col-score" th:text="${participant.score}">3</td>
+                    <td class="col-number" th:text="${iteration.count}">1</td>
+                    <td class="col-player" th:text="${participant.name}">Player 1</td>
+                    <td class="col-score" th:text="${participant.score}">3</td>
                     <td>N/A</td>
                     <td>N/A</td>
                     <td>N/A</td>
