@@ -4,7 +4,6 @@ import com.romco.domain.tournament.Match;
 import com.romco.domain.participant.Participant;
 import com.romco.domain.tournament.Round;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -21,52 +20,42 @@ class SwissMatcher implements Matcher {
     }
 
     @Override
-    public Round generateRound(List<Participant> participants) {
+    public Round generateRound(List<Participant> participants, MatcherMode mode) {
         if (participants.isEmpty()) {
             log.info("Empty list passed, returning null");
             return null;
         }
         
-        List<Participant> toPairList = new ArrayList<>(participants);
+//        List<Participant> toPairList = new ArrayList<>(participants);
+        List<Participant> toPairList = mode.sort(participants);
+        
+//        if (participants.stream().allMatch((participant) -> participant.getScore() == 0)) {
+//            // if first round, shuffle
+//            Collections.shuffle(toPairList);
+//        } else {
+//            // sort (reversed because we want descending)
+//            log.debug("Before sorting: " + toPairList.toString());
+//            toPairList.sort(Comparator.comparingDouble(Participant::getScore).reversed());
+//            log.debug("After sorting: " + toPairList.toString());
+//        }
 
-        if (participants.stream().allMatch((participant) -> participant.getScore() == 0)) {
-            // if first round, shuffle
-            Collections.shuffle(toPairList);
-        } else {
-            // sort (reversed because we want descending)
-            log.debug("Before sorting: " + toPairList.toString());
-            toPairList.sort(Comparator.comparingDouble(Participant::getScore).reversed());
-            log.debug("After sorting: " + toPairList.toString());
-        }
-
+        log.debug("toPairList after sorting: {}", toPairList);
         Round round = new Round();
 
         int matchCount = 1;
         // first need to check a bye
-        if (toPairList.size() % 2 == 1) {
-            int acceptableNumberOfByes = 0;
-            for (int i = toPairList.size() - 1; i >= 0; i--) {
-                Participant participant = toPairList.get(i);
-                if (participant.getNumberOfByes() <= acceptableNumberOfByes) {
-                    // create the bye match, then remove the participant
-                    log.info("assigning bye to participant {}", participant);
-                    Match match = new Match(participant);
-
-                    match.setMatchNumber(matchCount);
-                    match.setOfRound(round);
-                    matchCount++;
-
-                    participant.addPlayedMatch(match);
-                    round.addMatch(match);
-
-                    toPairList.remove(i);
-                    break;
-                } else if (i == 0) {
-                    acceptableNumberOfByes++;
-                    i = toPairList.size() - 1;
-                }
-
-            }
+//        if (toPairList.size() % 2 == 1) {
+//            Match byeMatch = MatcherHelper.handleBye(toPairList, round, matchCount);
+//
+//            byeMatch.setMatchNumber(matchCount);
+//            byeMatch.setOfRound(round);
+//            round.addMatch(byeMatch);
+//            matchCount++;
+//        }
+        if (MatcherHelper.handleBye(toPairList,
+                                    round,
+                                    matchCount)) {
+            matchCount++;
         }
         
         // go through list as long as there is someone to pair

@@ -50,7 +50,6 @@ class SwissMatcherTest {
         tournament.setStartingScore(player7, 10);
         tournament.setStartingScore(player8, 12);
 
-        Matcher matcher = new SwissMatcher();
         Round round = tournament.generateNextRound();
 
         List<Match> matches = round.getMatches();
@@ -60,20 +59,22 @@ class SwissMatcherTest {
         }
         
         // first pair - 2 highest scoring
-        assertEquals(player8, round.getMatch(0).getParticipants().get(0));
-        assertEquals(player7, round.getMatch(0).getParticipants().get(1));
+        assertTrue(round.getMatch(0).getParticipants().contains(player8));
+        assertTrue(round.getMatch(0).getParticipants().contains(player7));
 
         // second pair -
-        assertEquals(player6, round.getMatch(1).getParticipants().get(0));
-        assertEquals(player5, round.getMatch(1).getParticipants().get(1));
+        assertTrue(round.getMatch(1).getParticipants().contains(player6));
+        assertTrue(round.getMatch(1).getParticipants().contains(player5));
 
         // third pair
-        assertEquals(player2, round.getMatch(2).getParticipants().get(0));
-        assertThat(round.getMatch(2).getParticipants().get(1)).isIn(player3, player4);
+        assertTrue(round.getMatch(2).getParticipants().contains(player2));
+        assertTrue(round.getMatch(2).getParticipants().contains(player3)
+                  || round.getMatch(2).getParticipants().contains(player4));
 
         // fourth pair
-        assertThat(round.getMatch(3).getParticipants().get(0)).isIn(player3, player4);
-        assertEquals(player1, round.getMatch(3).getParticipants().get(1));
+        assertTrue(round.getMatch(3).getParticipants().contains(player3)
+                           || round.getMatch(3).getParticipants().contains(player4));
+        assertTrue(round.getMatch(3).getParticipants().contains(player1));
     }
 
     // todo fix below
@@ -87,7 +88,8 @@ class SwissMatcherTest {
         }
         log.debug("after loop");
         Matcher matcher = new SwissMatcher();
-        Round round = matcher.generateRound(tournament.getParticipants());
+        Round round = tournament.generateNextRound();
+//        Round round = matcher.generateRound(tournament.getParticipants());
 
         assertTrue(round.getMatch(0).isBye());
     }
