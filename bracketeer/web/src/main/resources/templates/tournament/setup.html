@@ -109,6 +109,8 @@
                                type="text"
                                name="playerName"
                                autofocus="autofocus"/>
+                        
+                        
                         <!--                                <input id="add-button table-action-button" class="player-add-button generic-button" type="submit" value="Add"/>-->
                     </form>
                 </td>
@@ -117,6 +119,10 @@
                             type="submit"
                             form="newTournamentAddPlayerForm"
                             value="Submit">Add</button>
+<!--
+                    <a class="clickable"
+                       th:href="'javascript:$(\'#newTournamentAddPlayerForm\').submit();'">Add</a>
+-->
                 </td>
 
             </tr>
@@ -136,9 +142,11 @@
                   method="post">
             </form>
 
-            <a href="javascript:$('#tournament-save-form').submit();">Save</a>
-            <a href="javascript:$('#tournament-generate-first-round-form').submit();">Generate first round pairings</a>
-            <a>Clear</a>
+            <a class="clickable"
+               href="javascript:$('#tournament-save-form').submit();">Save</a>
+            <a class="clickable"
+               href="javascript:$('#tournament-generate-first-round-form').submit();">Generate first round pairings</a>
+            <a class="clickable">Clear</a>
 
         </div>
 

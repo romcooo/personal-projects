@@ -404,11 +404,27 @@ body a:hover {
 
 .clickable {
     display: inline-block;
-    padding: 4px;
     
-    text-decoration: none;
+    padding: 0 4px;
+    
     color: inherit;
+    
+    line-height: 100%;
+    
+    transition: 250ms;
+    border-bottom: 1px solid rgba(40, 157, 246, 0.8);
+/*
+    text-decoration: underline;
+    text-decoration-color: #289df6;
+    text-decoration-style: solid;
+*/
+    
 } 
+
+.clickable:hover {
+    transition: 250ms;
+    border-bottom: 1px solid rgba(40, 157, 246, 0);
+}
 
 .not-clickable:hover {
     color: #ecf6fe;

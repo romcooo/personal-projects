@@ -2,21 +2,37 @@
 /*    if the gaps (cellspacing=0) should be done in css then its this:*/
 /*    border-spacing: 0;*/
     border: 2px solid #ecf6fe;
-    width: 65%;
+    width: 70%;
     text-align: center;
-    
 }
 
-.pairing-table-col-score,
-.pairing-table-col-score-divider {
+.pairing-table .col-match-number {
+    width: 5%;
+}
+
+.pairing-table .col-score,
+.pairing-table .col-score-divider {
     border-left: none;
     border-right: none;
 }
 
-.pairing-table-col-score-divider {
+.pairing-table .col-score-divider {
     margin: 0;
     padding: 0;
+    width: 1%
 /*    font-size: 75%;*/
+}
+
+.pairing-table .col-score {
+    width: 7%;
+}
+
+.pairing-table .col-name {
+    width: 35%;
+}
+
+.pairing-table .col-action {
+    width: 10%;
 }
 
 .pairing-table-score-input {
@@ -27,7 +43,7 @@
     border: none;
     margin: 0;
     padding: 0;
-    width: 50px;
+    width: 100%;
     display: block;
     resize: none;
     
@@ -36,7 +52,7 @@
 .pairing-table a {
     display: inline-block;
     
-    text-decoration: none;
+/*    text-decoration: none;*/
     color: inherit;
 }
 

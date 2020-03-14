@@ -72,29 +72,29 @@
 
             <thead>
             <tr>
-                <th class="pairing-table-h-match-number">#</th>
-                <th class="pairing-table-h-name">Player 1</th>
-                <th class="pairing-table-h-score"></th>
-                <th class="pairing-table-h-score-divider"></th>
-                <th class="pairing-table-h-score"></th>
-                <th class="pairing-table-h-name">Player 2</th>
-                <th class="pairing-table-h-action">Action</th>
+                <th class="h-match-number">#</th>
+                <th class="h-name">Player 1</th>
+                <th class="h-score"></th>
+                <th class="h-score-divider"></th>
+                <th class="h-score"></th>
+                <th class="h-name">Player 2</th>
+                <th class="h-action">Action</th>
             </tr>
             </thead>
 
             <tbody>
             <tr th:block th:each="match, iteration : ${round.matches}">
-                <td class="pairing-table-col-match-number" th:text="${iteration.count}">1</td>
-                <td class="pairing-table-col-name" th:id th:text="${match.participants[0].name}">p1Name</td>
-                <td class="pairing-table-col-score" contenteditable="true">
+                <td class="col-match-number" th:text="${iteration.count}">1</td>
+                <td class="col-name" th:id th:text="${match.participants[0].name}">p1Name</td>
+                <td class="col-score" contenteditable="true">
                     <input class="pairing-table-score-input"
                            th:form="'pairings-save-form-single-match-' + ${iteration.count}"
                            name="participant1Score"
                            th:value="${match.getMatchResultsForParticipant().get(match.participants[0]).getGamesWon()}"
                            th:placeholder="'_'">
                 </td>
-                <td class="pairing-table-col-score-divider">:</td>
-                <td class="pairing-table-col-score" contenteditable="true">
+                <td class="col-score-divider">:</td>
+                <td class="col-score" contenteditable="true">
                     <input class="pairing-table-score-input"
                            th:form="'pairings-save-form-single-match-' + ${iteration.count}"
                            name="participant2Score"
@@ -102,8 +102,8 @@
                            th:placeholder="'_'">
                 </td>
 
-                <td class="pairing-table-col-name" th:text="${match.participants[1].name}">p2Name</td>
-                <td class="pairing-table-col-action">
+                <td class="col-name" th:text="${match.participants[1].name}">p2Name</td>
+                <td class="col-action">
                     <form th:id="'pairings-save-form-single-match-' + ${iteration.count}"
                           class="save"
                           th:action="@{/tournament/__${tournamentCode}__/round/__${round.roundNumber}__/match/__${match.matchNumber}__/result}"
@@ -125,16 +125,18 @@
                   method="post"
                   th:object="${round}">
             </form>
-            <a href="javascript:$('#pairings-save-form').submit();">Save All Results</a>
+            <a class="clickable"
+               href="javascript:$('#pairings-save-form').submit();">Save All Results</a>
 
             <form id="tournament-generate-round-form"
                   class="generate-form"
                   th:action="@{/tournament/__${tournamentCode}__/round/generate?roundNumber=__${round.roundNumber}+1__}"
                   method="post">
             </form>
-            <a href="javascript:$('#tournament-generate-round-form').submit();">Generate next round pairings</a>
+            <a class="clickable"
+               href="javascript:$('#tournament-generate-round-form').submit();">Generate next round pairings</a>
 
-            <a>Clear</a>
+            <a class="clickable">Clear</a>
 
         </div>
 
