@@ -17,10 +17,10 @@ public class Match {
     private Round ofRound;
     private int matchNumber;
     private boolean isBye;
-    private Map<Participant, MatchResult> matchResultsForParticipant;
+    private Map<Participant, MatchResult> matchResultMap;
 
     public Match() {
-        matchResultsForParticipant = new HashMap<>();
+        matchResultMap = new HashMap<>();
     }
 
     public Match(Participant participant1) {
@@ -77,21 +77,21 @@ public class Match {
         this.ofRound = ofRound;
     }
 
-    public Map<Participant, MatchResult> getMatchResultsForParticipant() {
-        return matchResultsForParticipant;
+    public Map<Participant, MatchResult> getMatchResultMap() {
+        return matchResultMap;
     }
 
     public List<Participant> getOthers(Participant participant) {
-        return matchResultsForParticipant.keySet().stream()
-                    .filter((p) -> !p.equals(participant))
-                    .peek((p) -> log.debug("After filter: " + p))
-                    .collect(Collectors.toList());
+        return matchResultMap.keySet().stream()
+                             .filter((p) -> !p.equals(participant))
+                             .peek((p) -> log.debug("After filter: " + p))
+                             .collect(Collectors.toList());
     }
     
     public Participant getOther(Participant participant) {
-        List<Participant> others = matchResultsForParticipant.keySet().stream()
-                                               .filter((p) -> !p.equals(participant))
-                                               .collect(Collectors.toList());
+        List<Participant> others = matchResultMap.keySet().stream()
+                                                 .filter((p) -> !p.equals(participant))
+                                                 .collect(Collectors.toList());
         
         if (others.size() > 1) {
             log.warn("getOther yielded more than one result");
@@ -108,12 +108,12 @@ public class Match {
 
     public List<MatchResult> setMatchScore(Participant participant, int gamesWon) {
         
-        if (!matchResultsForParticipant.containsKey(participant)) {
+        if (!matchResultMap.containsKey(participant)) {
             log.warn(PARTICIPANT_NOT_FOUND_WARN_MESSAGE, participant);
             return Collections.emptyList();
         }
         
-        MatchResult matchResult = matchResultsForParticipant.get(participant);
+        MatchResult matchResult = matchResultMap.get(participant);
         matchResult.setGamesWon(gamesWon);
     
         List<MatchResult> matchResults = new ArrayList<>();
@@ -123,15 +123,15 @@ public class Match {
 
     public List<MatchResult> setMatchScore(Participant participant, int gamesWon, int gamesLost) {
         // if participant is not of this match
-        if (!matchResultsForParticipant.containsKey(participant)) {
+        if (!matchResultMap.containsKey(participant)) {
             log.warn(PARTICIPANT_NOT_FOUND_WARN_MESSAGE, participant);
             return Collections.emptyList();
         }
         Participant otherParticipant = getOther(participant);
 
-        MatchResult matchResult = matchResultsForParticipant.get(participant);
+        MatchResult matchResult = matchResultMap.get(participant);
         matchResult.setGamesWon(gamesWon);
-        MatchResult otherMatchResult = matchResultsForParticipant.get(otherParticipant);
+        MatchResult otherMatchResult = matchResultMap.get(otherParticipant);
         otherMatchResult.setGamesWon(gamesLost);
         log.debug("In setMatchScore, creating matchResults: {} and {}", matchResult, otherMatchResult);
         
@@ -144,25 +144,25 @@ public class Match {
     }
     
     public MatchResultEnum getMatchResult(Participant participant) {
-        if (!matchResultsForParticipant.containsKey(participant)) {
+        if (!matchResultMap.containsKey(participant)) {
             log.warn(PARTICIPANT_NOT_FOUND_WARN_MESSAGE, participant);
             return null;
         }
         // if the other entry is null, this means that no result is present yet
         // the null should be handled in the calling method
-        if (matchResultsForParticipant.get(participant) == null
-                || matchResultsForParticipant.get(participant).getGamesWon() == null) {
+        if (matchResultMap.get(participant) == null
+                || matchResultMap.get(participant).getGamesWon() == null) {
             return null;
         }
         
         MatchResultEnum matchResultEnum;
-        int gamesWon = matchResultsForParticipant.get(participant).getGamesWon();
-        if (matchResultsForParticipant.values()
-                                      .stream()
-                                      .filter((r) -> r.getForParticipant() != participant)
-                                      .anyMatch((r1) -> r1.getGamesWon() > gamesWon)) {
+        int gamesWon = matchResultMap.get(participant).getGamesWon();
+        if (matchResultMap.values()
+                          .stream()
+                          .filter((r) -> r.getForParticipant() != participant)
+                          .anyMatch((r1) -> r1.getGamesWon() > gamesWon)) {
             matchResultEnum = MatchResultEnum.LOSS;
-        } else if (matchResultsForParticipant
+        } else if (matchResultMap
                 .values()
                 .stream()
                 .filter((r) -> r.getForParticipant() != participant)
@@ -175,8 +175,8 @@ public class Match {
     }
     
     public List<Participant> getParticipants() {
-        log.debug("in getParticipants: {}", matchResultsForParticipant.keySet());
-        return new ArrayList<>(matchResultsForParticipant.keySet());
+        log.debug("in getParticipants: {}", matchResultMap.keySet());
+        return new ArrayList<>(matchResultMap.keySet());
     }
     
     public boolean isBye() {
@@ -200,12 +200,14 @@ public class Match {
 //    }
     
     public void addMatchResult(MatchResult matchResult) {
-        matchResultsForParticipant.put(matchResult.getForParticipant(), matchResult);
+        matchResultMap.put(matchResult.getForParticipant(), matchResult);
     }
     
     public void addParticipant(Participant participant) {
-        MatchResult matchResult = new MatchResult(this, participant, null);
-        this.matchResultsForParticipant.put(participant, matchResult);
+        if (!matchResultMap.containsKey(participant)) {
+            MatchResult matchResult = new MatchResult(this, participant, null);
+            this.matchResultMap.put(participant, matchResult);
+        }
     }
     
     @Override

@@ -11,6 +11,8 @@ left join participant p on p.tournament_id = t.id
 left join round r on r.tournament_id = t.id
 left join `match` m on m.round_id = r.id
 left join match_result mr on mr.match_id = m.id
+where t.code = 'rZbvvtX7IlhHbEcvKk9n'
+and r.round_number = 2;
 where t.id = -1;
 
 INSERT INTO `bracketeer`.`tournament`

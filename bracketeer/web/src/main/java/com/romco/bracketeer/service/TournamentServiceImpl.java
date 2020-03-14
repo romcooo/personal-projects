@@ -97,18 +97,20 @@ public class TournamentServiceImpl implements TournamentService {
                 for (Match match : matches) {
                     match.setOfRound(round);
                     
-                    Map<MatchResult, Long> matchResults = matchResultDao.retrieveByMatchId(match.getId());
-                    for (MatchResult matchResult : matchResults.keySet()) {
-                        matchResult.setOfMatch(match);
+                    Map<MatchResult, Long> matchResultMap = matchResultDao.retrieveByMatchId(match.getId());
+                    for (MatchResult matchResult : matchResultMap.keySet()) {
                         Participant ofMatch = participants.stream()
-                                                          .filter(participant -> participant.getId() == matchResults.get(matchResult))
+                                                          .filter(participant -> participant.getId() == matchResultMap.get(matchResult))
                                                           .findAny()
                                                           .get();
+                        matchResult.setOfMatch(match);
                         matchResult.setForParticipant(ofMatch);
-                        match.addParticipant(ofMatch);
+//                        match.addParticipant(ofMatch);
                         match.addMatchResult(matchResult);
+                        log.debug("MatchResult: {}, map:{}, participants: {}", matchResult, matchResultMap, participants);
+                        log.debug("Match: {}", match);
                     }
-                    
+
                     
                 }
                 round.setMatches(matches);
@@ -175,9 +177,10 @@ public class TournamentServiceImpl implements TournamentService {
         for (Match match : round.getMatches()) {
             match.setId(matchDao.create(match));
             
-            for (Participant participant : match.getMatchResultsForParticipant().keySet()) {
-                matchResultDao.create(match.getMatchResultsForParticipant().get(participant));
-                log.debug("Stored match result: {}", match.getMatchResultsForParticipant().get(participant));
+            for (Participant participant : match.getMatchResultMap().keySet()) {
+                MatchResult matchResult = match.getMatchResultMap().get(participant);
+                matchResultDao.create(matchResult);
+                log.debug("Stored match result: {}", matchResult);
             }
             
             log.debug("Stored match: {}", match);

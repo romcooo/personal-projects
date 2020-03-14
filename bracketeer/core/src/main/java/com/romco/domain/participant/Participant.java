@@ -35,25 +35,25 @@ public class Participant implements Comparable<Participant> {
     public String getCode() {
         return code;
     }
-    
-    public String getName() {
-        return name;
-    }
-    
-    public void setName(String name) {
-        this.name = name;
-    }
-    
-    public double getScore() {
-        return score;
-    }
-    
+
     public String setCode(String code) {
         String previous = this.code;
         this.code = code;
         return previous;
     }
-    
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public double getScore() {
+        return score;
+    }
+
     public void setScore(double score) {
         this.score = score;
     }

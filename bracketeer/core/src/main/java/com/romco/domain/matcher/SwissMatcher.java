@@ -5,9 +5,6 @@ import com.romco.domain.participant.Participant;
 import com.romco.domain.tournament.Round;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 // package-private because TournamentFormat provides the preferred builder method
@@ -20,7 +17,7 @@ class SwissMatcher implements Matcher {
     }
 
     @Override
-    public Round generateRound(List<Participant> participants, MatcherMode mode) {
+    public Round generateRound(List<Participant> participants, SortMode mode) {
         if (participants.isEmpty()) {
             log.info("Empty list passed, returning null");
             return null;

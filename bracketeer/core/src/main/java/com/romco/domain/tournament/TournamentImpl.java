@@ -1,7 +1,7 @@
 package com.romco.domain.tournament;
 
 import com.romco.domain.matcher.Matcher;
-import com.romco.domain.matcher.MatcherMode;
+import com.romco.domain.matcher.SortMode;
 import com.romco.domain.matcher.TournamentFormat;
 import com.romco.domain.participant.Participant;
 import com.romco.domain.util.CodeGenerator;
@@ -145,7 +145,7 @@ public class TournamentImpl implements Tournament {
 
         Matcher matcher = type.buildMatcher();
         Round round = matcher.generateRound(Collections.unmodifiableList(participants),
-                                            MatcherMode.SHUFFLE_THEN_SORT);
+                                            SortMode.SHUFFLE_THEN_SORT);
         round.setRoundNumber(rounds.size()+1);
         round.setOfTournament(this);
         rounds.add(round);

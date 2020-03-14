@@ -7,7 +7,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public enum MatcherMode {
+public enum SortMode {
     SHUFFLE_THEN_SORT {
         public List<Participant> sort(List<Participant> before) {
             List<Participant> after = new ArrayList<>(before);

@@ -6,5 +6,5 @@ import com.romco.domain.tournament.Round;
 import java.util.List;
 
 public interface Matcher {
-    Round generateRound(List<Participant> participant, MatcherMode mode);
+    Round generateRound(List<Participant> participant, SortMode mode);
 }

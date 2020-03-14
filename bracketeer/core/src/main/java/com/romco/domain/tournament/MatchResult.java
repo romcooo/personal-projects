@@ -28,4 +28,11 @@ public class MatchResult {
                 ", gamesWon=" + gamesWon +
                 '}';
     }
+
+    // this has to compare strictly instance, because of how it is handled in the DAO (two matchResults
+    // with the same values are not in fact the same and must be treated as 2 separate entities)
+    @Override
+    public boolean equals(Object o) {
+        return this == o;
+    }
 }
