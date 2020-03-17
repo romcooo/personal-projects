@@ -42,7 +42,7 @@ public class TournamentDaoImpl implements TournamentDao {
         SqlParameterSource source = new MapSqlParameterSource()
                 .addValue("code", tournament.getCode())
                 .addValue("name", tournament.getName())
-                .addValue("type", tournament.getType().toString());
+                .addValue("type", tournament.getRuleSet().getType().toString());
         log.debug("In create, source = {}", source);
         GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
         if (namedParameterJdbcTemplate.update(sqlQuery,
@@ -119,7 +119,7 @@ public class TournamentDaoImpl implements TournamentDao {
         SqlParameterSource source = new MapSqlParameterSource()
                 .addValue("code", tournament.getCode())
                 .addValue("name", tournament.getName())
-                .addValue("type", tournament.getType().toString())
+                .addValue("type", tournament.getRuleSet().getType().toString())
                 .addValue("id", tournament.getId());
         return namedParameterJdbcTemplate.update(sqlQuery, source) == 1;
     }

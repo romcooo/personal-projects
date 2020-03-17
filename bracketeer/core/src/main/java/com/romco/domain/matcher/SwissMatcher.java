@@ -80,6 +80,9 @@ class SwissMatcher implements Matcher {
                 }
                 Participant next = toPairList.get(i2);
                 log.debug("next: {}", next);
+                /* TODO debug - there is a bug where it's possible that the last person will have no one to play
+                    against because he will be left only to be matched against someone whom he has already played
+                 */
                 if (current.hasPlayedAgainst(next)) {
                     // in this case, keep going
                     i2++;

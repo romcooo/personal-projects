@@ -1,6 +1,5 @@
 package com.romco.domain.tournament;
 
-import com.romco.domain.matcher.TournamentFormat;
 import com.romco.domain.participant.Participant;
 
 import java.util.List;
@@ -14,9 +13,9 @@ public interface Tournament {
     
     String getName();
     void setName(String name);
-    
-    TournamentFormat getType();
-    void setType(TournamentFormat type);
+
+    RuleSet getRuleSet();
+    void setRuleSet(RuleSet ruleSet);
     
     boolean addParticipant(Participant participant);
     Participant removeParticipant(long id);

@@ -124,6 +124,7 @@ public class Participant implements Comparable<Participant> {
                 "id=" + id +
                 ", code=" + code +
                 ", name='" + name + '\'' +
+                ", score=" + score +
                 '}';
     }
 }

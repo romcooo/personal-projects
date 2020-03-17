@@ -3,7 +3,7 @@ package com.romco.domain.matcher;
 public enum TournamentFormat {
     SWISS {
         @Override
-        public SwissMatcher buildMatcher() {
+        public Matcher buildMatcher() {
             return new SwissMatcher();
         }
     },

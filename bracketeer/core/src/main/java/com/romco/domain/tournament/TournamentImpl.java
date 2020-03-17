@@ -22,7 +22,9 @@ public class TournamentImpl implements Tournament {
     private long id;
     private String code; // business id
     private String name;
-    private TournamentFormat type;
+
+    // TODO move type to ruleSet
+//    private TournamentFormat type;
     private RuleSet ruleSet;
 
     private List<Round> rounds;
@@ -31,17 +33,23 @@ public class TournamentImpl implements Tournament {
     private Map<Participant, Integer> startingParticipantByes;
     private Map<Participant, Double> startingParticipantScores;
 
+    private ParticipantManager participantManager;
+
     // == CONSTRUCTORS
 
-    private TournamentImpl() {
+    public TournamentImpl() {
         this.id = idCounter++;
         this.code = CodeGenerator.getCode();
         this.name = "";
+        this.ruleSet = RuleSet.getDefaultRuleSet();
+
         this.participants = new ArrayList<>();
         this.startingParticipantScores = new HashMap<>();
         this.startingParticipantByes = new HashMap<>();
+
         this.rounds = new LinkedList<>();
-        this.ruleSet = RuleSet.getDefaultRuleSet();
+
+        this.participantManager = new ParticipantManager();
     }
 
     /**
@@ -50,7 +58,8 @@ public class TournamentImpl implements Tournament {
      */
     public TournamentImpl(TournamentFormat type) {
         this();
-        this.type = type;
+//        this.type = type;
+        ruleSet.setType(type);
     }
     
     public TournamentImpl(TournamentFormat type, String name) {
@@ -62,7 +71,8 @@ public class TournamentImpl implements Tournament {
         this();
         this.code = code;
         this.name = name;
-        this.type = type;
+//        this.type = type;
+        ruleSet.setType(type);
     }
     
     public TournamentImpl(long id,
@@ -79,7 +89,8 @@ public class TournamentImpl implements Tournament {
         this.startingParticipantScores = startingParticipantScores;
         this.startingParticipantByes = startingParticipantByes;
         this.rounds = rounds;
-        this.type = type;
+//        this.type = type;
+        ruleSet.setType(type);
         this.ruleSet = ruleSet;
     }
     
@@ -94,41 +105,6 @@ public class TournamentImpl implements Tournament {
 
 //    }
 
-    @Override
-    public List<Participant> getParticipants() {
-        updateParticipants();
-        return Collections.unmodifiableList(participants);
-    }
-
-    @Override
-    public boolean addParticipant(Participant participant) {
-        if (participants.contains(participant)) {
-            log.info("Tournament already contains participant {}", participant);
-            return false;
-        } else {
-            participants.add(participant);
-            participant.setCode(Integer.toString(participants.size()));
-            startingParticipantScores.put(participant, 0d);
-            startingParticipantByes.put(participant, 0);
-            participant.setOfTournament(this);
-            log.info("Adding participant {}", participant);
-            return true;
-        }
-    }
-
-    @Override
-    public Participant removeParticipant(long id) {
-        for (Participant participant : this.participants) {
-            if (participant.getId() == id) {
-                participant.setOfTournament(null);
-                participants.remove(participant);
-                reconcileParticipantCodes();
-                return participant;
-            }
-        }
-        return null;
-    }
-    
     public void setStartingScore(Participant participant, double score) {
         startingParticipantScores.put(participant, score);
     }
@@ -143,7 +119,9 @@ public class TournamentImpl implements Tournament {
     public Round generateRound(int roundNumber) {
         updateParticipantsForAfterRound(roundNumber - 1);
 
-        Matcher matcher = type.buildMatcher();
+//        Matcher matcher = type.buildMatcher();
+        Matcher matcher = ruleSet.getType().buildMatcher();
+
         Round round = matcher.generateRound(Collections.unmodifiableList(participants),
                                             SortMode.SHUFFLE_THEN_SORT);
         round.setRoundNumber(rounds.size()+1);
@@ -207,6 +185,41 @@ public class TournamentImpl implements Tournament {
                 }
             }
         return Collections.emptyList();
+    }
+
+    @Override
+    public List<Participant> getParticipants() {
+        updateParticipants();
+        return Collections.unmodifiableList(participants);
+    }
+
+    @Override
+    public boolean addParticipant(Participant participant) {
+        if (participants.contains(participant)) {
+            log.info("Tournament already contains participant {}", participant);
+            return false;
+        } else {
+            participants.add(participant);
+            participant.setCode(Integer.toString(participants.size()));
+            startingParticipantScores.put(participant, 0d);
+            startingParticipantByes.put(participant, 0);
+            participant.setOfTournament(this);
+            log.info("Adding participant {}", participant);
+            return true;
+        }
+    }
+
+    @Override
+    public Participant removeParticipant(long id) {
+        for (Participant participant : this.participants) {
+            if (participant.getId() == id) {
+                participant.setOfTournament(null);
+                participants.remove(participant);
+                reconcileParticipantCodes();
+                return participant;
+            }
+        }
+        return null;
     }
 
 
@@ -310,7 +323,6 @@ public class TournamentImpl implements Tournament {
                 ", startingParticipantScores=" + startingParticipantScores +
                 ", startingParticipantByes=" + startingParticipantByes +
                 ", rounds=" + rounds +
-                ", type=" + type +
                 ", ruleSet=" + ruleSet +
                 '}';
     }

@@ -1,4 +1,4 @@
-package com.romco.bracketeer.testutil;
+package com.romco.testutil;
 
 import com.romco.domain.tournament.Tournament;
 import com.romco.domain.tournament.TournamentImpl;
@@ -9,7 +9,13 @@ import com.romco.domain.participant.Player;
 
 public class TestTournamentBuilder {
     
-    public enum Scores {
+    public enum DummyScoreType {
+        ALL_START_WITH_0 {
+            @Override
+            public double getNextScore() {
+                return 0;
+            }
+        },
         ASCENDING_SCORES {
             private double i = 0;
             @Override
@@ -53,15 +59,15 @@ public class TestTournamentBuilder {
         }
     }
     
-    public static Tournament build(int rounds, int players, Scores scores) {
-        Tournament tournament = new TournamentImpl(TournamentFormat.SWISS);
+    public static Tournament build(int rounds, int players, DummyScoreType dummyScoreType, TournamentFormat format) {
+        Tournament tournament = new TournamentImpl(format);
         for (int p = 0; p < players; p++) {
             Participant participant = new Player(p, NameGenerator.getName(p));
             tournament.addParticipant(participant);
-            tournament.setStartingScore(participant, scores.getNextScore());
+            tournament.setStartingScore(participant, dummyScoreType.getNextScore());
         }
     
-        for (int r = 0; r < rounds; r++) {
+        for (int r = 1; r <= rounds; r++) {
             tournament.generateNextRound();
             for (int p = 0; p < players; p++) {
                 tournament.setMatchResult(r, tournament.getParticipants().get(p), 2, 1);

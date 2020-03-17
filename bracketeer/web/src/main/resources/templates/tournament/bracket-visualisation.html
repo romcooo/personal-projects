@@ -1,43 +1,41 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+    
 <head>
-    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="stylesheet" type="text/css" href="/css/style.css">
     <link rel="stylesheet" type="text/css" href="/css/queries.css">
-    
-    
+
+
 <!--    for brackets:-->
     <link rel="stylesheet" type="text/css" href="../../static/css/style.css">
     <link rel="stylesheet" type="text/css" href="../../static/css/queries.css">
-    
+
     <link href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,400i&display=swap" rel="stylesheet">
-    
+
     <title>Bracketeer - New Tournament</title>
-    
+
     <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
 </head>
+
 <body>
+
     <div th:replace="fragments/navbars.html">
-        navbars fragment
+        Topnav bar fragment
     </div>
+
+    <div class="main">
     
-    <div class="main" align="center">
+        <div class=bracket-graphic>
+            <p>PLACEHOLDER IMAGE</p>
+            <img src="../../static/img/mario.jpg">
     
-        <h1>Find an Existing Tournament</h1>
-        <div class="find-box">
-            <div class="Labels">
-                <label>Id</label>
-            </div>
-            
-            <div class="Inputs">
-                <textarea></textarea>
-            </div>
-            <div class="actions">
-                <button>Find</button>
-            </div>
         </div>
+        
     </div>
+
+
 </body>
+
 </html>
