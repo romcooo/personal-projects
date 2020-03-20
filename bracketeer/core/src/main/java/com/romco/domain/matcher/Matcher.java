@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface Matcher {
     Round generateRound(List<Participant> participant, SortMode mode);
+    int getMaxNumberOfRounds(int numberOfParticipants);
 }

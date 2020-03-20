@@ -69,6 +69,20 @@ public class SingleElimMatcher implements Matcher {
         }
         return round;
     }
-
+    
+    @Override
+    public int getMaxNumberOfRounds(int numberOfParticipants) {
+        if (numberOfParticipants < 1) {
+            log.warn("getMaxNumberOfRounds called with less than 1");
+            return 0;
+        }
+        double logOf2 = Math.log(numberOfParticipants) / Math.log(2);
+        int roundedUp = (int) Math.ceil(logOf2);
+        log.debug("numberOfParticipants: {}, sqrt: {}, roundedUp (result): {}", numberOfParticipants, logOf2, roundedUp);
+        return roundedUp;
+    }
+    
     // TODO this could produce an entire bracket
+    
+    
 }
