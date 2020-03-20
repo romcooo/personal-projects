@@ -45,6 +45,7 @@ public class TournamentController {
         if (service.getTournament() != null) {
             String value = service.getTournament().getCode();
             if (value != null) {
+                log.debug("tournamentCode from service: {}", value);
                 return value;
             }
         }
@@ -69,7 +70,7 @@ public class TournamentController {
     // == SETUP OF TOURNAMENT
     @GetMapping(Mappings.Tournament.SETUP)
     public String tournamentSetup(Model model) {
-        log.info("In GET newTournamentSetup");
+        log.info("In GET tournamentSetup");
         model.addAttribute("participants", participants());
         return ViewNames.Tournament.SETUP;
     }
@@ -97,6 +98,8 @@ public class TournamentController {
         log.info("In getTournamentByCode with tournamentCode {}", tournamentCode);
         service.getTournamentByCode(tournamentCode);
         model.addAttribute("participants", participants());
+//        tournamentCode(); IDK why this doesn't work but below line works...
+        model.addAttribute("tournamentCode", tournamentCode);
         return ViewNames.Tournament.SETUP;
     }
     

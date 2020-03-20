@@ -43,8 +43,9 @@ public class RoundDaoImpl implements RoundDao {
     public List<Round> retrieveByTournamentId(long tournamentId) {
         String sqlQuery = SELECT_ALL_WHERE + " tournament_id = :tournamentId";
         SqlParameterSource source = new MapSqlParameterSource("tournamentId", tournamentId);
-        log.debug("In selectByTournamentId, source: {}", source);
+        log.debug("In retrieveByTournamentId, source: {}", source);
         List<Round> rounds = namedParameterJdbcTemplate.query(sqlQuery, source, new RoundRowMapper());
+        log.debug("In retrieveByTournamentId, rounds: {}", rounds);
         return rounds;
     }
     

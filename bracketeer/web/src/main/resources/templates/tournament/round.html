@@ -109,7 +109,8 @@
                           th:action="@{/tournament/__${tournamentCode}__/round/__${round.roundNumber}__/match/__${match.matchNumber}__/result}"
                           method="post">
                         <a class="clickable"
-                           th:href="'javascript:$(\'#pairings-save-form-single-match-' + ${iteration.count} + '\').submit();'">Save</a>
+                           th:href="'javascript:$(\'#pairings-save-form-single-match-' + ${iteration.count} + '\').submit();'"
+                           href="#">Save</a>
                         <!--                    <a href="javascript:$('#pairings-save-form-single-match').submit();">Save</a>    -->
                     </form>
                 </td>

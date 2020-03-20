@@ -20,10 +20,9 @@ public class SingleElimMatcher implements Matcher {
         log.debug("In generateRound, after elimination: {}", toPairList);
 
         Round round = new Round();
-        
         int matchCount = 1;
+
         // first need to check a bye
-    
         if (MatcherHelper.handleBye(toPairList,
                                     round,
                                     matchCount)) {

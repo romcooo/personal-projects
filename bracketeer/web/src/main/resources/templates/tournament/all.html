@@ -40,9 +40,9 @@
                 <tbody>
 
                     <tr th:block th:each="tournament : ${tournaments}">
-                        <td class="col-code" th:text="${tournament.code}">tCode</td>
+                        <td class="col-code" th:text="${tournament.code}">tCode123451234512345</td>
                         <td class="col-name" th:text="${tournament.name}">tName</td>
-                        <td class="col-type" th:text="${tournament.type}">tType</td>
+                        <td class="col-type" th:text="${tournament.ruleSet.type}">tType</td>
                         <td class="col-action">
                             <form th:action="@{/tournament/{code}(code=${tournament.code})}"
                                   method="get">

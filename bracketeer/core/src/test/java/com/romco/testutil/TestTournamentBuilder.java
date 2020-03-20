@@ -50,7 +50,7 @@ public class TestTournamentBuilder {
     static class NameGenerator {
         public static final String[] alphabeticalNames = {
                 "Aaron", "Berenika", "Cyril", "Derek", "Ezreal", "Finn", "Gary", "Hilda", "Ilya", "Jekyll",
-                "Kilian", "Larry", "Monroe", "Nate", "Orepheus", "Pate", "Roren", "Singed", "Talyia"};
+                "Kilian", "Larry", "Monroe", "Nate", "Orepheus", "Pate", "Roren", "Singed", "Taliyah"};
         public static String getName(int i) {
             if (alphabeticalNames.length > i) {
                 return alphabeticalNames[i];
@@ -59,7 +59,10 @@ public class TestTournamentBuilder {
         }
     }
     
-    public static Tournament build(int rounds, int players, DummyScoreType dummyScoreType, TournamentFormat format) {
+    public static Tournament build(int rounds,
+                                   int players,
+                                   DummyScoreType dummyScoreType,
+                                   TournamentFormat format) {
         Tournament tournament = new TournamentImpl(format);
         for (int p = 0; p < players; p++) {
             Participant participant = new Player(p, NameGenerator.getName(p));

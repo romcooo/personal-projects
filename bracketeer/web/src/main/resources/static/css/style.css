@@ -413,13 +413,15 @@ body a:hover {
     
     transition: 250ms;
     border-bottom: 1px solid rgba(40, 157, 246, 0.8);
+    
+    text-decoration: none;
 /*
     text-decoration: underline;
     text-decoration-color: #289df6;
     text-decoration-style: solid;
 */
     
-} 
+}
 
 .clickable:hover {
     transition: 250ms;
@@ -494,7 +496,7 @@ img {
 
 
 .tournament-table .col-code {
-    width: 25%;
+    width: 30%;
 }
 
 .tournament-table .col-name {
@@ -502,11 +504,11 @@ img {
 }
 
 .tournament-table .col-type {
-    width: 25%;
+    width: 20%;
 }
 
 .tournament-table .col-action {
-    width: 15%;
+    width: 10%;
 }
 
 

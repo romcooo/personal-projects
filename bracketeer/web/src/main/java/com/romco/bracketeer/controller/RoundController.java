@@ -61,10 +61,16 @@ public class RoundController {
     }
 
     @GetMapping(Mappings.Tournament.Round.WITH_NUMBER)
-    public String getRound(@PathVariable(value = "roundNumber") int roundNumber, Model model) {
+    public String getRound(@PathVariable(value = "roundNumber") int roundNumber,
+                           @PathVariable(value = "tournamentCode") String tournamentCode,
+                           Model model) {
         log.info("In getRound with roundNumber {}", roundNumber);
+        if (tournament().getCode() != null && !tournament().getCode().equals(tournamentCode)) {
+            service.getTournamentByCode(tournamentCode);
+        }
         Round round = service.getTournament().getRound(roundNumber);
         model.addAttribute("round", round);
+        model.addAttribute("tournamentCode", tournamentCode);
         return ViewNames.Tournament.ROUND;
     }
 
@@ -101,8 +107,17 @@ public class RoundController {
     // == STANDINGS AFTER ROUND #
     @GetMapping(Mappings.Tournament.Round.STANDINGS)
     public String getStandingsAfterRound(
+            @PathVariable(value = "tournamentCode") String tournamentCode,
             @PathVariable(value = "roundNumber") int roundNumber,
             Model model) {
+
+        log.info("In getStandingsAfterRound with roundNumber: {} for tournamentCode: {}",
+                 roundNumber,
+                 tournamentCode);
+
+        if (tournament().getCode() != null && !tournament().getCode().equals(tournamentCode)) {
+            service.getTournamentByCode(tournamentCode);
+        }
 
         Round round = service.getTournament().getRound(roundNumber);
         model.addAttribute("round", round);
