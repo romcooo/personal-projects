@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <link rel="stylesheet" type="text/css" href="/css/queries.css">
+    <link rel="stylesheet" type="text/css" href="/css/error.css">
+
+    <!--    direct path for brackets:-->
+    <link rel="stylesheet" type="text/css" href="../../static/css/style.css">
+    <link rel="stylesheet" type="text/css" href="../../static/css/queries.css">
+    <link rel="stylesheet" type="text/css" href="../../static/css/error.css">
+
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,400i&display=swap" rel="stylesheet">
+
+    <title>Bracketeer - Error Page</title>
+
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+</head>
+<body>
+
+<div th:replace="fragments/navbars.html">
+    Topnav bar fragment
+</div>
+
+<div class="main error-main">
+    <h1 class="title">Looks like the princess is in another castle!</h1>
+    <!--        <img src="../static/img/mario.jpg">-->
+    <p th:text="${message}">Message</p>
+</div>
+
+</body>
+</html>

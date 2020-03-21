@@ -10,14 +10,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Slf4j
 @Controller
-public class ParticipantController {
+public class SetupController {
 
     // == fields
     private final TournamentService service;
 
     // == constructors
     @Autowired
-    public ParticipantController(TournamentService service) {
+    public SetupController(TournamentService service) {
         this.service = service;
     }
 

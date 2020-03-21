@@ -72,6 +72,7 @@ public class SingleElimMatcher implements Matcher {
     
     @Override
     public int getMaxNumberOfRounds(int numberOfParticipants) {
+        log.debug("in getMaxNumberOfRounds, numberOfParticipants: {}", numberOfParticipants);
         if (numberOfParticipants < 1) {
             log.warn("getMaxNumberOfRounds called with less than 1");
             return 0;

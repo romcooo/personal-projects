@@ -39,7 +39,8 @@
             <a th:href="'/tournament/' + ${tournamentCode} + '/round/1/standings'">Standings</a>
             <a th:href="'/tournament/' + ${tournamentCode} + '/round/1'">Pairings</a>
             <a th:href="'/tournament/' + ${tournamentCode} + '/players'">List of Players</a>
-            <a onmouseover="">Full Bracket</a>
+            <a th:href="'/tournament/' + ${tournamentCode} + '/bracket'"
+               onmouseover="">Full Bracket</a>
             <a th:href="'/tournament/' + ${tournamentCode} + '/setup'">Settings</a>
         </div>
     </div>

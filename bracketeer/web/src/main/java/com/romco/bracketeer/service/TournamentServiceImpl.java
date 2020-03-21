@@ -127,7 +127,13 @@ public class TournamentServiceImpl implements TournamentService {
         log.info("In setTournamentName, tournamentName = {}", tournamentName);
         tournament.setName(tournamentName);
     }
-    
+
+    @Override
+    public void setTournamentType(String tournamentType) {
+        log.info(("in setTournamentType, tournamentType = {}"), tournamentType);
+        tournament.getRuleSet().setType(TournamentFormat.valueOf(tournamentType));
+    }
+
     @Override
     public List<Participant> getParticipants() {
         if (tournament == null) {
@@ -186,7 +192,12 @@ public class TournamentServiceImpl implements TournamentService {
             log.debug("Stored match: {}", match);
         }
     }
-    
+
+    @Override
+    public int getMaxNumberOfRounds() {
+        return tournament.getMaxNumberOfRounds();
+    }
+
     @Override
     public Collection<Tournament> getAllTournaments() {
         return tournamentDao.retrieveAll();

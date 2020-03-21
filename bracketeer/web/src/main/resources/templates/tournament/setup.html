@@ -51,24 +51,41 @@
             <ul>
                 <li>Tournament Style:
                     <div class="dropdown">
-                        Swiss &#x1F863;
-                        <!--                        <i class="fa fa-caret-down"></i>-->
-                        <!--
-
-                                                <select class="selection">
-                                                        <option value="SWISS">Swiss</option>
-                                                        <option value="ROUND_ROBIN">Round Robin</option>
-                                                        <option value="SINGLE_ELIMINATION">Single Elim</option>
-                                                        <option value="DOUBLE_ELIMINATION">Double Elim</option>
-                                                </select>
-                        -->
-
+                        <a th:text="${tournament?.ruleSet.type} + '&#x1F863' ?: 'Swiss &#x1F863'">Swiss &#x1F863;</a>
                         <div class="dropdown-content">
+<!--
                             <a>Swiss</a>
                             <a>Round Robin</a>
-                            <a>Single Elim</a>
-                            <a>Double Elim</a>
+-->
+<!--                            <a href="/tournament/set?type=SINGLE_ELIMINATION">Single Elim</a>-->
+<!--                            <a th:action="@{/tournament/set?type={type}(type='SINGLE_ELIMINATION')}">Single Elim</a>-->
+<!--                            <a>Double Elim</a>-->
+                            
+                            <button form="setTypeForm" 
+                                   class="generic-input"
+                                   name="tournamentType"
+                                   type=submit
+                                    value="SWISS">Swiss</button>
+                            <button form="setTypeForm" 
+                                   class="generic-input"
+                                   name="tournamentType"
+                                   type=submit 
+                                    value="ROUND_ROBIN">Round Robin</button>
+                            <button form="setTypeForm" 
+                                   class="generic-input"
+                                   name="tournamentType"
+                                   type=submit 
+                                   value="SINGLE_ELIMINATION">Single Elim</button>
+                            <button form="setTypeForm" 
+                                   class="generic-input"
+                                   name="tournamentType"
+                                   type=submit 
+                                   value="DOUBLE_ELIMINATION">Double Elim</button>
                         </div>
+                        <form id="setTypeForm"
+                              th:action="@{/tournament/setup}"
+                              method="post">
+                        </form>
                     </div>
                 </li>
                 <li>item 2</li>

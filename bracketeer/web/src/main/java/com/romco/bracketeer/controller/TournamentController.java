@@ -76,10 +76,14 @@ public class TournamentController {
     }
     
     @PostMapping(Mappings.Tournament.SETUP)
-    public String tournamentSetup(@RequestParam(name = "tournamentName", required = false) String tournamentName) {
-        log.info("In setName, input: {}", tournamentName);
+    public String tournamentSetup(@RequestParam(name = "tournamentName", required = false) String tournamentName,
+                                  @RequestParam(name = "tournamentType", required = false) String tournamentType) {
+        log.info("In tournamentSetup, tournamentName: {}, tournamentType: {}", tournamentName, tournamentType);
         if (tournamentName != null) {
             service.setTournamentName(tournamentName);
+        }
+        if (tournamentType != null) {
+            service.setTournamentType(tournamentType);
         }
         return Mappings.Tournament.REDIRECT_TO_SETUP;
     }

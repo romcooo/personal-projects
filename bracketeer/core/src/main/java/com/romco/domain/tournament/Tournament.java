@@ -22,14 +22,16 @@ public interface Tournament {
 
     List<Participant> getParticipants();
     List<Participant> getParticipantsAfterRound(int roundNumber);
-    
-    Round getRound(int roundNumber);
-    List<Round> getRounds();
+
 
     void setRounds(List<Round> rounds);
     
     Round generateNextRound();
     Round generateRound(int n);
+    int getMaxNumberOfRounds();
+
+    Round getRound(int roundNumber);
+    List<Round> getRounds();
 
     List<MatchResult> setMatchResult(int roundNumber, Participant participant, int gamesWon, int gamesLost);
     List<MatchResult> setMatchResult(int roundNumber, String participantCode, int gamesWon, int gamesLost);

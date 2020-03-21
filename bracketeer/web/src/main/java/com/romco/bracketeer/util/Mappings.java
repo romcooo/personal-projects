@@ -24,11 +24,11 @@ public final class Mappings {
         public static final String SAVE = NEW + "/save";
 
 
-//        public static final String EXISTING = BASE + "/existing";
         public static final String EXISTING_WITH_CODE = BASE + "/{tournamentCode}";
         public static final String EXISTING_STANDINGS = EXISTING_WITH_CODE + "/standings";
         public static final String REDIRECT_EXISTING_WITH_CODE = REDIRECT_PREFIX + EXISTING_WITH_CODE;
 
+        public static final String BRACKET = EXISTING_WITH_CODE + "/bracket";
 
         public static final String ALL = BASE + "/all";
         public static final String FIND = BASE + "/find";

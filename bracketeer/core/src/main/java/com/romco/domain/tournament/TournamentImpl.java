@@ -119,7 +119,6 @@ public class TournamentImpl implements Tournament {
     public Round generateRound(int roundNumber) {
         updateParticipantsForAfterRound(roundNumber - 1);
 
-//        Matcher matcher = type.buildMatcher();
         Matcher matcher = ruleSet.getType().buildMatcher();
 
         Round round = matcher.generateRound(Collections.unmodifiableList(participants),
@@ -129,6 +128,14 @@ public class TournamentImpl implements Tournament {
         rounds.add(round);
 
         return round;
+    }
+
+    @Override
+    public int getMaxNumberOfRounds() {
+        log.debug("In getMaxNumberOfRounds, ruleSet: {}, participants: {}", ruleSet, participants);
+        return ruleSet.getType()
+                      .buildMatcher()
+                      .getMaxNumberOfRounds(participants.size());
     }
 
     /**

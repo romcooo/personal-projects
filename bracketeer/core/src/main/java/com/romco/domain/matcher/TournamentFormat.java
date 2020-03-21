@@ -10,13 +10,13 @@ public enum TournamentFormat {
     ROUND_ROBIN {
         @Override
         public Matcher buildMatcher() {
-            return null;
+            return new RoundRobinMatcher();
         }
     },
     SINGLE_ELIMINATION {
         @Override
         public Matcher buildMatcher() {
-            return null;
+            return new SingleElimMatcher();
         }
     },
     DOUBLE_ELIMINATION {
