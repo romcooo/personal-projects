@@ -69,6 +69,13 @@ public class RoundController {
             service.getTournamentByCode(tournamentCode);
         }
         Round round = service.getTournament().getRound(roundNumber);
+
+        if (round == null) {
+            model.addAttribute("message",
+                               "Round #" + roundNumber + " does not yet exist for this tournament.");
+            return ViewNames.ERROR_WITH_MESSAGE;
+        }
+
         model.addAttribute("round", round);
         model.addAttribute("tournamentCode", tournamentCode);
         return ViewNames.Tournament.ROUND;
@@ -120,6 +127,12 @@ public class RoundController {
         }
 
         Round round = service.getTournament().getRound(roundNumber);
+
+        if (round == null) {
+            model.addAttribute("message", "No rounds yet exist for this tournament.");
+            return ViewNames.ERROR_WITH_MESSAGE;
+        }
+
         model.addAttribute("round", round);
 
 //        List<Participant> participantsAfterRound = service.getTournament().getParticipantsForAfterRound(roundNumber);

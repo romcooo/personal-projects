@@ -50,17 +50,20 @@
         <div class="options">
             <ul>
                 <li>Tournament Style:
-                    <div class="dropdown">
-                        <a th:text="${tournament?.ruleSet.type} + '&#x1F863' ?: 'Swiss &#x1F863'">Swiss &#x1F863;</a>
+                    <div class="dropdown"
+                         th:switch="${tournament?.ruleSet.type.toString()}">
+
+                        <a th:case="'SWISS'">Swiss &#x1F863;</a>
+
+                        <a th:case="'ROUND_ROBIN'">Round Robin &#x1F863;</a>
+
+                        <a th:case="'SINGLE_ELIMINATION'">Single Elimination &#x1F863;</a>
+
+                        <a th:case="'DOUBLE_ELIMINATION'">Double Elimination &#x1F863;</a>
+
+                        <a th:case="*">Select Type &#x1F863;</a>
+
                         <div class="dropdown-content">
-<!--
-                            <a>Swiss</a>
-                            <a>Round Robin</a>
--->
-<!--                            <a href="/tournament/set?type=SINGLE_ELIMINATION">Single Elim</a>-->
-<!--                            <a th:action="@{/tournament/set?type={type}(type='SINGLE_ELIMINATION')}">Single Elim</a>-->
-<!--                            <a>Double Elim</a>-->
-                            
                             <button form="setTypeForm" 
                                    class="generic-input"
                                    name="tournamentType"
