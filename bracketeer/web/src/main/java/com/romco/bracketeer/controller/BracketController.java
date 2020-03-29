@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import static com.romco.bracketeer.util.ModelAttributeNames.TOURNAMENT;
+import static com.romco.bracketeer.util.ModelAttributeNames.TOURNAMENT_CODE;
+
 @Slf4j
 @Controller
 public class BracketController {
@@ -27,14 +30,14 @@ public class BracketController {
     }
 
     // == model attributes
-    @ModelAttribute("tournament")
+    @ModelAttribute(TOURNAMENT)
     public Tournament tournament() {
         return service.getTournament();
     }
 
     // == request handlers
     @GetMapping(Mappings.Tournament.BRACKET)
-    public String getBracket(@PathVariable(value = "tournamentCode") String tournamentCode,
+    public String getBracket(@PathVariable(value = TOURNAMENT_CODE) String tournamentCode,
                              Model model) {
         log.info("In getBracket with tournamentCode {}, tournament type: {}",
                  tournamentCode,

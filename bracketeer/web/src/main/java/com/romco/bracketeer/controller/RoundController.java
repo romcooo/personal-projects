@@ -15,6 +15,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static com.romco.bracketeer.util.ModelAttributeNames.TOURNAMENT;
+import static com.romco.bracketeer.util.ModelAttributeNames.TOURNAMENT_CODE;
+
 @Slf4j
 @Controller
 public class RoundController {
@@ -29,15 +32,16 @@ public class RoundController {
     }
 
     // == model attributes
-    @ModelAttribute("tournament")
+    @ModelAttribute(TOURNAMENT)
     public Tournament tournament() {
         return service.getTournament();
     }
-    @ModelAttribute("tournamentCode")
-    public String tournamentCode() {
+    @ModelAttribute(TOURNAMENT_CODE)
+    public String tournamentCode(Model model) {
         if (service.getTournament() != null) {
             String value = service.getTournament().getCode();
             if (value != null) {
+                model.addAttribute(TOURNAMENT_CODE, value);
                 return value;
             }
         }
@@ -49,12 +53,15 @@ public class RoundController {
     // == ROUNDS
     @PostMapping(Mappings.Tournament.Round.GENERATE)
     public String generateRound(@RequestParam(value = "roundNumber") int roundNumber,
-                                @PathVariable(value = "tournamentCode") String tournamentCode,
+                                @PathVariable(value = TOURNAMENT_CODE) String tournamentCode,
                                 Model model) {
         log.info("In generateRound for roundNumber {}", roundNumber);
+
+        service.getTournamentByCode(tournamentCode);
+
         service.saveTournament();
         service.generateRound(roundNumber);
-        model.addAttribute("tournament", tournament());
+        model.addAttribute(TOURNAMENT, tournament());
         return Mappings.Tournament.Round.REDIRECT_WITH_NUMBER
                 .replace("{roundNumber}", Integer.toString(roundNumber))
                 .replace("{tournamentCode}", tournament().getCode());
@@ -62,12 +69,12 @@ public class RoundController {
 
     @GetMapping(Mappings.Tournament.Round.WITH_NUMBER)
     public String getRound(@PathVariable(value = "roundNumber") int roundNumber,
-                           @PathVariable(value = "tournamentCode") String tournamentCode,
+                           @PathVariable(value = TOURNAMENT_CODE) String tournamentCode,
                            Model model) {
         log.info("In getRound with roundNumber {}", roundNumber);
-        if (tournament().getCode() != null && !tournament().getCode().equals(tournamentCode)) {
-            service.getTournamentByCode(tournamentCode);
-        }
+
+        service.getTournamentByCode(tournamentCode);
+
         Round round = service.getTournament().getRound(roundNumber);
 
         if (round == null) {
@@ -77,7 +84,8 @@ public class RoundController {
         }
 
         model.addAttribute("round", round);
-        model.addAttribute("tournamentCode", tournamentCode);
+        tournamentCode(model);
+        model.addAttribute(TOURNAMENT_CODE, tournamentCode);
         return ViewNames.Tournament.ROUND;
     }
 
@@ -114,7 +122,7 @@ public class RoundController {
     // == STANDINGS AFTER ROUND #
     @GetMapping(Mappings.Tournament.Round.STANDINGS)
     public String getStandingsAfterRound(
-            @PathVariable(value = "tournamentCode") String tournamentCode,
+            @PathVariable(value = TOURNAMENT_CODE) String tournamentCode,
             @PathVariable(value = "roundNumber") int roundNumber,
             Model model) {
 
@@ -122,7 +130,8 @@ public class RoundController {
                  roundNumber,
                  tournamentCode);
 
-        if (tournament().getCode() != null && !tournament().getCode().equals(tournamentCode)) {
+        if (tournament() == null ||
+                (tournament().getCode() != null && !tournament().getCode().equals(tournamentCode))) {
             service.getTournamentByCode(tournamentCode);
         }
 

@@ -72,10 +72,23 @@ public class TournamentServiceImpl implements TournamentService {
         }
         return tournament.getCode();
     }
-    
+
+    /**
+     * If the code matches the current tournament, does nothing but return the current tournament.
+     * Otherwise, looks up a tournament based on the code in database and returns it.
+     * @param code - code of the tournament
+     * @return the tournament with the given code if it exists, otherwise returns null
+     */
     @Override
     public Tournament getTournamentByCode(String code) {
-        log.info("Getting tournament by code: {}", code);
+        log.info("in getTournamentByCode, code: {}", code);
+
+        // if current tournament already is the one requested
+        if (tournament != null && tournament.getCode().equals(code)) {
+            return tournament;
+        }
+
+        // else look it up
         tournament = tournamentDao.retrieve(code);
         if (tournament != null) {
             // get participants and add them to the tournament

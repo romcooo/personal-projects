@@ -86,7 +86,7 @@
                                    value="DOUBLE_ELIMINATION">Double Elim</button>
                         </div>
                         <form id="setTypeForm"
-                              th:action="@{/tournament/setup}"
+                              th:action="@{/tournament/${tournamentCode}/setup}"
                               method="post">
                         </form>
                     </div>
@@ -109,7 +109,7 @@
                 <td class="col-id" id="idField" th:text="${iteration.count}">ex</td>
                 <td class="col-player-name" th:text="${participant.name}">example</td>
                 <td class="col-action">
-                    <form th:action="@{/tournament/removePlayer?id={id}(id=${participant.id})}"
+                    <form th:action="@{/tournament/${tournamentCode}/removePlayer?id={id}(id=${participant.id})}"
                           method="post">
                         <button class="player-remove-button table-action-button generic-button"
                                 type="submit">Remove</button>
@@ -120,8 +120,8 @@
                 <td class="col-id">-</td>
                 <td class="col-player-name">
                     <form id="newTournamentAddPlayerForm"
+                          th:action="@{/tournament/__${tournamentCode}__/addPlayer}"
                           class="form-player-name"
-                          action="/tournament/addPlayer"
                           method="POST">
                         <!--                            <label id="add-player" for="playerName"></label>-->
                         <input id="playerName"
