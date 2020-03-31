@@ -21,7 +21,7 @@ public final class Mappings {
 
         public static final String EXISTING_SETUP = EXISTING_WITH_CODE + "/setup";
 
-        public static final String SAVE = NEW + "/save";
+        public static final String SAVE = EXISTING_WITH_CODE + "/save";
 
 //        public static final String SETUP = Tournament.BASE + "/setup";
 

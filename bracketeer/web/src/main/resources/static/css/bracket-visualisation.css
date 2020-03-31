@@ -2,11 +2,13 @@
     display: inline-block;
 /*    float: right;*/
 }
-.col-4p {
+
+.col-other-p {
     display: inline-block;
-/*    float: right;*/
+    
 }
-.col-8p {
-    display: inline-block;
-/*    float: right;*/
+
+.col-other-p p {
+    padding: 2px;
+    border: 1px solid white;
 }
