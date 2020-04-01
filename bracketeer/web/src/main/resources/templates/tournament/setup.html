@@ -32,7 +32,7 @@
     <div class="main" align="center">
         <h1 class="title">
             <form id="tournament-name-form"
-                  action="/tournament/setup"
+                  th:action="@{/tournament/{tournamentCode}/setup(tournamentCode=${tournamentCode})}"
                   method="post">
                 <input id="tournamentNameInput"
                        class="generic-input"
@@ -86,7 +86,7 @@
                                    value="DOUBLE_ELIMINATION">Double Elim</button>
                         </div>
                         <form id="setTypeForm"
-                              th:action="@{/tournament/${tournamentCode}/setup}"
+                              th:action="@{/tournament/{tournamentCode}/setup(tournamentCode=${tournamentCode})}"
                               method="post">
                         </form>
                     </div>
@@ -109,7 +109,7 @@
                 <td class="col-id" id="idField" th:text="${iteration.count}">ex</td>
                 <td class="col-player-name" th:text="${participant.name}">example</td>
                 <td class="col-action">
-                    <form th:action="@{/tournament/${tournamentCode}/removePlayer?id={id}(id=${participant.id})}"
+                    <form th:action="@{/tournament/{tournamentCode}/removePlayer?id={id}(id=${participant.id})}"
                           method="post">
                         <button class="player-remove-button table-action-button generic-button"
                                 type="submit">Remove</button>
@@ -120,7 +120,7 @@
                 <td class="col-id">-</td>
                 <td class="col-player-name">
                     <form id="newTournamentAddPlayerForm"
-                          th:action="@{/tournament/__${tournamentCode}__/addPlayer}"
+                          th:action="@{/tournament/{tournamentCode}/addPlayer(tournamentCode=${tournamentCode})}"
                           class="form-player-name"
                           method="POST">
                         <!--                            <label id="add-player" for="playerName"></label>-->
@@ -152,13 +152,13 @@
         <div class="tournament-submit-buttons">
             <form id="tournament-save-form"
                   class="save"
-                  action="/tournament/new/save"
+                  th:action="@{/tournament/{tournamentCode}/save(tournamentCode=${tournamentCode})}"
                   method="post">
             </form>
 
             <form id="tournament-generate-first-round-form"
                   class="generate-form"
-                  th:action="@{/tournament/__${tournamentCode}__/round/generate?roundNumber=1}"
+                  th:action="@{/tournament/{tournamentCode}/round/generate?roundNumber=1(tournamentCode=${tournamentCode})}"
                   method="post">
             </form>
 

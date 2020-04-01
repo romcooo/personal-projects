@@ -47,7 +47,9 @@ class SwissMatcher implements Matcher {
                                              .max(Comparator.comparingDouble(Participant::getScore));
     
             if (opponentOptional.isEmpty()) {
-                throw new RuntimeException("everyone already played with everyone in a swiss tournament");
+                log.warn("everyone already played with everyone in a swiss tournament");
+                return null;
+//                throw new RuntimeException("everyone already played with everyone in a swiss tournament");
             }
             
             Participant opponent = opponentOptional.get();
