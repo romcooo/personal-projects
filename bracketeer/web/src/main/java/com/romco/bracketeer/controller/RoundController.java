@@ -102,11 +102,11 @@ public class RoundController {
                                               .getParticipants()
                                               .get(0)
                                               .getCode();
-        String participant2Code = tournament().getRound(roundNumber)
-                                              .getMatch(matchNumber - 1)
-                                              .getParticipants()
-                                              .get(1)
-                                              .getCode();
+//        String participant2Code = tournament().getRound(roundNumber)
+//                                              .getMatch(matchNumber - 1)
+//                                              .getParticipants()
+//                                              .get(1)
+//                                              .getCode();
         log.info("In postMatchResult for roundNumber {}, matchNumber {}, scores are {} : {}",
                  roundNumber,
                  matchNumber,
