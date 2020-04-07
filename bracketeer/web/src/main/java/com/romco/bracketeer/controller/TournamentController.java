@@ -76,6 +76,7 @@ public class TournamentController {
         return Mappings.Tournament.REDIRECT_EXISTING_WITH_CODE.replace("{tournamentCode}", tournament.getCode());
     }
 
+    //  TODO move setup to setup controller
     // == SETUP OF TOURNAMENT
     @GetMapping({
 //            Mappings.Tournament.SETUP,

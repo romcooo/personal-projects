@@ -31,20 +31,23 @@ public class BracketController {
 
     // == model attributes
     @ModelAttribute(TOURNAMENT)
-    public Tournament tournament() {
-        return service.getTournament();
+    public Tournament tournament(Model model) {
+        Tournament tournament = service.getTournament();
+        model.addAttribute(TOURNAMENT, tournament);
+        return tournament;
     }
 
     // == request handlers
     @GetMapping(Mappings.Tournament.BRACKET)
     public String getBracket(@PathVariable(value = TOURNAMENT_CODE) String tournamentCode,
                              Model model) {
+        Tournament tournament = tournament(model);
         log.info("In getBracket with tournamentCode {}, tournament type: {}",
                  tournamentCode,
-                 tournament().getRuleSet().getType());
+                 tournament.getRuleSet().getType());
 
-        if (tournament().getRuleSet().getType() != TournamentFormat.SINGLE_ELIMINATION
-                && tournament().getRuleSet().getType() != TournamentFormat.DOUBLE_ELIMINATION) {
+        if (tournament.getRuleSet().getType() != TournamentFormat.SINGLE_ELIMINATION
+                && tournament.getRuleSet().getType() != TournamentFormat.DOUBLE_ELIMINATION) {
             model.addAttribute("message",
                                "This page is only available for Single/Double Elimination tournaments");
             return ViewNames.ERROR_WITH_MESSAGE;
