@@ -1,5 +1,9 @@
 package org.romcooo.util;
 
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
 import javax.xml.crypto.dsig.spec.HMACParameterSpec;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -8,7 +12,7 @@ import java.util.*;
 
 public class FeedCounter {
     
-    public static void main(String[] args) throws FileNotFoundException {
+    public static void main(String[] args) throws FileNotFoundException, ParseException {
         File file = new File("C:\\Users\\roman.stubna\\Desktop\\exports\\output_java_w_address_extended_backup.txt");
         Scanner reader = new Scanner(file);
     
@@ -47,6 +51,8 @@ public class FeedCounter {
     
         Map<String, Map<String, String>> modelAttributeMap = new HashMap<>();
         
+        List<Map<String, String>> salesroomList = new ArrayList<>();
+        
         for (Map<String, String> request : requests) {
             // producer to model count map
             String producer = request.get("commodity.producer");
@@ -83,13 +89,30 @@ public class FeedCounter {
 
             modelAttributeMap.put(modelNumber, modelAttributes);
             
+            // salesrooms
+            Map<String, String> salesroomInfo = new HashMap<>();
+            salesroomInfo.put("code", request.get("salesroom.code"));
+            salesroomInfo.put("name", request.get("salesroom.name"));
+            salesroomInfo.put("gpsLatitude", request.get("salesroom.gpsLatitude"));
+            salesroomInfo.put("gpsLongtitude", request.get("salesroom.gpsLongtitude"));
+    
+            JSONParser jsonParser = new JSONParser();
+            JSONObject jsonObject = (JSONObject) jsonParser.parse(request.get("salesroom.addressInfo"));
+            
+            salesroomInfo.put("countryCode", (String) jsonObject.get("countryCode"));
+            salesroomInfo.put("districtCode", (String) jsonObject.get("districtCode"));
+            salesroomInfo.put("houseNumber", (String) jsonObject.get("houseNumber"));
+            salesroomInfo.put("regionCode", (String) jsonObject.get("regionCode"));
+            salesroomInfo.put("addressType", (String) jsonObject.get("addressType"));
+    
+            salesroomList.add(salesroomInfo);
         }
     
     
         sb.append("## PRODUCERS:\n");
         for (String producers : producerCount.keySet()) {
             sb.append(producers)
-              .append(", ")
+              .append(",")
               .append(producerCount.get(producers))
               .append("\n");
         }
@@ -129,6 +152,29 @@ public class FeedCounter {
             }
             if (sb.lastIndexOf(",") > 0) {
                 sb.delete(sb.lastIndexOf(","), sb.lastIndexOf(",")+1);
+            }
+            sb.append("\n");
+        }
+        
+        sb.append("\n## SALESROOMS\n");
+        
+        Map<String, String> first = salesroomList.get(0);
+        int count = 0;
+        for (String key : first.keySet()) {
+            sb.append(key);
+            if (count < first.keySet().size()){
+                sb.append(",");
+            }
+            count++;
+        }
+        sb.append("\n");
+    
+    
+        for (Map<String, String> entry : salesroomList) {
+            for (String key : entry.keySet()) {
+                sb.append(entry.get(key))
+                  .append(",");
+                  
             }
             sb.append("\n");
         }
