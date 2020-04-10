@@ -13,8 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import static com.romco.bracketeer.util.ModelAttributeNames.TOURNAMENT;
-import static com.romco.bracketeer.util.ModelAttributeNames.TOURNAMENT_CODE;
+import static com.romco.bracketeer.util.ModelAttributeNames.*;
 
 @Slf4j
 @Controller
@@ -33,7 +32,8 @@ public class BracketController {
     @ModelAttribute(TOURNAMENT)
     public Tournament tournament(Model model) {
         Tournament tournament = service.getTournament();
-        model.addAttribute(TOURNAMENT, tournament);
+//        model.addAttribute(TOURNAMENT, tournament);
+        model.addAttribute(ROUNDS, tournament.getRounds());
         return tournament;
     }
 
