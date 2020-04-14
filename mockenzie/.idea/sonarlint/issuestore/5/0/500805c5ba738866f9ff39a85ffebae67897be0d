@@ -1,10 +1,10 @@
 
+Z	java:S106"9Replace this use of System.out or System.err by a logger.(ã×şÖıÿÿÿÿ8ûã¼ı“.
+b	java:S1121"FDefine and throw a dedicated exception instead of using a generic one.(÷ˆ°8ûã¼ı“.
+Z	java:S106*"9Replace this use of System.out or System.err by a logger.(ˆ©Â¸øÿÿÿÿ8ûã¼ı“.
+Z	java:S106G"9Replace this use of System.out or System.err by a logger.(€¢£Áÿÿÿÿÿ8ûã¼ı“.
 Z	java:S106"9Replace this use of System.out or System.err by a logger.(Úşºïûÿÿÿÿ8ûã¼ı“.
 Z	java:S106U"9Replace this use of System.out or System.err by a logger.(”á®öüÿÿÿÿ8ûã¼ı“.
 Z	java:S106D"9Replace this use of System.out or System.err by a logger.(ˆ©Â¸øÿÿÿÿ8ûã¼ı“.
-Z	java:S106*"9Replace this use of System.out or System.err by a logger.(ˆ©Â¸øÿÿÿÿ8ûã¼ı“.
-Z	java:S106G"9Replace this use of System.out or System.err by a logger.(€¢£Áÿÿÿÿÿ8ûã¼ı“.
-b	java:S1121"FDefine and throw a dedicated exception instead of using a generic one.(÷ˆ°8ûã¼ı“.
 b	java:S112"FDefine and throw a dedicated exception instead of using a generic one.(Öûø8ûã¼ı“.
 Z	java:S106-"9Replace this use of System.out or System.err by a logger.(€¢£Áÿÿÿÿÿ8ûã¼ı“.
-Z	java:S106"9Replace this use of System.out or System.err by a logger.(ã×şÖıÿÿÿÿ8ûã¼ı“.

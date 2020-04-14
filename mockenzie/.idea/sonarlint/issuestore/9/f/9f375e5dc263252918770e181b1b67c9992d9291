@@ -1,40 +1,40 @@
 
-J
-java:S2755A"-Disable XML external entity (XXE) processing.(ğ¨ºî8æºş“.
+^	java:S125«"<This block of commented-out lines of code should be removed.(àòÓêıÿÿÿÿ8¿Òò„”.
 R
 java:S2864È"4Iterate over the "entrySet" instead of the "keySet".(‡ñ¯»8¿Òò„”.
-O
-java:S1135b"2Complete the task associated to this TODO comment.(İ°şÆ8¿Òò„”.
-Y
-java:S1128"<Remove this unused import 'org.apache.http.ssl.SSLContexts'.(¶Ê§¡8‹Ùş“.
-g
-java:S20953"EUse try-with-resources or close this "Scanner" in a "finally" clause.(’³Ñşÿÿÿÿ8æºş“.
-X
-java:S1128'"6Remove this unused import 'java.net.http.HttpRequest'.(ş€ŠÍşÿÿÿÿ8­İÕş“.
-V	java:S106Î"9Replace this use of System.out or System.err by a logger.(Ç“¼8¿Òò„”.
-^	java:S125µ"<This block of commented-out lines of code should be removed.(›êµ”øÿÿÿÿ8¿Òò„”.
-^	java:S125±"<This block of commented-out lines of code should be removed.(òö©·üÿÿÿÿ8¿Òò„”.
-V	java:S106¤"9Replace this use of System.out or System.err by a logger.(í¨¢í8¿Òò„”.
-c
-java:S10752"ARefactor your code to get this URI from a customizable parameter.(…ƒ¾øÿÿÿÿ8æºş“.
-V	java:S106Œ"9Replace this use of System.out or System.err by a logger.(í¨¢í8¿Òò„”.
-T	java:S106?"9Replace this use of System.out or System.err by a logger.(²ÏË8æºş“.
 ”
 java:S11300"wRemove the declaration of thrown exception 'java.lang.InterruptedException', as it cannot be thrown from method's body.(Æ¢†¼8ìËõ„”.
-^	java:S125Â"<This block of commented-out lines of code should be removed.(éØ»Úûÿÿÿÿ8àÔè„”.
-^	java:S125«"<This block of commented-out lines of code should be removed.(àòÓêıÿÿÿÿ8¿Òò„”.
-]	java:S125c"<This block of commented-out lines of code should be removed.(‚ò—¼ÿÿÿÿÿ8Ş“ö„”.
-^	java:S125»"<This block of commented-out lines of code should be removed.(½îçÛûÿÿÿÿ8àÔè„”.
-k
-java:S20955"IUse try-with-resources or close this "PrintWriter" in a "finally" clause.( ¹†ıÿÿÿÿ8æºş“.
-{
-java:S2293F"YReplace the type specification in this constructor call with the diamond operator ("<>").(£…ó€üÿÿÿÿ8æºş“.
-W
-java:S1128&"5Remove this unused import 'java.net.http.HttpClient'.(Œ³’Öşÿÿÿÿ8š¦Öş“.
+^	java:S125½"<This block of commented-out lines of code should be removed.(™ÉßĞùÿÿÿÿ8¿Òò„”.
 o
 java:S1128"MRemove this unused import 'org.apache.http.conn.ssl.TrustSelfSignedStrategy'.(˜Å“•ÿÿÿÿÿ8‹Ùş“.
+c
+java:S10752"ARefactor your code to get this URI from a customizable parameter.(…ƒ¾øÿÿÿÿ8æºş“.
+X
+java:S1128'"6Remove this unused import 'java.net.http.HttpRequest'.(ş€ŠÍşÿÿÿÿ8­İÕş“.
+O
+java:S1135b"2Complete the task associated to this TODO comment.(İ°şÆ8¿Òò„”.
+^	java:S125Â"<This block of commented-out lines of code should be removed.(éØ»Úûÿÿÿÿ8àÔè„”.
+V	java:S106Œ"9Replace this use of System.out or System.err by a logger.(í¨¢í8¿Òò„”.
+^	java:S125µ"<This block of commented-out lines of code should be removed.(›êµ”øÿÿÿÿ8¿Òò„”.
+W
+java:S1128&"5Remove this unused import 'java.net.http.HttpClient'.(Œ³’Öşÿÿÿÿ8š¦Öş“.
+^	java:S125±"<This block of commented-out lines of code should be removed.(òö©·üÿÿÿÿ8¿Òò„”.
+^	java:S125»"<This block of commented-out lines of code should be removed.(½îçÛûÿÿÿÿ8àÔè„”.
 f
 java:S2259Ç"HA "NullPointerException" could be thrown; "getString()" can return null.(äÏ€Ï8¿Òò„”.
+{
+java:S2293F"YReplace the type specification in this constructor call with the diamond operator ("<>").(£…ó€üÿÿÿÿ8æºş“.
+k
+java:S20955"IUse try-with-resources or close this "PrintWriter" in a "finally" clause.( ¹†ıÿÿÿÿ8æºş“.
 R
 java:S1128"5Remove this unused import 'javax.net.ssl.SSLContext'.(ˆœ¤ë8‹Ùş“.
-^	java:S125½"<This block of commented-out lines of code should be removed.(™ÉßĞùÿÿÿÿ8¿Òò„”.
+J
+java:S2755A"-Disable XML external entity (XXE) processing.(ğ¨ºî8æºş“.
+Y
+java:S1128"<Remove this unused import 'org.apache.http.ssl.SSLContexts'.(¶Ê§¡8‹Ùş“.
+V	java:S106¤"9Replace this use of System.out or System.err by a logger.(í¨¢í8¿Òò„”.
+T	java:S106?"9Replace this use of System.out or System.err by a logger.(²ÏË8æºş“.
+V	java:S106Î"9Replace this use of System.out or System.err by a logger.(Ç“¼8¿Òò„”.
+]	java:S125c"<This block of commented-out lines of code should be removed.(‚ò—¼ÿÿÿÿÿ8Ş“ö„”.
+g
+java:S20953"EUse try-with-resources or close this "Scanner" in a "finally" clause.(’³Ñşÿÿÿÿ8æºş“.
