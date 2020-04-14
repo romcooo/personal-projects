@@ -31,19 +31,16 @@
     
         <div class=bracket-graphic>
 
-            <div th:each="r : ${#numbers.sequence(1, __${numberOfRounds}__)}"
-                 class = "col-other-p">
+            <div th:each="r : ${rounds}"
+                 class = "col-other-p"> <!--th:each="m : ${#numbers.sequence(1, __${numberOfRounds}__)}"-->
                 dynamic divs here!
-                <div th:each="m : ${tournament.getRound(r).}"> <!--each match-->
-                    <p th:each=""></p> <!-- add each player of match m i here -->
-                    <p>player 1</p>
-                    <p>player 2</p>
-                    <p>player 3</p>
-                    <p>player 4</p>
+                <div th:each="m : ${r.matches}"> <!--each match-->
+                    <p th:each="p : ${m.matchResultMap.keySet()}"
+                    th:text="${p.name}">asd</p> <!-- add each player of match m i here -->
                 </div>
-                
+
             </div>
-            
+
             <div class = "col-2p col-other-p">2 player finale
                 <p>p1</p>
                 <p>p2</p>

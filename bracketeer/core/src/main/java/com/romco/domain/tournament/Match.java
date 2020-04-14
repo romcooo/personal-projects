@@ -49,38 +49,6 @@ public class Match {
 //        return false;
 //    }
 
-    public long getId() {
-        return id;
-    }
-    
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public int getMatchNumber() {
-        return matchNumber;
-    }
-
-    public void setMatchNumber(int matchNumber) {
-        this.matchNumber = matchNumber;
-    }
-    
-    public void setBye(boolean bye) {
-        isBye = bye;
-    }
-    
-    public Round getOfRound() {
-        return ofRound;
-    }
-    
-    public void setOfRound(Round ofRound) {
-        this.ofRound = ofRound;
-    }
-
-    public Map<Participant, MatchResult> getMatchResultMap() {
-        return matchResultMap;
-    }
-
     public List<Participant> getOthers(Participant participant) {
         return matchResultMap.keySet().stream()
                              .filter((p) -> !p.equals(participant))
