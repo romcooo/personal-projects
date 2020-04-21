@@ -10,6 +10,8 @@ import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.*;
 
+import static org.romcooo.util.Const.csvSeparator;
+
 public class FeedCounter {
     
     public static void main(String[] args) throws FileNotFoundException, ParseException {
@@ -104,6 +106,7 @@ public class FeedCounter {
             salesroomInfo.put("houseNumber", (String) jsonObject.get("houseNumber"));
             salesroomInfo.put("regionCode", (String) jsonObject.get("regionCode"));
             salesroomInfo.put("addressType", (String) jsonObject.get("addressType"));
+            salesroomInfo.put("street", (String) jsonObject.get("street"));
     
             salesroomList.add(salesroomInfo);
         }
@@ -112,7 +115,7 @@ public class FeedCounter {
         sb.append("## PRODUCERS:\n");
         for (String producers : producerCount.keySet()) {
             sb.append(producers)
-              .append(",")
+              .append(csvSeparator)
               .append(producerCount.get(producers))
               .append("\n");
         }
@@ -126,9 +129,9 @@ public class FeedCounter {
             Map<String, Integer> modelCount = producerToModelCountMap.get(producer);
             for (String model : modelCount.keySet()) {
                 sb.append(model)
-                  .append(",")
+                  .append(csvSeparator)
                   .append(producer)
-                  .append(",")
+                  .append(csvSeparator)
                   .append(modelCount.get(model))
                   .append("\n");
             }
@@ -145,13 +148,13 @@ public class FeedCounter {
         for (String modelName : modelAttributeMap.keySet()) {
             Map<String, String> modelAttributes = modelAttributeMap.get(modelName);
             sb.append(modelName)
-              .append(",");
+              .append(csvSeparator);
             for (String attributeName : modelAttributes.keySet()) {
                 sb.append(modelAttributes.get(attributeName))
-                  .append(",");
+                  .append(csvSeparator);
             }
-            if (sb.lastIndexOf(",") > 0) {
-                sb.delete(sb.lastIndexOf(","), sb.lastIndexOf(",")+1);
+            if (sb.lastIndexOf(csvSeparator) > 0) {
+                sb.delete(sb.lastIndexOf(csvSeparator), sb.lastIndexOf(csvSeparator)+1);
             }
             sb.append("\n");
         }
@@ -159,13 +162,12 @@ public class FeedCounter {
         sb.append("\n## SALESROOMS\n");
         
         Map<String, String> first = salesroomList.get(0);
-        int count = 0;
         for (String key : first.keySet()) {
-            sb.append(key);
-            if (count < first.keySet().size()){
-                sb.append(",");
-            }
-            count++;
+            sb.append(key)
+              .append(csvSeparator);
+        }
+        if (sb.lastIndexOf(csvSeparator) > 0) {
+            sb.delete(sb.lastIndexOf(csvSeparator), sb.lastIndexOf(csvSeparator)+1);
         }
         sb.append("\n");
     
@@ -173,8 +175,11 @@ public class FeedCounter {
         for (Map<String, String> entry : salesroomList) {
             for (String key : entry.keySet()) {
                 sb.append(entry.get(key))
-                  .append(",");
+                  .append(csvSeparator);
                   
+            }
+            if (sb.lastIndexOf(csvSeparator) > 0) {
+                sb.delete(sb.lastIndexOf(csvSeparator), sb.lastIndexOf(csvSeparator)+1);
             }
             sb.append("\n");
         }
