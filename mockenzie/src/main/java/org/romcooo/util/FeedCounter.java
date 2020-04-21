@@ -107,6 +107,7 @@ public class FeedCounter {
             salesroomInfo.put("regionCode", (String) jsonObject.get("regionCode"));
             salesroomInfo.put("addressType", (String) jsonObject.get("addressType"));
             salesroomInfo.put("street", (String) jsonObject.get("street"));
+            salesroomInfo.put("town", (String) jsonObject.get("town"));
     
             salesroomList.add(salesroomInfo);
         }
@@ -172,6 +173,7 @@ public class FeedCounter {
         sb.append("\n");
     
     
+        int counter = 0;
         for (Map<String, String> entry : salesroomList) {
             for (String key : entry.keySet()) {
                 sb.append(entry.get(key))
@@ -182,6 +184,10 @@ public class FeedCounter {
                 sb.delete(sb.lastIndexOf(csvSeparator), sb.lastIndexOf(csvSeparator)+1);
             }
             sb.append("\n");
+            counter++;
+            if (counter >= 60) {
+                break;
+            }
         }
         
         System.out.println(sb.toString());
