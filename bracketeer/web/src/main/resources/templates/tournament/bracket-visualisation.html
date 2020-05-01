@@ -36,7 +36,7 @@
                 dynamic divs here!
                 <div th:each="m : ${r.matches}"> <!--each match-->
                     <p th:each="p : ${m.matchResultMap.keySet()}"
-                    th:text="${p.name}">asd</p> <!-- add each player of match m i here -->
+                    th:text="${p.name}">playerName</p> <!-- add each player of match m i here -->
                 </div>
 
             </div>
