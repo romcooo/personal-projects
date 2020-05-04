@@ -1,30 +1,30 @@
 
-k
-java:S20951"IUse try-with-resources or close this "PrintWriter" in a "finally" clause.( ¹†ıÿÿÿÿ8™ò×•.
-f
-java:S2259Ã"HA "NullPointerException" could be thrown; "getString()" can return null.(äÏ€Ï8™ò×•.
-^	java:S125·"<This block of commented-out lines of code should be removed.(½îçÛûÿÿÿÿ8™ò×•.
-{
-java:S2293B"YReplace the type specification in this constructor call with the diamond operator ("<>").(£…ó€üÿÿÿÿ8™ò×•.
+^	java:S125±"<This block of commented-out lines of code should be removed.(›êµ”øÿÿÿÿ8™ò×•.
+^	java:S125¾"<This block of commented-out lines of code should be removed.(éØ»Úûÿÿÿÿ8™ò×•.
+V	java:S106 "9Replace this use of System.out or System.err by a logger.(í¨¢í8™ò×•.
 c
 java:S1075."ARefactor your code to get this URI from a customizable parameter.(…ƒ¾øÿÿÿÿ8™ò×•.
-T	java:S106;"9Replace this use of System.out or System.err by a logger.(²ÏË8™ò×•.
-V	java:S106ˆ"9Replace this use of System.out or System.err by a logger.(í¨¢í8™ò×•.
-O
-java:S1135^"2Complete the task associated to this TODO comment.(İ°şÆ8™ò×•.
-V	java:S106Ê"9Replace this use of System.out or System.err by a logger.(Ç“¼8™ò×•.
-]	java:S125_"<This block of commented-out lines of code should be removed.(‚ò—¼ÿÿÿÿÿ8™ò×•.
-V	java:S106 "9Replace this use of System.out or System.err by a logger.(í¨¢í8™ò×•.
-^	java:S125­"<This block of commented-out lines of code should be removed.(òö©·üÿÿÿÿ8™ò×•.
-^	java:S125±"<This block of commented-out lines of code should be removed.(›êµ”øÿÿÿÿ8™ò×•.
-R
-java:S2864Ä"4Iterate over the "entrySet" instead of the "keySet".(‡ñ¯»8™ò×•.
-g
-java:S2095/"EUse try-with-resources or close this "Scanner" in a "finally" clause.(’³Ñşÿÿÿÿ8™ò×•.
-”
-java:S1130,"wRemove the declaration of thrown exception 'java.lang.InterruptedException', as it cannot be thrown from method's body.(Æ¢†¼8™ò×•.
+^	java:S125·"<This block of commented-out lines of code should be removed.(½îçÛûÿÿÿÿ8™ò×•.
+^	java:S125§"<This block of commented-out lines of code should be removed.(àòÓêıÿÿÿÿ8™ò×•.
 J
 java:S2755="-Disable XML external entity (XXE) processing.(ğ¨ºî8™ò×•.
+V	java:S106Ê"9Replace this use of System.out or System.err by a logger.(Ç“¼8™ò×•.
+T	java:S106;"9Replace this use of System.out or System.err by a logger.(²ÏË8™ò×•.
+k
+java:S20951"IUse try-with-resources or close this "PrintWriter" in a "finally" clause.( ¹†ıÿÿÿÿ8™ò×•.
 ^	java:S125¹"<This block of commented-out lines of code should be removed.(™ÉßĞùÿÿÿÿ8™ò×•.
-^	java:S125§"<This block of commented-out lines of code should be removed.(àòÓêıÿÿÿÿ8™ò×•.
-^	java:S125¾"<This block of commented-out lines of code should be removed.(éØ»Úûÿÿÿÿ8™ò×•.
+”
+java:S1130,"wRemove the declaration of thrown exception 'java.lang.InterruptedException', as it cannot be thrown from method's body.(Æ¢†¼8™ò×•.
+{
+java:S2293B"YReplace the type specification in this constructor call with the diamond operator ("<>").(£…ó€üÿÿÿÿ8™ò×•.
+]	java:S125_"<This block of commented-out lines of code should be removed.(‚ò—¼ÿÿÿÿÿ8™ò×•.
+f
+java:S2259Ã"HA "NullPointerException" could be thrown; "getString()" can return null.(äÏ€Ï8™ò×•.
+V	java:S106ˆ"9Replace this use of System.out or System.err by a logger.(í¨¢í8™ò×•.
+g
+java:S2095/"EUse try-with-resources or close this "Scanner" in a "finally" clause.(’³Ñşÿÿÿÿ8™ò×•.
+R
+java:S2864Ä"4Iterate over the "entrySet" instead of the "keySet".(‡ñ¯»8™ò×•.
+O
+java:S1135^"2Complete the task associated to this TODO comment.(İ°şÆ8™ò×•.
+^	java:S125­"<This block of commented-out lines of code should be removed.(òö©·üÿÿÿÿ8™ò×•.
