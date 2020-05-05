@@ -1,5 +1,7 @@
 package com.romco.bracketeer.persistence.daoimpl
 
-class UserDaoImpl {
+import com.romco.bracketeer.persistence.dao.UserDao
+
+class UserDaoImpl: UserDao {
 
 }
