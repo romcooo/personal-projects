@@ -9,6 +9,8 @@ interface UserDao {
     // retrieves all
     fun retrieveAll(): Collection<User>
 
+    fun retrieveByUsername(username: String): User?
+
     // creates and returns id of the newly created record. In case of failure, returns -1.
     fun create(user: User): Long
 

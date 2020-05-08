@@ -32,6 +32,10 @@ class UserDaoImpl: UserDao {
         TODO("Not yet implemented")
     }
 
+    override fun retrieveByUsername(username: String): User? {
+        TODO("Not yet implemented")
+    }
+
     override fun create(user: User): Long {
         val sqlQuery = "$INSERT (:username, :password)"
         val source = MapSqlParameterSource()
