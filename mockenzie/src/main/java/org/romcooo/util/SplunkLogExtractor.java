@@ -41,15 +41,19 @@ import java.util.Scanner;
 
 public class SplunkLogExtractor {
     
+    public static final String SALESROOM_ENDPOINT = "https://homesis.vn00c1.vn.infra/homesis/restful/salesrooms/";
+    public static final String PARTNERS_ENDPOINT = "https://homesis.vn00c1.vn.infra/homesis/restful/partners/";
+    
+    
     public static void main(String[] args) throws IOException, ParserConfigurationException, SAXException, XPathExpressionException, InterruptedException, ParseException, KeyStoreException, NoSuchAlgorithmException, KeyManagementException {
         // write your code here
-        File file = new File("C:\\Users\\roman.stubna\\Desktop\\vn prod 4h only v6.txt");
+        File file = new File("C:\\Users\\roman.stubna\\Desktop\\exports\\vn prod 4h only v6.txt");
         Scanner reader = new Scanner(file);
         
-        PrintWriter writer = new PrintWriter("C:\\Users\\roman.stubna\\Desktop\\output_java.txt");
+        PrintWriter writer = new PrintWriter("C:\\Users\\roman.stubna\\Desktop\\exports\\output_java.txt");
         
         int counter = 0;
-        int maxRows = 5;
+        int maxRows = 60;
         
         while (reader.hasNextLine() && counter < maxRows) {
             counter++;
@@ -120,7 +124,7 @@ public class SplunkLogExtractor {
             vals.put("commodity.price", commodityPrice);
             
             
-            String salesroomDetailsUri = "https://homesis.vn00c1.vn.infra/homesis/restful/salesrooms/" + salesroomCode;
+            String salesroomDetailsUri = SALESROOM_ENDPOINT + salesroomCode;
             CloseableHttpClient httpClient = createTrustAllHttpClientBuilder().build();
             String encoding = Base64.getEncoder().encodeToString(("homerselect:homerselect").getBytes());
             
@@ -133,19 +137,21 @@ public class SplunkLogExtractor {
             
             if (srDetailResponse.getStatusLine().getStatusCode() == 200) {
                 String respString = EntityUtils.toString(srDetailResponse.getEntity());
-                System.out.println(respString);
+                System.out.println("Salesroom response: " + respString);
                 JSONParser jsonParser = new JSONParser();
                 JSONObject jsonObject = (JSONObject) jsonParser.parse(respString);
                 String salesroomName = (String) jsonObject.get("name");
+                String partnerCode = (String) jsonObject.get("partnerCode");
                 String salesroomGpsLatitude = (String) jsonObject.get("gpsLatitude");
                 String salesroomGpsLongitude = (String) jsonObject.get("gpsLongtitude");
                 vals.put("salesroom.name", salesroomName);
+                vals.put("salesroom.partnerCode", partnerCode);
                 vals.put("salesroom.gpsLatitude", salesroomGpsLatitude);
                 vals.put("salesroom.gpsLongtitude", salesroomGpsLongitude);
             }
             
             
-            String salesroomAddressUri = "https://homesis.vn00c1.vn.infra/homesis/restful/salesrooms/" + salesroomCode + "/addresses/SR_BUS";
+            String salesroomAddressUri = SALESROOM_ENDPOINT + salesroomCode + "/addresses/SR_BUS";
             
             HttpUriRequest httpUriRequestAddress = new HttpGet(URI.create(salesroomAddressUri));
             httpUriRequest.setHeader("User-Agent", "Java 11 HttpClient Bot");
@@ -157,9 +163,29 @@ public class SplunkLogExtractor {
             
             if (addressResponse.getStatusLine().getStatusCode() == 200) {
                 String respString = EntityUtils.toString(addressResponse.getEntity());
-                System.out.println(respString);
+                System.out.println("Address response: " + respString);
                 vals.put("salesroom.addressInfo", respString);
                 
+            }
+            
+            String partnerCode = vals.get("salesroom.partnerCode");
+            if (partnerCode != null && !partnerCode.equals("")) {
+                String partnerUri = PARTNERS_ENDPOINT + partnerCode;
+                
+                HttpUriRequest httpUriRequestPartner = new HttpGet(URI.create(partnerUri));
+                httpUriRequestPartner.setHeader("User-Agent", "Java 11 HttpClient Bot");
+                httpUriRequestPartner.setHeader("Authorization", "Basic " + encoding);
+                httpUriRequestPartner.setHeader("Accept", "*/*");
+                
+                CloseableHttpResponse partnerResponse = httpClient.execute(httpUriRequestPartner);
+                
+                if (partnerResponse.getStatusLine().getStatusCode() == 200) {
+                    String respString = EntityUtils.toString(partnerResponse.getEntity());
+                    System.out.println("Partner response: " + respString);
+                    JSONParser jsonParser = new JSONParser();
+                    JSONObject jsonObject = (JSONObject) jsonParser.parse(respString);
+                    vals.put("salesroom.partnerName", (String) jsonObject.get("name"));
+                }
             }
             
             ////////////////
@@ -170,7 +196,7 @@ public class SplunkLogExtractor {
 //                commodityExchangeIds.remove(commodityExchangeIds.size()-1);
 //            }
 //
-//            String prodEncoding = Base64.getEncoder().encodeToString(("osbuser:6xKcZIH7PLE4").getBytes());
+//            String prodEncoding = Base64.getEncoder().encodeToString(("ADD IF NEEDED:PWD").getBytes());
 //            String commodityUri = "https://commoditywl.pdcvn1.vn.prod/commodity/openapi/v1/commodities/" + exchangeIds.toString();
 //            System.out.println("calling " + commodityUri);
 //
