@@ -1,21 +1,24 @@
 package com.romco.bracketeer.persistence.dao
 
+import com.romco.bracketeer.domain.User
 import javax.sql.DataSource
 
 interface UserDao {
-    fun setDataSource(dataSource: DataSource?)
+    fun setDataSource(dataSource: DataSource)
 
     // retrieves all
-    fun <T> retrieveAll(): Collection<T?>?
+    fun retrieveAll(): Collection<User>
+
+    fun retrieveByUsername(username: String): User?
 
     // creates and returns id of the newly created record. In case of failure, returns -1.
-    fun <T> create(t: T?): Long
+    fun create(user: User): Long
 
     // updates by id, returns true if success.
-    fun <T> update(t: T?): Boolean
+    fun update(user: User): Boolean
 
     // deletes by id, returns true if success.
-    fun <T> delete(t: T?): Boolean
+    fun delete(user: User): Boolean
 
     fun cleanup()
 }
