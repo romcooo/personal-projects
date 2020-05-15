@@ -15,7 +15,8 @@ import static org.romcooo.util.Const.csvSeparator;
 public class FeedCounter {
     
     public static void main(String[] args) throws FileNotFoundException, ParseException {
-        File file = new File("C:\\Users\\roman.stubna\\Desktop\\exports\\output_java_w_address_extended_backup.txt");
+//        File file = new File("C:\\Users\\roman.stubna\\Desktop\\exports\\output_java_w_address_extended_backup.txt");
+        File file = new File("C:\\Users\\roman.stubna\\Desktop\\exports\\output_java.txt");
         Scanner reader = new Scanner(file);
     
 //        PrintWriter writer = new PrintWriter("C:\\Users\\roman.stubna\\Desktop\\output_producer_distrib.txt");
@@ -97,6 +98,8 @@ public class FeedCounter {
             salesroomInfo.put("name", request.get("salesroom.name"));
             salesroomInfo.put("gpsLatitude", request.get("salesroom.gpsLatitude"));
             salesroomInfo.put("gpsLongtitude", request.get("salesroom.gpsLongtitude"));
+            salesroomInfo.put("partnerCode", request.get("salesroom.partnerCode"));
+            salesroomInfo.put("partnerName", request.get("salesroom.partnerName"));
     
             JSONParser jsonParser = new JSONParser();
             JSONObject jsonObject = (JSONObject) jsonParser.parse(request.get("salesroom.addressInfo"));
