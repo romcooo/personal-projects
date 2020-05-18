@@ -1,4 +1,4 @@
-package com.romco.bracketeer.persistence.daoimpl;
+package com.romco.bracketeer.persistence.rowmapper;
 
 import com.romco.bracketeer.domain.matcher.TournamentFormat;
 import com.romco.bracketeer.domain.tournament.Tournament;
