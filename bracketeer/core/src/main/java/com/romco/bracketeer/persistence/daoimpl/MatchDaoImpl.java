@@ -2,6 +2,7 @@ package com.romco.bracketeer.persistence.daoimpl;
 
 import com.romco.bracketeer.domain.tournament.Match;
 import com.romco.bracketeer.persistence.dao.MatchDao;
+import com.romco.bracketeer.persistence.rowmapper.MatchRowMapper;
 import com.romco.bracketeer.persistence.util.NamedParameterJdbcTemplateHolder;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,4 +1,4 @@
-package com.romco.bracketeer.persistence.daoimpl;
+package com.romco.bracketeer.persistence.rowmapper;
 
 import com.romco.bracketeer.domain.tournament.Round;
 import org.springframework.jdbc.core.RowMapper;

@@ -1,4 +1,4 @@
-package com.romco.bracketeer.persistence.daoimpl;
+package com.romco.bracketeer.persistence.rowmapper;
 
 import com.romco.bracketeer.domain.tournament.MatchResult;
 import lombok.extern.slf4j.Slf4j;
