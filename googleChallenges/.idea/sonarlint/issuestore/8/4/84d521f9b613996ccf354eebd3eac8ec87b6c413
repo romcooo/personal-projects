@@ -1,0 +1,35 @@
+
+^
+java:S2095|"HUse try-with-resources or close this "FileWriter" in a "finally" clause.(Ì×ÍÊ
+g
+java:S2095}"LUse try-with-resources or close this "BufferedWriter" in a "finally" clause.(îŞÀ‘ûÿÿÿÿ
+F
+java:S1128"0Remove this unused import 'java.nio.file.Files'.(‚ƒü
+F
+java:S1128"0Remove this unused import 'java.nio.file.Paths'.(áè°¯
+E
+java:S1128"/Remove this unused import 'java.nio.file.Path'.(×²êÂ
+T
+java:S1128">Remove this unused import 'java.nio.charset.StandardCharsets'.(ï˜ŞÛ
+N	java:S106]"9Replace this use of System.out or System.err by a logger.(ØÔ¡¸
+N	java:S106^"9Replace this use of System.out or System.err by a logger.(¦œß®
+S	java:S106p"9Replace this use of System.out or System.err by a logger.(åö¡½úÿÿÿÿ
+S	java:S106q"9Replace this use of System.out or System.err by a logger.(ÏŠñğıÿÿÿÿ
+W
+java:S1075u"ARefactor your code to get this URI from a customizable parameter.(Ù©¹µ
+\	java:S899z"BDo something with the "boolean" value returned by "createNewFile".(Ğ’Íùÿÿÿÿ
+T	java:S106‚"9Replace this use of System.out or System.err by a logger.(¨¶ÑÍşÿÿÿÿ
+i
+java:S3776‡"RRefactor this method to reduce its Cognitive Complexity from 39 to the 15 allowed.(Â„‘¡
+T	java:S106È"9Replace this use of System.out or System.err by a logger.(€Ì—·øÿÿÿÿ
+Q	java:S125;"<This block of commented-out lines of code should be removed.(±§ª×
+Q	java:S125="<This block of commented-out lines of code should be removed.(¯ôáÀ
+V	java:S125K"<This block of commented-out lines of code should be removed.(®Ü¹¥ÿÿÿÿÿ
+V	java:S125O"<This block of commented-out lines of code should be removed.(ÕÁÅ¼ıÿÿÿÿ
+V	java:S125T"<This block of commented-out lines of code should be removed.(¾¬°²úÿÿÿÿ
+W	java:S125ˆ"<This block of commented-out lines of code should be removed.(½š†‘ùÿÿÿÿ
+W	java:S125"<This block of commented-out lines of code should be removed.( Ãåùùÿÿÿÿ
+Q	java:S125"<This block of commented-out lines of code should be removed.(ìÂĞC
+W	java:S125©"<This block of commented-out lines of code should be removed.(šõ…‚øÿÿÿÿ
+R	java:S125³"<This block of commented-out lines of code should be removed.(Ô›·’
+Q	java:S125Ã"<This block of commented-out lines of code should be removed.(±®×
