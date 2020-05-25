@@ -8,6 +8,8 @@ public final class ViewNames {
     public static final String ERROR_WITH_MESSAGE = "error-with-message";
 
     public static class Tournament {
+        private Tournament() { }
+
         public static final String BASE = "tournament";
 
         public static final String NEW = BASE + "/new";
@@ -23,5 +25,16 @@ public final class ViewNames {
         public static final String ALL = BASE + "/all";
 
         public static final String FIND = BASE + "/find";
+    }
+
+    public static class UserManagement {
+
+        private UserManagement() { }
+
+        public static final String BASE = "user-management";
+
+        public static final String LOGIN = BASE + "/login";
+
+        public static final String REGISTER = BASE + "/register";
     }
 }

@@ -32,22 +32,40 @@
 <!--</body>-->
 
 <body>
+    <div th:replace="fragments/navbars.html">
+        Topnav bar fragment
+    </div>
     
     <div class="main" align="center">
-        <div th:replace="fragments/navbars.html">
-            navbars fragment
-        </div>
-        <h1>Login</h1>
-        <form name="login-form" action="login" method="POST">
+
+        <h1>Register</h1>
+        <form name="registration-form" action="/register2" method="POST">
             <table>
                 <tr>
                     <td>User:</td>
-                    <td><input type="text" name="username" value=""></td>
+                    <td><input type="text" name="username" /></td>
                 </tr>
                 <tr>
                     <td>Password:</td>
                     <td><input type="password" name="password" /></td>
                 </tr>
+
+                <tr>
+                    <td>Password confirmation:</td>
+                    <td><input type="passwordConfirmation" name="passwordConfirmation" /></td>
+                </tr>
+
+
+                <tr>
+                    <td>Email address:</td>
+                    <td><input type="email" name="email" /></td>
+                </tr>
+
+                <tr>
+                    <td>Email confirmation:</td>
+                    <td><input type="emailConfirmation" name="emailConfirmation" /></td>
+                </tr>
+
                 <tr>
                     <td><input name="submit" type="submit" value="submit" /></td>
                 </tr>

@@ -53,4 +53,8 @@ public final class Mappings {
         }
 
     }
+
+    public static class UserManagement {
+        public static final String LOGIN = "/login";
+        public static final String REGISTER = "/register";    }
 }
