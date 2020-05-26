@@ -1,10 +1,10 @@
 
+N	java:S1062"9Replace this use of System.out or System.err by a logger.(å×­Ú
 P
 java:S1118	":Add a private constructor to hide the implicit public one.(§¢ªà
-N	java:S1062"9Replace this use of System.out or System.err by a logger.(å×­Ú
-S	java:S106A"9Replace this use of System.out or System.err by a logger.(ìßÜ‰þÿÿÿÿ
-Q	java:S125"<This block of commented-out lines of code should be removed.(Ð‰òé
-Q	java:S125"<This block of commented-out lines of code should be removed.(ÅÌ„
-Q	java:S125!"<This block of commented-out lines of code should be removed.(²â¿­
-V	java:S1256"<This block of commented-out lines of code should be removed.(Õ­Ëàüÿÿÿÿ
 V	java:S125="<This block of commented-out lines of code should be removed.(ÿëÿÿÿÿÿ
+Q	java:S125!"<This block of commented-out lines of code should be removed.(²â¿­
+Q	java:S125"<This block of commented-out lines of code should be removed.(Ð‰òé
+V	java:S1256"<This block of commented-out lines of code should be removed.(Õ­Ëàüÿÿÿÿ
+S	java:S106A"9Replace this use of System.out or System.err by a logger.(ìßÜ‰þÿÿÿÿ
+Q	java:S125"<This block of commented-out lines of code should be removed.(ÅÌ„

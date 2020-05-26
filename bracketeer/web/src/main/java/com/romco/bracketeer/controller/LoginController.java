@@ -1,0 +1,50 @@
+package com.romco.bracketeer.controller;
+
+import com.romco.bracketeer.util.Mappings;
+import com.romco.bracketeer.util.ViewNames;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+
+@Slf4j
+@Controller
+public class LoginController {
+    // == fields
+
+    // == constructors
+
+    // == model attributes
+
+    // == request handlers
+    @GetMapping("/login")
+    public String login(Model model) {
+        return ViewNames.UserManagement.LOGIN;
+    }
+
+    @GetMapping("/login-error")
+    public String loginError(Model model) {
+        model.addAttribute("isLoginError", true);
+        return ViewNames.UserManagement.LOGIN;
+    }
+
+    @GetMapping(Mappings.UserManagement.REGISTER)
+    public String showRegister() {
+        log.info("in /register");
+        return ViewNames.UserManagement.REGISTER;
+    }
+
+    @PostMapping(Mappings.UserManagement.REGISTER)
+    public String register(
+                           @RequestParam(value = "username") String username,
+                           @RequestParam(value = "password") String password
+                          ) {
+        log.info("username is " + username);
+        log.info("in post register");
+        // TODO if
+        return ViewNames.UserManagement.LOGIN;
+    }
+}

@@ -13,7 +13,7 @@ left join `match` m on m.round_id = r.id
 left join match_result mr on mr.match_id = m.id
 where t.code = 'rZbvvtX7IlhHbEcvKk9n'
 and r.round_number = 2;
-where t.id = -1;
+-- where t.id = -1;
 
 INSERT INTO `bracketeer`.`tournament`
 (`id`,`code`,`name`,`type`)
@@ -69,9 +69,9 @@ INSERT INTO `bracketeer`.`match_result`
 VALUES
 (-4, -2, 2);
 
-DELETE FROM tournament where id < 0;
-DELETE FROM round where id < 0;
-DELETE FROM `match` where id < 0;
-DELETE FROM participant where id < 0;
 DELETE FROM match_result where match_id < 0;
+DELETE FROM `match` where id < 0;
+DELETE FROM round where id < 0;
+DELETE FROM participant where id < 0;
+DELETE FROM tournament where id < 0;
 
