@@ -1,27 +1,27 @@
 
-f
-java:S1128"IRemove this unused import 'javax.xml.crypto.dsig.spec.HMACParameterSpec'.(íæÕ¶8–¥ÎÌ•.
-Q
-java:S2864†"4Iterate over the "entrySet" instead of the "keySet".(Éé´!8â‹Ïà™.
-g
-java:S2095"EUse try-with-resources or close this "Scanner" in a "finally" clause.(’³Ñşÿÿÿÿ8â‹Ïà™.
-X	java:S125"<This block of commented-out lines of code should be removed.(µšñß8áÌ¡ñ .
-]	java:S1251"<This block of commented-out lines of code should be removed.(éØ»Úûÿÿÿÿ8â‹Ïà™.
-P
-java:S2864x"4Iterate over the "entrySet" instead of the "keySet".(ÓÙ»Z8â‹Ïà™.
-W
-java:S2864"4Iterate over the "entrySet" instead of the "keySet".(’Ë›úÿÿÿÿ8â‹Ïà™.
-^
-java:S1075"ARefactor your code to get this URI from a customizable parameter.(ùÿÂø8Ë’¡ñ .
 o
 java:S3776"RRefactor this method to reduce its Cognitive Complexity from 34 to the 15 allowed.(ÉûÒÕ8â‹Ïà™.
-[	java:S106Ä"9Replace this use of System.out or System.err by a logger.(åö¡½úÿÿÿÿ8Ä¤ªá™.
-R
-java:S2864˜"4Iterate over the "entrySet" instead of the "keySet".(—˜˜‹8â‹Ïà™.
-X	java:S125"<This block of commented-out lines of code should be removed.(Ñ¨’µ8äÙñ .
-^	java:S125„"<This block of commented-out lines of code should be removed.(õúİÆùÿÿÿÿ8â‹Ïà™.
-]	java:S125-"<This block of commented-out lines of code should be removed.(æÖ•äşÿÿÿÿ8â‹Ïà™.
-W
-java:S2864µ"4Iterate over the "entrySet" instead of the "keySet".(ÿÅ÷Ìşÿÿÿÿ8â‹Ïà™.
 R
 java:S2864œ"4Iterate over the "entrySet" instead of the "keySet".(¦ş¥´8â‹Ïà™.
+Q
+java:S2864†"4Iterate over the "entrySet" instead of the "keySet".(Éé´!8â‹Ïà™.
+R
+java:S2864˜"4Iterate over the "entrySet" instead of the "keySet".(—˜˜‹8â‹Ïà™.
+g
+java:S2095"EUse try-with-resources or close this "Scanner" in a "finally" clause.(’³Ñşÿÿÿÿ8â‹Ïà™.
+P
+java:S2864x"4Iterate over the "entrySet" instead of the "keySet".(ÓÙ»Z8â‹Ïà™.
+X	java:S125"<This block of commented-out lines of code should be removed.(µšñß8áÌ¡ñ .
+f
+java:S1128"IRemove this unused import 'javax.xml.crypto.dsig.spec.HMACParameterSpec'.(íæÕ¶8–¥ÎÌ•.
+]	java:S125-"<This block of commented-out lines of code should be removed.(æÖ•äşÿÿÿÿ8â‹Ïà™.
+^
+java:S1075"ARefactor your code to get this URI from a customizable parameter.(ùÿÂø8Ë’¡ñ .
+[	java:S106Ä"9Replace this use of System.out or System.err by a logger.(åö¡½úÿÿÿÿ8Ä¤ªá™.
+X	java:S125"<This block of commented-out lines of code should be removed.(Ñ¨’µ8äÙñ .
+W
+java:S2864µ"4Iterate over the "entrySet" instead of the "keySet".(ÿÅ÷Ìşÿÿÿÿ8â‹Ïà™.
+^	java:S125„"<This block of commented-out lines of code should be removed.(õúİÆùÿÿÿÿ8â‹Ïà™.
+W
+java:S2864"4Iterate over the "entrySet" instead of the "keySet".(’Ë›úÿÿÿÿ8â‹Ïà™.
+]	java:S1251"<This block of commented-out lines of code should be removed.(éØ»Úûÿÿÿÿ8â‹Ïà™.
