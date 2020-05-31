@@ -10,8 +10,8 @@ import java.util.List;
 @Slf4j
 public class MatcherHelper {
     public static boolean handleBye(List<Participant> toHandle,
-                                  Round currentRound,
-                                  int matchCount) {
+                                    Round currentRound,
+                                    int matchCount) {
         if (toHandle.size() % 2 == 1) {
             int acceptableNumberOfByes = 0;
             for (int i = toHandle.size() - 1; i >= 0; i--) {

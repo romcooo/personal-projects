@@ -1,4 +1,4 @@
 package com.romco.bracketeer.domain
 
-class User(val username: String, val password: String)
+data class User(val username: String, val passwordHash: String)
 class Role(val name: String)

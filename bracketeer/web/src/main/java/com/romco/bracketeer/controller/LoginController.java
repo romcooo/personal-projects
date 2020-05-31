@@ -27,7 +27,7 @@ public class LoginController {
     // == model attributes
     
     // == request handlers
-    @GetMapping("/login")
+    @GetMapping(Mappings.UserManagement.LOGIN)
     public String login(Model model) {
         return ViewNames.UserManagement.LOGIN;
     }
@@ -52,8 +52,10 @@ public class LoginController {
                            @RequestParam(value = "email") String email,
                            @RequestParam(value = "emailConfirmation") String emailConfirmation
                           ) {
+
         log.info("username is " + username);
         log.info("in post register");
+        userService.registerUser(username, password, email);
         // TODO if
         return ViewNames.UserManagement.LOGIN;
     }
