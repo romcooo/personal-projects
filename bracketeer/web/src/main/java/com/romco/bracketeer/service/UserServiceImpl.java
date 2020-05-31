@@ -28,6 +28,7 @@ public class UserServiceImpl implements UserService {
         log.info("in registerUser");
         String passwordHash = HashUtilKt.encodePassword(password);
         User newUser = new User(username, passwordHash);
+        // TODO add email to user and db etc.
         return userDao.create(newUser) > 0;
     }
     
