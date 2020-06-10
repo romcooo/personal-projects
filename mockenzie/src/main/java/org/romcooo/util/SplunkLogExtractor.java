@@ -41,30 +41,53 @@ import java.util.Scanner;
 
 public class SplunkLogExtractor {
     
-    public static final String SALESROOM_ENDPOINT = "https://homesis.vn00c1.vn.infra/homesis/restful/salesrooms/";
-    public static final String PARTNERS_ENDPOINT = "https://homesis.vn00c1.vn.infra/homesis/restful/partners/";
+    public static final String REQUEST_START = "<ContractFullInfoRequest xmlns=\"http://homecredit.net/homerselect/contract/v6\" xmlns:ns2=\"http://homecredit.net/homerselect/common/v1\" xmlns:ns3=\"http://homecredit.net/homerselect/contractbulk/v6\">";
+    public static final String REQUEST_END = "</ContractFullInfoRequest>";
+    
+    public static final String SALESROOM_ENDPOINT = "https://homesis.in00c1.in.infra/homesis/restful/salesrooms/";
+    public static final String PARTNERS_ENDPOINT = "https://homesis.in00c1.in.infra/homesis/restful/partners/";
     
     
     public static void main(String[] args) throws IOException, ParserConfigurationException, SAXException, XPathExpressionException, InterruptedException, ParseException, KeyStoreException, NoSuchAlgorithmException, KeyManagementException {
         // write your code here
-        File file = new File("C:\\Users\\roman.stubna\\Desktop\\exports\\vn prod 4h only v6.txt");
+        File file = new File("C:\\Users\\roman.stubna\\Desktop\\exports\\export_in_2_older.txt");
         Scanner reader = new Scanner(file);
         
-        PrintWriter writer = new PrintWriter("C:\\Users\\roman.stubna\\Desktop\\exports\\output_java.txt");
+        PrintWriter writer = new PrintWriter("C:\\Users\\roman.stubna\\Desktop\\exports\\output_java_in_2_2.txt");
         
         int counter = 0;
-        int maxRows = 60;
+        int maxRows = 6000;
         
         while (reader.hasNextLine() && counter < maxRows) {
-            counter++;
-            
+    
+            String line = reader.nextLine();
+            if (!line.contains(REQUEST_START) || !line.contains(REQUEST_END)) {
+                continue;
+            }
+    
             StringBuilder sb = new StringBuilder();
             sb.append("=================\n");
-            System.out.println("=================");
-            String line = reader.nextLine();
+    
+            counter++;
+            boolean initPrintOut = (counter == 1);
+            
+            if (initPrintOut) {
+                System.out.println("=================");
+            }
+            
+            
+            int start = line.indexOf(REQUEST_START);
+            int end = line.indexOf(REQUEST_END) + REQUEST_END.length();
+            
+            String request = line.substring(start, end);
+    
+            if (initPrintOut) {
+                System.out.println(request);
+            }
+            
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = factory.newDocumentBuilder();
-            Document document = builder.parse(new InputSource(new StringReader(line)));
+            Document document = builder.parse(new InputSource(new StringReader(request)));
             Element root = document.getDocumentElement();
             
             Map<String, String> vals = new HashMap<String, String>();
@@ -137,13 +160,15 @@ public class SplunkLogExtractor {
             
             if (srDetailResponse.getStatusLine().getStatusCode() == 200) {
                 String respString = EntityUtils.toString(srDetailResponse.getEntity());
-                System.out.println("Salesroom response: " + respString);
+                if (initPrintOut) {
+                    System.out.println("Salesroom response: " + respString);
+                }
                 JSONParser jsonParser = new JSONParser();
                 JSONObject jsonObject = (JSONObject) jsonParser.parse(respString);
                 String salesroomName = (String) jsonObject.get("name");
                 String partnerCode = (String) jsonObject.get("partnerCode");
-                String salesroomGpsLatitude = (String) jsonObject.get("gpsLatitude");
-                String salesroomGpsLongitude = (String) jsonObject.get("gpsLongtitude");
+                String salesroomGpsLatitude = (String) jsonObject.get("gpsLatitude").toString();
+                String salesroomGpsLongitude = (String) jsonObject.get("gpsLongtitude").toString();
                 vals.put("salesroom.name", salesroomName);
                 vals.put("salesroom.partnerCode", partnerCode);
                 vals.put("salesroom.gpsLatitude", salesroomGpsLatitude);
@@ -163,7 +188,9 @@ public class SplunkLogExtractor {
             
             if (addressResponse.getStatusLine().getStatusCode() == 200) {
                 String respString = EntityUtils.toString(addressResponse.getEntity());
-                System.out.println("Address response: " + respString);
+                if (initPrintOut) {
+                    System.out.println("Address response: " + respString);
+                }
                 vals.put("salesroom.addressInfo", respString);
                 
             }
@@ -181,7 +208,9 @@ public class SplunkLogExtractor {
                 
                 if (partnerResponse.getStatusLine().getStatusCode() == 200) {
                     String respString = EntityUtils.toString(partnerResponse.getEntity());
-                    System.out.println("Partner response: " + respString);
+                    if (initPrintOut) {
+                        System.out.println("Partner response: " + respString);
+                    }
                     JSONParser jsonParser = new JSONParser();
                     JSONObject jsonObject = (JSONObject) jsonParser.parse(respString);
                     vals.put("salesroom.partnerName", (String) jsonObject.get("name"));
@@ -224,14 +253,19 @@ public class SplunkLogExtractor {
                       .append(" = ")
                       .append(vals.get(key))
                       .append("\n" );
-                    
-                    System.out.println(key + " : " + vals.get(key));
+    
+                    if (initPrintOut) {
+                        System.out.println(key + " : " + vals.get(key));
+                    }
                 }
                 writer.println(sb.toString());
             }
             
+            if (counter % 10 == 0) {
+                System.out.println("at: " + counter);
+            }
+            
         }
-        
         
         writer.close();
         

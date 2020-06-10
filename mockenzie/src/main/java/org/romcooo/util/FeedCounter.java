@@ -16,7 +16,7 @@ public class FeedCounter {
     
     public static void main(String[] args) throws FileNotFoundException, ParseException {
 //        File file = new File("C:\\Users\\roman.stubna\\Desktop\\exports\\output_java_w_address_extended_backup.txt");
-        File file = new File("C:\\Users\\roman.stubna\\Desktop\\exports\\output_java.txt");
+        File file = new File("C:\\Users\\roman.stubna\\Desktop\\exports\\output_java_in_2.txt");
         Scanner reader = new Scanner(file);
     
 //        PrintWriter writer = new PrintWriter("C:\\Users\\roman.stubna\\Desktop\\output_producer_distrib.txt");
@@ -101,16 +101,17 @@ public class FeedCounter {
             salesroomInfo.put("partnerCode", request.get("salesroom.partnerCode"));
             salesroomInfo.put("partnerName", request.get("salesroom.partnerName"));
     
-            JSONParser jsonParser = new JSONParser();
-            JSONObject jsonObject = (JSONObject) jsonParser.parse(request.get("salesroom.addressInfo"));
-            
-            salesroomInfo.put("countryCode", (String) jsonObject.get("countryCode"));
-            salesroomInfo.put("districtCode", (String) jsonObject.get("districtCode"));
-            salesroomInfo.put("houseNumber", (String) jsonObject.get("houseNumber"));
-            salesroomInfo.put("regionCode", (String) jsonObject.get("regionCode"));
-            salesroomInfo.put("addressType", (String) jsonObject.get("addressType"));
-            salesroomInfo.put("street", (String) jsonObject.get("street"));
-            salesroomInfo.put("town", (String) jsonObject.get("town"));
+            if (request.get("salesroom.addressInfo") != null) {JSONParser jsonParser = new JSONParser();
+                JSONObject
+                jsonObject = (JSONObject) jsonParser.parse(request.get("salesroom.addressInfo"));
+                salesroomInfo.put("countryCode", (String) jsonObject.get("countryCode"));
+                salesroomInfo.put("districtCode", (String) jsonObject.get("districtCode"));
+                salesroomInfo.put("houseNumber", (String) jsonObject.get("houseNumber"));
+                salesroomInfo.put("regionCode", (String) jsonObject.get("regionCode"));
+                salesroomInfo.put("addressType", (String) jsonObject.get("addressType"));
+                salesroomInfo.put("street", (String) jsonObject.get("street"));
+                salesroomInfo.put("town", (String) jsonObject.get("town"));
+            }
     
             salesroomList.add(salesroomInfo);
         }
