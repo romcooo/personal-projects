@@ -1,48 +1,49 @@
 
-O
-java:S1135q"2Complete the task associated to this TODO comment.(İ°şÆ8Ü¥—ì©.
-{
-java:S2293U"YReplace the type specification in this constructor call with the diamond operator ("<>").(£…ó€üÿÿÿÿ8Ü¥—ì©.
-R
-java:S2864í"4Iterate over the "entrySet" instead of the "keySet".(‡ñ¯»8Ü¥—ì©.
-f
-java:S2259ì"HA "NullPointerException" could be thrown; "getString()" can return null.(äÏ€Ï8Ü¥—ì©.
 i
-java:S1192“"KDefine a constant instead of duplicating this literal "User-Agent" 3 times.(¥âÕ»8Á¶Ãñ .
+java:S1192›"KDefine a constant instead of duplicating this literal "User-Agent" 3 times.(¥âÕ»8Á¶Ãñ .
 o
-java:S37763"RRefactor this method to reduce its Cognitive Complexity from 24 to the 15 allowed.(Æ¢†¼8…›¾ñ .
+java:S37763"RRefactor this method to reduce its Cognitive Complexity from 44 to the 15 allowed.(Æ¢†¼8…›¾ñ .
+j
+java:S1192"GDefine a constant instead of duplicating this literal "Accept" 3 times.(“†Ü¯ùÿÿÿÿ8Ü¥—ì©.
+u
+java:S1192›"WDefine a constant instead of duplicating this literal "Java 11 HttpClient Bot" 3 times.(¥âÕ»8Á¶Ãñ .
+[	java:S106‰"9Replace this use of System.out or System.err by a logger.(¹ ·“ûÿÿÿÿ8øÁ–ñ©.
+^	java:S125ğ"<This block of commented-out lines of code should be removed.(™ÉßĞùÿÿÿÿ8Ü¥—ì©.
 g
 java:S20956"EUse try-with-resources or close this "Scanner" in a "finally" clause.(’³Ñşÿÿÿÿ8ÅÄäğ .
-T	java:S106B"9Replace this use of System.out or System.err by a logger.(²ÏË8ÅÄäğ .
-G
-java:S1905 ")Remove this unnecessary cast to "String".(ÜêÇÛ8™Ÿåì©.
-^	java:S125à"<This block of commented-out lines of code should be removed.(½îçÛûÿÿÿÿ8Ü¥—ì©.
-V	java:S106µ"9Replace this use of System.out or System.err by a logger.(Ì—ËÊ8Ü¥—ì©.
-e
-java:S1192”"GDefine a constant instead of duplicating this literal "Basic " 3 times.(‚Ñ¤ì8Ü¥—ì©.
-^	java:S125Ğ"<This block of commented-out lines of code should be removed.(àòÓêıÿÿÿÿ8Ü¥—ì©.
-V	java:S106ó"9Replace this use of System.out or System.err by a logger.(Ç“¼8Ü¥—ì©.
-j
-java:S1192•"GDefine a constant instead of duplicating this literal "Accept" 3 times.(“†Ü¯ùÿÿÿÿ8Ü¥—ì©.
-^
-java:S10755"ARefactor your code to get this URI from a customizable parameter.(Şö›¥8ÅÄäğ .
-u
-java:S1192“"WDefine a constant instead of duplicating this literal "Java 11 HttpClient Bot" 3 times.(¥âÕ»8Á¶Ãñ .
-f
-java:S20958"IUse try-with-resources or close this "PrintWriter" in a "finally" clause.(šš§°8ÅÄäğ .
-[	java:S106›"9Replace this use of System.out or System.err by a logger.(¾Ù¯¬ıÿÿÿÿ8Ü¥—ì©.
-V	java:S106Ç"9Replace this use of System.out or System.err by a logger.(àèİ£8Ü¥—ì©.
-”
-java:S11303"wRemove the declaration of thrown exception 'java.lang.InterruptedException', as it cannot be thrown from method's body.(Æ¢†¼8«ä”ì©.
-Z	java:S106N"9Replace this use of System.out or System.err by a logger.(¶®éÓøÿÿÿÿ8Í·±ì©.
-]	java:S125r"<This block of commented-out lines of code should be removed.(‚ò—¼ÿÿÿÿÿ8Ü¥—ì©.
-l
-java:S1192”"NDefine a constant instead of duplicating this literal "Authorization" 3 times.(‚Ñ¤ì8Á¶Ãñ .
-^	java:S125â"<This block of commented-out lines of code should be removed.(™ÉßĞùÿÿÿÿ8Ü¥—ì©.
-^	java:S125Ö"<This block of commented-out lines of code should be removed.(à’¼Ôúÿÿÿÿ8Ü¥—ì©.
-^	java:S125ç"<This block of commented-out lines of code should be removed.(éØ»Úûÿÿÿÿ8Ü¥—ì©.
-^	java:S125Ú"<This block of commented-out lines of code should be removed.(›êµ”øÿÿÿÿ8Ü¥—ì©.
+c
+java:S10755"ARefactor your code to get this URI from a customizable parameter.(Šº˜‹ùÿÿÿÿ8ÅÄäğ .
 P
-java:S2755P"3Disable access to external entities in XML parsing.(ğ¨ºî8Ü¥—ì©.
+java:S2755X"3Disable access to external entities in XML parsing.(ğ¨ºî8Ü¥—ì©.
+^	java:S125è"<This block of commented-out lines of code should be removed.(›êµ”øÿÿÿÿ8Ü¥—ì©.
+e
+java:S1192œ"GDefine a constant instead of duplicating this literal "Basic " 3 times.(‚Ñ¤ì8Ü¥—ì©.
+[	java:S106¤"9Replace this use of System.out or System.err by a logger.(¾Ù¯¬ıÿÿÿÿ8Ü¥—ì©.
+R
+java:S2864û"4Iterate over the "entrySet" instead of the "keySet".(‡ñ¯»8Ü¥—ì©.
+]	java:S125z"<This block of commented-out lines of code should be removed.(‚ò—¼ÿÿÿÿÿ8Ü¥—ì©.
 G
-java:S1905¡")Remove this unnecessary cast to "String".(÷Ãª“8¶¾åì©.
+java:S1905ª")Remove this unnecessary cast to "String".(ÜêÇÛ8™Ÿåì©.
+^	java:S125Ş"<This block of commented-out lines of code should be removed.(àòÓêıÿÿÿÿ8Ü¥—ì©.
+Z	java:S106U"9Replace this use of System.out or System.err by a logger.(¶®éÓøÿÿÿÿ8Í·±ì©.
+l
+java:S1192œ"NDefine a constant instead of duplicating this literal "Authorization" 3 times.(‚Ñ¤ì8Á¶Ãñ .
+V	java:S106‚"9Replace this use of System.out or System.err by a logger.(Ç“¼8Ü¥—ì©.
+T	java:S106K"9Replace this use of System.out or System.err by a logger.(²ÏË8Â‹¢ñ©.
+{
+java:S2293]"YReplace the type specification in this constructor call with the diamond operator ("<>").(£…ó€üÿÿÿÿ8Ü¥—ì©.
+V	java:S106À"9Replace this use of System.out or System.err by a logger.(Ì—ËÊ8Ü¥—ì©.
+^	java:S125î"<This block of commented-out lines of code should be removed.(½îçÛûÿÿÿÿ8Ü¥—ì©.
+V	java:S106Ô"9Replace this use of System.out or System.err by a logger.(àèİ£8Ü¥—ì©.
+f
+java:S2259ú"HA "NullPointerException" could be thrown; "getString()" can return null.(äÏ€Ï8Ü¥—ì©.
+O
+java:S1135y"2Complete the task associated to this TODO comment.(İ°şÆ8Ü¥—ì©.
+G
+java:S1905«")Remove this unnecessary cast to "String".(÷Ãª“8¶¾åì©.
+^	java:S125ä"<This block of commented-out lines of code should be removed.(à’¼Ôúÿÿÿÿ8Ü¥—ì©.
+k
+java:S20958"IUse try-with-resources or close this "PrintWriter" in a "finally" clause.(Ä›Ï°ûÿÿÿÿ8ÅÄäğ .
+”
+java:S11303"wRemove the declaration of thrown exception 'java.lang.InterruptedException', as it cannot be thrown from method's body.(Æ¢†¼8Â‹¢ñ©.
+^	java:S125õ"<This block of commented-out lines of code should be removed.(éØ»Úûÿÿÿÿ8Ü¥—ì©.

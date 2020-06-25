@@ -49,7 +49,6 @@ public class SplunkLogExtractor {
     
     
     public static void main(String[] args) throws IOException, ParserConfigurationException, SAXException, XPathExpressionException, InterruptedException, ParseException, KeyStoreException, NoSuchAlgorithmException, KeyManagementException {
-        // write your code here
         File file = new File("C:\\Users\\roman.stubna\\Desktop\\exports\\export_in_2_older.txt");
         Scanner reader = new Scanner(file);
         
@@ -58,7 +57,7 @@ public class SplunkLogExtractor {
         int counter = 0;
         int maxRows = 6000;
         
-        while (reader.hasNextLine() && counter < maxRows) {
+        while (reader.hasNextLine() && (counter < maxRows || maxRows == -1)) {
     
             String line = reader.nextLine();
             if (!line.contains(REQUEST_START) || !line.contains(REQUEST_END)) {
