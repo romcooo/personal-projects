@@ -6,6 +6,6 @@ import com.romco.bracketeer.domain.tournament.Round;
 import java.util.List;
 
 public interface Matcher {
-    Round generateRound(List<Participant> participant, SortMode mode);
+    Round generateRound(List<Participant> participants, SortMode mode);
     int getMaxNumberOfRounds(int numberOfParticipants);
 }

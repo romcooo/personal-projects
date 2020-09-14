@@ -9,6 +9,10 @@ import java.util.List;
 
 @Slf4j
 public class MatcherHelper {
+
+    private MatcherHelper() {
+    }
+
     public static boolean handleBye(List<Participant> toHandle,
                                     Round currentRound,
                                     int matchCount) {
@@ -19,7 +23,7 @@ public class MatcherHelper {
                 if (participant.getNumberOfByes() <= acceptableNumberOfByes) {
                     // create the bye match, then remove the participant
                     log.info("assigning bye to participant {}", participant);
-            
+
                     Match match = new Match(participant);
                     match.setMatchNumber(matchCount);
                     match.setOfRound(currentRound);
