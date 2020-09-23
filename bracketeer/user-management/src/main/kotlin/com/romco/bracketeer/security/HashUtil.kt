@@ -1,11 +1,14 @@
 package com.romco.bracketeer.security
 
+import com.romco.bracketeer.domain.User
+import com.romco.bracketeer.persistence.daoimpl.UserDaoImpl
 import com.romco.bracketeer.util.logger
 import com.sun.tools.javac.Main
 import lombok.extern.slf4j.Slf4j
 import org.springframework.security.crypto.factory.PasswordEncoderFactories
 import org.springframework.security.crypto.password.PasswordEncoder
 import java.security.spec.KeySpec
+import java.time.LocalDateTime
 import java.util.*
 import javax.crypto.SecretKeyFactory
 import javax.crypto.spec.PBEKeySpec
@@ -16,6 +19,7 @@ const val ID = "$31$"
 const val DEFAULT_COST = 16
 const val ALGORITHM = "PBKDF2WithHmacSHA512"
 
+//TODO this method can be removed
 fun hashPassword(password: String): Password {
     val salt = ByteArray(16)
     Random.nextBytes(salt)
@@ -35,6 +39,11 @@ fun encodePassword(password: String): String? {
     return hash
 }
 
+fun verifyUser(user: User, password: String): Boolean {
+    val passwordEncoder: PasswordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder()
+    return passwordEncoder.matches(password, user.passwordHash)
+}
+
 
 fun main() {
     val passwordEncoder: PasswordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder()
@@ -43,4 +52,9 @@ fun main() {
     println("password = $password, hashed = $hashed")
     val doesMatch = passwordEncoder.matches(password, hashed)
     println(doesMatch)
+
+    val userDaoImpl = UserDaoImpl()
+    userDaoImpl.create(User("bracketeer", encodePassword("bracketeer").orEmpty(), Date()))
+    val user = userDaoImpl.retrieveByUsername("bracketeer")
+    println(user.toString())
 }

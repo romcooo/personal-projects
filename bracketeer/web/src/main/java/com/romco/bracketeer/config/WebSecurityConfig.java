@@ -25,4 +25,9 @@ class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //                .logout()
 //                .permitAll()
     }
+    
+    // TODO?
+    public void authorize() {
+    
+    }
 }

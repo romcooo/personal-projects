@@ -26,7 +26,7 @@ open class UserDaoImpl: UserDao {
     private val SCHEMA = "bracketeer_um"
     private val TABLE_NAME = "$SCHEMA.user"
     private val SELECT_ALL_WHERE = "SELECT id, username, password_hash FROM $TABLE_NAME WHERE"
-    private val INSERT = "INSERT INTO $TABLE_NAME (username, password_hash, created_date) VALUES"
+    private val INSERT = "INSERT INTO $TABLE_NAME (username, password_hash, last_update_date) VALUES"
     private val UPDATE = "UPDATE $TABLE_NAME SET"
 
     private lateinit var namedParameterJdbcTemplate: NamedParameterJdbcTemplate
@@ -50,11 +50,11 @@ open class UserDaoImpl: UserDao {
     }
 
     override fun create(user: User): Long {
-        val sqlQuery = "$INSERT (:username, :passwordHash, :createdDate)"
+        val sqlQuery = "$INSERT (:username, :passwordHash, :lastUpdateDate)"
         val source = MapSqlParameterSource()
                 .addValue("username", user.username)
                 .addValue("passwordHash", user.passwordHash)
-                .addValue("createdDate", LocalDateTime.now())
+                .addValue("lastUpdateDate", LocalDateTime.now())
         val keyHolder = GeneratedKeyHolder()
         log.info("creating user in database: $user")
         return if (namedParameterJdbcTemplate.update(sqlQuery, source, keyHolder) == 1) {

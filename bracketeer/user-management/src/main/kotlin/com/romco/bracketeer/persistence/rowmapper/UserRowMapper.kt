@@ -6,7 +6,8 @@ import java.sql.ResultSet
 
 class UserRowMapper : RowMapper<User> {
     override fun mapRow(rs: ResultSet, rowNum: Int): User? {
-        val user = User(rs.getString("username"), rs.getString("password_hash"))
-        return user
+        return User(rs.getString("username"),
+                    rs.getString("password_hash"),
+                    rs.getDate("last_update_date"))
     }
 }

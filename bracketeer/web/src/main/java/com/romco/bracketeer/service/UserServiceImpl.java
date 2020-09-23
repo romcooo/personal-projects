@@ -8,6 +8,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
+
 @Slf4j
 @Service
 public class UserServiceImpl implements UserService {
@@ -27,16 +29,21 @@ public class UserServiceImpl implements UserService {
                                 @NonNull String email) {
         log.info("in registerUser");
         String passwordHash = HashUtilKt.encodePassword(password);
-        User newUser = new User(username, passwordHash);
+        User newUser = new User(username, passwordHash, new Date());
+        log.info(newUser.toString());
         // TODO add email to user and db etc.
         return userDao.create(newUser) > 0;
     }
     
     public boolean loginUser(String username,
                              String password) {
-        // TODO
-
-        return false;
+        // TODO ?
+        User user = userDao.retrieveByUsername(username);
+        if (user == null) {
+            return false;
+        }
+        
+        return HashUtilKt.verifyUser(user, password);
     }
     
 }
