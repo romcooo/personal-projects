@@ -22,6 +22,13 @@
         - Double Elim
         - Round Robin????? (pointless?)
 
+- As a participant, I want to:
+    - be able to join a tournament using some unique identifier
+        (code, link, ...)
+    - be able to enter my own round results and view my standings
+        after individual rounds
+    
+
 ## Web Functionality
 
 TODO

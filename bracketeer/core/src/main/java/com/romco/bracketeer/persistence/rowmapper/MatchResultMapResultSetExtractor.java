@@ -13,7 +13,7 @@ import java.util.Map;
 @Slf4j
 public class MatchResultMapResultSetExtractor implements ResultSetExtractor<Map<MatchResult, Long>> {
     @Override
-    public Map<MatchResult, Long> extractData(ResultSet rs) throws SQLException, DataAccessException {
+    public Map<MatchResult, Long> extractData(ResultSet rs) throws SQLException {
         HashMap<MatchResult, Long> resultMap = new HashMap<>();
         while (rs.next()) {
             log.debug("In extractData per row: resultSet, statement: {}, games_won: {}, participant_id: {}",
