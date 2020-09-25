@@ -6,7 +6,7 @@ data class User(var id: Long? = -1,
                 var username: String,
                 var passwordHash: String,
                 var lastUpdateDate: Date,
-                var roles: Collection<Role>? = listOf()) {
+                var roles: Collection<Role>? = emptyList()) {
 
     // required for proper java interoperability
     constructor(username: String, passwordHash: String, lastUpdateDate: Date) {
@@ -18,11 +18,20 @@ data class User(var id: Long? = -1,
 
 class Role(var id: Long = -1,
            var name: String,
-           var privileges: Collection<Privilege>,
-           var ofUsers: Collection<User> = listOf()) {
+           var privileges: Collection<Privilege> = emptyList(),
+           var ofUsers: Collection<User> = emptyList()) {
+
+    constructor(name: String) {
+        Role(name)
+    }
 
 }
 
 class Privilege(var id: Long = 1,
                 var name: String,
-                var ofRoles: Collection<Role> = listOf())
+                var ofRoles: Collection<Role> = emptyList()) {
+
+    constructor(name: String){
+        Privilege(name)
+    }
+}

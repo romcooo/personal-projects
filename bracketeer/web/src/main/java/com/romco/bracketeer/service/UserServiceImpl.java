@@ -21,6 +21,7 @@ public class UserServiceImpl implements UserService {
     // == constructors
     @Autowired
     public UserServiceImpl() {
+        // autowired empty constructor
     }
     
     // == methods
@@ -32,6 +33,7 @@ public class UserServiceImpl implements UserService {
         User newUser = new User(username, passwordHash, new Date());
         log.info(newUser.toString());
         // TODO add email to user and db etc.
+        // TODO also take care of storing the appropriate roles in a many-to-many way here!
         return userDao.create(newUser) > 0;
     }
     

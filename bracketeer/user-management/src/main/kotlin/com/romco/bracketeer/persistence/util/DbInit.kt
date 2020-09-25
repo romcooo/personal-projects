@@ -1,5 +1,7 @@
 package com.romco.bracketeer.persistence.util
 
+import com.romco.bracketeer.persistence.dao.PrivilegeDao
+import com.romco.bracketeer.persistence.dao.RoleDao
 import com.romco.bracketeer.persistence.dao.UserDao
 import com.romco.bracketeer.util.logger
 import lombok.extern.slf4j.Slf4j
@@ -17,10 +19,21 @@ open class DbInit {
     @Autowired
     lateinit var userDao: UserDao
 
+    @Autowired
+    lateinit var roleDao: RoleDao
+
+    @Autowired
+    lateinit var privilegeDao: PrivilegeDao
+
     @PostConstruct
     fun initialize() {
         userDao.cleanup()
         log.info("in init userDao")
     }
+
+    fun initDbSetup() {
+
+    }
+
 }
 

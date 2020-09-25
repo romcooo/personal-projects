@@ -38,6 +38,7 @@ public class TournamentServiceImpl implements TournamentService {
     // == constructors
     @Autowired
     public TournamentServiceImpl() {
+        // autowired empty constructor
     }
     
     // == methods
