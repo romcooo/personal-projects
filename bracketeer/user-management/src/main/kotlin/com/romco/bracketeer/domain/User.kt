@@ -2,15 +2,25 @@ package com.romco.bracketeer.domain
 
 import java.util.*
 
-data class User(var id: Long? = -1,
+// TODO changed structure, this class needs to be aligned
+
+data class User(var id: Long = -1,
                 var username: String,
                 var passwordHash: String,
-                var lastUpdateDate: Date,
+                var lastUpdateDate: Date?,
                 var roles: Collection<Role>? = emptyList()) {
 
     // required for proper java interoperability
-    constructor(username: String, passwordHash: String, lastUpdateDate: Date) {
-        User(username, passwordHash, lastUpdateDate)
+    constructor(username: String, passwordHash: String, lastUpdateDate: Date):
+            this() {
+        this.username = username
+        this.passwordHash = passwordHash
+        this.lastUpdateDate = lastUpdateDate
+    }
+
+    // TODO solve it better, this is really ugly (needed because of compiler complaints and java interop)
+    private constructor() {
+        User(-1, "", "", Date(), emptyList())
     }
 }
 

@@ -1,6 +1,8 @@
 package com.romco.bracketeer.service;
 
+import com.romco.bracketeer.domain.Role;
 import com.romco.bracketeer.domain.User;
+import com.romco.bracketeer.persistence.dao.RoleDao;
 import com.romco.bracketeer.persistence.dao.UserDao;
 import com.romco.bracketeer.security.HashUtilKt;
 import lombok.NonNull;
@@ -8,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.util.Date;
 
 @Slf4j
@@ -17,6 +20,9 @@ public class UserServiceImpl implements UserService {
     // == DAO
     @Autowired
     UserDao userDao;
+
+    @Autowired
+    RoleDao roleDao;
 
     // == constructors
     @Autowired
@@ -44,6 +50,9 @@ public class UserServiceImpl implements UserService {
         if (user == null) {
             return false;
         }
+
+        Collection<Role> roles = roleDao.retrieveByUser(user.getId());
+        log.info(roles.toString());
         
         return HashUtilKt.verifyUser(user, password);
     }

@@ -47,7 +47,7 @@ fun verifyUser(user: User, password: String): Boolean {
 
 fun main() {
     val passwordEncoder: PasswordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder()
-    val password = "qwe"
+    val password = "bracketeer"
     val hashed = passwordEncoder.encode(password)
     println("password = $password, hashed = $hashed")
     val doesMatch = passwordEncoder.matches(password, hashed)

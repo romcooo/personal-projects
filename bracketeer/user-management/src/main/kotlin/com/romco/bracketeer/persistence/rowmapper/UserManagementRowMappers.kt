@@ -1,5 +1,6 @@
 package com.romco.bracketeer.persistence.rowmapper
 
+import com.romco.bracketeer.domain.Role
 import com.romco.bracketeer.domain.User
 import org.springframework.jdbc.core.RowMapper
 import java.sql.ResultSet
@@ -10,5 +11,12 @@ class UserRowMapper : RowMapper<User> {
                     rs.getString("username"),
                     rs.getString("password_hash"),
                     rs.getDate("last_update_date"))
+    }
+}
+
+class RoleRowMapper : RowMapper<Role> {
+    override fun mapRow(rs: ResultSet, rowNum: Int): Role? {
+        return Role(rs.getLong("id"),
+                    rs.getString("name"))
     }
 }

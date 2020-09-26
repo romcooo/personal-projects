@@ -3,8 +3,8 @@ package com.romco.bracketeer.persistence.daoimpl
 import com.romco.bracketeer.domain.User
 import com.romco.bracketeer.persistence.dao.UserDao
 import com.romco.bracketeer.persistence.rowmapper.UserRowMapper
+import com.romco.bracketeer.persistence.util.Constants
 import com.romco.bracketeer.util.logger
-import lombok.extern.slf4j.Slf4j
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate
@@ -13,7 +13,6 @@ import org.springframework.stereotype.Repository
 import java.time.LocalDateTime
 import javax.sql.DataSource
 
-@Slf4j
 @Repository
 open class UserDaoImpl: UserDao {
 
@@ -23,8 +22,7 @@ open class UserDaoImpl: UserDao {
     private val passwordHashCol = "password_hash"
     private val createdDateCol = "created_date"
 
-    private val SCHEMA = "bracketeer_um"
-    private val TABLE_NAME = "$SCHEMA.user"
+    private val TABLE_NAME = "${Constants.UM_SCHEMA}.user"
     private val SELECT_ALL_WHERE = "SELECT id, username, password_hash FROM $TABLE_NAME WHERE"
     private val INSERT = "INSERT INTO $TABLE_NAME (username, password_hash, last_update_date) VALUES"
     private val UPDATE = "UPDATE $TABLE_NAME SET"
@@ -43,7 +41,6 @@ open class UserDaoImpl: UserDao {
     override fun retrieveByUsername(username: String): User? {
         val sqlQuery = "$SELECT_ALL_WHERE username = :username"
         val source = MapSqlParameterSource("username", username)
-        val keyHolder = GeneratedKeyHolder()
         val user = namedParameterJdbcTemplate.queryForObject(sqlQuery, source, UserRowMapper())
         log.info("retrieved user $user")
         return user
