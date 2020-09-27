@@ -297,6 +297,22 @@ public class TournamentImpl implements Tournament {
         return opponents;
     }
 
+    public List<Match> getParticipantMatches(Participant participant) {
+        return getParticipantMatchesForAfterRound(participant, rounds.size());
+    }
+
+    public List<Match> getParticipantMatchesForAfterRound(Participant participant, int roundNumber) {
+        List<Match> matches = new ArrayList<>();
+        log.debug("Getting matches of participant {}", participant);
+        for (Round round : rounds) {
+            if (round.getRoundNumber() > roundNumber) {
+                continue;
+            }
+            matches.add(round.getMatchByParticipant(participant));
+        }
+        return matches;
+    }
+
 
     // == private methods
     private void updateParticipants() {
@@ -304,6 +320,7 @@ public class TournamentImpl implements Tournament {
             participant.setScore(getParticipantScore(participant));
             participant.setNumberOfByes(getParticipantByes(participant));
             participant.setPlayedAgainst(getParticipantPlayedAgainst(participant));
+            participant.setPlayedMatches(getParticipantMatches(participant));
         }
     }
     private void updateParticipantsForAfterRound(int roundNumber) {
@@ -311,6 +328,7 @@ public class TournamentImpl implements Tournament {
             participant.setScore(getParticipantScoreAfterRound(participant, roundNumber));
             participant.setNumberOfByes(getParticipantByesAfterRound(participant, roundNumber));
             participant.setPlayedAgainst(getParticipantPlayedAgainstForAfterRound(participant, roundNumber));
+            participant.setPlayedMatches(getParticipantMatchesForAfterRound(participant, roundNumber));
         }
     }
     private void reconcileParticipantCodes() {
@@ -412,7 +430,8 @@ public class TournamentImpl implements Tournament {
                     continue;
                 }
 
-                if (round.getMatchByParticipant(participant) != null && round.getMatchByParticipant(participant).isBye()) {
+                if (round.getMatchByParticipant(participant) != null
+                        && round.getMatchByParticipant(participant).isBye()) {
                     byes++;
                 }
             }

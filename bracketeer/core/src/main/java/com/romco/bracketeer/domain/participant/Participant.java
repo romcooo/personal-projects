@@ -2,6 +2,7 @@ package com.romco.bracketeer.domain.participant;
 
 
 import com.romco.bracketeer.domain.tournament.Match;
+import com.romco.bracketeer.domain.tournament.MatchResultEnum;
 import com.romco.bracketeer.domain.tournament.Tournament;
 
 import java.util.ArrayList;
@@ -96,6 +97,14 @@ public class Participant implements Comparable<Participant> {
     public void addPlayedMatch(Match match) {
         this.playedMatches.add(match);
     }
+
+    public List<Match> getPlayedMatches() {
+        return new ArrayList<>(playedMatches);
+    }
+
+    public void setPlayedMatches(List<Match> matches) {
+        this.playedMatches = new ArrayList<>(matches);
+    }
     
     public Tournament getOfTournament() {
         return ofTournament;
@@ -104,7 +113,26 @@ public class Participant implements Comparable<Participant> {
     public void setOfTournament(Tournament ofTournament) {
         this.ofTournament = ofTournament;
     }
-    
+
+    // replaced by generic below, remove later if the generic method proves as usable
+//    public long getNumberOfWins() {
+//        return playedMatches
+//                .stream()
+//                .filter(it -> it.getMatchResult(this) == MatchResultEnum.WIN)
+//                .count();
+//    }
+
+    public long getNumberOfMatchesWithResult(MatchResultEnum resultType) {
+        return playedMatches
+                .stream()
+                .filter(it -> it.getMatchResult(this) == resultType)
+                .count();
+    }
+
+    public long getNumberOfMatchesWithResult(String resultType) {
+        return getNumberOfMatchesWithResult(MatchResultEnum.valueOf(resultType));
+    }
+
     @Override
     public int compareTo(Participant o) {
         return Long.compare(id, o.id);
