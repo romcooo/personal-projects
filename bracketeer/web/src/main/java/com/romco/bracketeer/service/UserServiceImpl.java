@@ -36,7 +36,7 @@ public class UserServiceImpl implements UserService {
                                 @NonNull String email) {
         log.info("in registerUser");
         String passwordHash = HashUtilKt.encodePassword(password);
-        User newUser = new User(username, passwordHash, new Date());
+        User newUser =  User.Companion.buildUser(username, passwordHash, new Date());
         log.info(newUser.toString());
         // TODO add email to user and db etc.
         // TODO also take care of storing the appropriate roles in a many-to-many way here!

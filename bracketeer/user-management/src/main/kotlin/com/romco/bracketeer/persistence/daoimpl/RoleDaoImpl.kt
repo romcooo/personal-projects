@@ -28,17 +28,17 @@ open class RoleDaoImpl: RoleDao {
     private lateinit var namedParameterJdbcTemplate: NamedParameterJdbcTemplate
 
 
-    @Autowired
-    override fun setDataSource(dataSource: DataSource) {
-        namedParameterJdbcTemplate = NamedParameterJdbcTemplate(dataSource)
-    }
-
     override fun retrieveByUser(userId: Long): Collection<Role> {
         val sqlQuery = "$SELECT_ALL_WHERE id IN (${User2RoleDaoUtil.SELECT_ROLE_BY_USER})"
         val source = MapSqlParameterSource("user_id", userId)
         val roles: List<Role> = namedParameterJdbcTemplate.query(sqlQuery, source, RoleRowMapper())
         log.info("retrieved roles: $roles")
         return roles
+    }
+
+    @Autowired
+    override fun setDataSource(dataSource: DataSource) {
+        namedParameterJdbcTemplate = NamedParameterJdbcTemplate(dataSource)
     }
 
     override fun retrieveAll(): Collection<Role> {

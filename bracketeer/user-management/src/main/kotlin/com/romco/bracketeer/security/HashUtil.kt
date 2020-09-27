@@ -54,7 +54,9 @@ fun main() {
     println(doesMatch)
 
     val userDaoImpl = UserDaoImpl()
-    userDaoImpl.create(User("bracketeer", encodePassword("bracketeer").orEmpty(), Date()))
+    userDaoImpl.create(User(username = "bracketeer",
+                            passwordHash =  encodePassword("bracketeer").orEmpty(),
+                            lastUpdateDate = Date()))
     val user = userDaoImpl.retrieveByUsername("bracketeer")
     println(user.toString())
 }
