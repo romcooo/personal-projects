@@ -44,6 +44,8 @@ public final class Mappings {
             public static final String GENERATE = BASE + "/generate";
             public static final String STANDINGS = WITH_NUMBER + "/standings";
 
+            public static final String SAVE_ALL_RESULTS = WITH_NUMBER + "/results/save";
+
             public static class Match {
                 public static final String BASE = Round.WITH_NUMBER + "/match";
                 public static final String WITH_NUMBER = BASE + "/{matchNumber}";

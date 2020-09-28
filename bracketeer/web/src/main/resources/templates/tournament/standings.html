@@ -6,7 +6,7 @@
 
     <link rel="stylesheet" type="text/css" href="/css/style.css">
     <link rel="stylesheet" type="text/css" href="/css/queries.css">
-    <link rel="stylesheet" type="text/css" href="/css/round.css">
+    <link rel="stylesheet" type="text/css" href="/css/standings.css">
 
 
     <!--    for brackets:-->
@@ -65,7 +65,8 @@
                     <th class="table-h">Wins</th>
                     <th class="table-h">Losses</th>
                     <th class="table-h">Ties</th>
-                </tr>    
+                    <th class="table-h">Rounds Played</th>
+                </tr>
             </thead>
         
             <tbody>
@@ -76,6 +77,7 @@
                     <td class="col-wins" th:text="${participant.getNumberOfMatchesWithResult('WIN')}">N/A</td>
                     <td class="col-losses" th:text="${participant.getNumberOfMatchesWithResult('LOSS')}">N/A</td>
                     <td class="col-ties" th:text="${participant.getNumberOfMatchesWithResult('TIE')}">N/A</td>
+                    <td class="col-total-games" th:text="${participant.getTotalNumberOfPlayedMatches()}">N/A</td>
                 </tr>
             </tbody>
         

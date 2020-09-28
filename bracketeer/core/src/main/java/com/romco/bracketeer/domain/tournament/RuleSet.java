@@ -4,7 +4,7 @@ import com.romco.bracketeer.domain.matcher.TournamentFormat;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.Map;
 
 @Slf4j
@@ -24,7 +24,7 @@ public class RuleSet {
     private TournamentFormat type;
 
     public RuleSet(double pointsForWin, double pointsForLoss, double pointsForTie, int bestOf, TournamentFormat type) {
-        pointMap = new HashMap<>(3);
+        pointMap = new EnumMap<>(MatchResultEnum.class);
         pointMap.put(MatchResultEnum.WIN, pointsForWin);
         pointMap.put(MatchResultEnum.LOSS, pointsForLoss);
         pointMap.put(MatchResultEnum.TIE, pointsForTie);

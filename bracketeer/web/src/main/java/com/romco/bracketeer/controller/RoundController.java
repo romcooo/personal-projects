@@ -1,12 +1,13 @@
 package com.romco.bracketeer.controller;
 
-import com.romco.bracketeer.service.TournamentService;
-import com.romco.bracketeer.util.Mappings;
-import com.romco.bracketeer.util.ViewNames;
 import com.romco.bracketeer.domain.participant.Participant;
+import com.romco.bracketeer.domain.tournament.Match;
 import com.romco.bracketeer.domain.tournament.Round;
 import com.romco.bracketeer.domain.tournament.Standings;
 import com.romco.bracketeer.domain.tournament.Tournament;
+import com.romco.bracketeer.service.TournamentService;
+import com.romco.bracketeer.util.Mappings;
+import com.romco.bracketeer.util.ViewNames;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -118,6 +119,16 @@ public class RoundController {
 
         return Mappings.Tournament.Round.REDIRECT_WITH_NUMBER;
     }
+
+    // TODO method below
+    // == ALL MATCH RESULTS
+    @PostMapping(Mappings.Tournament.Round.SAVE_ALL_RESULTS)
+    public String postRoundResults(@PathVariable(value = "roundNumber") int roundNumber,
+                                   @ModelAttribute Match match) {
+        log.info("in /results/save, round: " + match.getParticipants().toString());
+        return ViewNames.Tournament.ROUND;
+    }
+
 
     // == STANDINGS AFTER ROUND #
     @GetMapping(Mappings.Tournament.Round.STANDINGS)

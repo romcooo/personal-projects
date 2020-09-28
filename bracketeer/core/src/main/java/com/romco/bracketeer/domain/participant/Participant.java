@@ -122,6 +122,13 @@ public class Participant implements Comparable<Participant> {
 //                .count();
 //    }
 
+    public long getTotalNumberOfPlayedMatches() {
+        // null means the participant has not yet played that match => filter out
+        return playedMatches.stream()
+                            .filter(it -> it.getMatchResult(this) != null)
+                            .count();
+    }
+
     public long getNumberOfMatchesWithResult(MatchResultEnum resultType) {
         return playedMatches
                 .stream()
