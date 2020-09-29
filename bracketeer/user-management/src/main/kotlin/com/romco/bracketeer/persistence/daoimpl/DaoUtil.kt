@@ -9,3 +9,10 @@ class User2RoleDaoUtil {
         val SELECT_USER_BY_ROLE = "SELECT user_id FROM $TABLE_NAME WHERE role_id = :roleId"
     }
 }
+
+class Role2PrivilegeDaoUtil {
+    companion object {
+        private val TABLE_NAME = "${Constants.UM_SCHEMA}.role2privilege"
+        val SELECT_PRIVILEGE_BY_ROLE = "SELECT privilege_id FROM $TABLE_NAME WHERE role_id = :roleId"
+    }
+}
