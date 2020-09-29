@@ -1,5 +1,5 @@
 # Core
-
+TODO
 
 # User Management
 
@@ -34,8 +34,8 @@ TODO
 | privilege_id | long      | false        |
 
 ## Privilege
-| Column Name | Data Type | Is Nullable? |
-| ----        | ----      | ----         |
-| id          | long      | false        |
-TODO
+| Column Name | Data Type    | Is Nullable? |
+| ----        | ----         | ----         |
+| id          | long         | false        |
+| name        | varchar(100) | false        |
 

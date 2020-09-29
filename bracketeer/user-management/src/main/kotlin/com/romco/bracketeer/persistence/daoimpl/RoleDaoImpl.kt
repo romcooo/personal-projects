@@ -1,6 +1,7 @@
 package com.romco.bracketeer.persistence.daoimpl
 
 import com.romco.bracketeer.domain.Role
+import com.romco.bracketeer.logged
 import com.romco.bracketeer.persistence.dao.RoleDao
 import com.romco.bracketeer.persistence.rowmapper.RoleRowMapper
 import com.romco.bracketeer.persistence.util.Constants
@@ -32,8 +33,8 @@ open class RoleDaoImpl: RoleDao {
         val sqlQuery = "$SELECT_ALL_WHERE id IN (${User2RoleDaoUtil.SELECT_ROLE_BY_USER})"
         val source = MapSqlParameterSource("user_id", userId)
         val roles: List<Role> = namedParameterJdbcTemplate.query(sqlQuery, source, RoleRowMapper())
-        log.info("retrieved roles: $roles")
-        return roles
+//        log.info("retrieved roles: $roles")
+        return roles.logged()
     }
 
     @Autowired
