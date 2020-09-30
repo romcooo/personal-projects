@@ -70,8 +70,10 @@ open class UserDaoImpl: UserDao {
     }
 
     override fun cleanup() {
-        val sqlQuery = "DELETE FROM $TABLE_NAME WHERE id > -1"
-        namedParameterJdbcTemplate.jdbcOperations.execute(sqlQuery)
-        log.info("in cleanup of UserDaoImpl")
+//        val sqlQuery = "DELETE FROM $TABLE_NAME WHERE id > -1"
+//        namedParameterJdbcTemplate.jdbcOperations.execute(sqlQuery)
+//        log.info("Cleaned up $TABLE_NAME: $sqlQuery")
+
+        log.info("$TABLE_NAME will not be cleaned up, contains necessary test data at the moment.")
     }
 }

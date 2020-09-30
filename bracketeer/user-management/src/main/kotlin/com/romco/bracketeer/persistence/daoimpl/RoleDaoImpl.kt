@@ -59,6 +59,10 @@ open class RoleDaoImpl: RoleDao {
     }
 
     override fun cleanup() {
-        TODO("Not yet implemented")
+//        val sqlQuery = "DELETE FROM $TABLE_NAME WHERE id > -1"
+//        namedParameterJdbcTemplate.jdbcOperations.execute(sqlQuery)
+//        log.info("Cleaned up $TABLE_NAME: $sqlQuery")
+
+        log.info("$TABLE_NAME will not be cleaned up, contains parametrized data.")
     }
 }

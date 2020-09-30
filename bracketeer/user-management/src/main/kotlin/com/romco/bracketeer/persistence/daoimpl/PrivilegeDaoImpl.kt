@@ -6,6 +6,7 @@ import com.romco.bracketeer.persistence.rowmapper.PrivilegeRowMapper
 import com.romco.bracketeer.persistence.util.Constants
 import com.romco.bracketeer.util.logger
 import lombok.extern.slf4j.Slf4j
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate
 import org.springframework.stereotype.Repository
@@ -31,8 +32,9 @@ open class PrivilegeDaoImpl: PrivilegeDao {
         return privileges
     }
 
+    @Autowired
     override fun setDataSource(dataSource: DataSource) {
-        TODO("Not yet implemented")
+        namedParameterJdbcTemplate = NamedParameterJdbcTemplate(dataSource)
     }
 
     override fun retrieveAll(): Collection<Privilege> {
@@ -52,6 +54,10 @@ open class PrivilegeDaoImpl: PrivilegeDao {
     }
 
     override fun cleanup() {
-        TODO("Not yet implemented")
+//        val sqlQuery = "DELETE FROM $TABLE_NAME WHERE id > -1"
+//        namedParameterJdbcTemplate.jdbcOperations.execute(sqlQuery)
+//        log.info("Cleaned up $TABLE_NAME: $sqlQuery")
+
+        log.info("$TABLE_NAME will not be cleaned up, contains parametrized data.")
     }
 }
