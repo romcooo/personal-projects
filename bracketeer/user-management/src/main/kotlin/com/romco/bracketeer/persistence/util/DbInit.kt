@@ -33,6 +33,8 @@ open class DbInit {
 
     @Autowired
     fun setDataSource(dataSource: DataSource) {
+        dataSource.connection
+        dataSource.connection.schema = "bracketeer_um"
         namedParameterJdbcTemplate = NamedParameterJdbcTemplate(dataSource)
     }
 
@@ -44,16 +46,20 @@ open class DbInit {
         privilegeDao.cleanup()
 
         // init here
-        //TODO apparently it defaults to the wrong schema, figure out how to change it to the right one
-        var sqlQuery = "INSERT INTO `bracketeer_um.user` VALUES (-1,'bracketeer','{bcrypt}\$2a\$10\$ehfPb/GiMFugw26ObJzja.iflGYnvtNfLjTwBxgB3eTQMZL16pedW','2020-09-26 20:41:22',NULL,'test@test.com',NULL);"
+        //TODO ok so this is really ugly, rework it later
+        var sqlQuery = "USE bracketeer_um"
         namedParameterJdbcTemplate.jdbcOperations.execute(sqlQuery)
-        sqlQuery = "INSERT INTO `bracketeer_um.role` (id, name) VALUES (-1, 'basic_user');"
+        sqlQuery = "INSERT INTO `user` VALUES (-1,'bracketeer','{bcrypt}\$2a\$10\$ehfPb/GiMFugw26ObJzja.iflGYnvtNfLjTwBxgB3eTQMZL16pedW','2020-09-26 20:41:22',NULL,'test@test.com',NULL);"
         namedParameterJdbcTemplate.jdbcOperations.execute(sqlQuery)
-        sqlQuery = "INSERT INTO `bracketeer_um.user2role` (user_id, role_id) VALUES (-1, -1);"
+        sqlQuery = "INSERT INTO `role` (id, name) VALUES (-1, 'basic_user');"
         namedParameterJdbcTemplate.jdbcOperations.execute(sqlQuery)
-        sqlQuery = "INSERT INTO `bracketeer_um.privilege` (id, name) VALUES (-1, 'user_access');"
+        sqlQuery = "INSERT INTO `user2role` (user_id, role_id) VALUES (-1, -1);"
         namedParameterJdbcTemplate.jdbcOperations.execute(sqlQuery)
-        sqlQuery = "INSERT INTO `bracketeer_um.role2privilege` (role_id, privilege_id) VALUES (-1, -1);"
+        sqlQuery = "INSERT INTO `privilege` (id, name) VALUES (-1, 'user_access');"
+        namedParameterJdbcTemplate.jdbcOperations.execute(sqlQuery)
+        sqlQuery = "INSERT INTO `role2privilege` (role_id, privilege_id) VALUES (-1, -1);"
+        namedParameterJdbcTemplate.jdbcOperations.execute(sqlQuery)
+        sqlQuery = "USE bracketeer"
         namedParameterJdbcTemplate.jdbcOperations.execute(sqlQuery)
         log.info("Created test data.")
     }
