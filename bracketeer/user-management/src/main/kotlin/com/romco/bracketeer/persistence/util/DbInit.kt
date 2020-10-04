@@ -7,6 +7,7 @@ import com.romco.bracketeer.util.logger
 import lombok.extern.slf4j.Slf4j
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.context.event.ContextRefreshedEvent
 import org.springframework.context.event.EventListener
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate
@@ -32,9 +33,7 @@ open class DbInit {
     lateinit var privilegeDao: PrivilegeDao
 
     @Autowired
-    fun setDataSource(dataSource: DataSource) {
-        dataSource.connection
-        dataSource.connection.schema = "bracketeer_um"
+    fun setDataSource(@Qualifier("userManagementDataSource") dataSource: DataSource) {
         namedParameterJdbcTemplate = NamedParameterJdbcTemplate(dataSource)
     }
 
@@ -47,20 +46,20 @@ open class DbInit {
 
         // init here
         //TODO ok so this is really ugly, rework it later
-        var sqlQuery = "USE bracketeer_um"
+//        var sqlQuery = "USE bracketeer_um"
+//        namedParameterJdbcTemplate.jdbcOperations.execute(sqlQuery)
+        var sqlQuery = "INSERT IGNORE  INTO `user` VALUES (-1,'bracketeer','{bcrypt}\$2a\$10\$ehfPb/GiMFugw26ObJzja.iflGYnvtNfLjTwBxgB3eTQMZL16pedW','2020-09-26 20:41:22',NULL,'test@test.com',NULL);"
         namedParameterJdbcTemplate.jdbcOperations.execute(sqlQuery)
-        sqlQuery = "INSERT INTO `user` VALUES (-1,'bracketeer','{bcrypt}\$2a\$10\$ehfPb/GiMFugw26ObJzja.iflGYnvtNfLjTwBxgB3eTQMZL16pedW','2020-09-26 20:41:22',NULL,'test@test.com',NULL);"
+        sqlQuery = "INSERT IGNORE  INTO `role` (id, name) VALUES (-1, 'basic_user');"
         namedParameterJdbcTemplate.jdbcOperations.execute(sqlQuery)
-        sqlQuery = "INSERT INTO `role` (id, name) VALUES (-1, 'basic_user');"
+        sqlQuery = "INSERT IGNORE  INTO `user2role` (user_id, role_id) VALUES (-1, -1);"
         namedParameterJdbcTemplate.jdbcOperations.execute(sqlQuery)
-        sqlQuery = "INSERT INTO `user2role` (user_id, role_id) VALUES (-1, -1);"
+        sqlQuery = "INSERT IGNORE  INTO `privilege` (id, name) VALUES (-1, 'user_access');"
         namedParameterJdbcTemplate.jdbcOperations.execute(sqlQuery)
-        sqlQuery = "INSERT INTO `privilege` (id, name) VALUES (-1, 'user_access');"
+        sqlQuery = "INSERT IGNORE  INTO `role2privilege` (role_id, privilege_id) VALUES (-1, -1);"
         namedParameterJdbcTemplate.jdbcOperations.execute(sqlQuery)
-        sqlQuery = "INSERT INTO `role2privilege` (role_id, privilege_id) VALUES (-1, -1);"
-        namedParameterJdbcTemplate.jdbcOperations.execute(sqlQuery)
-        sqlQuery = "USE bracketeer"
-        namedParameterJdbcTemplate.jdbcOperations.execute(sqlQuery)
+//        sqlQuery = "USE bracketeer"
+//        namedParameterJdbcTemplate.jdbcOperations.execute(sqlQuery)
         log.info("Created test data.")
     }
 

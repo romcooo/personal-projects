@@ -18,15 +18,33 @@
 <!--        <property name="password" value="devpassword420"/>-->
 <!--    </bean>-->
 
-    <bean id="dataSource"
-          class="org.apache.commons.dbcp.BasicDataSource"
-          destroy-method="close">
-        <property name="url" value="${spring.datasource.url}"/>
-        <property name="driverClassName" value="${spring.datasource.driver-class-name}"/>
-        <property name="username" value="${spring.datasource.username}"/>
-        <property name="password" value="${spring.datasource.password}"/>
-    </bean>
+<!--    <bean id="dataSource"-->
+<!--          class="org.apache.commons.dbcp.BasicDataSource"-->
+<!--          destroy-method="close">-->
+<!--        <property name="url" value="${spring.datasource.url}"/>-->
+<!--        <property name="driverClassName" value="${spring.datasource.driver-class-name}"/>-->
+<!--        <property name="username" value="${spring.datasource.username}"/>-->
+<!--        <property name="password" value="${spring.datasource.password}"/>-->
+<!--    </bean>-->
 
+<!--    <bean id="coreDataSource"-->
+<!--          class="org.apache.commons.dbcp.BasicDataSource"-->
+<!--          destroy-method="close">-->
+<!--        <property name="url" value="${app.datasource.bracketeer.url}"/>-->
+<!--        <property name="driverClassName" value="${app.datasource.bracketeer.driver-class-name}"/>-->
+<!--        <property name="username" value="${app.datasource.bracketeer.username}"/>-->
+<!--        <property name="password" value="${app.datasource.bracketeer.password}"/>-->
+<!--    </bean>-->
+<!--    -->
+<!--    <bean id="userManagementDataSource"-->
+<!--                     class="org.apache.commons.dbcp.BasicDataSource"-->
+<!--                     destroy-method="close">-->
+<!--    <property name="url" value="${app.datasource.bracketeer_um.url}"/>-->
+<!--    <property name="driverClassName" value="${app.datasource.bracketeer_um.driver-class-name}"/>-->
+<!--    <property name="username" value="${app.datasource.bracketeer_um.username}"/>-->
+<!--    <property name="password" value="${app.datasource.bracketeer_um.password}"/>-->
+<!--    </bean>-->
+    
 <!--    <bean id="tournamentDao" class="com.romco.bracketeer.persistence.daoimpl.TournamentDaoImpl">-->
 <!--        <property name="dataSource" ref="dataSource"/>-->
 <!--    </bean>-->
