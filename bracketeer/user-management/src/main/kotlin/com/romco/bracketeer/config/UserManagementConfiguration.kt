@@ -14,12 +14,16 @@ import javax.sql.DataSource
 @ConfigurationProperties("app.datasource.bracketeer-um")
 open class UserManagementDataSourceConfiguration {
 
+    companion object {
+        const val USER_MANAGEMENT_DATA_SOURCE_BEAN_NAME = "userManagementDataSource"
+    }
+
     @Bean
     open fun userManagementDataSourceProperties(): DataSourceProperties {
         return DataSourceProperties()
     }
 
-    @Bean(name = ["userManagementDataSource"])
+    @Bean(name = [USER_MANAGEMENT_DATA_SOURCE_BEAN_NAME])
     open fun userManagementDataSource(): DataSource {
         val dataSourceBuilder = DataSourceBuilder.create()
         dataSourceBuilder

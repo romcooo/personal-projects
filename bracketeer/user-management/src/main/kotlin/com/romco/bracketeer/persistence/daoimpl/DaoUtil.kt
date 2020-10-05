@@ -1,6 +1,11 @@
 package com.romco.bracketeer.persistence.daoimpl
 
 import com.romco.bracketeer.persistence.util.Constants
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.beans.factory.annotation.Qualifier
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate
+import org.springframework.stereotype.Component
+import javax.sql.DataSource
 
 class User2RoleDaoUtil {
     companion object {
@@ -16,3 +21,19 @@ class Role2PrivilegeDaoUtil {
         val SELECT_PRIVILEGE_BY_ROLE = "SELECT privilege_id FROM $TABLE_NAME WHERE role_id = :roleId"
     }
 }
+
+//@Component
+//class UserManagementNamedParameterJdbcTemplateHolder {
+//    companion object {
+//        lateinit var namedParameterJdbcTemplate: NamedParameterJdbcTemplate
+//
+//        @Autowired
+//        fun setDataSource(@Qualifier("userManagementDataSource") dataSource: DataSource) {
+//            namedParameterJdbcTemplate = NamedParameterJdbcTemplate(dataSource)
+//        }
+//
+//        fun get(): NamedParameterJdbcTemplate {
+//            return namedParameterJdbcTemplate
+//        }
+//    }
+//}

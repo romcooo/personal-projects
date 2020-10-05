@@ -1,5 +1,6 @@
 package com.romco.bracketeer.persistence.util
 
+import com.romco.bracketeer.config.UserManagementDataSourceConfiguration.Companion.USER_MANAGEMENT_DATA_SOURCE_BEAN_NAME
 import com.romco.bracketeer.persistence.dao.PrivilegeDao
 import com.romco.bracketeer.persistence.dao.RoleDao
 import com.romco.bracketeer.persistence.dao.UserDao
@@ -33,7 +34,7 @@ open class DbInit {
     lateinit var privilegeDao: PrivilegeDao
 
     @Autowired
-    fun setDataSource(@Qualifier("userManagementDataSource") dataSource: DataSource) {
+    fun setDataSource(@Qualifier(USER_MANAGEMENT_DATA_SOURCE_BEAN_NAME) dataSource: DataSource) {
         namedParameterJdbcTemplate = NamedParameterJdbcTemplate(dataSource)
     }
 

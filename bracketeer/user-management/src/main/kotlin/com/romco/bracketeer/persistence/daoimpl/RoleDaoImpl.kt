@@ -1,5 +1,7 @@
 package com.romco.bracketeer.persistence.daoimpl
 
+import com.romco.bracketeer.config.UserManagementDataSourceConfiguration
+import com.romco.bracketeer.config.UserManagementDataSourceConfiguration.Companion.USER_MANAGEMENT_DATA_SOURCE_BEAN_NAME
 import com.romco.bracketeer.domain.Role
 import com.romco.bracketeer.logged
 import com.romco.bracketeer.persistence.dao.RoleDao
@@ -8,6 +10,7 @@ import com.romco.bracketeer.persistence.util.Constants
 import com.romco.bracketeer.util.logger
 import lombok.extern.slf4j.Slf4j
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate
 import org.springframework.stereotype.Repository
@@ -38,7 +41,7 @@ open class RoleDaoImpl: RoleDao {
     }
 
     @Autowired
-    override fun setDataSource(dataSource: DataSource) {
+    override fun setDataSource(@Qualifier(USER_MANAGEMENT_DATA_SOURCE_BEAN_NAME) dataSource: DataSource) {
         namedParameterJdbcTemplate = NamedParameterJdbcTemplate(dataSource)
     }
 
