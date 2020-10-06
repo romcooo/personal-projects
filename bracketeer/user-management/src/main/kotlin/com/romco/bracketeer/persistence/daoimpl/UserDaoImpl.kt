@@ -6,6 +6,7 @@ import com.romco.bracketeer.domain.User
 import com.romco.bracketeer.persistence.dao.UserDao
 import com.romco.bracketeer.persistence.rowmapper.UserRowMapper
 import com.romco.bracketeer.persistence.util.Constants
+import com.romco.bracketeer.persistence.util.WithDataSource
 import com.romco.bracketeer.util.logger
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Qualifier
@@ -17,7 +18,7 @@ import java.time.LocalDateTime
 import javax.sql.DataSource
 
 @Repository
-open class UserDaoImpl: UserDao {
+open class UserDaoImpl: UserDao, WithDataSource() {
 
     val log = logger<UserDaoImpl>()
 
@@ -30,12 +31,12 @@ open class UserDaoImpl: UserDao {
     private val INSERT = "INSERT INTO $TABLE_NAME (username, password_hash, last_update_date) VALUES"
     private val UPDATE = "UPDATE $TABLE_NAME SET"
 
-    private lateinit var namedParameterJdbcTemplate: NamedParameterJdbcTemplate
-
-    @Autowired
-    override fun setDataSource(@Qualifier(USER_MANAGEMENT_DATA_SOURCE_BEAN_NAME) dataSource: DataSource) {
-        namedParameterJdbcTemplate = NamedParameterJdbcTemplate(dataSource)
-    }
+//    private lateinit var namedParameterJdbcTemplate: NamedParameterJdbcTemplate
+//
+//    @Autowired
+//    override fun setDataSource(@Qualifier(USER_MANAGEMENT_DATA_SOURCE_BEAN_NAME) dataSource: DataSource) {
+//        namedParameterJdbcTemplate = NamedParameterJdbcTemplate(dataSource)
+//    }
 
     override fun retrieveAll(): Collection<User> {
         TODO("Not yet implemented")
