@@ -1,12 +1,12 @@
 package com.romco.bracketeer.persistence.daoimpl
 
 import com.romco.bracketeer.domain.Role
-import com.romco.bracketeer.logged
 import com.romco.bracketeer.persistence.dao.RoleDao
 import com.romco.bracketeer.persistence.rowmapper.RoleRowMapper
 import com.romco.bracketeer.persistence.util.Constants
 import com.romco.bracketeer.persistence.util.User2RoleDaoUtil
 import com.romco.bracketeer.persistence.util.WithDataSource
+import com.romco.bracketeer.util.logged
 import com.romco.bracketeer.util.logger
 import lombok.extern.slf4j.Slf4j
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource
@@ -33,7 +33,7 @@ open class RoleDaoImpl: RoleDao, WithDataSource() {
         val source = MapSqlParameterSource("user_id", userId)
         val roles: List<Role> = namedParameterJdbcTemplate.query(sqlQuery, source, RoleRowMapper())
 //        log.info("retrieved roles: $roles")
-        return roles.logged()
+        return roles.logged("Returning roles:")
     }
 
 //    @Autowired

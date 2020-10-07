@@ -1,6 +1,6 @@
 package com.romco.bracketeer.persistence.util
 
-import com.romco.bracketeer.config.UserManagementDataSourceConfiguration
+import com.romco.bracketeer.config.UserManagementDataSourceConfiguration.Companion.USER_MANAGEMENT_DATA_SOURCE_BEAN_NAME
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate
@@ -26,7 +26,7 @@ abstract class WithDataSource {
     protected lateinit var namedParameterJdbcTemplate: NamedParameterJdbcTemplate
 
     @Autowired
-    fun setDataSource(@Qualifier(UserManagementDataSourceConfiguration.USER_MANAGEMENT_DATA_SOURCE_BEAN_NAME) dataSource: DataSource) {
+    fun setDataSource(@Qualifier(USER_MANAGEMENT_DATA_SOURCE_BEAN_NAME) dataSource: DataSource) {
         namedParameterJdbcTemplate = NamedParameterJdbcTemplate(dataSource)
     }
 

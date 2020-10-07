@@ -47,6 +47,40 @@ public class RuleSet {
                 DEFAULT_FORMAT
         );
     }
+    
+    public static class RuleSetBuilder {
+        private final RuleSet ruleSet = getDefaultRuleSet();
+
+        
+        public RuleSetBuilder withPointsForWin(double pointsForWin) {
+            ruleSet.pointMap.put(MatchResultEnum.WIN, pointsForWin);
+            return this;
+        }
+
+        public RuleSetBuilder withPointsForLoss(double pointsForLoss) {
+            ruleSet.pointMap.put(MatchResultEnum.LOSS, pointsForLoss);
+            return this;
+        }
+
+        public RuleSetBuilder withPointsForTie(double pointsForTie) {
+            ruleSet.pointMap.put(MatchResultEnum.TIE, pointsForTie);
+            return this;
+        }
+
+        public RuleSetBuilder withBestOf(int bestOf) {
+            ruleSet.bestOf = bestOf;
+            return this;
+        }
+
+        public RuleSetBuilder withType(TournamentFormat type) {
+            ruleSet.type = type;
+            return this;
+        }
+
+        public RuleSet build() {
+            return ruleSet;
+        }
+    }
 
 }
 
