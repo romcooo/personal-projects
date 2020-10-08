@@ -13,5 +13,5 @@ interface RoleDao: GenericDao<Role> {
 }
 
 interface PrivilegeDao : GenericDao<Privilege> {
-    fun retrieveByRole(roleiD: Long): Collection<Privilege>
+    fun retrieveByRole(roleId: Long): Collection<Privilege>
 }
