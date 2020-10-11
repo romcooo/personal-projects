@@ -17,7 +17,7 @@ open class PrivilegeDaoImpl: PrivilegeDao, WithDataSource() {
 
     val log = logger<PrivilegeDaoImpl>()
 
-    private val TABLE_NAME = "${Constants.UM_SCHEMA}.privilege"
+    private val TABLE_NAME = "privilege"
     private val SELECT_ALL_WHERE = "SELECT id, name FROM $TABLE_NAME WHERE"
 
 

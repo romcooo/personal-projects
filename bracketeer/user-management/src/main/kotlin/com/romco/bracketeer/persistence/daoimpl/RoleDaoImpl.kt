@@ -20,7 +20,7 @@ open class RoleDaoImpl: RoleDao, WithDataSource() {
 
     private val nameCol = "name"
 
-    private val TABLE_NAME = "${Constants.UM_SCHEMA}.role"
+    private val TABLE_NAME = "role"
     private val SELECT_ALL_WHERE = "SELECT id, name FROM $TABLE_NAME WHERE"
     private val INSERT = "INSERT INTO $TABLE_NAME (name) VALUES"
     private val UPDATE = "UPDATE $TABLE_NAME SET"

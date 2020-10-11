@@ -26,7 +26,7 @@ open class UserDaoImpl: UserDao, WithDataSource() {
     private val passwordHashCol = "password_hash"
     private val createdDateCol = "created_date"
 
-    private val TABLE_NAME = "${Constants.UM_SCHEMA}.user"
+    private val TABLE_NAME = "user"
     private val SELECT_ALL_WHERE = "SELECT id, username, password_hash FROM $TABLE_NAME WHERE"
     private val INSERT = "INSERT INTO $TABLE_NAME (username, password_hash, last_update_date) VALUES"
     private val UPDATE = "UPDATE $TABLE_NAME SET"

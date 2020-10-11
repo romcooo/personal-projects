@@ -8,16 +8,16 @@ import javax.sql.DataSource
 
 class User2RoleDaoUtil {
     companion object {
-        private val TABLE_NAME = "${Constants.UM_SCHEMA}.user2role"
-        val SELECT_ROLE_BY_USER = "SELECT role_id FROM $TABLE_NAME WHERE user_id = :userId"
-        val SELECT_USER_BY_ROLE = "SELECT user_id FROM $TABLE_NAME WHERE role_id = :roleId"
+        private const val TABLE_NAME = "user2role"
+        const val SELECT_ROLE_BY_USER = "SELECT role_id FROM $TABLE_NAME WHERE user_id = :userId"
+        const val SELECT_USER_BY_ROLE = "SELECT user_id FROM $TABLE_NAME WHERE role_id = :roleId"
     }
 }
 
 class Role2PrivilegeDaoUtil {
     companion object {
-        private val TABLE_NAME = "${Constants.UM_SCHEMA}.role2privilege"
-        val SELECT_PRIVILEGE_BY_ROLE = "SELECT privilege_id FROM $TABLE_NAME WHERE role_id = :roleId"
+        private const val TABLE_NAME = "role2privilege"
+        const val SELECT_PRIVILEGE_BY_ROLE = "SELECT privilege_id FROM $TABLE_NAME WHERE role_id = :roleId"
     }
 }
 
