@@ -162,8 +162,6 @@ public class TournamentImpl implements Tournament {
                                     .setMatchScore(participant,
                                                    gamesWon,
                                                    gamesLost);
-
-//        return Collections.emptyList();
     }
 
     @Override

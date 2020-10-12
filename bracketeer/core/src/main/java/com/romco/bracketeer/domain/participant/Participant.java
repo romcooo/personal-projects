@@ -3,6 +3,7 @@ package com.romco.bracketeer.domain.participant;
 
 import com.romco.bracketeer.domain.tournament.Match;
 import com.romco.bracketeer.domain.tournament.MatchResultEnum;
+import com.romco.bracketeer.domain.tournament.RuleSet;
 import com.romco.bracketeer.domain.tournament.Tournament;
 
 import java.util.ArrayList;
@@ -13,7 +14,7 @@ public class Participant implements Comparable<Participant> {
     protected long id;
     protected String code;
     protected String name;
-    protected double score;
+    protected double scoreDeprecated;
     protected int numberOfByes;
     protected List<Participant> playedAgainst;
     protected List<Match> playedMatches;
@@ -51,12 +52,40 @@ public class Participant implements Comparable<Participant> {
         this.name = name;
     }
 
+    // TODO rework this to compute the value here
     public double getScore() {
-        return score;
+
+        // TODO in progress here
+        RuleSet ruleSet = ofTournament.getRuleSet();
+        double score = playedMatches.stream()
+                              .mapToDouble(it -> ruleSet.getPointMap()
+                                                        .get(it.getMatchResult(this)))
+                              .sum();
+//        return score;
+
+
+        // another option for the calculation:
+//        AtomicReference<Double> score = new AtomicReference<>(0.0d);
+//        playedMatches.forEach(it -> score.updateAndGet(v -> v + ruleSet.getPointMap().get(it.getMatchResult(this))));
+        //
+
+        return scoreDeprecated;
+
     }
 
+    public double getScoreAfterMatch(int matchNumber) {
+        RuleSet ruleSet = ofTournament.getRuleSet();
+        return playedMatches.stream()
+                            .filter(match -> match.getMatchNumber() <= matchNumber)
+                            .mapToDouble(it -> ruleSet.getPointMap()
+                                                      .get(it.getMatchResult(this)))
+                            .sum();
+    }
+
+
+
     public void setScore(double score) {
-        this.score = score;
+        this.scoreDeprecated = score;
     }
     
     public int getNumberOfByes() {
@@ -159,7 +188,7 @@ public class Participant implements Comparable<Participant> {
                 "id=" + id +
                 ", code=" + code +
                 ", name='" + name + '\'' +
-                ", score=" + score +
+                ", score=" + scoreDeprecated +
                 '}';
     }
 }
