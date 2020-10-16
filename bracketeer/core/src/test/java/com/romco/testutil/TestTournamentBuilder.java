@@ -1,12 +1,18 @@
 package com.romco.testutil;
 
-import com.romco.bracketeer.domain.tournament.Tournament;
-import com.romco.bracketeer.domain.tournament.TournamentImpl;
 import com.romco.bracketeer.domain.matcher.TournamentFormat;
 import com.romco.bracketeer.domain.participant.Participant;
 import com.romco.bracketeer.domain.participant.Player;
+import com.romco.bracketeer.domain.tournament.Match;
+import com.romco.bracketeer.domain.tournament.Tournament;
+import com.romco.bracketeer.domain.tournament.TournamentImpl;
+import lombok.extern.slf4j.Slf4j;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
+@Slf4j
 public class TestTournamentBuilder {
     
     public enum DummyScoreType {
@@ -72,11 +78,17 @@ public class TestTournamentBuilder {
     
         for (int r = 1; r <= rounds; r++) {
             tournament.generateNextRound();
-            for (int p = 0; p < players; p++) {
-                tournament.setMatchResult(r, tournament.getParticipants().get(p), 2, 1);
+            // TODO here is likely an issue
+            List<Match> matches = tournament.getRound(r).getMatches();
+            for (Match match : matches) {
+                Map<Participant, Integer> results = new HashMap<>();
+                results.put(match.getParticipants().get(0), 2);
+                results.put(match.getParticipants().get(1), 1);
+                log.info("setting result in round {}: {}", r, results);
+                match.setMatchScore(results);
             }
         }
-        
+
         return tournament;
     }
 }

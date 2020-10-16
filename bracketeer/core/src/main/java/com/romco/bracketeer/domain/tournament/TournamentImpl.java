@@ -31,7 +31,7 @@ public class TournamentImpl implements Tournament {
 
     private List<Participant> participants;
     private Map<Participant, Integer> startingParticipantByes;
-    private Map<Participant, Double> startingParticipantScores;
+//    private Map<Participant, Double> startingParticipantScores;
 
     private ParticipantManager participantManager;
 
@@ -44,7 +44,7 @@ public class TournamentImpl implements Tournament {
         this.ruleSet = RuleSet.getDefaultRuleSet();
 
         this.participants = new ArrayList<>();
-        this.startingParticipantScores = new HashMap<>();
+//        this.startingParticipantScores = new HashMap<>();
         this.startingParticipantByes = new HashMap<>();
 
         this.rounds = new LinkedList<>();
@@ -86,8 +86,6 @@ public class TournamentImpl implements Tournament {
         this.code = code;
         this.name = name;
         this.participants = participants;
-        this.startingParticipantScores = startingParticipantScores;
-        this.startingParticipantByes = startingParticipantByes;
         this.rounds = rounds;
 //        this.type = type;
         ruleSet.setType(type);
@@ -106,7 +104,9 @@ public class TournamentImpl implements Tournament {
 //    }
 
     public void setStartingScore(Participant participant, double score) {
-        startingParticipantScores.put(participant, score);
+        participant.giveAdditionalPoints(score);
+
+//        startingParticipantScores.put(participant, score);
     }
 
     @Override
@@ -117,12 +117,12 @@ public class TournamentImpl implements Tournament {
 
     @Override
     public Round generateRound(int roundNumber) {
-        updateParticipantsForAfterRound(roundNumber - 1);
-
+        log.info("In generateRound for round {}", roundNumber);
         Matcher matcher = ruleSet.getType().buildMatcher();
 
         Round round = matcher.generateRound(Collections.unmodifiableList(participants),
-                                            SortMode.SHUFFLE_THEN_SORT);
+                                            SortMode.SHUFFLE_THEN_SORT,
+                                            roundNumber);
         round.setRoundNumber(rounds.size()+1);
         round.setOfTournament(this);
         rounds.add(round);
@@ -153,48 +153,47 @@ public class TournamentImpl implements Tournament {
         return round.get();
     }
 
+    //TODO remove this
     @Override
     public List<MatchResult> setMatchResult(int roundNumber,
                                   Participant participant,
                                   int gamesWon,
                                   int gamesLost) {
+
         return getRound(roundNumber).getMatchByParticipant(participant)
                                     .setMatchScore(participant,
                                                    gamesWon,
                                                    gamesLost);
     }
 
-    @Override
-    public List<MatchResult> setMatchResult(int roundNumber,
-                                  String participantCode,
-                                  int gamesWon,
-                                  int gamesLost) {
-        for (Participant participant : participants) {
-            if (participant.getCode().equals(participantCode)) {
-                log.debug("in setMatchResult, setting match result for participant: {}, {}", participant, gamesWon);
-                return setMatchResult(roundNumber, participant, gamesWon, gamesLost);
-            }
-        }
-        return Collections.emptyList();
-    }
 
-    @Override
     public List<MatchResult> setMatchResult(int roundNumber,
-                                  String participantCode,
-                                  int gamesWon) {
-
-            for (Participant participant : participants) {
-                if (participant.getCode().equals(participantCode)) {
-                    return getRound(roundNumber).getMatchByParticipant(participant)
-                                                .setMatchScore(participant, gamesWon);
+                                            int matchNumber,
+                                            Map<String, Integer> gamesWonByParticipantCodes) {
+        Map <Participant, Integer> gamesWonByParticipants = new HashMap<>();
+        for (Map.Entry<String, Integer> entry : gamesWonByParticipantCodes.entrySet()) {
+            for (Participant participant: participants) {
+                if (participant.getCode().equals(entry.getKey())) {
+                    gamesWonByParticipants.put(participant, entry.getValue());
                 }
             }
-        return Collections.emptyList();
+        }
+        return setMatchResultByParticipant(roundNumber, matchNumber, gamesWonByParticipants);
+    }
+
+    public List<MatchResult> setMatchResultByParticipant(int roundNumber,
+                                                         int matchNumber,
+                                                         Map<Participant, Integer> gamesWonByParticipants) {
+        Round r = rounds.get(roundNumber);
+        if (r == null) {
+            log.warn("no round of number {}", roundNumber);
+            return Collections.emptyList();
+        }
+        return r.setMatchResult(matchNumber, gamesWonByParticipants);
     }
 
     @Override
     public List<Participant> getParticipants() {
-        updateParticipants();
         return Collections.unmodifiableList(participants);
     }
 
@@ -206,7 +205,7 @@ public class TournamentImpl implements Tournament {
         } else {
             participants.add(participant);
             participant.setCode(Integer.toString(participants.size()));
-            startingParticipantScores.put(participant, 0d);
+//            startingParticipantScores.put(participant, 0d);
             startingParticipantByes.put(participant, 0);
             participant.setOfTournament(this);
             log.info("Adding participant {}", participant);
@@ -227,108 +226,6 @@ public class TournamentImpl implements Tournament {
         return null;
     }
 
-
-    @Override
-    public List<Participant> getParticipantsAfterRound(int roundNumber) {
-        updateParticipantsForAfterRound(roundNumber);
-        return Collections.unmodifiableList(participants);
-    }
-
-    public Double getParticipantScore(Participant participant) {
-        log.debug("In getParticipantScore, rounds: {}", rounds);
-        return getParticipantScoreAfterRound(participant, rounds.size());
-    }
-
-    public Double getParticipantScoreAfterRound(Participant participant, int roundNumber) {
-        double score = startingParticipantScores.get(participant);
-        for (Round round : rounds) {
-            if (round.getRoundNumber() > roundNumber) {
-                continue;
-            }
-            Match match = round.getMatchByParticipant(participant);
-            if (match != null) {
-                MatchResultEnum result = match.getMatchResult(participant);
-                if (result != null) {
-                    score += ruleSet.getPoints(result);
-                    log.debug("Result for participant {} is {}, score set to {}", participant, result, score);
-                }
-            }
-        }
-        log.debug("Score of participant {} is {} after round {}", participant, score, roundNumber);
-        return score;
-    }
-
-    public Integer getParticipantByes(Participant participant) {
-        return getParticipantByesAfterRound(participant, rounds.size());
-    }
-
-    public Integer getParticipantByesAfterRound(Participant participant, int roundNumber) {
-        int byes = startingParticipantByes.get(participant);
-        for (Round round : rounds) {
-            if (round.getRoundNumber() > roundNumber) {
-                continue;
-            }
-
-            if (round.getMatchByParticipant(participant) != null && round.getMatchByParticipant(participant).isBye()) {
-                byes++;
-            }
-        }
-        return byes;
-    }
-
-    public List<Participant> getParticipantPlayedAgainst(Participant participant) {
-        return getParticipantPlayedAgainstForAfterRound(participant, rounds.size());
-    }
-
-    public List<Participant> getParticipantPlayedAgainstForAfterRound(Participant participant, int roundNumber) {
-        List<Participant> opponents = new ArrayList<>();
-        log.debug("Getting opponents of participant {}", participant);
-        for (Round round : rounds) {
-            if (round.getRoundNumber() > roundNumber) {
-                continue;
-            }
-            if (round.getMatchByParticipant(participant) != null) {
-                opponents.addAll(round.getMatchByParticipant(participant).getOthers(participant));
-            }
-        }
-        log.debug("Adding opponents {} for participant {}", opponents, participant);
-        return opponents;
-    }
-
-    public List<Match> getParticipantMatches(Participant participant) {
-        return getParticipantMatchesForAfterRound(participant, rounds.size());
-    }
-
-    public List<Match> getParticipantMatchesForAfterRound(Participant participant, int roundNumber) {
-        List<Match> matches = new ArrayList<>();
-        log.debug("Getting matches of participant {}", participant);
-        for (Round round : rounds) {
-            if (round.getRoundNumber() > roundNumber) {
-                continue;
-            }
-            matches.add(round.getMatchByParticipant(participant));
-        }
-        return matches;
-    }
-
-
-    // == private methods
-    private void updateParticipants() {
-        for (Participant participant : this.participants) {
-            participant.setScore(getParticipantScore(participant));
-            participant.setNumberOfByes(getParticipantByes(participant));
-            participant.setPlayedAgainst(getParticipantPlayedAgainst(participant));
-            participant.setPlayedMatches(getParticipantMatches(participant));
-        }
-    }
-    private void updateParticipantsForAfterRound(int roundNumber) {
-        for (Participant participant : participants) {
-            participant.setScore(getParticipantScoreAfterRound(participant, roundNumber));
-            participant.setNumberOfByes(getParticipantByesAfterRound(participant, roundNumber));
-            participant.setPlayedAgainst(getParticipantPlayedAgainstForAfterRound(participant, roundNumber));
-            participant.setPlayedMatches(getParticipantMatchesForAfterRound(participant, roundNumber));
-        }
-    }
     private void reconcileParticipantCodes() {
         for (int i = 0; i < participants.size(); i++) {
             Participant participant = participants.get(i);
@@ -343,7 +240,7 @@ public class TournamentImpl implements Tournament {
                 ", code='" + code + '\'' +
                 ", name='" + name + '\'' +
                 ", participants=" + participants +
-                ", startingParticipantScores=" + startingParticipantScores +
+//                ", startingParticipantScores=" + startingParticipantScores +
                 ", startingParticipantByes=" + startingParticipantByes +
                 ", rounds=" + rounds +
                 ", ruleSet=" + ruleSet +
@@ -355,7 +252,7 @@ public class TournamentImpl implements Tournament {
     private class ParticipantManager {
         private List<Participant> participants;
         private Map<Participant, Integer> startingParticipantByes;
-        private Map<Participant, Double> startingParticipantScores;
+//        private Map<Participant, Double> startingParticipantScores;
 
         public boolean addParticipant(Participant participant) {
             if (participants.contains(participant)) {
@@ -364,7 +261,7 @@ public class TournamentImpl implements Tournament {
             } else {
                 participants.add(participant);
                 participant.setCode(Integer.toString(participants.size()));
-                startingParticipantScores.put(participant, 0d);
+//                startingParticipantScores.put(participant, 0d);
                 startingParticipantByes.put(participant, 0);
                 participant.setOfTournament(TournamentImpl.this);
                 log.info("Adding participant {}", participant);
@@ -385,92 +282,10 @@ public class TournamentImpl implements Tournament {
         }
 
         public void setStartingScore(Participant participant, double score) {
-            startingParticipantScores.put(participant, score);
+            participant.giveAdditionalPoints(score);
+//            startingParticipantScores.put(participant, score);
         }
 
-        public List<Participant> getParticipantsAfterRound(int roundNumber) {
-            updateParticipantsForAfterRound(roundNumber);
-            return Collections.unmodifiableList(participants);
-        }
-
-        public Double getParticipantScore(Participant participant) {
-            log.debug("In getParticipantScore, rounds: {}", rounds);
-            return getParticipantScoreAfterRound(participant, rounds.size());
-        }
-
-        public Double getParticipantScoreAfterRound(Participant participant, int roundNumber) {
-            double score = startingParticipantScores.get(participant);
-            for (Round round : rounds) {
-                if (round.getRoundNumber() > roundNumber) {
-                    continue;
-                }
-                Match match = round.getMatchByParticipant(participant);
-                if (match != null) {
-                    MatchResultEnum result = match.getMatchResult(participant);
-                    if (result != null) {
-                        score += ruleSet.getPoints(result);
-                        log.debug("Result for participant {} is {}, score set to {}", participant, result, score);
-                    }
-                }
-            }
-            log.debug("Score of participant {} is {} after round {}", participant, score, roundNumber);
-            return score;
-        }
-
-        public Integer getParticipantByes(Participant participant) {
-            return getParticipantByesAfterRound(participant, rounds.size());
-        }
-
-        public Integer getParticipantByesAfterRound(Participant participant, int roundNumber) {
-            int byes = startingParticipantByes.get(participant);
-            for (Round round : rounds) {
-                if (round.getRoundNumber() > roundNumber) {
-                    continue;
-                }
-
-                if (round.getMatchByParticipant(participant) != null
-                        && round.getMatchByParticipant(participant).isBye()) {
-                    byes++;
-                }
-            }
-            return byes;
-        }
-
-        public List<Participant> getParticipantPlayedAgainst(Participant participant) {
-            return getParticipantPlayedAgainstForAfterRound(participant, rounds.size());
-        }
-
-        public List<Participant> getParticipantPlayedAgainstForAfterRound(Participant participant, int roundNumber) {
-            List<Participant> opponents = new ArrayList<>();
-            log.debug("Getting opponents of participant {}", participant);
-            for (Round round : rounds) {
-                if (round.getRoundNumber() > roundNumber) {
-                    continue;
-                }
-                if (round.getMatchByParticipant(participant) != null) {
-                    opponents.addAll(round.getMatchByParticipant(participant).getOthers(participant));
-                }
-            }
-            log.debug("Adding opponents {} for participant {}", opponents, participant);
-            return opponents;
-        }
-
-
-        // == private methods
-        private void updateParticipants() {
-            for (Participant participant : this.participants) {
-                participant.setScore(getParticipantScore(participant));
-                participant.setNumberOfByes(getParticipantByes(participant));
-                participant.setPlayedAgainst(getParticipantPlayedAgainst(participant));
-            }
-        }
-        private void updateParticipantsForAfterRound(int roundNumber) {
-            for (Participant participant : participants) {
-                participant.setScore(getParticipantScoreAfterRound(participant, roundNumber));
-                participant.setNumberOfByes(getParticipantByesAfterRound(participant, roundNumber));
-                participant.setPlayedAgainst(getParticipantPlayedAgainstForAfterRound(participant, roundNumber));
-            }
-        }
         private void reconcileParticipantCodes() {
             for (int i = 0; i < participants.size(); i++) {
                 Participant participant = participants.get(i);

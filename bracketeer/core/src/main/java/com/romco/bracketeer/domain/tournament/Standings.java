@@ -14,19 +14,19 @@ public class Standings {
         printStandings(tournament, tournament.getRounds().size());
     }
 
-    public static void printStandings(Tournament tournament, int afterRoundNumber) {
-        List<Participant> participants = new ArrayList<>(tournament.getParticipantsAfterRound(afterRoundNumber));
-        
-        participants.sort(Comparator.comparingDouble(Participant::getScore).reversed());
+    public static void printStandings(Tournament tournament, int afterRound) {
+        List<Participant> participants = new ArrayList<>(tournament.getParticipants());
+
+        participants.sort(Comparator.comparingDouble((Participant p) -> p.getScoreAfterRound(afterRound)).reversed());
         for (Participant participant : participants) {
             log.info(participant + " has score of: " + participant.getScore());
         }
     }
     
-    public static List<Participant> getStandings(Tournament tournament, int afterRoundNumber) {
-        List<Participant> participants = new ArrayList<>(tournament.getParticipantsAfterRound(afterRoundNumber));
+    public static List<Participant> getStandings(Tournament tournament, int afterRound) {
+        List<Participant> participants = new ArrayList<>(tournament.getParticipants());
         
-        participants.sort(Comparator.comparingDouble(Participant::getScore).reversed());
+        participants.sort(Comparator.comparingDouble((Participant p) -> p.getScoreAfterRound(afterRound)).reversed());
         return participants;
     }
 

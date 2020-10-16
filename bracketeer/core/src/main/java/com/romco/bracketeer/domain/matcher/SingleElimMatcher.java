@@ -9,13 +9,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Slf4j
-public class SingleElimMatcher implements Matcher {
+class SingleElimMatcher implements Matcher {
     @Override
-    public Round generateRound(List<Participant> participants, SortMode mode) {
-        List<Participant> toPairList = mode.sort(participants);
-        double highestScore = toPairList.get(0).getScore();
+    public Round generateRound(List<Participant> participants, SortMode mode, int numberOfRoundToGenerate) {
+        List<Participant> toPairList = mode.sort(participants, numberOfRoundToGenerate - 1);
+        double highestScore = toPairList.get(0).getScoreAfterRound(numberOfRoundToGenerate - 1);
         toPairList = toPairList.stream()
-                               .filter(p -> p.getScore() == highestScore)
+                               .filter(p -> p.getScoreAfterRound(numberOfRoundToGenerate - 1) == highestScore)
                                .collect(Collectors.toList());
         log.debug("In generateRound, after elimination: {}", toPairList);
 

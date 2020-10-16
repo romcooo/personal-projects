@@ -110,6 +110,24 @@ public class Match {
         matchResults.add(otherMatchResult);
         return matchResults;
     }
+
+    // TODO check if it can just be a boolean instead of a map
+    public List<MatchResult> setMatchScore(Map<Participant, Integer> gamesWonByParticipants) {
+        if (!matchResultMap.keySet().containsAll(gamesWonByParticipants.keySet())) {
+            log.warn("Match doesn't contain all provided participants. Match participants: {}, provided: {}",
+                                                  matchResultMap.keySet(),
+                                                  gamesWonByParticipants.keySet());
+            return Collections.emptyList();
+        }
+
+        List<MatchResult> resultList = new ArrayList<>();
+        for (Map.Entry<Participant, Integer> participantGamesWonEntry : gamesWonByParticipants.entrySet()) {
+            MatchResult matchResult = matchResultMap.get(participantGamesWonEntry.getKey());
+            matchResult.setGamesWon(participantGamesWonEntry.getValue());
+            resultList.add(matchResult);
+        }
+        return resultList;
+    }
     
     public MatchResultEnum getMatchResult(Participant participant) {
         if (!matchResultMap.containsKey(participant)) {
@@ -143,29 +161,12 @@ public class Match {
     }
     
     public List<Participant> getParticipants() {
-        log.debug("in getParticipants: {}", matchResultMap.keySet());
         return new ArrayList<>(matchResultMap.keySet());
     }
     
     public boolean isBye() {
         return isBye;
     }
-
-//
-//    public int getWinsForParticipant(Participant participant) {
-//        if (!matchResultsForParticipant.containsKey(participant)) {
-//            log.warn(PARTICIPANT_NOT_FOUND_WARN_MESSAGE, participant);
-//            return 0;
-//        }
-//
-//        if (matchResultsForParticipant.get(participant) == null
-//                || matchResultsForParticipant.get(participant).getGamesWon() == null) {
-//            log.info("Participant does not yet have a submitted result: {}", participant);
-//            return 0;
-//        }
-//
-//        return matchResultsForParticipant.get(participant).getGamesWon();
-//    }
     
     public void addMatchResult(MatchResult matchResult) {
         matchResultMap.put(matchResult.getForParticipant(), matchResult);
@@ -180,8 +181,13 @@ public class Match {
     
     @Override
     public String toString() {
+        List<Participant> participants = new ArrayList<>();
+        if (matchResultMap != null && !matchResultMap.isEmpty()) {
+            participants.addAll(matchResultMap.keySet());
+        }
         return "Match{" +
                 "id=" + id +
+//                ", participants=" + participants +
                 '}';
     }
 }

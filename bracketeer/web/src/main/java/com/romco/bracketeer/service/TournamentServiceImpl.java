@@ -178,12 +178,23 @@ public class TournamentServiceImpl implements TournamentService {
         }
     }
     
-    @Override
-    public void setResult(int roundNumber, String participantCode, int gamesWon, int gamesLost) {
-        List<MatchResult> matchResults = tournament.setMatchResult(roundNumber, participantCode, gamesWon, gamesLost);
-        if (!matchResults.isEmpty()){
+//    @Override
+//    public void setResult(int roundNumber, String participantCode, int gamesWon, int gamesLost) {
+//        List<MatchResult> matchResults = tournament.setMatchResult(roundNumber, participantCode, gamesWon, gamesLost);
+//        if (!matchResults.isEmpty()){
+//            for (MatchResult matchResult : matchResults) {
+//                log.debug("in setResult, creating matchResult {}", matchResult);
+//                matchResultDao.update(matchResult);
+//            }
+//        }
+//    }
+
+    public void setResult(int roundNumber, int matchNumber, Map<String, Integer> participantCodeToGamesWon) {
+
+        List<MatchResult> matchResults = tournament.setMatchResult(roundNumber, matchNumber, participantCodeToGamesWon);
+        if (!matchResults.isEmpty()) {
             for (MatchResult matchResult : matchResults) {
-                log.debug("in setResult, creating matchResult {}", matchResult);
+                log.debug("in setResult, creating matchResult: {}", matchResult);
                 matchResultDao.update(matchResult);
             }
         }

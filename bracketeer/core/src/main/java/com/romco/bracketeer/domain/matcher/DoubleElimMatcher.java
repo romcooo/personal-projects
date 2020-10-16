@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Slf4j
-public class DoubleElimMatcher implements Matcher {
+class DoubleElimMatcher implements Matcher {
 
     /*
     Double elim works the following way:
@@ -21,7 +21,7 @@ public class DoubleElimMatcher implements Matcher {
      */
 
     @Override
-    public Round generateRound(List<Participant> participants, SortMode mode) {
+    public Round generateRound(List<Participant> participants, SortMode mode, int numberOfRoundToGenerate) {
         List<Participant> winningBracket =
                 participants.stream()
                             .filter(participant -> participant.getNumberOfMatchesWithResult(MatchResultEnum.LOSS) < 1)

@@ -34,7 +34,7 @@ public class RuleSet {
     }
 
     public double getPoints(MatchResultEnum result) {
-//        log.debug("getPoints for {} results in {} points.", result, pointMap.get(result));
+        log.trace("getPoints for {} results in {} points.", result, pointMap.get(result));
         return pointMap.get(result);
     }
 

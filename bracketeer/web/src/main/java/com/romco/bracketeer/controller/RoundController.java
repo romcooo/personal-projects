@@ -14,7 +14,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static com.romco.bracketeer.util.ModelAttributeNames.TOURNAMENT;
 import static com.romco.bracketeer.util.ModelAttributeNames.TOURNAMENT_CODE;
@@ -103,11 +105,11 @@ public class RoundController {
                                               .getParticipants()
                                               .get(0)
                                               .getCode();
-//        String participant2Code = tournament().getRound(roundNumber)
-//                                              .getMatch(matchNumber - 1)
-//                                              .getParticipants()
-//                                              .get(1)
-//                                              .getCode();
+        String participant2Code = tournament().getRound(roundNumber)
+                                              .getMatch(matchNumber - 1)
+                                              .getParticipants()
+                                              .get(1)
+                                              .getCode();
         log.info("In postMatchResult for roundNumber {}, matchNumber {}, scores are {} : {}",
                  roundNumber,
                  matchNumber,
@@ -115,7 +117,11 @@ public class RoundController {
                  participant2Score);
         // this is a version of the method that allows to use both scores with only 1 participant,
         // assuming that it's a duel.
-        service.setResult(roundNumber, participant1Code, participant1Score, participant2Score);
+//        service.setResult(roundNumber, participant1Code, participant1Score, participant2Score);
+        Map<String, Integer> gamesWonByParticipantsWithCode = new HashMap<>();
+        gamesWonByParticipantsWithCode.put(participant1Code, participant1Score);
+        gamesWonByParticipantsWithCode.put(participant2Code, participant2Score);
+        service.setResult(roundNumber, matchNumber, gamesWonByParticipantsWithCode);
 
         return Mappings.Tournament.Round.REDIRECT_WITH_NUMBER;
     }

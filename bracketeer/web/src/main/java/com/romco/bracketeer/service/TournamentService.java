@@ -6,6 +6,7 @@ import com.romco.bracketeer.domain.tournament.Tournament;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 public interface TournamentService {
     
@@ -26,5 +27,5 @@ public interface TournamentService {
     void generateRound(int n);
     int getMaxNumberOfRounds();
 
-    void setResult(int roundNumber, String participantCode, int gamesWon, int gamesLost);
+    void setResult(int roundNumber, int matchNumber, Map<String, Integer> participantCodeToGamesWon);
 }

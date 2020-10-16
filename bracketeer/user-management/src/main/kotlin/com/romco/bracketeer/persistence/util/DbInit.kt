@@ -16,8 +16,6 @@ open class DbInit: WithDataSource() {
 
     val log = logger<DbInit>()
 
-//    private lateinit var namedParameterJdbcTemplate: NamedParameterJdbcTemplate
-
     @Autowired
     lateinit var userDao: UserDao
 

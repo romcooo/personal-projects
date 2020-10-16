@@ -5,7 +5,9 @@ import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @Data
@@ -49,6 +51,17 @@ public class Round {
         }
         log.warn("No match with matchNumber {} found", matchNumber);
         return null;
+    }
+
+    public List<MatchResult> setMatchResult(int matchNumber, Map<Participant, Integer> gamesWonByParticipants) {
+        Match m = getMatchByMatchNumber(matchNumber);
+
+        if (m == null) {
+            log.warn("no such match exists in this round");
+            return Collections.emptyList();
+        }
+
+        return m.setMatchScore(gamesWonByParticipants);
     }
     
     @Override

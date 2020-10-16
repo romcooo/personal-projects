@@ -23,11 +23,10 @@ class TournamentImplTest {
 
     @Test
     void generateRound() {
-        Round round = tournament.generateRound(1);
-        assertEquals(4, round.getMatches().size());
         // exactly one will have a score of 9 after tournament, 1 will have score 0, and 3 will have scores 3 and 3 6
         // TODO technically speaking this kind of depends on the TestTournamentBuilder, so revisit this later but
         //  for now it should be fine
+        log.info(tournament.getParticipants().toString());
         assertEquals(1, tournament.getParticipants().stream().filter(p -> p.getScore() == 9).count());
         assertEquals(3, tournament.getParticipants().stream().filter(p -> p.getScore() == 6).count());
         assertEquals(3, tournament.getParticipants().stream().filter(p -> p.getScore() == 3).count());
@@ -35,5 +34,11 @@ class TournamentImplTest {
 
         log.debug("Tournament: {}", tournament);
         log.debug("Standings after: {}", Standings.getStandings(tournament, 3));
+    }
+
+    @Test
+    void generateRoundSize() {
+        Round round = tournament.generateRound(1);
+        assertEquals(4, round.getMatches().size());
     }
 }

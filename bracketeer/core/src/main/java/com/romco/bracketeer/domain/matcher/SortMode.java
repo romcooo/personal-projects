@@ -9,20 +9,23 @@ import java.util.List;
 
 public enum SortMode {
     SHUFFLE_THEN_SORT {
-        public List<Participant> sort(List<Participant> before) {
+        public List<Participant> sort(List<Participant> before, int afterRound) {
             List<Participant> after = new ArrayList<>(before);
             Collections.shuffle(after);
-            after.sort(Comparator.comparingDouble(Participant::getScore).reversed());
+            // TODO
+            after.sort(Comparator.comparingDouble((Participant p) -> p.getScoreAfterRound(afterRound)).reversed());
             return after;
         }
     },
     KEEP_SEED_ORDER_AND_SORT {
         @Override
-        List<Participant> sort(List<Participant> before) {
+        List<Participant> sort(List<Participant> before, int afterRound) {
             List<Participant> after = new ArrayList<>(before);
-            after.sort(Comparator.comparingDouble(Participant::getScore).reversed());
+//            after.sort(Comparator.comparingDouble(Participant::getScore).reversed());
+            // TODO check this again
+            after.sort(Comparator.comparingDouble((Participant p) -> p.getScoreAfterRound(afterRound)).reversed());
             return after;
         }
     };
-    abstract List<Participant> sort(List<Participant> before);
+    abstract List<Participant> sort(List<Participant> before, int afterRound);
 }

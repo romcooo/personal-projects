@@ -22,7 +22,7 @@ public enum TournamentFormat {
     DOUBLE_ELIMINATION {
         @Override
         public Matcher buildMatcher() {
-            return null;
+            return new DoubleElimMatcher();
         }
     };
     

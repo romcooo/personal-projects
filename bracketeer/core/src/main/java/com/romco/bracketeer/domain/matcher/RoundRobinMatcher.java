@@ -8,10 +8,10 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.List;
 
 @Slf4j
-public class RoundRobinMatcher implements Matcher {
+class RoundRobinMatcher implements Matcher {
     @Override
-    public Round generateRound(List<Participant> participants, SortMode mode) {
-        List<Participant> toPairList = mode.sort(participants);
+    public Round generateRound(List<Participant> participants, SortMode mode, int numberOfRoundToGenerate) {
+        List<Participant> toPairList = mode.sort(participants, numberOfRoundToGenerate - 1);
         // first check if it's still possible - if one player played against everyone else
         boolean matchIsPossible = false;
         for (int i = 1; i < toPairList.size(); i++) {

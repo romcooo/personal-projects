@@ -1,7 +1,8 @@
 # TODO
 
 ## HIGH
-1. set up DB access for 2 new users
+1. set up DB access for 2 new users DONE
+2. rework forAfterRound - IN PROGRESS
 
 ## MEDIUM
 1. when opening standings, default to last round

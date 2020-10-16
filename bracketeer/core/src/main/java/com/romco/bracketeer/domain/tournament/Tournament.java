@@ -3,6 +3,7 @@ package com.romco.bracketeer.domain.tournament;
 import com.romco.bracketeer.domain.participant.Participant;
 
 import java.util.List;
+import java.util.Map;
 
 public interface Tournament {
     long getId();
@@ -21,8 +22,6 @@ public interface Tournament {
     Participant removeParticipant(long id);
 
     List<Participant> getParticipants();
-    List<Participant> getParticipantsAfterRound(int roundNumber);
-
 
     void setRounds(List<Round> rounds);
     
@@ -34,8 +33,9 @@ public interface Tournament {
     List<Round> getRounds();
 
     List<MatchResult> setMatchResult(int roundNumber, Participant participant, int gamesWon, int gamesLost);
-    List<MatchResult> setMatchResult(int roundNumber, String participantCode, int gamesWon, int gamesLost);
-    List<MatchResult> setMatchResult(int roundNumber, String participantCode, int gamesWon);
+//    List<MatchResult> setMatchResult(int roundNumber, String participantCode, int gamesWon, int gamesLost);
+    List<MatchResult> setMatchResult(int roundNumber, int matchNumber, Map<String, Integer> gamesWonByParticipants);
+//    List<MatchResult> setMatchResult(int roundNumber, String participantCode, int gamesWon);
 
     void setStartingScore(Participant participant, double by);
 }

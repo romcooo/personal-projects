@@ -11,18 +11,16 @@ import java.util.Optional;
 
 // package-private because TournamentFormat provides the preferred builder method
 @Slf4j
-public
 class SwissMatcher implements Matcher {
     
     @Override
-    public Round generateRound(List<Participant> participants, SortMode mode) {
+    public Round generateRound(List<Participant> participants, SortMode mode, int numberOfRoundToGenerate) {
         if (participants.isEmpty()) {
             log.info("Empty list passed, returning null");
             return null;
         }
-        
-//        List<Participant> toPairList = new ArrayList<>(participants);
-        List<Participant> toPairList = mode.sort(participants);
+
+        List<Participant> toPairList = mode.sort(participants, numberOfRoundToGenerate - 1);
 
         log.debug("toPairList after sorting: {}", toPairList);
         Round round = new Round();
@@ -42,9 +40,9 @@ class SwissMatcher implements Matcher {
     
             // get the participant with which the current has not yet played and which has the highest score
             Optional<Participant> opponentOptional = toPairList.stream()
-                                             .filter(p -> !current.hasPlayedAgainst(p))
+                                             .filter(p -> !current.hasPlayedAgainstUptilRound(p, numberOfRoundToGenerate - 1))
                                              .filter(p -> !p.equals(current))
-                                             .max(Comparator.comparingDouble(Participant::getScore));
+                                             .max(Comparator.comparingDouble(p -> p.getScoreAfterRound(numberOfRoundToGenerate - 1)));
     
             if (opponentOptional.isEmpty()) {
                 log.warn("everyone already played with everyone in a swiss tournament");

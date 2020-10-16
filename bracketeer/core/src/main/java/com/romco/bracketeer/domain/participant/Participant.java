@@ -5,20 +5,32 @@ import com.romco.bracketeer.domain.tournament.Match;
 import com.romco.bracketeer.domain.tournament.MatchResultEnum;
 import com.romco.bracketeer.domain.tournament.RuleSet;
 import com.romco.bracketeer.domain.tournament.Tournament;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 public class Participant implements Comparable<Participant> {
     protected static long idCounter = 1;
     protected long id;
     protected String code;
     protected String name;
-    protected double scoreDeprecated;
     protected int numberOfByes;
+    // TODO ok so this should actually just be calculated from playedMatches also:
     protected List<Participant> playedAgainst;
     protected List<Match> playedMatches;
     protected Tournament ofTournament;
+    protected double additionalPoints = 0;
+
+    public double getAdditionalPoints() {
+        return additionalPoints;
+    }
+
+    public void giveAdditionalPoints(double additionalPoints) {
+        this.additionalPoints += additionalPoints;
+    }
+
     
     public Participant() {
         id = idCounter++;
@@ -57,11 +69,24 @@ public class Participant implements Comparable<Participant> {
 
         // TODO in progress here
         RuleSet ruleSet = ofTournament.getRuleSet();
-        double score = playedMatches.stream()
-                              .mapToDouble(it -> ruleSet.getPointMap()
-                                                        .get(it.getMatchResult(this)))
-                              .sum();
-//        return score;
+
+        double score = additionalPoints;
+
+        if (playedMatches != null
+                && !playedMatches.isEmpty()
+                && ofTournament != null
+                && ofTournament.getRuleSet() != null
+                && ofTournament.getRuleSet().getPointMap() != null
+//                && ofTournament.getRuleSet().getPointMap().isEmpty()
+                && playedMatches.stream().anyMatch(it -> it.getParticipants().contains(this))
+                && playedMatches.stream().anyMatch(it -> it.getMatchResult(this) != null)) {
+
+            score = playedMatches.stream()
+                                 .mapToDouble(it -> ruleSet.getPointMap()
+                                                           .get(it.getMatchResult(this)))
+                                 .sum();
+        }
+        return score;
 
 
         // another option for the calculation:
@@ -69,23 +94,33 @@ public class Participant implements Comparable<Participant> {
 //        playedMatches.forEach(it -> score.updateAndGet(v -> v + ruleSet.getPointMap().get(it.getMatchResult(this))));
         //
 
-        return scoreDeprecated;
-
     }
 
-    public double getScoreAfterMatch(int matchNumber) {
+    public double getScoreAfterRound(int roundNumber) {
+        if (roundNumber < 1) {
+            return additionalPoints;
+        }
+
         RuleSet ruleSet = ofTournament.getRuleSet();
-        return playedMatches.stream()
-                            .filter(match -> match.getMatchNumber() <= matchNumber)
-                            .mapToDouble(it -> ruleSet.getPointMap()
-                                                      .get(it.getMatchResult(this)))
-                            .sum();
-    }
+        double score = additionalPoints;
 
+        if (playedMatches != null
+                && !playedMatches.isEmpty()
+                && ofTournament != null
+                && ofTournament.getRuleSet() != null
+                && ofTournament.getRuleSet().getPointMap() != null
+//                && ofTournament.getRuleSet().getPointMap().isEmpty()
+                && playedMatches.stream().anyMatch(it -> it.getParticipants().contains(this))
+                && playedMatches.stream().anyMatch(it -> it.getMatchResult(this) != null)) {
 
+            score = playedMatches.stream()
+                                 .filter(match -> match.getOfRound().getRoundNumber() <= roundNumber)
+                                 .mapToDouble(it -> ruleSet.getPointMap()
+                                                           .get(it.getMatchResult(this)))
+                                 .sum();
+        }
 
-    public void setScore(double score) {
-        this.scoreDeprecated = score;
+        return score;
     }
     
     public int getNumberOfByes() {
@@ -116,11 +151,17 @@ public class Participant implements Comparable<Participant> {
     }
     
     public boolean hasPlayedAgainst(Participant other) {
-        return this.playedAgainst.contains(other);
+        return this.playedMatches.stream()
+                                 .anyMatch(it -> it.getOthers(this)
+                                                   .contains(other));
     }
-    
-    public void setPlayedAgainst(List<Participant> opponents) {
-        this.playedAgainst = opponents;
+
+    public boolean hasPlayedAgainstUptilRound(Participant other, int roundNumber) {
+
+        return this.playedMatches.stream()
+                                 .filter(match -> match.getOfRound().getRoundNumber() <= roundNumber)
+                                 .anyMatch(match -> match.getOthers(this)
+                                                   .contains(other));
     }
     
     public void addPlayedMatch(Match match) {
@@ -131,9 +172,6 @@ public class Participant implements Comparable<Participant> {
         return new ArrayList<>(playedMatches);
     }
 
-    public void setPlayedMatches(List<Match> matches) {
-        this.playedMatches = new ArrayList<>(matches);
-    }
     
     public Tournament getOfTournament() {
         return ofTournament;
@@ -142,14 +180,6 @@ public class Participant implements Comparable<Participant> {
     public void setOfTournament(Tournament ofTournament) {
         this.ofTournament = ofTournament;
     }
-
-    // replaced by generic below, remove later if the generic method proves as usable
-//    public long getNumberOfWins() {
-//        return playedMatches
-//                .stream()
-//                .filter(it -> it.getMatchResult(this) == MatchResultEnum.WIN)
-//                .count();
-//    }
 
     public long getTotalNumberOfPlayedMatches() {
         // null means the participant has not yet played that match => filter out
@@ -184,11 +214,43 @@ public class Participant implements Comparable<Participant> {
     
     @Override
     public String toString() {
+        double score = 0;
+        if (ofTournament != null) {
+
+            RuleSet ruleSet = ofTournament.getRuleSet();
+            if (playedMatches != null
+                    && !playedMatches.isEmpty()
+                    && ofTournament != null
+                    && ofTournament.getRuleSet() != null
+                    && ofTournament.getRuleSet().getPointMap() != null
+//                && ofTournament.getRuleSet().getPointMap().isEmpty()
+                    && playedMatches.stream().anyMatch(it -> it.getParticipants().contains(this))
+                    && playedMatches.stream().anyMatch(it -> it.getMatchResult(this) != null)) {
+//            score = playedMatches.stream()
+//                                 .mapToDouble(it -> ofTournament.getRuleSet().getPointMap()
+//                                                                .getOrDefault(it.getMatchResult(this), 0d))
+//                                 .sum();
+
+                List<MatchResultEnum> matchResultEnums = new ArrayList<>();
+                for (Match match : playedMatches) {
+                    // TODO figure out why they have null entries in the first place!! without this if, it crashed on nulls
+                    if (match.getMatchResult(this) != null) {
+                        matchResultEnums.add(match.getMatchResult(this));
+                    }
+                }
+                for (MatchResultEnum resultEnum : matchResultEnums) {
+                    score += ruleSet.getPoints(resultEnum);
+                }
+                log.debug("determining score for participant {}, results: {}, score: {}",
+                          name, matchResultEnums.toString(), score);
+
+            }
+        }
         return "Participant{" +
                 "id=" + id +
                 ", code=" + code +
                 ", name='" + name + '\'' +
-                ", score=" + scoreDeprecated +
+                ", score=" + score +
                 '}';
     }
 }
