@@ -5,13 +5,18 @@ import com.romco.bracketeer.domain.tournament.Match;
 import com.romco.bracketeer.domain.tournament.Round;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.Comparator;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 // package-private because TournamentFormat provides the preferred builder method
 @Slf4j
 class SwissMatcher implements Matcher {
+
+    private int roundNumberToUse;
+    private Round round;
+    private int matchNumber = 0;
     
     @Override
     public Round generateRound(List<Participant> participants, SortMode mode, int numberOfRoundToGenerate) {
@@ -19,66 +24,101 @@ class SwissMatcher implements Matcher {
             log.info("Empty list passed, returning null");
             return null;
         }
+        roundNumberToUse = numberOfRoundToGenerate - 1;
 
         List<Participant> toPairList = mode.sort(participants, numberOfRoundToGenerate - 1);
 
-        log.debug("toPairList after sorting: {}", toPairList);
-        Round round = new Round();
 
-        int matchNumber = 1;
+        log.debug("toPairList after sorting: {}", toPairList);
+        round = new Round();
+
+        matchNumber = 1;
         if (MatcherHelper.handleBye(toPairList,
                                     round,
                                     matchNumber)) {
             matchNumber++;
         }
-        
-        // go through list as long as there is someone to pair
-        while (!toPairList.isEmpty()) {
-            // get the participant with most points
-            Participant current = toPairList.get(0);
-            log.debug("current: {}", current);
-    
-            // get the participant with which the current has not yet played and which has the highest score
-            Optional<Participant> opponentOptional = toPairList.stream()
-                                             .filter(p -> !current.hasPlayedAgainstUptilRound(p, numberOfRoundToGenerate - 1))
-                                             .filter(p -> !p.equals(current))
-                                             .max(Comparator.comparingDouble(p -> p.getScoreAfterRound(numberOfRoundToGenerate - 1)));
-    
-            if (opponentOptional.isEmpty()) {
-                log.warn("everyone already played with everyone in a swiss tournament");
-                return null;
-//                throw new RuntimeException("everyone already played with everyone in a swiss tournament");
-            }
-            
-            Participant opponent = opponentOptional.get();
-            log.debug("participant {} has not yet played against: {}", current, opponent);
-    
-            // this is the goal - match current with next, then remove both from the list and keep going
-            log.info("matching {} with {}", current, opponent);
-    
-            Match match = new Match(current, opponent);
-            match.setMatchNumber(matchNumber);
-            match.setOfRound(round);
-            matchNumber++;
-    
-            log.debug(match.toString());
-            round.addMatch(match);
-    
-            current.addPlayedMatch(match);
-            opponent.addPlayedMatch(match);
-    
-            current.setPlayedAgainstBiDirectional(opponent);
-    
-            toPairList.remove(current);
-            toPairList.remove(opponent);
-        }
+
+        match(toPairList);
     
         log.info("Matches: {}", round.getMatches().toString());
         return round;
     }
-    
+
     @Override
     public int getMaxNumberOfRounds(int numberOfParticipants) {
         return numberOfParticipants - 1;
     }
+
+    // todo this still assumes that the first player is the most important, which would kind of make sense since
+    // the first player has the highest score always
+    private boolean match(List<Participant> toPairList) {
+        // if called with an empty list, returns true - this means success because everyone has been matched correctly
+        if (toPairList.isEmpty()) {
+            log.debug("toPairList empty, returning true");
+            return true;
+        }
+        // take first
+        Participant toMatch = toPairList.remove(0);
+
+        // determine whom he has not yet played
+        List<Participant> notPlayedYet = toPairList.stream()
+                                                   .filter(p -> !toMatch.hasPlayedAgainstUptilRound(p, roundNumberToUse))
+                                                   .collect(Collectors.toList());
+
+        double scoreDiffThreshold;
+
+        // 1. get scores
+        // 2. filter out distinct values
+        // 3. get the difference between current participant and the distinct score values
+        // 4. get the absolute values (eg. a player with a score of 6 can be matched equally with a player with score of 3 as a player with score of 9)
+        // 5. sort ascending
+        List<Double> distinctDiffs = notPlayedYet.stream()
+                                                 .map(p -> p.getScoreAfterRound(roundNumberToUse))
+                                                 .distinct()
+                                                 .map(distinctScore -> toMatch.getScoreAfterRound(roundNumberToUse) - distinctScore)
+                                                 .map(Math::abs)
+                                                 .sorted()
+                                                 .collect(Collectors.toList());
+
+        // go from the lowest diff and try to find if all the players can be matched with someone whom they haven't played
+        while (!distinctDiffs.isEmpty()) {
+            scoreDiffThreshold = distinctDiffs.get(0);
+            List<Participant> scoreWithinThreshold = notPlayedYet.stream()
+                                                                 .filter(isScoreWithinThreshold(roundNumberToUse,
+                                                                                                toMatch.getScoreAfterRound(
+                                                                                                        roundNumberToUse),
+                                                                                                scoreDiffThreshold))
+                                                                 .collect(Collectors.toList());
+
+            log.debug("list of within threshold: {}", scoreWithinThreshold);
+
+            for (Participant participant : scoreWithinThreshold) {
+                List<Participant> newList = new ArrayList<>(toPairList);
+                Participant opponent = participant;
+                newList.remove(opponent);
+                newList.remove(toMatch);
+
+                Match match = new Match(toMatch, opponent);
+                match.setMatchNumber(matchNumber);
+                match.setOfRound(round);
+                matchNumber++;
+                round.addMatch(match);
+                toMatch.setPlayedAgainstBiDirectional(opponent);
+                log.debug("matched p1: {}, p2: {}, remaining: {}", toMatch, opponent, newList);
+                if (match(newList)) {
+                    return true;
+                }
+                // else keep going
+            }
+            // if none are matched successfully, increase threshold but just for this one participant TODO
+            distinctDiffs.remove(0);
+        }
+        return false;
+    }
+
+    private static Predicate<Participant> isScoreWithinThreshold(int roundNumber, double origScore, double scoreThreshold) {
+        return p -> p.getScoreAfterRound(roundNumber) >= origScore - scoreThreshold && p.getScoreAfterRound( roundNumber) <= origScore + scoreThreshold;
+    }
+
 }

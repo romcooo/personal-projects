@@ -97,11 +97,11 @@ public class Participant implements Comparable<Participant> {
     }
 
     public double getScoreAfterRound(int roundNumber) {
+        log.debug("in gSAR, rn: {}, this: {}, playedMatches: {}", roundNumber, this.toString(), playedMatches.toString());
         if (roundNumber < 1) {
             return additionalPoints;
         }
 
-        RuleSet ruleSet = ofTournament.getRuleSet();
         double score = additionalPoints;
 
         if (playedMatches != null
@@ -112,6 +112,8 @@ public class Participant implements Comparable<Participant> {
 //                && ofTournament.getRuleSet().getPointMap().isEmpty()
                 && playedMatches.stream().anyMatch(it -> it.getParticipants().contains(this))
                 && playedMatches.stream().anyMatch(it -> it.getMatchResult(this) != null)) {
+
+            RuleSet ruleSet = ofTournament.getRuleSet();
 
             score = playedMatches.stream()
                                  .filter(match -> match.getOfRound().getRoundNumber() <= roundNumber)
@@ -157,15 +159,16 @@ public class Participant implements Comparable<Participant> {
     }
 
     public boolean hasPlayedAgainstUptilRound(Participant other, int roundNumber) {
-
+        log.debug("hasPlayedAgainstUptilRound, playedMatches: {}", playedMatches.toString());
         return this.playedMatches.stream()
                                  .filter(match -> match.getOfRound().getRoundNumber() <= roundNumber)
-                                 .anyMatch(match -> match.getOthers(this)
-                                                   .contains(other));
+                                 .anyMatch(match -> match.getParticipants().contains(other));
     }
     
     public void addPlayedMatch(Match match) {
-        this.playedMatches.add(match);
+        if (!this.playedMatches.contains(match)) {
+            this.playedMatches.add(match);
+        }
     }
 
     public List<Match> getPlayedMatches() {
@@ -241,7 +244,7 @@ public class Participant implements Comparable<Participant> {
                 for (MatchResultEnum resultEnum : matchResultEnums) {
                     score += ruleSet.getPoints(resultEnum);
                 }
-                log.debug("determining score for participant {}, results: {}, score: {}",
+                log.trace("determining score for participant {}, results: {}, score: {}",
                           name, matchResultEnums.toString(), score);
 
             }

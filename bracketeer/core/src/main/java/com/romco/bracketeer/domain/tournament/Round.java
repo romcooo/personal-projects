@@ -49,7 +49,7 @@ public class Round {
                 return match;
             }
         }
-        log.warn("No match with matchNumber {} found", matchNumber);
+        log.warn("No match with matchNumber {} found, matches present: {}", matchNumber, matches.toString());
         return null;
     }
 

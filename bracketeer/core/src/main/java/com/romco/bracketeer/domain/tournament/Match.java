@@ -26,13 +26,16 @@ public class Match {
     public Match(Participant participant1) {
         this();
         addParticipant(participant1);
+        participant1.addPlayedMatch(this);
         isBye = true;
     }
     
     public Match(Participant participant1, Participant participant2) {
         this();
         addParticipant(participant1);
+        participant1.addPlayedMatch(this);
         addParticipant(participant2);
+        participant2.addPlayedMatch(this);
         isBye = false;
     }
 
@@ -52,7 +55,7 @@ public class Match {
     public List<Participant> getOthers(Participant participant) {
         return matchResultMap.keySet().stream()
                              .filter((p) -> !p.equals(participant))
-                             .peek((p) -> log.debug("After filter: " + p))
+                             .peek((p) -> log.trace("After filter: " + p))
                              .collect(Collectors.toList());
     }
     
@@ -176,18 +179,19 @@ public class Match {
         if (!matchResultMap.containsKey(participant)) {
             MatchResult matchResult = new MatchResult(this, participant, null);
             this.matchResultMap.put(participant, matchResult);
+            participant.addPlayedMatch(this);
         }
     }
     
     @Override
     public String toString() {
-        List<Participant> participants = new ArrayList<>();
+        List<String> participantNames = new ArrayList<>();
         if (matchResultMap != null && !matchResultMap.isEmpty()) {
-            participants.addAll(matchResultMap.keySet());
+            matchResultMap.keySet().forEach(p -> participantNames.add(p.getName()));
         }
         return "Match{" +
                 "id=" + id +
-//                ", participants=" + participants +
+                ", participants (names)=" + participantNames +
                 '}';
     }
 }

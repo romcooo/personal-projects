@@ -184,7 +184,9 @@ public class TournamentImpl implements Tournament {
     public List<MatchResult> setMatchResultByParticipant(int roundNumber,
                                                          int matchNumber,
                                                          Map<Participant, Integer> gamesWonByParticipants) {
-        Round r = rounds.get(roundNumber);
+        Round r = rounds.stream()
+                        .filter(round -> round.getRoundNumber() == roundNumber)
+                        .findAny().orElse(null);
         if (r == null) {
             log.warn("no round of number {}", roundNumber);
             return Collections.emptyList();
