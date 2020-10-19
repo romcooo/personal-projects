@@ -49,7 +49,7 @@ class RoundRobinMatcher implements Matcher {
                     current.addPlayedMatch(match);
                     next.addPlayedMatch(match);
 
-                    current.setPlayedAgainstBiDirectional(next);
+//                    current.setPlayedAgainstBiDirectional(next);
 
                     toPairList.remove(current);
                     toPairList.remove(next);

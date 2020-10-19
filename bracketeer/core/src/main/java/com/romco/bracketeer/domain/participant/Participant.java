@@ -18,7 +18,7 @@ public class Participant implements Comparable<Participant> {
     protected String name;
     protected int numberOfByes;
     // TODO ok so this should actually just be calculated from playedMatches also:
-    protected List<Participant> playedAgainst;
+//    protected List<Participant> playedAgainst;
     protected List<Match> playedMatches;
     protected Tournament ofTournament;
     protected double additionalPoints = 0;
@@ -34,7 +34,6 @@ public class Participant implements Comparable<Participant> {
     
     public Participant() {
         id = idCounter++;
-        playedAgainst = new ArrayList<>();
         playedMatches = new ArrayList<>();
     }
     
@@ -88,12 +87,6 @@ public class Participant implements Comparable<Participant> {
         }
         return score;
 
-
-        // another option for the calculation:
-//        AtomicReference<Double> score = new AtomicReference<>(0.0d);
-//        playedMatches.forEach(it -> score.updateAndGet(v -> v + ruleSet.getPointMap().get(it.getMatchResult(this))));
-        //
-
     }
 
     public double getScoreAfterRound(int roundNumber) {
@@ -133,32 +126,16 @@ public class Participant implements Comparable<Participant> {
         this.numberOfByes = numberOfByes;
     }
     
-    /**
-     * Adds the passed value to the list of Participants against which this player has played,
-     * AND calls the passed participant to add this to its "played against" list
-     * (so it does not need to be set separately).
-     * @param other - the participant against which the participant being called has played
-     */
-    public void setPlayedAgainstBiDirectional(Participant other) {
-        if (!playedAgainst.contains(other)) {
-            playedAgainst.add(other);
-        }
-        other.addPlayedAgainst(this);
-    }
-    
-    public void addPlayedAgainst(Participant other) {
-        if (!playedAgainst.contains(other)) {
-            playedAgainst.add(other);
-        }
-    }
-    
     public boolean hasPlayedAgainst(Participant other) {
         return this.playedMatches.stream()
                                  .anyMatch(it -> it.getOthers(this)
                                                    .contains(other));
     }
 
-    public boolean hasPlayedAgainstUptilRound(Participant other, int roundNumber) {
+    /*
+    Until is inclusive
+     */
+    public boolean hasPlayedAgainstUntilIncludingRound(Participant other, int roundNumber) {
         log.debug("hasPlayedAgainstUptilRound, playedMatches: {}", playedMatches.toString());
         return this.playedMatches.stream()
                                  .filter(match -> match.getOfRound().getRoundNumber() <= roundNumber)
@@ -226,7 +203,6 @@ public class Participant implements Comparable<Participant> {
                     && ofTournament != null
                     && ofTournament.getRuleSet() != null
                     && ofTournament.getRuleSet().getPointMap() != null
-//                && ofTournament.getRuleSet().getPointMap().isEmpty()
                     && playedMatches.stream().anyMatch(it -> it.getParticipants().contains(this))
                     && playedMatches.stream().anyMatch(it -> it.getMatchResult(this) != null)) {
 //            score = playedMatches.stream()
