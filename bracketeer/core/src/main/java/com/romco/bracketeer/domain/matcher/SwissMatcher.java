@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 @Slf4j
 class SwissMatcher implements Matcher {
 
-    private int roundNumberToUse;
+    private int lastFinishedRoundNumber;
     private Round round;
     private int matchNumber = 0;
     
@@ -24,23 +24,18 @@ class SwissMatcher implements Matcher {
             log.info("Empty list passed, returning null");
             return null;
         }
-        roundNumberToUse = numberOfRoundToGenerate - 1;
-
-        List<Participant> toPairList = mode.sort(participants, numberOfRoundToGenerate - 1);
-
+        lastFinishedRoundNumber = numberOfRoundToGenerate - 1;
+        List<Participant> toPairList = mode.sort(participants, lastFinishedRoundNumber);
 
         log.debug("toPairList after sorting: {}", toPairList);
         round = new Round();
-
         matchNumber = 1;
         if (MatcherHelper.handleBye(toPairList,
                                     round,
                                     matchNumber)) {
             matchNumber++;
         }
-
         match(toPairList);
-    
         log.info("Matches: {}", round.getMatches().toString());
         return round;
     }
@@ -63,7 +58,7 @@ class SwissMatcher implements Matcher {
 
         // determine whom he has not yet played
         List<Participant> notPlayedYet = toPairList.stream()
-                                                   .filter(p -> !participantToBeMatched.hasPlayedAgainstUntilIncludingRound(p, roundNumberToUse))
+                                                   .filter(p -> !participantToBeMatched.hasPlayedAgainstUntilIncludingRound(p, lastFinishedRoundNumber))
                                                    .collect(Collectors.toList());
 
         double scoreDiffThreshold;
@@ -75,9 +70,9 @@ class SwissMatcher implements Matcher {
         ** 5. sort ascending
          */
         List<Double> distinctDiffs = notPlayedYet.stream()
-                                                 .map(p -> p.getScoreAfterRound(roundNumberToUse))
+                                                 .map(p -> p.getScoreAfterRound(lastFinishedRoundNumber))
                                                  .distinct()
-                                                 .map(distinctScore -> participantToBeMatched.getScoreAfterRound(roundNumberToUse) - distinctScore)
+                                                 .map(distinctScore -> participantToBeMatched.getScoreAfterRound(lastFinishedRoundNumber) - distinctScore)
                                                  .map(Math::abs)
                                                  .sorted()
                                                  .collect(Collectors.toList());
@@ -86,8 +81,8 @@ class SwissMatcher implements Matcher {
         while (!distinctDiffs.isEmpty()) {
             scoreDiffThreshold = distinctDiffs.get(0);
             List<Participant> scoreWithinThreshold = notPlayedYet.stream()
-                                                                 .filter(isScoreWithinThreshold(roundNumberToUse,
-                                                                                                participantToBeMatched.getScoreAfterRound(roundNumberToUse),
+                                                                 .filter(isScoreWithinThreshold(lastFinishedRoundNumber,
+                                                                                                participantToBeMatched.getScoreAfterRound(lastFinishedRoundNumber),
                                                                                                 scoreDiffThreshold))
                                                                  .collect(Collectors.toList());
 
@@ -103,21 +98,21 @@ class SwissMatcher implements Matcher {
                 match.setOfRound(round);
                 matchNumber++;
                 round.addMatch(match);
-//                participantToBeMatched.setPlayedAgainstBiDirectional(opponent);
                 log.debug("matched p1: {}, p2: {}, remaining: {}", participantToBeMatched, opponent, newList);
                 if (match(newList)) {
                     return true;
                 }
                 // else keep going
             }
-            // if none are matched successfully, increase threshold but just for this one participant TODO
+            // if none are matched successfully, increase threshold but just for this one participant
             distinctDiffs.remove(0);
         }
         return false;
     }
 
     private static Predicate<Participant> isScoreWithinThreshold(int roundNumber, double origScore, double scoreThreshold) {
-        return p -> p.getScoreAfterRound(roundNumber) >= origScore - scoreThreshold && p.getScoreAfterRound( roundNumber) <= origScore + scoreThreshold;
+        return p -> p.getScoreAfterRound(roundNumber) >= origScore - scoreThreshold
+                &&  p.getScoreAfterRound(roundNumber) <= origScore + scoreThreshold;
     }
 
 }

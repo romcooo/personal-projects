@@ -20,6 +20,7 @@ class DoubleElimMatcher implements Matcher {
             - in losers' bracket,,
      */
 
+    // TODO all of this
     @Override
     public Round generateRound(List<Participant> participants, SortMode mode, int numberOfRoundToGenerate) {
         List<Participant> winningBracket =

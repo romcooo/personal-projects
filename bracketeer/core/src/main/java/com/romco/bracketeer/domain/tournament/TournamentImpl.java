@@ -23,15 +23,12 @@ public class TournamentImpl implements Tournament {
     private String code; // business id
     private String name;
 
-    // TODO move type to ruleSet
-//    private TournamentFormat type;
     private RuleSet ruleSet;
 
     private List<Round> rounds;
 
     private List<Participant> participants;
     private Map<Participant, Integer> startingParticipantByes;
-//    private Map<Participant, Double> startingParticipantScores;
 
     private ParticipantManager participantManager;
 
@@ -44,7 +41,6 @@ public class TournamentImpl implements Tournament {
         this.ruleSet = RuleSet.getDefaultRuleSet();
 
         this.participants = new ArrayList<>();
-//        this.startingParticipantScores = new HashMap<>();
         this.startingParticipantByes = new HashMap<>();
 
         this.rounds = new LinkedList<>();
@@ -58,7 +54,6 @@ public class TournamentImpl implements Tournament {
      */
     public TournamentImpl(TournamentFormat type) {
         this();
-//        this.type = type;
         ruleSet.setType(type);
     }
     
@@ -71,27 +66,9 @@ public class TournamentImpl implements Tournament {
         this();
         this.code = code;
         this.name = name;
-//        this.type = type;
         ruleSet.setType(type);
     }
-    
-    public TournamentImpl(long id,
-                          String code,
-                          String name,
-                          List<Participant> participants,
-                          List<Round> rounds,
-                          TournamentFormat type,
-                          RuleSet ruleSet) {
-        this.id = id;
-        this.code = code;
-        this.name = name;
-        this.participants = participants;
-        this.rounds = rounds;
-//        this.type = type;
-        ruleSet.setType(type);
-        this.ruleSet = ruleSet;
-    }
-    
+
     // TODO maybe implement later
 //    public int addParticipants(List<Participant> participants) {
 //        int count = 0;
@@ -105,8 +82,6 @@ public class TournamentImpl implements Tournament {
 
     public void setStartingScore(Participant participant, double score) {
         participant.giveAdditionalPoints(score);
-
-//        startingParticipantScores.put(participant, score);
     }
 
     @Override
@@ -207,7 +182,6 @@ public class TournamentImpl implements Tournament {
         } else {
             participants.add(participant);
             participant.setCode(Integer.toString(participants.size()));
-//            startingParticipantScores.put(participant, 0d);
             startingParticipantByes.put(participant, 0);
             participant.setOfTournament(this);
             log.info("Adding participant {}", participant);
@@ -242,7 +216,6 @@ public class TournamentImpl implements Tournament {
                 ", code='" + code + '\'' +
                 ", name='" + name + '\'' +
                 ", participants=" + participants +
-//                ", startingParticipantScores=" + startingParticipantScores +
                 ", startingParticipantByes=" + startingParticipantByes +
                 ", rounds=" + rounds +
                 ", ruleSet=" + ruleSet +
@@ -254,7 +227,6 @@ public class TournamentImpl implements Tournament {
     private class ParticipantManager {
         private List<Participant> participants;
         private Map<Participant, Integer> startingParticipantByes;
-//        private Map<Participant, Double> startingParticipantScores;
 
         public boolean addParticipant(Participant participant) {
             if (participants.contains(participant)) {
@@ -263,7 +235,6 @@ public class TournamentImpl implements Tournament {
             } else {
                 participants.add(participant);
                 participant.setCode(Integer.toString(participants.size()));
-//                startingParticipantScores.put(participant, 0d);
                 startingParticipantByes.put(participant, 0);
                 participant.setOfTournament(TournamentImpl.this);
                 log.info("Adding participant {}", participant);
@@ -285,7 +256,6 @@ public class TournamentImpl implements Tournament {
 
         public void setStartingScore(Participant participant, double score) {
             participant.giveAdditionalPoints(score);
-//            startingParticipantScores.put(participant, score);
         }
 
         private void reconcileParticipantCodes() {

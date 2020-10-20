@@ -10,7 +10,8 @@ public class MatchResult {
     private Match ofMatch;
     private Participant forParticipant;
     private Integer gamesWon;
-    
+
+    //TODO this can be done better surely
     public MatchResult() {
     }
     

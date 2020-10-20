@@ -12,7 +12,6 @@ public enum SortMode {
         public List<Participant> sort(List<Participant> before, int afterRound) {
             List<Participant> after = new ArrayList<>(before);
             Collections.shuffle(after);
-            // TODO
             after.sort(Comparator.comparingDouble((Participant p) -> p.getScoreAfterRound(afterRound)).reversed());
             return after;
         }
@@ -21,8 +20,6 @@ public enum SortMode {
         @Override
         List<Participant> sort(List<Participant> before, int afterRound) {
             List<Participant> after = new ArrayList<>(before);
-//            after.sort(Comparator.comparingDouble(Participant::getScore).reversed());
-            // TODO check this again
             after.sort(Comparator.comparingDouble((Participant p) -> p.getScoreAfterRound(afterRound)).reversed());
             return after;
         }

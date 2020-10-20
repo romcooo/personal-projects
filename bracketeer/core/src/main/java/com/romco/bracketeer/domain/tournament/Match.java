@@ -135,13 +135,13 @@ public class Match {
     public MatchResultEnum getMatchResult(Participant participant) {
         if (!matchResultMap.containsKey(participant)) {
             log.warn(PARTICIPANT_NOT_FOUND_WARN_MESSAGE, participant);
-            return null;
+            return MatchResultEnum.NOT_PLAYED;
         }
         // if the other entry is null, this means that no result is present yet
         // the null should be handled in the calling method
         if (matchResultMap.get(participant) == null
                 || matchResultMap.get(participant).getGamesWon() == null) {
-            return null;
+            return MatchResultEnum.NOT_PLAYED;
         }
         
         MatchResultEnum matchResultEnum;
@@ -180,6 +180,7 @@ public class Match {
             MatchResult matchResult = new MatchResult(this, participant, null);
             this.matchResultMap.put(participant, matchResult);
             participant.addPlayedMatch(this);
+            // TODO recheck isBye here
         }
     }
     

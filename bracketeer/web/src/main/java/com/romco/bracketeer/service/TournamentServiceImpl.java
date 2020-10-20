@@ -119,7 +119,6 @@ public class TournamentServiceImpl implements TournamentService {
                                                           .get();
                         matchResult.setOfMatch(match);
                         matchResult.setForParticipant(ofMatch);
-//                        match.addParticipant(ofMatch);
                         match.addMatchResult(matchResult);
                         log.debug("MatchResult: {}, map:{}, participants: {}", matchResult, matchResultMap, participants);
                         log.debug("Match: {}", match);

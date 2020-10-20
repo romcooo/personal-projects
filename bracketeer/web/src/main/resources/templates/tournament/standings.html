@@ -73,7 +73,7 @@
                 <tr th:block th:each="participant, iteration : ${participants}">
                     <td class="col-number" th:text="${iteration.count}">1</td>
                     <td class="col-player" th:text="${participant.name}">Player 1</td>
-                    <td class="col-score" th:text="${participant.score}">3</td>
+                    <td class="col-score" th:text="${participant.getScoreAfterRound(round.roundNumber)}">3</td>
                     <td class="col-wins" th:text="${participant.getNumberOfMatchesWithResult('WIN')}">N/A</td>
                     <td class="col-losses" th:text="${participant.getNumberOfMatchesWithResult('LOSS')}">N/A</td>
                     <td class="col-ties" th:text="${participant.getNumberOfMatchesWithResult('TIE')}">N/A</td>

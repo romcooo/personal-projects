@@ -16,9 +16,6 @@ public class Participant implements Comparable<Participant> {
     protected long id;
     protected String code;
     protected String name;
-    protected int numberOfByes;
-    // TODO ok so this should actually just be calculated from playedMatches also:
-//    protected List<Participant> playedAgainst;
     protected List<Match> playedMatches;
     protected Tournament ofTournament;
     protected double additionalPoints = 0;
@@ -63,10 +60,7 @@ public class Participant implements Comparable<Participant> {
         this.name = name;
     }
 
-    // TODO rework this to compute the value here
     public double getScore() {
-
-        // TODO in progress here
         RuleSet ruleSet = ofTournament.getRuleSet();
 
         double score = additionalPoints;
@@ -118,12 +112,8 @@ public class Participant implements Comparable<Participant> {
         return score;
     }
     
-    public int getNumberOfByes() {
-        return numberOfByes;
-    }
-    
-    public void setNumberOfByes(int numberOfByes) {
-        this.numberOfByes = numberOfByes;
+    public long getNumberOfByes() {
+        return playedMatches.stream().filter(Match::isBye).count();
     }
     
     public boolean hasPlayedAgainst(Participant other) {

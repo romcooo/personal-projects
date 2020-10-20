@@ -28,7 +28,8 @@ public class RuleSet {
         pointMap.put(MatchResultEnum.WIN, pointsForWin);
         pointMap.put(MatchResultEnum.LOSS, pointsForLoss);
         pointMap.put(MatchResultEnum.TIE, pointsForTie);
-        
+        pointMap.put(MatchResultEnum.NOT_PLAYED, 0d);
+
         this.bestOf = bestOf;
         this.type = type;
     }

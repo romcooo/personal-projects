@@ -33,9 +33,7 @@ public interface Tournament {
     List<Round> getRounds();
 
     List<MatchResult> setMatchResult(int roundNumber, Participant participant, int gamesWon, int gamesLost);
-//    List<MatchResult> setMatchResult(int roundNumber, String participantCode, int gamesWon, int gamesLost);
     List<MatchResult> setMatchResult(int roundNumber, int matchNumber, Map<String, Integer> gamesWonByParticipants);
-//    List<MatchResult> setMatchResult(int roundNumber, String participantCode, int gamesWon);
 
     void setStartingScore(Participant participant, double by);
 }
