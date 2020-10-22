@@ -296,6 +296,20 @@ body a:hover {
     transition: color 0.25s;
 }
 
+.stylish-button {
+    margin: 0 0;
+    padding: 0 0;
+    border: 0;
+    
+    font-size: 80%;
+    
+    color: inherit;
+    background-color: transparent;
+    
+    width: 100%;
+    height: 42px;
+}
+
 /* == PLAYER TABLE*/
 
 .player-table {
