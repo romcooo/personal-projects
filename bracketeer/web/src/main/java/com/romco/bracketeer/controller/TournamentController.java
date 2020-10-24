@@ -107,7 +107,7 @@ public class TournamentController {
         if (tournamentType != null) {
             service.setTournamentType(tournamentType);
         }
-        return Mappings.Tournament.REDIRECT_TO_NEW_SETUP;
+        return Mappings.Tournament.REDIRECT_TO_EXISTING_SETUP;
     }
 
     // == save tournament and retrieve existing by code=

@@ -48,6 +48,12 @@ public class RuleSet {
                 DEFAULT_FORMAT
         );
     }
+
+    public boolean setPointsForResult(MatchResultEnum result, double pointsForResult) {
+        pointMap.put(result, pointsForResult);
+        //TODO check?
+        return true;
+    }
     
     public static class RuleSetBuilder {
         private final RuleSet ruleSet = getDefaultRuleSet();

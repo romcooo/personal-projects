@@ -25,17 +25,21 @@ public final class Mappings {
 
 //        public static final String SETUP = Tournament.BASE + "/setup";
 
-        public static final String REDIRECT_TO_NEW_SETUP = REDIRECT_PREFIX + EXISTING_SETUP;
+        public static final String REDIRECT_TO_EXISTING_SETUP = REDIRECT_PREFIX + EXISTING_SETUP;
 
+
+        // TODO move these 2 under /tournament/{tournamentCode}/setup/...
         public static final String ADD_PLAYER = EXISTING_WITH_CODE + "/addPlayer";
-
         public static final String REMOVE_PLAYER = EXISTING_WITH_CODE + "/removePlayer";
 
 
         public static final String BRACKET = EXISTING_WITH_CODE + "/bracket";
 
 
-
+        public static class Setup {
+            public static final String BASE = Tournament.EXISTING_WITH_CODE + "/setup";
+            public static final String SET_POINTS_FOR_MATCH_RESULT_TYPE = BASE + "/rule-set";
+        }
 
         public static class Round {
             public static final String BASE = Tournament.EXISTING_WITH_CODE + "/round";

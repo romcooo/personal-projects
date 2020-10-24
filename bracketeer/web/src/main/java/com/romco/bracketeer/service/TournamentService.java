@@ -27,5 +27,7 @@ public interface TournamentService {
     void generateRound(int n);
     int getMaxNumberOfRounds();
 
+    boolean setPointsForMatchResultType(String matchResultType, double pointsForMatchResultType);
+
     void setResult(int roundNumber, int matchNumber, Map<String, Integer> participantCodeToGamesWon);
 }

@@ -30,7 +30,7 @@ public class SetupController {
                             @RequestParam(name = "playerName") String playerName) {
         log.info("In addPlayer, input: {}, tournamentCode: {}", playerName, tournamentCode);
         service.addPlayer(playerName);
-        return Mappings.Tournament.REDIRECT_TO_NEW_SETUP.replace("{tournamentCode}", tournamentCode);
+        return Mappings.Tournament.REDIRECT_TO_EXISTING_SETUP.replace("{tournamentCode}", tournamentCode);
     }
 
     @PostMapping(Mappings.Tournament.REMOVE_PLAYER)
@@ -38,7 +38,15 @@ public class SetupController {
                                @RequestParam(name = "id") String playerId) {
         log.info("In POST removePlayer with id {}", playerId);
         service.removePlayer(playerId);
-        return Mappings.Tournament.REDIRECT_TO_NEW_SETUP.replace("{tournamentCode}", tournamentCode);
+        return Mappings.Tournament.REDIRECT_TO_EXISTING_SETUP.replace("{tournamentCode}", tournamentCode);
     }
 
+    @PostMapping(Mappings.Tournament.Setup.SET_POINTS_FOR_MATCH_RESULT_TYPE)
+    public String setPointsForMatchResult(@PathVariable(name = TOURNAMENT_CODE) String tournamentCode,
+                                          @RequestParam(name = "matchResultType") String matchResultType,
+                                          @RequestParam(name = "pointsResult") int pointsForResultType) {
+        log.info("In POST setPointsForMatchResult");
+        service.setPointsForMatchResultType(matchResultType, pointsForResultType);
+        return Mappings.Tournament.REDIRECT_TO_EXISTING_SETUP.replace("{tournamentCode}", tournamentCode);
+    }
 }
