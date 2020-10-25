@@ -2,6 +2,7 @@ package com.romco.bracketeer.service;
 
 
 import com.romco.bracketeer.domain.participant.Participant;
+import com.romco.bracketeer.domain.tournament.MatchResultEnum;
 import com.romco.bracketeer.domain.tournament.Tournament;
 
 import java.util.Collection;
@@ -27,7 +28,7 @@ public interface TournamentService {
     void generateRound(int n);
     int getMaxNumberOfRounds();
 
-    boolean setPointsForMatchResultType(String matchResultType, double pointsForMatchResultType);
+    boolean setPointsForMatchResultType(MatchResultEnum matchResultType, double pointsForMatchResultType);
 
     void setResult(int roundNumber, int matchNumber, Map<String, Integer> participantCodeToGamesWon);
 }

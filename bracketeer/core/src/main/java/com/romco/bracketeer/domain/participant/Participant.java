@@ -208,7 +208,7 @@ public class Participant implements Comparable<Participant> {
                     }
                 }
                 for (MatchResultEnum resultEnum : matchResultEnums) {
-                    score += ruleSet.getPoints(resultEnum);
+                    score += ruleSet.getPointsForResult(resultEnum);
                 }
                 log.trace("determining score for participant {}, results: {}, score: {}",
                           name, matchResultEnums.toString(), score);

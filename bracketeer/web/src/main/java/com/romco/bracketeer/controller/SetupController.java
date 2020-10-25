@@ -1,5 +1,6 @@
 package com.romco.bracketeer.controller;
 
+import com.romco.bracketeer.domain.tournament.MatchResultEnum;
 import com.romco.bracketeer.service.TournamentService;
 import com.romco.bracketeer.util.Mappings;
 import lombok.extern.slf4j.Slf4j;
@@ -43,10 +44,13 @@ public class SetupController {
 
     @PostMapping(Mappings.Tournament.Setup.SET_POINTS_FOR_MATCH_RESULT_TYPE)
     public String setPointsForMatchResult(@PathVariable(name = TOURNAMENT_CODE) String tournamentCode,
-                                          @RequestParam(name = "matchResultType") String matchResultType,
-                                          @RequestParam(name = "pointsResult") int pointsForResultType) {
+                                          @RequestParam(name = "pointsForVictory") double pointsForVictory,
+                                          @RequestParam(name = "pointsForLoss") double pointsForLoss,
+                                          @RequestParam(name = "pointsForTie") double pointsForTie) {
         log.info("In POST setPointsForMatchResult");
-        service.setPointsForMatchResultType(matchResultType, pointsForResultType);
+        service.setPointsForMatchResultType(MatchResultEnum.WIN, pointsForVictory);
+        service.setPointsForMatchResultType(MatchResultEnum.LOSS, pointsForLoss);
+        service.setPointsForMatchResultType(MatchResultEnum.TIE, pointsForTie);
         return Mappings.Tournament.REDIRECT_TO_EXISTING_SETUP.replace("{tournamentCode}", tournamentCode);
     }
 }

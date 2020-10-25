@@ -100,15 +100,48 @@
         <div class="advanced-settings">
             <button class="accordion clickable stylish-button">v Advanced Settings v</button>
             <div class="advanced-settings-panel">
-                <p>Advanced Settings go here</p>
-                <table>
+                <p>Advanced Settings:</p>
                 
-                <p>Points for a victory: _</p>
-                <p>Points for a loss: _</p>
-                <p>Points for a tie: _</p>
-                    
+                <table class="points-setup-table" cellspacing="0">
+
                 
+                    <tbody>
+                        <tr>
+                            <td>Points for a victory:</td>
+                            <td contenteditable="true">_
+                                <input th:form="rule-set-form"
+                                       name="pointsForVictory" th:value="${tournament.getRuleSet().getPointsForResult('WIN')}">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Points for a loss:</td>
+                            <td contenteditable="true">_
+                                <input th:form="rule-set-form"
+                                       name="pointsForLoss"
+                                       th:value="${tournament.getRuleSet().getPointsForResult('LOSS')}">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Points for a tie:</td>
+                            <td contenteditable="true">_
+                                <input th:form="rule-set-form"
+                                       name="pointsForTie"
+                                       th:value="${tournament.getRuleSet().getPointsForResult('TIE')}">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <form th:id="rule-set-form"
+                                      th:action="@{/tournament/__${tournamentCode}__/setup/rule-set}"
+                                      method="post">
+                                    <a class="clickable"
+                                       th:href="'javascript:$(\'#rule-set-form\').submit();'"
+                                       href="#">Save</a>
+                                </form>
+                            </td>
+                        </tr>
                 </table>
+                    
                 
             </div>
             <!-- TODO this script is redundantly iterative, i'm only using it for one thing right now-->

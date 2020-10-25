@@ -34,9 +34,38 @@ public class RuleSet {
         this.type = type;
     }
 
-    public double getPoints(MatchResultEnum result) {
+    public double getPointsForResult(MatchResultEnum result) {
         log.trace("getPoints for {} results in {} points.", result, pointMap.get(result));
         return pointMap.get(result);
+    }
+
+    public double getPointsForResult(String result) {
+        MatchResultEnum matchResultEnum;
+        try {
+            matchResultEnum = MatchResultEnum.valueOf(result);
+        } catch (IllegalArgumentException e) {
+            log.warn("Illegal resultType passed: {}", result);
+            return 0d;
+        }
+        return getPointsForResult(matchResultEnum);
+    }
+
+    public boolean setPointsForResult(MatchResultEnum resultType, double pointsForResult) {
+        pointMap.put(resultType, pointsForResult);
+        log.trace("setPointsForResult for {} to {} points.", resultType, pointMap.get(resultType));
+        //TODO check?
+        return true;
+    }
+
+    public boolean setPointsForResult(String result, double pointsForResult) {
+        MatchResultEnum matchResultEnum;
+        try {
+            matchResultEnum = MatchResultEnum.valueOf(result);
+        } catch (IllegalArgumentException e) {
+            log.warn("Illegal resultType passed: {}", result);
+            return false;
+        }
+        return setPointsForResult(matchResultEnum, pointsForResult);
     }
 
     public static RuleSet getDefaultRuleSet() {
@@ -49,11 +78,7 @@ public class RuleSet {
         );
     }
 
-    public boolean setPointsForResult(MatchResultEnum result, double pointsForResult) {
-        pointMap.put(result, pointsForResult);
-        //TODO check?
-        return true;
-    }
+
     
     public static class RuleSetBuilder {
         private final RuleSet ruleSet = getDefaultRuleSet();

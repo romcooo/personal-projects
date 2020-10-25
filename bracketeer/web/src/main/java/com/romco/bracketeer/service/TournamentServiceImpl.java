@@ -223,16 +223,8 @@ public class TournamentServiceImpl implements TournamentService {
     }
 
     @Override
-    public boolean setPointsForMatchResultType(String matchResultType, double pointsForMatchResultType) {
-        MatchResultEnum resultEnum;
-        try {
-            resultEnum = MatchResultEnum.valueOf(matchResultType);
-        } catch (IllegalArgumentException e) {
-            log.warn("Illegal result type passed: {}", matchResultType);
-            return false;
-        }
-        tournament.getRuleSet().setPointsForResult(resultEnum, pointsForMatchResultType);
-        return true;
+    public boolean setPointsForMatchResultType(MatchResultEnum matchResultType, double pointsForMatchResultType) {
+        return tournament.getRuleSet().setPointsForResult(matchResultType, pointsForMatchResultType);
     }
 
     @Override
