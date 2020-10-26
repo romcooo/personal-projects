@@ -80,7 +80,7 @@ public class TournamentController {
     // == SETUP OF TOURNAMENT
     @GetMapping({
 //            Mappings.Tournament.SETUP,
-            Mappings.Tournament.EXISTING_SETUP})
+            Mappings.Tournament.Setup.BASE})
     public String tournamentSetup(@PathVariable(name = TOURNAMENT_CODE, required = false) String tournamentCode,
                                   Model model) {
         if (tournamentCode != null) {
@@ -93,7 +93,7 @@ public class TournamentController {
     
     @PostMapping({
 //            Mappings.Tournament.SETUP,
-            Mappings.Tournament.EXISTING_SETUP})
+            Mappings.Tournament.Setup.BASE})
     public String tournamentSetup(@PathVariable(name = TOURNAMENT_CODE, required = false) String tournamentCode,
                                   @RequestParam(name = "tournamentName", required = false) String tournamentName,
                                   @RequestParam(name = "tournamentType", required = false) String tournamentType) {
@@ -107,7 +107,7 @@ public class TournamentController {
         if (tournamentType != null) {
             service.setTournamentType(tournamentType);
         }
-        return Mappings.Tournament.REDIRECT_TO_EXISTING_SETUP;
+        return Mappings.Tournament.Setup.REDIRECT_TO_EXISTING_SETUP;
     }
 
     // == save tournament and retrieve existing by code=

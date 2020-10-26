@@ -19,18 +19,8 @@ public final class Mappings {
         public static final String EXISTING_STANDINGS = EXISTING_WITH_CODE + "/standings";
         public static final String REDIRECT_EXISTING_WITH_CODE = REDIRECT_PREFIX + EXISTING_WITH_CODE;
 
-        public static final String EXISTING_SETUP = EXISTING_WITH_CODE + "/setup";
 
         public static final String SAVE = EXISTING_WITH_CODE + "/save";
-
-//        public static final String SETUP = Tournament.BASE + "/setup";
-
-        public static final String REDIRECT_TO_EXISTING_SETUP = REDIRECT_PREFIX + EXISTING_SETUP;
-
-
-        // TODO move these 2 under /tournament/{tournamentCode}/setup/...
-        public static final String ADD_PLAYER = EXISTING_WITH_CODE + "/addPlayer";
-        public static final String REMOVE_PLAYER = EXISTING_WITH_CODE + "/removePlayer";
 
 
         public static final String BRACKET = EXISTING_WITH_CODE + "/bracket";
@@ -39,6 +29,11 @@ public final class Mappings {
         public static class Setup {
             public static final String BASE = Tournament.EXISTING_WITH_CODE + "/setup";
             public static final String SET_POINTS_FOR_MATCH_RESULT_TYPE = BASE + "/rule-set";
+            public static final String REDIRECT_TO_EXISTING_SETUP = REDIRECT_PREFIX + BASE;
+
+            //TODO change to /players POST and /players DELETE?
+            public static final String ADD_PLAYER = EXISTING_WITH_CODE + "/addPlayer";
+            public static final String REMOVE_PLAYER = EXISTING_WITH_CODE + "/removePlayer";
         }
 
         public static class Round {
@@ -50,6 +45,7 @@ public final class Mappings {
 
             public static final String SAVE_ALL_RESULTS = WITH_NUMBER + "/results/save";
 
+
             public static class Match {
                 public static final String BASE = Round.WITH_NUMBER + "/match";
                 public static final String WITH_NUMBER = BASE + "/{matchNumber}";
@@ -60,7 +56,10 @@ public final class Mappings {
 
     }
 
+
     public static class UserManagement {
         public static final String LOGIN = "/login";
-        public static final String REGISTER = "/register";    }
+        public static final String REGISTER = "/register";
+    }
+
 }
