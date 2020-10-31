@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class IdTracker {
-    private static Map<Class<?>, AtomicInteger> integerMap = new HashMap<>();
+    private static final Map<Class<?>, AtomicInteger> integerMap = new HashMap<>();
 
 //    private IdTracker() {
 //        integerMap = new HashMap<>();

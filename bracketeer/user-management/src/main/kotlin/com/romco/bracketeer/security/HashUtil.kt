@@ -4,11 +4,9 @@ import com.romco.bracketeer.domain.User
 import com.romco.bracketeer.persistence.daoimpl.UserDaoImpl
 import com.romco.bracketeer.util.logger
 import com.sun.tools.javac.Main
-import lombok.extern.slf4j.Slf4j
 import org.springframework.security.crypto.factory.PasswordEncoderFactories
 import org.springframework.security.crypto.password.PasswordEncoder
 import java.security.spec.KeySpec
-import java.time.LocalDateTime
 import java.util.*
 import javax.crypto.SecretKeyFactory
 import javax.crypto.spec.PBEKeySpec

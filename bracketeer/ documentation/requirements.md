@@ -34,7 +34,9 @@
     - be able to enter my own round results and view my standings
         after individual rounds
     
-
+- If I'm a logged in user, I want to see the list of tournaments that 
+    I'm organizing AND tournaments I'm participating in.
+    
 ## Web Functionality
 
 TODO

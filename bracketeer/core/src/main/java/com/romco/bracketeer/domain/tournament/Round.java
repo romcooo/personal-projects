@@ -14,6 +14,8 @@ import java.util.Map;
 public class Round {
     private long id;
     private int roundNumber;
+    // note that bestOf is taken from rule set of tournament, but if the ruleset is changed, the existing rounds should
+    // actually keep the one they had before, and only newly generated rounds will have the new value
     private int bestOf;
     private List<Match> matches;
     private Tournament ofTournament;

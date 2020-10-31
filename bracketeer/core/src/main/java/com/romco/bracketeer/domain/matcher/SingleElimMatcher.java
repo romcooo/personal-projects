@@ -80,8 +80,8 @@ class SingleElimMatcher implements Matcher {
         log.debug("numberOfParticipants: {}, sqrt: {}, roundedUp (result): {}", numberOfParticipants, logOf2, roundedUp);
         return roundedUp;
     }
-    
-    // TODO this could produce an entire bracket
-    
+
+    // To "simulate" a full bracket generation, use sort mode "KEEP_ORDER_THEN_SORT" and simply go through the list of
+    // passed participants top to bottom, creating a bracket
     
 }

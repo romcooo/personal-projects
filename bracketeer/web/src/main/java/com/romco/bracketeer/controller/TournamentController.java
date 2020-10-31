@@ -143,6 +143,5 @@ public class TournamentController {
         return ViewNames.Tournament.FIND;
     }
 
-    
 
 }

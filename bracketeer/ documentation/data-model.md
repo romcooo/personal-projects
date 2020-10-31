@@ -1,5 +1,58 @@
 # Core
-TODO
+
+## Tournament
+| Column Name  | Data Type    | Nullable? | Note                              |
+| ----         | ----         | ----      | ----                              |
+| id           | int          | false     | -                                 |
+| code         | varchar(255) | true      | -                                 |
+| name         | varchar(255) | true      | -                                 |
+| type         | varchar(45)  | true      | move to rule_set                  |
+| organized_by | varchar(45)  | true      | TODO implement (username of user) |
+
+
+## Round
+| Column Name   | Data Type          | Nullable? | Note |
+| ----          | ----               | ----      | ---- |
+| id            | int                | false     | -    |
+| tournament_id | FK - Tournament.id | false     | -    |
+| round_number  | int                | true      | -    |
+| best_of       | int                | true      | -    |
+
+## Match
+| Column Name  | Data Type     | Nullable? | Note |
+| ----         | ----          | ----      | ---- |
+| id           | int           | false     | -    |
+| is_bye       | tinyint       | true      | -    |
+| round_id     | FK - Round.id | false     | -    |
+| match_number | int           | true      | -    |
+
+## Match Result
+| Column Name    | Data Type           | Nullable? | Note |
+| ----           | ----                | ----      | ---- |
+| participant_id | FK - Participant.id | false     | -    |
+| match_id       | FK - Match.id       | false     | -    |
+| games_won      | int                 | true      | -    |
+
+## Participant
+| Column Name    | Data Type          | Nullable? | Note |
+| ----           | ----               | ----      | ---- |
+| id             | int                | false     | -    |
+| name           | varchar(255)       | true      | -    |
+| code           | varchar(255)       | true      | -    |
+| starting_score | int                | true      | -    |
+| starting_byes  | int                | true      | -    |
+| tournament_id  | FK - Tournament.id | false     | -    |
+
+## Rule Set
+| Column Name        | Data Type          | Nullable? | Note                               |
+| ----               | ----               | ----      | ----                               |
+| id                 | int                | false     | -                                  |
+| points_for_victory | double             | true      | TODO - rename from points_for_win  |
+| points_for_loss    | double             | true      | -                                  |
+| points_for_tie     | double             | true      | -                                  |
+| best_of            | int                | true      | TODO - rename from default_best_of |
+| tournament_id      | FK - Tournament.id | false     | -                                  |
+
 
 # User Management
 
