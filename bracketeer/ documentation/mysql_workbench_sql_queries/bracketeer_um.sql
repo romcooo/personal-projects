@@ -56,9 +56,9 @@ CREATE USER 'brkt_core'@'localhost' IDENTIFIED BY 'password';
 GRANT ALL PRIVILEGES ON bracketeer.* TO 'brkt_core'@'localhost';
 
 ALTER USER 'brkt_core'@'localhost' IDENTIFIED BY 'corePASS420';
+CREATE USER 'brkt_um'@'localhost' IDENTIFIED BY 'um71830';
 ALTER USER 'brkt_um'@'localhost' IDENTIFIED BY 'umPASS420';
 
-CREATE USER 'brkt_um'@'localhost' IDENTIFIED BY 'um71830';
 
 DROP USER 'asd'@'localhost';
 

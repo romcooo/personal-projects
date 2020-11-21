@@ -1,6 +1,6 @@
 package com.romco.bracketeer.controller;
 
-import com.romco.bracketeer.service.UserService;
+import com.romco.bracketeer.service.CustomUserService;
 import com.romco.bracketeer.util.Mappings;
 import com.romco.bracketeer.util.ViewNames;
 import lombok.extern.slf4j.Slf4j;
@@ -18,12 +18,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class LoginController {
     // == fields
-    private final UserService userService;
+    private final CustomUserService customUserService;
 
     // == constructors
     @Autowired
-    public LoginController(UserService service) {
-        this.userService = service;
+    public LoginController(CustomUserService service) {
+        this.customUserService = service;
     }
 
     // == model attributes
@@ -31,6 +31,18 @@ public class LoginController {
     // == request handlers
     @GetMapping(Mappings.UserManagement.LOGIN)
     public String login(Model model) {
+        return ViewNames.UserManagement.LOGIN;
+    }
+
+//    @PostMapping(Mappings.UserManagement.LOGIN)
+    @PostMapping("/login2")
+    public String login(@RequestParam(value = "username") String username,
+                        @RequestParam(value = "password") String password,
+                        Model model) {
+
+        log.info("In login with credentials: {}, {}", username, password);
+
+
         return ViewNames.UserManagement.LOGIN;
     }
 
@@ -57,7 +69,7 @@ public class LoginController {
 
         log.info("username is " + username);
         log.info("in post register");
-        userService.registerUser(username, password, email);
+        customUserService.registerUser(username, password, email);
         // TODO log in right away
         
         

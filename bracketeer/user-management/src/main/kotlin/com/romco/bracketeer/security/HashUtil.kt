@@ -50,11 +50,4 @@ fun main() {
     println("password = $password, hashed = $hashed")
     val doesMatch = passwordEncoder.matches(password, hashed)
     println(doesMatch)
-
-    val userDaoImpl = UserDaoImpl()
-    userDaoImpl.create(User(username = "bracketeer",
-                            passwordHash =  encodePassword("bracketeer").orEmpty(),
-                            lastUpdateDate = Date()))
-    val user = userDaoImpl.retrieveByUsername("bracketeer")
-    println(user.toString())
 }

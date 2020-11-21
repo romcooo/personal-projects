@@ -1,15 +1,46 @@
 package com.romco.bracketeer.config;
 
+import com.romco.bracketeer.auth.CustomAuthenticationProvider;
+import com.romco.bracketeer.service.CustomUserServiceImpl;
 import com.romco.bracketeer.util.Mappings;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 
 
 @Configuration
 @EnableWebSecurity
+//idk what the below does
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @Autowired
+    private CustomUserServiceImpl userDetailsService;
+    @Autowired
+    private CustomAuthenticationProvider customAuthenticationProvider;
+
+    @Autowired
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userDetailsService);
+    }
+
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+
+        auth.inMemoryAuthentication()
+            .withUser("bracketeer")
+            .password(PasswordEncoderFactories.createDelegatingPasswordEncoder().encode("bracketeer"))
+            .roles("USER");
+
+    }
+
+    //TODO adjust the hardcoded mappings below to refer to the Mappings class
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http
@@ -19,8 +50,11 @@ class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .formLogin()
                 .loginPage(Mappings.UserManagement.LOGIN)
+                .loginProcessingUrl("/login")
+                .failureUrl("/login-error")
                 .permitAll()
-                .and().csrf().disable();
+                .and().csrf().disable()
+                .authenticationProvider(customAuthenticationProvider);
 //                .and()
 //                .logout()
 //                .permitAll()
@@ -28,6 +62,6 @@ class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     
     // TODO?
     public void authorize() {
-    
+
     }
 }

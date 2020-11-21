@@ -8,6 +8,9 @@ import com.romco.bracketeer.security.HashUtilKt;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -15,7 +18,7 @@ import java.util.Date;
 
 @Slf4j
 @Service
-public class UserServiceImpl implements UserService {
+public class CustomUserServiceImpl implements CustomUserService, UserDetailsService {
 
     // == DAO
     @Autowired
@@ -26,7 +29,7 @@ public class UserServiceImpl implements UserService {
 
     // == constructors
     @Autowired
-    public UserServiceImpl() {
+    public CustomUserServiceImpl() {
         // autowired empty constructor
     }
     
@@ -56,5 +59,10 @@ public class UserServiceImpl implements UserService {
         
         return HashUtilKt.verifyUser(user, password);
     }
-    
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+
+        return null;
+    }
 }

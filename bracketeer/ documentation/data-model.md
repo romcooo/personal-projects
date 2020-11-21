@@ -9,7 +9,6 @@
 | type         | varchar(45)  | true      | move to rule_set                  |
 | organized_by | varchar(45)  | true      | TODO implement (username of user) |
 
-
 ## Round
 | Column Name   | Data Type          | Nullable? | Note |
 | ----          | ----               | ----      | ---- |
@@ -34,14 +33,15 @@
 | games_won      | int                 | true      | -    |
 
 ## Participant
-| Column Name    | Data Type          | Nullable? | Note |
-| ----           | ----               | ----      | ---- |
-| id             | int                | false     | -    |
-| name           | varchar(255)       | true      | -    |
-| code           | varchar(255)       | true      | -    |
-| starting_score | int                | true      | -    |
-| starting_byes  | int                | true      | -    |
-| tournament_id  | FK - Tournament.id | false     | -    |
+| Column Name    | Data Type          | Nullable? | Note                              |
+| ----           | ----               | ----      | ----                              |
+| id             | int                | false     | -                                 |
+| name           | varchar(255)       | true      | -                                 |
+| code           | varchar(255)       | true      | -                                 |
+| starting_score | int                | true      | -                                 |
+| starting_byes  | int                | true      | -                                 |
+| tournament_id  | FK - Tournament.id | false     | -                                 |
+| of_user        | varchar(45)        | true      | TODO implement (username of user) |
 
 ## Rule Set
 | Column Name        | Data Type          | Nullable? | Note                               |
