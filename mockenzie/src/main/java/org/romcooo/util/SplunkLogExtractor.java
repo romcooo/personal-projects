@@ -10,11 +10,13 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.ssl.SSLContextBuilder;
 import org.apache.http.util.EntityUtils;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -34,10 +36,7 @@ import java.net.URI;
 import java.security.KeyManagementException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
-import java.util.Base64;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 public class SplunkLogExtractor {
     
@@ -46,16 +45,20 @@ public class SplunkLogExtractor {
     
     public static final String SALESROOM_ENDPOINT = "https://homesis.in00c1.in.infra/homesis/restful/salesrooms/";
     public static final String PARTNERS_ENDPOINT = "https://homesis.in00c1.in.infra/homesis/restful/partners/";
+    public static final String COMMODITY_TYPES_ENDPOINT = "https://commoditywl.in00c1.in.infra/commodity/openapi/v1/commodity-types/";
+    public static final String COMMODITY_CATEGORIES_ENDPOINT = "https://commoditywl.in00c1.in.infra/commodity/openapi/v1/commodity-categories/";
     
     
     public static void main(String[] args) throws IOException, ParserConfigurationException, SAXException, XPathExpressionException, InterruptedException, ParseException, KeyStoreException, NoSuchAlgorithmException, KeyManagementException {
         File file = new File("C:\\Users\\roman.stubna\\Desktop\\exports\\export_in_2_older.txt");
         Scanner reader = new Scanner(file);
         
-        PrintWriter writer = new PrintWriter("C:\\Users\\roman.stubna\\Desktop\\exports\\output_java_in_2_2.txt");
+        PrintWriter writer = new PrintWriter("C:\\Users\\roman.stubna\\Desktop\\exports\\output_java_in_2_3.txt");
         
         int counter = 0;
         int maxRows = 6000;
+        
+        Map<String, String> commodityTypeToCategoryNameMap = new HashMap<>();
         
         while (reader.hasNextLine() && (counter < maxRows || maxRows == -1)) {
     
@@ -68,6 +71,8 @@ public class SplunkLogExtractor {
             sb.append("=================\n");
     
             counter++;
+            
+            // only print out the first one to check that it's parsing right
             boolean initPrintOut = (counter == 1);
             
             if (initPrintOut) {
@@ -131,6 +136,62 @@ public class SplunkLogExtractor {
 //                commodityExchangeIds.add(content);
 //                System.out.println(content);
 //            }
+    
+            // retrieve commodity category by commodity type code and add it to map so it doesn't have to call again next time
+            if (!commodityTypeToCategoryNameMap.containsKey(commodityTypeCode)) {
+                String commodityTypeDetailUri = COMMODITY_TYPES_ENDPOINT + commodityTypeCode;
+                CloseableHttpClient httpClient = createTrustAllHttpClientBuilder().build();
+                String encoding = Base64.getEncoder()
+                                        .encodeToString(("homerselect:homerselect").getBytes());
+    
+                HttpUriRequest commodityTypeRequest = new HttpGet(URI.create(commodityTypeDetailUri));
+                commodityTypeRequest.setHeader("User-Agent", "Java 11 HttpClient Bot");
+                commodityTypeRequest.setHeader("Authorization", "Basic " + encoding);
+                commodityTypeRequest.setHeader("Accept", "*/*");
+                
+                CloseableHttpResponse commodityTypeResponse = httpClient.execute(commodityTypeRequest);
+                
+                if (commodityTypeResponse.getStatusLine().getStatusCode() == 200) {
+                    String commodityTypeResponseString = EntityUtils.toString(commodityTypeResponse.getEntity());
+                    if (initPrintOut) {
+                        System.out.println("Commodity response:" + commodityTypeResponseString);
+                    }
+                    JSONParser jsonParser = new JSONParser();
+                    JSONArray jsonArray = (JSONArray) jsonParser.parse(commodityTypeResponseString);
+                    JSONObject jsonObject = (JSONObject) jsonArray.get(0);
+                    String commodityCategoryCode = (String) jsonObject.get("categoryCode");
+                    
+                    if (!commodityCategoryCode.isBlank()) {
+                        String commodityCategoryDetailUri = COMMODITY_CATEGORIES_ENDPOINT + commodityCategoryCode;
+                        HttpUriRequest commodityCategoryRequest = new HttpGet(URI.create(commodityCategoryDetailUri));
+    
+                        commodityCategoryRequest.setHeader("User-Agent", "Java 11 HttpClient Bot");
+                        commodityCategoryRequest.setHeader("Authorization", "Basic " + encoding);
+                        commodityCategoryRequest.setHeader("Accept", "*/*");
+    
+                        CloseableHttpResponse commodityCategoryResponse = httpClient.execute(commodityCategoryRequest);
+                        
+                        if (commodityCategoryResponse.getStatusLine().getStatusCode() == 200) {
+                            String commodityCategoryResponseString = EntityUtils.toString(commodityCategoryResponse.getEntity());
+                            if (initPrintOut) {
+                                System.out.println("Commodity category response:" + commodityCategoryResponseString);
+                            }
+                            jsonArray = (JSONArray) jsonParser.parse(commodityCategoryResponseString);
+                            jsonObject = (JSONObject) jsonArray.get(0);
+                            JSONObject jsonObject1 = (JSONObject) jsonObject.get("name");
+                            String commodityCategoryName = (String) jsonObject1.getOrDefault("EN", "");
+                            
+                            // could be empty, that's ok we still want to put it in the map to not repeat the call
+                            commodityTypeToCategoryNameMap.put(commodityTypeCode, commodityCategoryName);
+                            
+                        }
+                    }
+                }
+                
+            }
+    
+            String commodityCategoryName = commodityTypeToCategoryNameMap.get(commodityTypeCode);
+            
             
             vals.put("financialParameters.totalMonthlyPayment", totalMonthlyPayment);
             vals.put("financialParameters.term", term);
@@ -144,6 +205,7 @@ public class SplunkLogExtractor {
             vals.put("commodity.engineNumber", commodityEngineNumber);
             vals.put("commodity.licencePlateNumber", commodityLicencePlateNumber);
             vals.put("commodity.price", commodityPrice);
+            vals.put("commodity.category", commodityCategoryName);
             
             
             String salesroomDetailsUri = SALESROOM_ENDPOINT + salesroomCode;
