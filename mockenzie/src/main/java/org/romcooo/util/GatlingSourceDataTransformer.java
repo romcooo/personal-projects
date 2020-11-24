@@ -12,14 +12,17 @@ import java.util.*;
 
 import static org.romcooo.util.Const.csvSeparator;
 
-public class FeedCounter {
+public class GatlingSourceDataTransformer {
+    
+    public static final String CURRENCY = "INR";
     
     public static void main(String[] args) throws FileNotFoundException, ParseException {
 //        File file = new File("C:\\Users\\roman.stubna\\Desktop\\exports\\output_java_w_address_extended_backup.txt");
-        File file = new File("C:\\Users\\roman.stubna\\Desktop\\exports\\output_java_in_2.txt");
+//        File file = new File("C:\\Users\\roman.stubna\\Desktop\\exports\\output_java_in_2.txt");
+        File file = new File("C:\\Users\\roman.stubna\\Desktop\\exports\\output_java_in_2_3.txt");
         Scanner reader = new Scanner(file);
     
-//        PrintWriter writer = new PrintWriter("C:\\Users\\roman.stubna\\Desktop\\output_producer_distrib.txt");
+        PrintWriter writer = new PrintWriter("C:\\Users\\roman.stubna\\Desktop\\exports\\output_producer_distrib.txt");
     
         List<Map<String, String>> requests = new ArrayList<>();
         Map<String, String> currentRequest = new HashMap<>();
@@ -84,11 +87,13 @@ public class FeedCounter {
             // model attributes
             Map<String, String> modelAttributes = new HashMap<>();
             modelAttributes.put("producer", producer);
-            modelAttributes.put("price", request.get("commodity.price"));
+            // strip currency from price
+            modelAttributes.put("price", request.get("commodity.price").replace(CURRENCY, ""));
             modelAttributes.put("typeCode", request.get("commodity.typeCode"));
             modelAttributes.put("serialNumber", request.get("commodity.serialNumber"));
             modelAttributes.put("engineNumber", request.get("commodity.engineNumber"));
             modelAttributes.put("licencePlateNumber", request.get("commodity.licencePlateNumber"));
+            modelAttributes.put("category", request.get("commodity.category"));
 
             modelAttributeMap.put(modelNumber, modelAttributes);
             
@@ -102,8 +107,7 @@ public class FeedCounter {
             salesroomInfo.put("partnerName", request.get("salesroom.partnerName"));
     
             if (request.get("salesroom.addressInfo") != null) {JSONParser jsonParser = new JSONParser();
-                JSONObject
-                jsonObject = (JSONObject) jsonParser.parse(request.get("salesroom.addressInfo"));
+                JSONObject jsonObject = (JSONObject) jsonParser.parse(request.get("salesroom.addressInfo"));
                 salesroomInfo.put("countryCode", (String) jsonObject.get("countryCode"));
                 salesroomInfo.put("districtCode", (String) jsonObject.get("districtCode"));
                 salesroomInfo.put("houseNumber", (String) jsonObject.get("houseNumber"));
@@ -194,6 +198,9 @@ public class FeedCounter {
             }
         }
         
+        writer.println(sb.toString());
+        writer.close();
+        reader.close();
         System.out.println(sb.toString());
         
     }
