@@ -40,6 +40,9 @@ import java.util.*;
 
 public class SplunkLogExtractor {
     
+    // source data exported from https://splunk-pdc.cz.prod/en-GB/account/login?return_to=%2Fen-GB%2Fapp%2Fsearch%2Fsearch%3Fq%3Dsearch%2520country%253D%2522vn%2522%2520index%253D%2522hcg_bsl_prod%2522%2520ContractFullInfoRequest%2520%2522ContractSignSE%2522%26display.page.search.mode%3Dsmart%26dispatch.sample_ratio%3D1%26earliest%3D-30d%2540d%26latest%3Dnow%26display.page.search.tab%3Devents%26sid%3D1585837234.15944_3C280DFD-CE09-4D68-858E-F772545BBA91
+    // but using country="in"
+    
     public static final String REQUEST_START = "<ContractFullInfoRequest xmlns=\"http://homecredit.net/homerselect/contract/v6\" xmlns:ns2=\"http://homecredit.net/homerselect/common/v1\" xmlns:ns3=\"http://homecredit.net/homerselect/contractbulk/v6\">";
     public static final String REQUEST_END = "</ContractFullInfoRequest>";
     
@@ -48,19 +51,22 @@ public class SplunkLogExtractor {
     public static final String COMMODITY_TYPES_ENDPOINT = "https://commoditywl.in00c1.in.infra/commodity/openapi/v1/commodity-types/";
     public static final String COMMODITY_CATEGORIES_ENDPOINT = "https://commoditywl.in00c1.in.infra/commodity/openapi/v1/commodity-categories/";
     
+    public static final String FILE_IN_PATH = "C:\\Users\\roman.stubna\\Desktop\\exports\\export_in_2_older.txt";
+    public static final String FILE_OUT_PATH = "C:\\Users\\roman.stubna\\Desktop\\exports\\output_java_in_2_3.txt";
+    
+    public static final int MAX_ROWS = 6000;
     
     public static void main(String[] args) throws IOException, ParserConfigurationException, SAXException, XPathExpressionException, InterruptedException, ParseException, KeyStoreException, NoSuchAlgorithmException, KeyManagementException {
-        File file = new File("C:\\Users\\roman.stubna\\Desktop\\exports\\export_in_2_older.txt");
+        File file = new File(FILE_IN_PATH);
         Scanner reader = new Scanner(file);
         
-        PrintWriter writer = new PrintWriter("C:\\Users\\roman.stubna\\Desktop\\exports\\output_java_in_2_3.txt");
+        PrintWriter writer = new PrintWriter(FILE_OUT_PATH);
         
         int counter = 0;
-        int maxRows = 6000;
         
         Map<String, String> commodityTypeToCategoryNameMap = new HashMap<>();
         
-        while (reader.hasNextLine() && (counter < maxRows || maxRows == -1)) {
+        while (reader.hasNextLine() && (counter < MAX_ROWS || MAX_ROWS == -1)) {
     
             String line = reader.nextLine();
             if (!line.contains(REQUEST_START) || !line.contains(REQUEST_END)) {
@@ -277,35 +283,6 @@ public class SplunkLogExtractor {
                     vals.put("salesroom.partnerName", (String) jsonObject.get("name"));
                 }
             }
-            
-            ////////////////
-
-//            StringBuilder exchangeIds = new StringBuilder();
-//            commodityExchangeIds.forEach(it -> exchangeIds.append(it).append(","));
-//            if (!commodityExchangeIds.isEmpty()) {
-//                commodityExchangeIds.remove(commodityExchangeIds.size()-1);
-//            }
-//
-//            String prodEncoding = Base64.getEncoder().encodeToString(("ADD IF NEEDED:PWD").getBytes());
-//            String commodityUri = "https://commoditywl.pdcvn1.vn.prod/commodity/openapi/v1/commodities/" + exchangeIds.toString();
-//            System.out.println("calling " + commodityUri);
-//
-//            HttpUriRequest httpUriRequestCommodity = new HttpGet(URI.create(commodityUri));
-//            httpUriRequest.setHeader("User-Agent", "appsupp_healthcheck");
-//            httpUriRequest.setHeader("Authorization", "Basic " + prodEncoding);
-//            httpUriRequest.setHeader("Accept", "*/*");
-//
-//
-//            CloseableHttpResponse commodityResponse = httpClient.execute(httpUriRequestCommodity);
-//
-//            if (addressResponse.getStatusLine().getStatusCode() == 200) {
-//                String respString = EntityUtils.toString(commodityResponse.getEntity());
-//                System.out.println(respString);
-//                vals.put("commodity.details", respString);
-//
-//            }
-//
-            //////////////
             
             
             if (!getString("initTransactionType", root).equals("NDF")) {

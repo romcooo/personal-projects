@@ -4,7 +4,6 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import javax.xml.crypto.dsig.spec.HMACParameterSpec;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
@@ -16,13 +15,16 @@ public class GatlingSourceDataTransformer {
     
     public static final String CURRENCY = "INR";
     
+    public static final String FILE_IN_PATH = "C:\\Users\\roman.stubna\\Desktop\\exports\\output_java_in_2_3.txt";
+    public static final String FILE_OUT_PATH = "C:\\Users\\roman.stubna\\Desktop\\exports\\output_producer_distrib.txt";
+    
     public static void main(String[] args) throws FileNotFoundException, ParseException {
 //        File file = new File("C:\\Users\\roman.stubna\\Desktop\\exports\\output_java_w_address_extended_backup.txt");
 //        File file = new File("C:\\Users\\roman.stubna\\Desktop\\exports\\output_java_in_2.txt");
-        File file = new File("C:\\Users\\roman.stubna\\Desktop\\exports\\output_java_in_2_3.txt");
+        File file = new File(FILE_IN_PATH);
         Scanner reader = new Scanner(file);
     
-        PrintWriter writer = new PrintWriter("C:\\Users\\roman.stubna\\Desktop\\exports\\output_producer_distrib.txt");
+        PrintWriter writer = new PrintWriter(FILE_OUT_PATH);
     
         List<Map<String, String>> requests = new ArrayList<>();
         Map<String, String> currentRequest = new HashMap<>();
@@ -132,9 +134,6 @@ public class GatlingSourceDataTransformer {
         sb.append("## MODELS:\n");
         
         for (String producer : producerToModelCountMap.keySet()) {
-//            sb.append("\n==")
-//              .append(producer)
-//              .append(":\n");
             Map<String, Integer> modelCount = producerToModelCountMap.get(producer);
             for (String model : modelCount.keySet()) {
                 sb.append(model)
