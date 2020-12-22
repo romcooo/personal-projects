@@ -1,0 +1,61 @@
+parameters:
+  - name: NumberOfUsers
+    displayName: Number of users
+    type: number
+    default: 10
+  - name: DurationSeconds
+    displayName: Duration in seconds
+    type: number
+    default: 10
+  - name: TargetURL
+    displayName: Target URL
+    type: string
+    default: https://hosel.in.hcgma.com/importer/sales-feed
+  - name: TargetFolderName
+    displayName: Target Data Folder
+    type: string
+    default: india
+  - name: SimulationClass
+    displayName: Simulation Class
+    type: string
+    default: net.homecredit.koyal.salesfeed.SalesFeedSimulation
+    values:
+      - net.homecredit.koyal.salesfeed.SalesFeedSimulation
+
+trigger: none
+
+pool:
+  name: JavaBuildAgent
+
+variables:
+  Version.MajorMinor: '1.0'
+  Version.Revision: $[counter(variables['Version.MajorMinor'], 0)]
+  Version: $(Version.MajorMinor).$(Version.Revision)
+  AppName: $(Build.Repository.Name)
+
+stages:
+  - stage: CompileAndRun
+    displayName: 'Compile and Run'
+    jobs:
+      - job: test_job
+        displayName: 'Run Maven'
+        steps:
+          - bash: echo "##vso[task.setvariable variable=koyal-user]`az keyvault secret show --vault-name hi-nonprod --name gma-hoselimporter-user --output tsv --query value`"
+            displayName: "Get secret koyal-user from Azure KeyVault hi-nonprod"
+          - bash: echo "##vso[task.setvariable variable=koyal-password]`az keyvault secret show --vault-name hi-nonprod --name gma-hoselimporter-password --output tsv --query value`"
+            displayName: "Get secret koyal-password from Azure KeyVault hi-nonprod"
+          - task: Maven@3
+            inputs:
+              mavenPomFile: 'pom.xml'
+              mavenOptions: '-Xmx3072m'
+              javaHomeOption: 'JDKVersion'
+              jdkVersionOption: 1.14header
+              jdkArchitectureOption: 'x64'
+              goals: 'gatling:test -Dgatling.simulationClass=${{ parameters.SimulationClass }} -DnumberOfUsers=${{ parameters.NumberOfUsers }} -DdurationInSeconds=${{ parameters.DurationSeconds }} -DtargetFolderName=${{ parameters.TargetFolderName }} -DtargetUrl=${{ parameters.TargetURL }} -DkoyalUser=$(koyal-user) -DkoyalPassword=$(koyal-password)'
+          - bash: mv "./target/gatling/$(cat ./target/gatling/lastRun.txt)" ./target/gatling/report
+            displayName: 'Rename Report Directory'
+          - task: PublishBuildArtifacts@1
+            displayName: 'Publish Test Report as Build Artifact'
+            inputs:
+              pathtoPublish: './target/gatling/report'
+              artifactName: report

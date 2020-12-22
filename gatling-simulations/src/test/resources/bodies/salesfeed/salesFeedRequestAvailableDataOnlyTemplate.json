@@ -1,0 +1,55 @@
+{
+  "financialParameters" : {
+      "monthlyInstallment" : {{ monthlyInstallment }},
+      "term" : {{ term }},
+      "loanAmount" : {{ loanAmount }},
+      "downPayment" : {{ downPayment }}
+  },
+  "salesRoomDetail" : {
+    "code" : "{{ salesroom.code }}",
+    "name" : "{{ salesroom.name }}",
+    "gpsLatitude" : {{ salesroom.gpsLatitude }},
+    "gpsLongtitude" : {{ salesroom.gpsLongitude }},
+    "partnerCode" : "{{ salesroom.partnerCode }}",
+    "partnerName" : "{{ salesroom.partnerName }}",
+    "address" : {
+      "country" : "{{ salesroom.countryCode }}",
+      "region" : "{{ salesroom.regionCode }}",
+      "district" : "{{ salesroom.districtCode }}",
+{% if (salesroom.houseNumber is not null) and (salesroom.houseNumber is not empty) %}
+      "houseNumber" : "{{ salesroom.houseNumber }}",
+{% endif %}
+{% if (salesroom.street is not null) and (salesroom.street is not empty) %}
+      "street" : "{{ salesroom.street }}",
+{% endif %}
+{% if (salesroom.town is not null) and (salesroom.town is not empty) %}
+      "town" : "{{ salesroom.town }}",
+{% endif %}
+      "type" : "{{ salesroom.addressType }}"
+    }
+  },
+  "commodityDetail" : [
+{% for commodityDetail in commodityDetails %}
+{
+      "category" : "{{ commodityDetail.category }}",
+      "type" : "{{ commodityDetail.commodityType }}",
+      "producerCode" : "{{ commodityDetail.producerCode }}",
+{% if (commodityDetail.serialNumber is not null) and (commodityDetail.serialNumber is not empty) %}
+      "serialNumber" : "{{ commodityDetail.serialNumber }}",
+{% endif %}
+{% if (commodityDetail.modelNumber is not null) and (commodityDetail.modelNumber is not empty) %}
+      "modelNumber" : "{{ commodityDetail.modelNumber }}",
+{% endif %}
+{% if (commodityDetail.engineNumber is not null) and (commodityDetail.engineNumber is not empty) %}
+      "engineNumber" : "{{ commodityDetail.engineNumber }}",
+{% endif %}
+{% if (commodityDetail.licencePlateNumber is not null) and (commodityDetail.licencePlateNumber is not empty) %}
+      "licencePlateNumber" : "{{ commodityDetail.licencePlateNumber }}",
+{% endif %}
+      "price" : {{ commodityDetail.price }}
+}
+{% endfor %}
+  ],
+  "cuid" : "{{ cuid }}",
+  "contractCode" : "{{ contractCode }}"
+}

@@ -1,0 +1,17 @@
+
+B
+java:S2629Ê"$Invoke method(s) only conditionally.(À¼„8»·ªè.
+W
+java:S2864¸"4Iterate over the "entrySet" instead of the "keySet".(ÿÅ÷Ìşÿÿÿÿ8©šîªç.
+W
+java:S2864‡"4Iterate over the "entrySet" instead of the "keySet".(’Ë›úÿÿÿÿ8©šîªç.
+R
+java:S2864Ÿ"4Iterate over the "entrySet" instead of the "keySet".(¦ş¥´8©šîªç.
+P
+java:S2864~"4Iterate over the "entrySet" instead of the "keySet".(ÓÙ»Z8Öáºªè.
+o
+java:S3776"RRefactor this method to reduce its Cognitive Complexity from 36 to the 15 allowed.(êù¬á8©šîªç.
+Q
+java:S2864‰"4Iterate over the "entrySet" instead of the "keySet".(Éé´!8©šîªç.
+R
+java:S2864›"4Iterate over the "entrySet" instead of the "keySet".(—˜˜‹8©šîªç.

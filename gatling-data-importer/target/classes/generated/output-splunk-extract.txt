@@ -1,0 +1,309 @@
+=================
+salesroom.partnerCode = 001185
+financialParameters.term = 42
+salesroom.code = 009990217
+salesroom.gpsLatitude = 0.0
+commodity.serialNumber = 
+commodity.engineNumber = 
+commodity.category = ROND_YCNB23708_CSGHV
+commodity.licencePlateNumber = 
+commodity.producer = 
+salesroom.gpsLongtitude = 0.0
+salesroom.name = CASH LOAN (NCR)
+financialParameters.totalMonthlyPayment = 8908INR
+commodity.modelNumber = 
+financialParameters.downPayment = 0INR
+commodity.typeCode = 
+salesroom.partnerName = CASH LOAN (NCR)
+financialParameters.loanAmount = 230000INR
+salesroom.addressInfo = {"countryCode":"356","block":null,"blockSet":null,"districtCode":"DL","subdistrict":null,"flat":null,"floor":"0","houseNumber":"1","landmark":null,"locality":"UTTAM NAGAR","regionCode":"DL","street":null,"town":"DELHI","zipcode":"110059","gpsLatitude":null,"gpsLongtitude":null,"locationType":null,"addressType":"SR_BUS"}
+commodity.price = 
+
+=================
+salesroom.partnerCode = 5K01ZK
+financialParameters.term = 7
+salesroom.code = 0112602BN
+salesroom.gpsLatitude = 10.0
+commodity.serialNumber = 
+commodity.engineNumber = 
+commodity.category = Mobiles
+commodity.licencePlateNumber = 
+commodity.producer = VIVO
+salesroom.gpsLongtitude = 10.0
+salesroom.name = NEW DHAKA MOBILE GALLERY
+financialParameters.totalMonthlyPayment = 2070INR
+commodity.modelNumber = Y19(4+128G)
+financialParameters.downPayment = 3401INR
+commodity.typeCode = CT_TE_MP
+salesroom.partnerName = NEW DHAKA MOBILE GALLERY
+financialParameters.loanAmount = 11589INR
+salesroom.addressInfo = {"countryCode":"356","block":null,"blockSet":null,"districtCode":"UK_DD","subdistrict":null,"flat":null,"floor":null,"houseNumber":"3, CAPITAL COMPLEX","landmark":"NEAR SAHASTRADHARA CROSSING","locality":"RAJPUR ROAD","regionCode":"UK","street":"RAJPUR ROAD","town":"DEHRADUN","zipcode":"248001","gpsLatitude":null,"gpsLongtitude":null,"locationType":null,"addressType":"SR_BUS"}
+commodity.price = 14990INR
+
+=================
+salesroom.partnerCode = 5K01KC
+financialParameters.term = 8
+salesroom.code = 0112601T1
+salesroom.gpsLatitude = 0.0
+commodity.serialNumber = 
+commodity.engineNumber = 
+commodity.category = Home appliance
+commodity.licencePlateNumber = 
+commodity.producer = XIAOMI
+salesroom.gpsLongtitude = 10.0
+salesroom.name = BATHEJA TELECOM
+financialParameters.totalMonthlyPayment = 1285INR
+commodity.modelNumber = OTHER MODEL
+financialParameters.downPayment = 4116INR
+commodity.typeCode = CT_HA_LED
+salesroom.partnerName = BATHEJA TELECOM
+financialParameters.loanAmount = 9384INR
+salesroom.addressInfo = {"countryCode":"356","block":null,"blockSet":null,"districtCode":"MP_BP","subdistrict":null,"flat":null,"floor":"0","houseNumber":"shop no-28","landmark":"SINOHI GOLGHAR WATER TANK","locality":"SAHJANA ROAD","regionCode":"MP","street":"0","town":"BHOPAL","zipcode":"462001","gpsLatitude":null,"gpsLongtitude":null,"locationType":null,"addressType":"SR_BUS"}
+commodity.price = 13500INR
+
+=================
+financialParameters.term = 6
+salesroom.code = 0112616UG
+commodity.serialNumber = IGDHJEAEIGGEGHA
+commodity.engineNumber = 
+commodity.category = Mobiles
+commodity.licencePlateNumber = 
+commodity.producer = OPPO
+financialParameters.totalMonthlyPayment = 1432INR
+commodity.modelNumber = A54GB2020CPH1933
+financialParameters.downPayment = 5401INR
+commodity.typeCode = CT_TE_MP
+financialParameters.loanAmount = 8589INR
+commodity.price = 13990INR
+
+=================
+financialParameters.term = 6
+salesroom.code = 011260XP5
+commodity.serialNumber = 
+commodity.engineNumber = 
+commodity.category = Mobiles
+commodity.licencePlateNumber = 
+commodity.producer = OPPO
+financialParameters.totalMonthlyPayment = 1356INR
+commodity.modelNumber = A54GB2020CPH1933
+financialParameters.downPayment = 6400INR
+commodity.typeCode = CT_TE_MP
+financialParameters.loanAmount = 7590INR
+commodity.price = 13990INR
+
+=================
+financialParameters.term = 6
+salesroom.code = 0112614C2
+commodity.serialNumber = D904TCF06CZE
+commodity.engineNumber = 
+commodity.category = Mobiles
+commodity.licencePlateNumber = 
+commodity.producer = VIVO
+financialParameters.totalMonthlyPayment = 1446INR
+commodity.modelNumber = Y12(3+64G)
+financialParameters.downPayment = 2901INR
+commodity.typeCode = CT_TE_MP
+financialParameters.loanAmount = 8089INR
+commodity.price = 10990INR
+
+=================
+salesroom.partnerCode = 5K0KS0
+financialParameters.term = 6
+salesroom.code = 011260NQI
+salesroom.gpsLatitude = 29.920828
+commodity.serialNumber = 
+commodity.engineNumber = 
+commodity.category = Mobiles
+commodity.licencePlateNumber = 
+commodity.producer = XIAOMI
+salesroom.gpsLongtitude = 78.04139
+salesroom.name = NITIN TELECOME
+financialParameters.totalMonthlyPayment = 1677INR
+commodity.modelNumber = 
+financialParameters.downPayment = 7101INR
+commodity.typeCode = CT_TE_MP
+salesroom.partnerName = NITIN TELECOME
+financialParameters.loanAmount = 8889INR
+salesroom.addressInfo = {"countryCode":"356","block":null,"blockSet":null,"districtCode":"UK_HA","subdistrict":null,"flat":null,"floor":null,"houseNumber":null,"landmark":"NEAR KALI MATA MANDIR","locality":"BAHADRABAD","regionCode":"UK","street":"BUS STAND BAHADRABAD","town":"BAHADRABAD","zipcode":"249402","gpsLatitude":null,"gpsLongtitude":null,"locationType":null,"addressType":"SR_BUS"}
+commodity.price = 15990INR
+
+=================
+salesroom.partnerCode = 040147
+financialParameters.term = 6
+salesroom.code = 040153
+salesroom.gpsLatitude = 0.0
+commodity.serialNumber = 
+commodity.engineNumber = 
+commodity.category = Mobiles
+commodity.licencePlateNumber = 
+commodity.producer = OPPO
+salesroom.gpsLongtitude = 0.0
+salesroom.name = OM SAI COMMUNICATION
+financialParameters.totalMonthlyPayment = 1399INR
+commodity.modelNumber = A314GB64CPH2015
+financialParameters.downPayment = 4101INR
+commodity.typeCode = CT_TE_MP
+salesroom.partnerName = OM SAI COMMUNICATION
+financialParameters.loanAmount = 8389INR
+salesroom.addressInfo = {"countryCode":"356","block":null,"blockSet":null,"districtCode":"PB_LU","subdistrict":null,"flat":null,"floor":"0","houseNumber":"Shop no.384","landmark":null,"locality":"MANDI GOBINGARH","regionCode":"PB","street":"AERY MILL ROAD","town":"LUDHIANA","zipcode":"147301","gpsLatitude":null,"gpsLongtitude":null,"locationType":null,"addressType":"SR_BUS"}
+commodity.price = 12490INR
+
+=================
+financialParameters.term = 6
+salesroom.code = 0112612B9
+commodity.serialNumber = 
+commodity.engineNumber = 
+commodity.category = Mobiles
+commodity.licencePlateNumber = 
+commodity.producer = VIVO
+financialParameters.totalMonthlyPayment = 1527INR
+commodity.modelNumber = OTHER MODEL
+financialParameters.downPayment = 2801INR
+commodity.typeCode = CT_TE_MP
+financialParameters.loanAmount = 8089INR
+commodity.price = 10890INR
+
+=================
+financialParameters.term = 6
+salesroom.code = 0112610Y1
+commodity.serialNumber = 
+commodity.engineNumber = 
+commodity.category = Mobiles
+commodity.licencePlateNumber = 
+commodity.producer = OPPO
+financialParameters.totalMonthlyPayment = 1535INR
+commodity.modelNumber = A54GB2020CPH1933
+financialParameters.downPayment = 5401INR
+commodity.typeCode = CT_TE_MP
+financialParameters.loanAmount = 8589INR
+commodity.price = 13990INR
+
+=================
+financialParameters.term = 24
+salesroom.code = 011261CYW
+commodity.serialNumber = 
+commodity.engineNumber = 
+commodity.category = ROND_YCNB23708_CSGHV
+commodity.licencePlateNumber = 
+commodity.producer = 
+financialParameters.totalMonthlyPayment = 3885INR
+commodity.modelNumber = 
+financialParameters.downPayment = 0INR
+commodity.typeCode = 
+financialParameters.loanAmount = 70000INR
+commodity.price = 
+
+=================
+salesroom.partnerCode = 5K0IDV
+financialParameters.term = 6
+salesroom.code = 011260L3Y
+salesroom.gpsLatitude = 0.0
+commodity.serialNumber = 
+commodity.engineNumber = 
+commodity.category = Mobiles
+commodity.licencePlateNumber = 
+commodity.producer = SAMSUNG
+salesroom.gpsLongtitude = 0.0
+salesroom.name = D S COMMUNICATION
+financialParameters.totalMonthlyPayment = 1800INR
+commodity.modelNumber = A20s (4/64GB)
+financialParameters.downPayment = 2901INR
+commodity.typeCode = CT_TE_MP
+salesroom.partnerName = D S COMMUNICATION
+financialParameters.loanAmount = 10799INR
+salesroom.addressInfo = {"countryCode":"356","block":null,"blockSet":null,"districtCode":"WB_KO","subdistrict":null,"flat":null,"floor":null,"houseNumber":null,"landmark":null,"locality":"KOLKATA","regionCode":"WB","street":"87/A/H/1","town":"KOLKATA","zipcode":"700002","gpsLatitude":null,"gpsLongtitude":null,"locationType":null,"addressType":"SR_BUS"}
+commodity.price = 13700INR
+
+=================
+salesroom.partnerCode = 5K0G0H
+financialParameters.term = 6
+salesroom.code = 011260IFZ
+salesroom.gpsLatitude = 0.0
+commodity.serialNumber = 
+commodity.engineNumber = 
+commodity.category = Home appliance
+commodity.licencePlateNumber = 
+commodity.producer = WHIRLPOOL
+salesroom.gpsLongtitude = 0.0
+salesroom.name = MUKUL ELECTRONICS REPAIRING CENTRE
+financialParameters.totalMonthlyPayment = 2280INR
+commodity.modelNumber = 
+financialParameters.downPayment = 12311INR
+commodity.typeCode = CT_HA_REF
+salesroom.partnerName = MUKUL ELECTRONICS REPAIRING CENTRE
+financialParameters.loanAmount = 13679INR
+salesroom.addressInfo = {"countryCode":"356","block":null,"blockSet":null,"districtCode":"WB_KO","subdistrict":null,"flat":null,"floor":"0","houseNumber":"SHOP NO 17","landmark":"0","locality":"PRATAPGARH NIMTA","regionCode":"WB","street":"RISHI BANKIM ROAD","town":"KOLKATA","zipcode":"700049","gpsLatitude":null,"gpsLongtitude":null,"locationType":null,"addressType":"SR_BUS"}
+commodity.price = 25990INR
+
+=================
+salesroom.partnerCode = 5K0OMI
+financialParameters.term = 6
+salesroom.code = 011260RVR
+salesroom.gpsLatitude = 0.0
+commodity.serialNumber = 
+commodity.engineNumber = 
+commodity.category = Mobiles
+commodity.licencePlateNumber = 
+commodity.producer = OPPO
+salesroom.gpsLongtitude = 0.0
+salesroom.name = MS INFOTECH
+financialParameters.totalMonthlyPayment = 1499INR
+commodity.modelNumber = A314GB64CPH2015
+financialParameters.downPayment = 4101INR
+commodity.typeCode = CT_TE_MP
+salesroom.partnerName = MS INFOTECH
+financialParameters.loanAmount = 8389INR
+salesroom.addressInfo = {"countryCode":"356","block":null,"blockSet":null,"districtCode":"WB_PN","subdistrict":null,"flat":null,"floor":"GROUND FLO","houseNumber":"0","landmark":"0","locality":"RAJARHAT MAIN ROAD KOLKATA","regionCode":"WB","street":"RAJARHAT MAIN ROAD KOLKATA","town":"KOLKATA","zipcode":"700136","gpsLatitude":null,"gpsLongtitude":null,"locationType":null,"addressType":"SR_BUS"}
+commodity.price = 12490INR
+
+=================
+financialParameters.term = 7
+salesroom.code = 011260ULK
+commodity.serialNumber = 
+commodity.engineNumber = 
+commodity.category = Mobiles
+commodity.licencePlateNumber = 
+commodity.producer = XIAOMI
+financialParameters.totalMonthlyPayment = 2425INR
+commodity.modelNumber = OTHER MODEL
+financialParameters.downPayment = 2293INR
+commodity.typeCode = CT_TE_MP
+financialParameters.loanAmount = 14707INR
+commodity.price = 17000INR
+
+=================
+financialParameters.term = 6
+salesroom.code = 011260WIV
+commodity.serialNumber = 
+commodity.engineNumber = 
+commodity.category = Mobiles
+commodity.licencePlateNumber = 
+commodity.producer = XIAOMI
+financialParameters.totalMonthlyPayment = 2018INR
+commodity.modelNumber = Redmi Note 8 Pro # 6+128 # Shadow Black # 25509
+financialParameters.downPayment = 6201INR
+commodity.typeCode = CT_TE_MP
+financialParameters.loanAmount = 11298INR
+commodity.price = 17499INR
+
+=================
+salesroom.partnerCode = 5K03B6
+financialParameters.term = 6
+salesroom.code = 0112603SO
+salesroom.gpsLatitude = 0.0
+commodity.serialNumber = 
+commodity.engineNumber = 
+commodity.category = Mobiles
+commodity.licencePlateNumber = 
+commodity.producer = OPPO
+salesroom.gpsLongtitude = 0.0
+salesroom.name = BHUMI SALES AND SERVICES (FP)
+financialParameters.totalMonthlyPayment = 1356INR
+commodity.modelNumber = A5S 4GBCPH1909
+financialParameters.downPayment = 4401INR
+commodity.typeCode = CT_TE_MP
+salesroom.partnerName = BHUMI SALES AND SERVICES
+financialParameters.loanAmount = 7589INR
+salesroom.addressInfo = {"countryCode":"356","block":null,"blockSet":null,"districtCode":"MH_NG","subdistrict":null,"flat":null,"floor":"0","houseNumber":"PLOT NO-765-1","landmark":"RANDHEY COLLEGE","locality":"NANDANVAN","regionCode":"MH","street":"RANDHEY COLLEGE","town":"NAGPUR","zipcode":"440009","gpsLatitude":null,"gpsLongtitude":null,"locationType":null,"addressType":"SR_BUS"}
+commodity.price = 11990INR
+

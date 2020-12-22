@@ -1,0 +1,52 @@
+{
+  "financialParameters" : {
+      "monthlyInstallment" : {{ monthlyInstallment }},
+      "term" : {{ term }},
+      "loanAmount" : {{ loanAmount }},
+      "downPayment" : {{ downPayment }}
+  },
+  "salesRoomDetail" : {
+    "code" : "{{ salesroom.code }}",
+    "name" : "{{ salesroom.name }}",
+    "gpsLatitude" : "{{ salesroom.gpsLatitude }}",
+    "gpsLongtitude" : "{{ salesroom.gpsLongitude }}",
+    "partnerName" : "{{ salesroom.partnerName }}",
+    "partnerCode" : "{{ salesroom.partnerCode }}",
+    "address" : {
+      "country" : "{{ salesroom.countryCode }}",
+      "region" : "{{ salesroom.regionCode }}",
+      "district" : "{{ salesroom.districtCode }}",
+      "subDistrict" : "{{ salesroom.subDistrict }}",
+      "block" : "{{ salesroom.block }}",
+      "blockSet" : "{{ salesroom.blockSet }}",
+      "flat" : "{{ salesroom.flat }}",
+      "floor" : "{{ salesroom.floor }}",
+      "houseNumber" : "{{ salesroom.houseNumber }}",
+      "landmark" : "{{ salesroom.landmark }}",
+      "locality" : "{{ salesroom.locality }}",
+      "street" : "{{ salesroom.street }}",
+      "type" : "{{ salesroom.addressType }}",
+      "town" : "{{ salesroom.town }}",
+      "zip" : "{{ salesroom.zip }}",
+    }
+  },
+  "commodityDetail" : [
+{% for commodityDetail in commodityDetails %}
+{
+      "category" : "{{ commodityDetail.category }}",
+      "type" : "{{ commodityDetail.commodityType }}",
+      "producerCode" : "{{ commodityDetail.producerCode }}",
+      "serialNumber" : "{{ commodityDetail.serialNumber }}",
+      "modelNumber" : "{{ commodityDetail.modelNumber }}",
+      "engineNumber" : "{{ commodityDetail.engineNumber }}",
+      "licencePlateNumber" : "{{ commodityDetail.licencePlateNumber }}",
+      "price" : "{{ commodityDetail.price }}",
+      "imei" : "{{ commodityDetail.imei }}",
+      "vin" : "{{ commodityDetail.vin }}",
+      "producerText" : "{{ commodityDetail.producerText }}"
+}
+{% endfor %}
+  ],
+  "cuid" : "{{ cuid }}",
+  "contractCode" : "{{ contractCode }}"
+}

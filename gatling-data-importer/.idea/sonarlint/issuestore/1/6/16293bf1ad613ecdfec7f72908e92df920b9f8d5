@@ -1,0 +1,23 @@
+
+a
+java:S2095M"EUse try-with-resources or close this "Scanner" in a "finally" clause.(€ô¥8–ÿ©è.
+G
+java:S1905›")Remove this unnecessary cast to "String".(ÜêÇÛ8¬ãä±è.
+G
+java:S1905œ")Remove this unnecessary cast to "String".(÷Ãª“8é¶Œ±è.
+R
+java:S2864²"4Iterate over the "entrySet" instead of the "keySet".(‡ñ¯»8¬ãä±è.
+P
+java:S2755q"3Disable access to external entities in XML parsing.(ğ¨ºî8é¶Œ±è.
+f
+java:S2259±"HA "NullPointerException" could be thrown; "getString()" can return null.(äÏ€Ï8¬ãä±è.
+{
+java:S2293v"YReplace the type specification in this constructor call with the diamond operator ("<>").(£…ó€üÿÿÿÿ8é¶Œ±è.
+v
+java:S1192Ô"XDefine a constant instead of duplicating this literal "homerselect:homerselect" 4 times.(Óû–î8¬ãä±è.
+¡
+java:S1130©"~Remove the declaration of thrown exception 'org.json.simple.parser.ParseException', as it cannot be thrown from method's body.(µôºËúÿÿÿÿ8¬ãä±è.
+k
+java:S2095N"IUse try-with-resources or close this "PrintWriter" in a "finally" clause.(ö¿÷àøÿÿÿÿ8é¶Œ±è.
+o
+java:S3776H"RRefactor this method to reduce its Cognitive Complexity from 29 to the 15 allowed.(ÁíŞ±8é¶Œ±è.
