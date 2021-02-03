@@ -93,7 +93,7 @@
                         </form>
                     </div>
                 </li>
-                <li>item 2</li>
+<!--                <li>item 2</li>-->
             </ul>
         </div>
 
@@ -108,23 +108,26 @@
                     <tbody>
                         <tr>
                             <td>Points for a victory:</td>
-                            <td contenteditable="true">_
+                            <td contenteditable="true">
                                 <input th:form="rule-set-form"
+                                       class="generic-input"
                                        name="pointsForVictory" th:value="${tournament.getRuleSet().getPointsForResult('WIN')}">
                             </td>
                         </tr>
                         <tr>
                             <td>Points for a loss:</td>
-                            <td contenteditable="true">_
+                            <td contenteditable="true">
                                 <input th:form="rule-set-form"
+                                       class="generic-input"
                                        name="pointsForLoss"
                                        th:value="${tournament.getRuleSet().getPointsForResult('LOSS')}">
                             </td>
                         </tr>
                         <tr>
                             <td>Points for a tie:</td>
-                            <td contenteditable="true">_
+                            <td contenteditable="true">
                                 <input th:form="rule-set-form"
+                                       class="generic-input"
                                        name="pointsForTie"
                                        th:value="${tournament.getRuleSet().getPointsForResult('TIE')}">
                             </td>
@@ -137,6 +140,15 @@
                                     <a class="clickable"
                                        th:href="'javascript:$(\'#rule-set-form\').submit();'"
                                        href="#">Save</a>
+                                </form>
+                            </td>
+                            <td>
+                                <form th:id="rule-reset-form"
+                                      th:action="@{/tournament/__${tournamentCode}__/setup/rule-set/reset-to-default}"
+                                      method="post">
+                                    <a class="clickable"
+                                       th:href="'javascript:$(\'#rule-reset-form\').submit();'"
+                                       href="#">Reset to defaults</a>
                                 </form>
                             </td>
                         </tr>

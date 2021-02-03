@@ -61,4 +61,11 @@ public class SetupController {
         service.setPointsForMatchResultType(MatchResultEnum.TIE, pointsForTie);
         return Mappings.Tournament.Setup.REDIRECT_TO_EXISTING_SETUP.replace("{tournamentCode}", tournamentCode);
     }
+
+    @PostMapping(Mappings.Tournament.Setup.RESET_POINTS_FOR_ALL_TYPES)
+    public String resetPointsForAllMatchResults(@PathVariable(name = TOURNAMENT_CODE) String tournamentCode) {
+        log.info("In POST resetPointsForAllMatchResults");
+        service.resetPointsForMatchResultTypesToDefault();
+        return Mappings.Tournament.Setup.REDIRECT_TO_EXISTING_SETUP.replace("{tournamentCode}", tournamentCode);
+    }
 }

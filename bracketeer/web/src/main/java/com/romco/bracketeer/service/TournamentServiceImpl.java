@@ -224,7 +224,17 @@ public class TournamentServiceImpl implements TournamentService {
 
     @Override
     public boolean setPointsForMatchResultType(MatchResultEnum matchResultType, double pointsForMatchResultType) {
+        // TODO store this ruleSet!
         return tournament.getRuleSet().setPointsForResult(matchResultType, pointsForMatchResultType);
+    }
+
+    @Override
+    public boolean resetPointsForMatchResultTypesToDefault() {
+        // TODO store to DB and if storing fails, return false
+        tournament.getRuleSet().setPointsForResult(MatchResultEnum.WIN, RuleSet.DEFAULT_POINTS_FOR_WIN);
+        tournament.getRuleSet().setPointsForResult(MatchResultEnum.LOSS, RuleSet.DEFAULT_POINTS_FOR_LOSS);
+        tournament.getRuleSet().setPointsForResult(MatchResultEnum.TIE, RuleSet.DEFAULT_POINTS_FOR_TIE);
+        return true;
     }
 
     @Override

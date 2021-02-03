@@ -13,7 +13,6 @@ class HashUtil {
     fun encodePassword() {
         assertTrue(PasswordEncoderFactories
                 .createDelegatingPasswordEncoder()
-                .matches("password",
-                        encodePassword("password")))
+                .matches("password", encodePassword("password")))
     }
 }

@@ -29,6 +29,7 @@ public interface TournamentService {
     int getMaxNumberOfRounds();
 
     boolean setPointsForMatchResultType(MatchResultEnum matchResultType, double pointsForMatchResultType);
+    boolean resetPointsForMatchResultTypesToDefault();
 
     void setResult(int roundNumber, int matchNumber, Map<String, Integer> participantCodeToGamesWon);
 }

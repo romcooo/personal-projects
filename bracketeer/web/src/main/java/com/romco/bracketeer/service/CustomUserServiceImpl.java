@@ -62,7 +62,8 @@ public class CustomUserServiceImpl implements CustomUserService, UserDetailsServ
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-
+        User user = userDao.retrieveByUsername(username);
+        UserDetails userDetails = null; //TODO
         return null;
     }
 }

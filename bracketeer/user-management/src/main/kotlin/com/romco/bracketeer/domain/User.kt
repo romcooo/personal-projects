@@ -8,7 +8,7 @@ data class User(var id: Long = 0,
                 var username: String,
                 var passwordHash: String,
                 var lastUpdateDate: Date?,
-                var roles: Collection<Role>? = emptyList()) {
+                var roles: Collection<Role> = emptyList()) {
 
     companion object {
         fun buildUser(username: String, passwordHash: String, lastUpdateDate: Date): User {

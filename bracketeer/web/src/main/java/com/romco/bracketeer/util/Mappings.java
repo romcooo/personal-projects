@@ -28,7 +28,10 @@ public final class Mappings {
 
         public static class Setup {
             public static final String BASE = Tournament.EXISTING_WITH_CODE + "/setup";
+            // TODO below is currently named as if it was specific for points, but it also sets best-of
+            // TODO also look at how swiss is set
             public static final String SET_POINTS_FOR_MATCH_RESULT_TYPE = BASE + "/rule-set";
+            public static final String RESET_POINTS_FOR_ALL_TYPES = SET_POINTS_FOR_MATCH_RESULT_TYPE + "/reset-to-default";
             public static final String REDIRECT_TO_EXISTING_SETUP = REDIRECT_PREFIX + BASE;
 
             //TODO change to /players POST and /players DELETE?
