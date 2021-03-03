@@ -1,5 +1,3 @@
-package com.romcooo.unionfind;
-
 import edu.princeton.cs.algs4.StdRandom;
 import edu.princeton.cs.algs4.StdStats;
 
@@ -9,7 +7,6 @@ public class PercolationStats {
     private final int n;
     private final int trials;
     private final double[] threshold;
-//    private final boolean[] siteWasOpened;
     private int openCount;
 
     // perform independent trials on an n-by-n grid
@@ -18,7 +15,6 @@ public class PercolationStats {
         this.n = n;
         this.trials = trials;
         threshold = new double[trials];
-//        siteWasOpened = new boolean[n * n + 1];
         this.compute();
     }
 
@@ -64,29 +60,6 @@ public class PercolationStats {
                 break;
             }
         }
-
-//        int numberOfClosed = (n * n - openCount);
-//        int target = StdRandom.uniform(numberOfClosed);
-//        int counter = 0;
-
-//        for (int x = 1; x <= n; x++) {
-//            for (int y = 1; y <= n; y++) {
-//                if (!siteWasOpened[flatten(x, y)]) {
-//                    if (target == counter) {
-//                        p.open(x, y);
-//                        siteWasOpened[flatten(x, y)] = true;
-//                        openCount++;
-//                        return;
-//                    } else {
-//                        counter++;
-//                    }
-//                }
-//            }
-//        }
-    }
-
-    private int flatten(int x, int y) {
-        return (y + (x - 1) * n);
     }
 
     // test client (see below)
@@ -95,8 +68,8 @@ public class PercolationStats {
         int numberOfTrials;
         if (args.length < 2) {
 //            throw new IllegalArgumentException();
-            gridSize = 20;
-            numberOfTrials = 100000;
+            gridSize = 30;
+            numberOfTrials = 50000;
         } else {
             gridSize = Integer.parseInt(args[0]);
             numberOfTrials = Integer.parseInt(args[1]);
