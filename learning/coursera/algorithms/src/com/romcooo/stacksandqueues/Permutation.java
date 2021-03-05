@@ -1,6 +1,7 @@
 package com.romcooo.stacksandqueues;
 
 import edu.princeton.cs.algs4.StdIn;
+import edu.princeton.cs.algs4.StdOut;
 
 public class Permutation {
 
@@ -23,6 +24,10 @@ public class Permutation {
             } else {
                 randomizedQueue.enqueue(input);
             }
+        }
+
+        for (int i = 0; i < k; i++) {
+            StdOut.println(randomizedQueue.dequeue());
         }
 
     }

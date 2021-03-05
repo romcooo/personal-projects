@@ -96,6 +96,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 
         @Override
         public Item next() {
+            if (iteratorSize == 0) throw new NoSuchElementException();
             Item randomItem = null;
             int randomIndex = 0;
             while (randomItem == null) {
