@@ -1,3 +1,5 @@
+package com.romcooo.unionfind;
+
 import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 
 public class Percolation {
@@ -7,29 +9,28 @@ public class Percolation {
     private final boolean[] siteIsOpen;
     private final int bottom;
     private final WeightedQuickUnionUF uf;
-    private final WeightedQuickUnionUF ufBackwash;
+//    private final WeightedQuickUnionUF ufBackwash;
     private int openedCount = 0;
+
+    private int recursionCounter;
+    private int lastRow;
+    private int lastCol;
+
+    private final boolean[] siteIsFull;
+    private final boolean[] siteIsChecked;
 
     // creates n-by-n grid, with all sites initially blocked
     public Percolation(int n) {
         if (n <= 0) throw new IllegalArgumentException();
         this.n = n;
-
-        siteIsOpen = new boolean[n*n + 1];
-        uf = new WeightedQuickUnionUF(n*n + 2);
-
         bottom = n*n+1;
 
-        ufBackwash = new WeightedQuickUnionUF(n*n + n/2 + 1 + 1);
+        siteIsOpen = new boolean[n*n + 1];
+        siteIsFull = new boolean[n*n + 1];
+        siteIsChecked = new boolean[n*n + 1];
 
-
-        /* n * n + n + 1
-         *    0
-         *  1 2 3
-         *  4 5 6
-         *  7 8 9
-         *  0 1 2
-         */
+        uf = new WeightedQuickUnionUF(n*n + 2);
+//        ufBackwash = new WeightedQuickUnionUF(n*n + 1);
     }
 
     // opens the site (row, col) if it is not open already
@@ -41,37 +42,86 @@ public class Percolation {
         siteIsOpen[flatten(row, col)] = true;
         openedCount++;
 
+        lastRow = row;
+        lastCol = col;
+
+        boolean floodHappened = false;
         // check all neighbours: x-1, x+1, y-1, y+1
         // above
-        if (row > 1 && siteIsOpen[flatten(row-1, col)]) {
-            uf.union(flatten(row, col), flatten(row-1, col));
-            ufBackwash.union(flatten(row, col), flatten(row-1, col));
+        int current = flatten(row, col);
+        int above = flatten(row - 1, col);
+        if (row > 1 && siteIsOpen[above]) {
+            if (isItAboutToPercolate(row, col)) {
+                // about to percolate, loop through everything, then fill rest, then union
+                floodBeforePercolation();
+                floodHappened = true;
+                while (!fill(lastRow, lastCol)) {
+                    recursionCounter = 0;
+                }
+            }
+            uf.union(current, above);
         }
         // left
-        if (col > 1 && siteIsOpen[flatten(row, col-1)]) {
-            uf.union(flatten(row, col), flatten(row, col-1));
-            ufBackwash.union(flatten(row, col), flatten(row, col-1));
+        int left = flatten(row, col - 1);
+        if (col > 1 && siteIsOpen[left]) {
+            if (isItAboutToPercolate(row, col)) {
+                if (!floodHappened) {
+                    floodBeforePercolation();
+                    floodHappened = true;
+                }
+                while (!fill(lastRow, lastCol)) {
+                    recursionCounter = 0;
+                }
+            }
+            uf.union(current, left);
         }
         // right
-        if (col < n && siteIsOpen[flatten(row, col+1)]) {
-            uf.union(flatten(row, col), flatten(row, col+1));
-            ufBackwash.union(flatten(row, col), flatten(row, col+1));
+        int right = flatten(row, col+1);
+        if (col < n && siteIsOpen[right]) {
+            if (isItAboutToPercolate(row, col)) {
+                if (!floodHappened) {
+                    floodBeforePercolation();
+                    floodHappened = true;
+                }
+                while (!fill(lastRow, lastCol)) {
+                    recursionCounter = 0;
+                }
+            }
+            uf.union(current, right);
         }
         // below
-        if (row < n && siteIsOpen[flatten(row+1, col)]) {
-            uf.union(flatten(row, col), flatten(row+1, col));
-            ufBackwash.union(flatten(row, col), flatten(row+1, col));
+        int below = flatten(row+1, col);
+        if (row < n && siteIsOpen[below]) {
+            if (isItAboutToPercolate(row, col)) {
+                if (!floodHappened) {
+                    floodBeforePercolation();
+                    floodHappened = true;
+                }
+                while (!fill(lastRow, lastCol)) {
+                    recursionCounter = 0;
+                }
+            }
+            uf.union(current, below);
         }
 
+        // TODO this won't work properly yet
         if (row == 1) {
-            uf.union(flatten(row, col), TOP);
-            ufBackwash.union(flatten(row, col), TOP);
+            uf.union(current, TOP);
+            if (!percolates()) {
+                siteIsFull[current] = true;
+            } else {
+                System.out.println("percolates: " + percolates() + ", sIF[c] = " + siteIsFull[current]);
+                if (!siteIsFull[current]) {
+                    while (!fill(lastRow, lastCol)) {
+//                System.out.println("row == 1 while code block triggered");
+                        recursionCounter = 0;
+                    }
+                }
+            }
         }
         if (row == n) {
-            uf.union(flatten(row, col), bottom);
-            ufBackwash.union(flatten(row, col), flatten(row+1, col/2 + 1));
+            uf.union(current, bottom);
         }
-
 
     }
 
@@ -84,7 +134,8 @@ public class Percolation {
     // is the site (row, col) full?
     public boolean isFull(int row, int col) {
         if (row < 1 || col < 1 || row > n || col > n) throw new IllegalArgumentException();
-        return isOpen(row, col) && (ufBackwash.find(flatten(row, col)) == ufBackwash.find(TOP));
+        return siteIsFull[flatten(row, col)];
+//        return isOpen(row, col) && (ufBackwash.find(flatten(row, col)) == ufBackwash.find(TOP));
     }
 
     // returns the number of open sites
@@ -94,14 +145,6 @@ public class Percolation {
 
     // does the system percolate?
     public boolean percolates() {
-//        if (openedCount < n) return false;
-//        int botrow = n * n + 1;
-//        for (int b = botrow; b < (botrow + (n/2 + 1)); b++) {
-//            if (uf.find(TOP) == uf.find(b)) {
-//                return true;
-//            }
-//        }
-//        return false;
         if (openedCount < n) return false;
         if (uf.find(TOP) == uf.find(bottom)) {
             return true;
@@ -113,56 +156,184 @@ public class Percolation {
         return (y + (x - 1) * n);
     }
 
-//    private void printSite() {
-//        for (int x = 1; x <= n; x++) {
-//            for (int y = 1; y <= n; y++) {
-//                System.out.print(siteIsOpen[flatten(x, y)] + ", ");
-//            }
-//            System.out.println();
+    private boolean fill(int row, int col) {
+        if (recursionCounter >= n * n / 4) {
+            System.out.println("counter = " + recursionCounter);
+            lastRow = row;
+            lastCol = col;
+            return false;
+        }
+        recursionCounter++;
+        boolean isComplete = true;
+
+        System.out.println("filling row " + row + ", col " + col);
+
+        int current = flatten(row, col);
+        siteIsChecked[current] = true;
+
+        siteIsFull[current] = true;
+        int above = flatten(row - 1, col);
+        int left = flatten(row, col - 1);
+        int right =  flatten(row, col + 1);
+        int below = flatten(row + 1, col);
+
+//        if (row > 1 && siteIsOpen[above] && !siteIsFull[above]) {
+//            fill(row - 1, col);
 //        }
-//    }
-//
-//    public void printTree() {
-//        for (int i = 0; i < ((n * n) + (n / 2) + (1 + 1)); i++) {
-//            System.out.print(uf.find(i) + " ");
+//        if (col > 1 && siteIsOpen[left] && !siteIsFull[left]) {
+//            fill(row, col -1);
 //        }
-//        System.out.println();
-//    }
+//        if (col < n && siteIsOpen[right] && !siteIsFull[right]) {
+//            fill(row, col + 1);
+//        }
+//        if (row < n && siteIsOpen[below] && !siteIsFull[below]) {
+//            fill(row + 1, col);
+//        }
+
+        if (row > 1 && siteIsOpen[above] && !siteIsChecked[above]) {
+            if (!fill(row - 1, col)) {
+                siteIsChecked[current] = false;
+                return false;
+            }
+        }
+        if (col > 1 && siteIsOpen[left] && !siteIsChecked[left]) {
+            if (!fill(row, col -1)) {
+                siteIsChecked[current] = false;
+                return false;
+            }
+        }
+        if (col < n && siteIsOpen[right] && !siteIsChecked[right]) {
+            if (!fill(row, col + 1)) {
+                siteIsChecked[current] = false;
+                return false;
+            }
+        }
+        if (row < n && siteIsOpen[below] && !siteIsChecked[below]) {
+            if (!fill(row + 1, col)) {
+                siteIsChecked[current] = false;
+                return false;
+            }
+        }
+        return true;
+//        if (isComplete) {
+//            siteIsChecked[current] = true;
+//            System.out.println("completed filling and checking row " + row + ", col " + col);
+//        } else {
+//            System.out.println("false: row " + row + ", col " + col);
+//        }
+//        return isComplete;
+    }
+
+    private boolean isAtLeastOneNeighbourFull(int row, int col) {
+        int current = flatten(row, col);
+        int above = flatten(row - 1, col);
+        int left = flatten(row, col - 1);
+        int right =  flatten(row, col + 1);
+        int below = flatten(row + 1, col);
+
+        return  (row > 1 && siteIsFull[above])
+                || (col > 1 && siteIsFull[left])
+                || (col < n && siteIsFull[right])
+                || (row < n && siteIsFull[below]);
+    }
+
+    private boolean isAtLeastOneNeighbourConnectedToTop(int row, int col) {
+        int above = flatten(row - 1, col);
+        int left = flatten(row, col - 1);
+        int right =  flatten(row, col + 1);
+        int below = flatten(row + 1, col);
+        return  (row > 1 && uf.find(above) == uf.find(TOP))
+                || (col > 1 && uf.find(left) == uf.find(TOP))
+                || (col < n && uf.find(right) == uf.find(TOP))
+                || (row < n && uf.find(below) == uf.find(TOP));
+    }
+
+    private boolean isAtLeastOneNeighbourConnectedToBottom(int row, int col) {
+        int above = flatten(row - 1, col);
+        int left = flatten(row, col - 1);
+        int right =  flatten(row, col + 1);
+        int below = flatten(row + 1, col);
+        return  (row > 1 && uf.find(above) == uf.find(bottom))
+                || (col > 1 && uf.find(left) == uf.find(bottom))
+                || (col < n && uf.find(right) == uf.find(bottom))
+                || (row < n && uf.find(below) == uf.find(bottom));
+    }
+
+    private void floodBeforePercolation() {
+        for (int row = 1; row <= n; row++) {
+            for (int col = 1; col <= n; col++) {
+                int current = flatten(row, col);
+                if (uf.find(current) == uf.find(TOP)) {
+                    siteIsFull[current] = true;
+                }
+            }
+        }
+        System.out.println("flooded:");
+        printIsFull();
+    }
+
+    private boolean isItAboutToPercolate(int row, int col) {
+        return isAtLeastOneNeighbourConnectedToTop(row, col)
+                && isAtLeastOneNeighbourConnectedToBottom(row, col);
+    }
+
+    public void printIsOpen() {
+        System.out.println("printIsOpen:");
+        for (int x = 1; x <= n; x++) {
+            for (int y = 1; y <= n; y++) {
+                System.out.print(siteIsOpen[flatten(x, y)] + ", ");
+            }
+            System.out.println();
+        }
+    }
+
+    public void printTree() {
+        for (int i = 0; i < ((n * n)  + 1); i++) {
+            System.out.print(uf.find(i) + " ");
+        }
+        System.out.println();
+    }
+
+    public void printIsFull() {
+        System.out.println("printIsFull:");
+        for (int x = 1; x <= n; x++) {
+            for (int y = 1; y <= n; y++) {
+                System.out.print(siteIsFull[flatten(x, y)] + ", ");
+            }
+            System.out.println();
+        }
+    }
 
     /**
      * test client
      * @param args
      */
     public static void main(String[] args) {
-//        Percolation p = new Percolation(3);
-//        p.printSite();
-//        p.printTree();
+        Percolation p = new Percolation(3);
+        p.printIsOpen();
+        p.printTree();
 
-//        System.out.println("opening 1, 1");
-//        p.open(1, 1);
-//        System.out.println("opening 2, 1");
-//        p.open(2, 1);
-//        System.out.println("opening 3, 1");
-//        p.open(3, 1);
-//        System.out.println("opening 3, 3");
-//        p.open(3, 3);
-//        p.printSite();
-//        p.printTree();
-//
-//        System.out.print("percolates:");
-//        System.out.println(p.percolates());
-//        System.out.println("full:");
-//        System.out.println(p.isFull(1, 1));
-//        System.out.println(p.isFull(2, 1));
-//        System.out.println(p.isFull(3, 1));
-//        System.out.println(p.isFull(3, 3));
-//
-//        System.out.println("opening 3, 2 - then isFull(3, 3):");
-//        p.open(3, 2);
-//        System.out.println(p.isFull(3, 2));
-//        System.out.println(p.isFull(3, 3));
-//        p.printSite();
-//        p.printTree();
+        System.out.println("opening 1, 1");
+        p.open(1, 1);
+        System.out.println("opening 2, 1");
+        p.open(2, 1);
+        System.out.println("opening 3, 1");
+        p.open(3, 1);
+        System.out.println("opening 3, 3");
+        p.open(3, 3);
+        p.printIsOpen();
+        p.printTree();
+
+        System.out.print("percolates:");
+        System.out.println(p.percolates());
+        System.out.println("full:");
+        p.printIsFull();
+
+        System.out.println("opening 3, 2 - then isFull(3, 3):");
+        p.open(3, 2);
+        p.printIsOpen();
+        p.printTree();
+        p.printIsFull();
 
         /**
          *      1

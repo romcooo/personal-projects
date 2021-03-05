@@ -1,3 +1,5 @@
+package com.romcooo.unionfind;
+
 import edu.princeton.cs.algs4.StdRandom;
 import edu.princeton.cs.algs4.StdStats;
 
@@ -45,6 +47,8 @@ public class PercolationStats {
             while (!p.percolates()) {
                 openRandom(p);
             }
+//            p.printIsOpen();
+//            p.printIsFull();
             threshold[trial] = (double) openCount / (n * n);
 //            System.out.println("trial #" + trial + " took " + openCount + " openings to percolate.");
         }
@@ -68,8 +72,8 @@ public class PercolationStats {
         int numberOfTrials;
         if (args.length < 2) {
 //            throw new IllegalArgumentException();
-            gridSize = 30;
-            numberOfTrials = 50000;
+            gridSize = 1000;
+            numberOfTrials = 1;
         } else {
             gridSize = Integer.parseInt(args[0]);
             numberOfTrials = Integer.parseInt(args[1]);
