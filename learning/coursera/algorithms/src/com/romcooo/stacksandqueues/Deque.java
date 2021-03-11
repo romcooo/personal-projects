@@ -17,13 +17,13 @@ public class Deque<Item> implements Iterable<Item> {
     }
 
     private class Node {
-        public Node(Item current) {
-            this.item = current;
-        }
-
         Item item;
         Node next = null;
         Node previous = null;
+
+        public Node(Item current) {
+            this.item = current;
+        }
     }
 
     // is the deque empty?
@@ -40,7 +40,8 @@ public class Deque<Item> implements Iterable<Item> {
     public void addFirst(Item item) {
         if (item == null) throw new IllegalArgumentException();
         if (isEmpty()) {
-            this.first = this.last = new Node(item);
+            this.first = new Node(item);
+            this.last = this.first;
         } else {
             Node oldFirst = this.first;
             this.first = new Node(item);
@@ -54,7 +55,8 @@ public class Deque<Item> implements Iterable<Item> {
     public void addLast(Item item) {
         if (item == null) throw new IllegalArgumentException();
         if (isEmpty()) {
-            this.first = this.last = new Node(item);
+            this.first = new Node(item);
+            this.last = this.first;
         } else {
             Node oldLast = this.last;
             this.last = new Node(item);
@@ -102,7 +104,7 @@ public class Deque<Item> implements Iterable<Item> {
 
         @Override
         public Item next() {
-            if (isEmpty()) throw new NoSuchElementException();
+            if (current == null) throw new NoSuchElementException();
             Item item = current.item;
             current = current.next;
             return item;

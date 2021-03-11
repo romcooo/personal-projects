@@ -1,12 +1,13 @@
 package com.romcooo.stacksandqueues;
 
+import com.romcooo.stacksandqueues.RandomizedQueue;
 import edu.princeton.cs.algs4.StdIn;
 import edu.princeton.cs.algs4.StdOut;
 
 public class Permutation {
 
     public static void main(String[] args) {
-        int k = 0;
+        int k;
 
         if (args.length > 0) {
             k = Integer.parseInt(args[0]);
@@ -17,13 +18,13 @@ public class Permutation {
 
         RandomizedQueue<String> randomizedQueue = new RandomizedQueue<>();
 
-        while (true) {
-            String input = StdIn.readString();
-            if (input.isEmpty()) {
+        int counter = 0;
+        while (!StdIn.isEmpty()) {
+            if (counter >= k) {
                 break;
-            } else {
-                randomizedQueue.enqueue(input);
             }
+            counter++;
+            randomizedQueue.enqueue(StdIn.readString());
         }
 
         for (int i = 0; i < k; i++) {

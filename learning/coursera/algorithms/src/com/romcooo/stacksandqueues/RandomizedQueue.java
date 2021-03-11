@@ -5,6 +5,7 @@ import edu.princeton.cs.algs4.StdRandom;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 
 public class RandomizedQueue<Item> implements Iterable<Item> {
 
@@ -29,6 +30,9 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 
     // add the item
     public void enqueue(Item item) {
+        if (item == null) {
+            throw new IllegalArgumentException();
+        }
         boolean queued = false;
         for (int i = 0; i < items.length; i++) {
             if (items[i] == null) {
@@ -53,7 +57,6 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         Item randomItem = getRandom(true);
         size--;
         if (size < items.length / 4) {
-//            System.out.println("halving");
             Item[] halved = (Item[]) new Object[items.length / 2];
             int filled = 0;
             for (Item item : items) {
@@ -76,10 +79,22 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 
     private class RandomizedQueueIterator implements Iterator<Item> {
         private Item[] itemsCopy;
+//        private final Item[] iteratorItems;
         private int iteratorSize;
 
         RandomizedQueueIterator() {
             iteratorSize = size;
+//            iteratorItems = (Item[]) new Object[iteratorSize];
+//            itemsCopy = (Item[]) new Object[iteratorSize];
+//            int filled = 0;
+//            for (Item item : items) {
+//                if (item != null) {
+//                    itemsCopy[filled++] = item;
+//                }
+//            }
+//            for (int i = 0; i < itemsCopy.length; i++) {
+//                iteratorItems[i] =
+//            }
             itemsCopy = (Item[]) new Object[iteratorSize];
             int filled = 0;
             for (Item item : items) {
@@ -99,10 +114,32 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
             if (iteratorSize == 0) throw new NoSuchElementException();
             Item randomItem = null;
             int randomIndex = 0;
+            randomIndex = StdRandom.uniform(itemsCopy.length);
+            int randomIndexOriginal = randomIndex;
+            // coinflip
+            boolean down = StdRandom.uniform(0, 1) == 0;
+
             while (randomItem == null) {
-                randomIndex = StdRandom.uniform(itemsCopy.length);
                 randomItem = itemsCopy[randomIndex];
-                itemsCopy[randomIndex] = null;
+                if (randomItem == null) {
+                    if (down) {
+                        if (randomIndex > 0) {
+                            randomIndex--;
+                        } else {
+                            down = false;
+                            randomIndex = randomIndexOriginal + 1;
+                        }
+                    } else {
+                        if (randomIndex < itemsCopy.length - 1) {
+                            randomIndex++;
+                        } else {
+                            down = true;
+                            randomIndex = randomIndexOriginal - 1;
+                        }
+                    }
+                } else {
+                    itemsCopy[randomIndex] = null;
+                }
             }
             iteratorSize--;
             if (iteratorSize < itemsCopy.length / 4) {
