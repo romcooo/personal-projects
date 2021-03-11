@@ -1,6 +1,5 @@
-package com.romcooo.stacksandqueues;
 
-import com.romcooo.stacksandqueues.RandomizedQueue;
+
 import edu.princeton.cs.algs4.StdIn;
 import edu.princeton.cs.algs4.StdOut;
 
