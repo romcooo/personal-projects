@@ -1,4 +1,4 @@
-
+// package com.romcooo.stacksandqueues;
 
 import edu.princeton.cs.algs4.StdOut;
 import edu.princeton.cs.algs4.StdRandom;
@@ -10,9 +10,6 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 
     private Item[] items;
     private int size = 0;
-
-
-
 
     // construct an empty randomized queue
     public RandomizedQueue() {
@@ -34,21 +31,12 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         if (item == null) {
             throw new IllegalArgumentException();
         }
-        boolean queued = false;
-        for (int i = 0; i < items.length; i++) {
-            if (items[i] == null) {
-                items[i] = item;
-                queued = true;
-                break;
-            }
-        }
-        if (!queued) {
-            int newIndex = items.length;
+        if (size == items.length) {
             Item[] doubled = (Item[]) new Object[items.length * 2];
             System.arraycopy(items, 0, doubled, 0, items.length);
             items = doubled;
-            items[newIndex] = item;
         }
+        items[size] = item;
         size++;
     }
 
@@ -56,15 +44,9 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
     public Item dequeue() {
         if (isEmpty()) throw new NoSuchElementException();
         Item randomItem = getRandom(true);
-        size--;
         if (size < items.length / 4) {
             Item[] halved = (Item[]) new Object[items.length / 2];
-            int filled = 0;
-            for (Item item : items) {
-                if (item != null) {
-                    halved[filled++] = item;
-                }
-            }
+            if (size >= 0) System.arraycopy(items, 0, halved, 0, size);
             items = halved;
         }
 
@@ -77,7 +59,6 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         return getRandom(false);
     }
 
-
     private class RandomizedQueueIterator implements Iterator<Item> {
         private final Item[] iteratorItems;
         private int iteratorSize;
@@ -85,17 +66,13 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         RandomizedQueueIterator() {
             Item[] itemsCopy = (Item[]) new Object[items.length];
             System.arraycopy(items, 0, itemsCopy, 0, items.length);
-            StdRandom.shuffle(itemsCopy);
-
+            iteratorSize = size;
             iteratorItems = (Item[]) new Object[size];
-            int fill = 0;
-            for (Item item : itemsCopy) {
-                if (item != null) {
-                    iteratorItems[fill] = item;
-                    fill++;
-                }
+            for (int i = 0; i < iteratorSize; i++) {
+                iteratorItems[i] = dequeue();
             }
-            iteratorSize = iteratorItems.length;
+            items = itemsCopy;
+            size = iteratorSize;
         }
 
         @Override
@@ -120,14 +97,13 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 
     private Item getRandom(boolean removeItem) {
         Item randomItem = null;
-        StdRandom.shuffle(items);
-        int i = 0;
-        while (items[i] == null) {
-            i++;
-        }
+        int i = StdRandom.uniform(0, size);
         randomItem = items[i];
+
         if (removeItem) {
-            items[i] = null;
+            items[i] = items[size - 1];
+            items[size - 1] = null;
+            size--;
         }
         return randomItem;
     }
