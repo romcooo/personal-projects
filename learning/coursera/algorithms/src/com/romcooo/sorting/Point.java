@@ -1,9 +1,13 @@
 package com.romcooo.sorting;
 
+import edu.princeton.cs.algs4.StdDraw;
+import edu.princeton.cs.algs4.StdOut;
+
 import java.util.Comparator;
 
 public class Point implements Comparable<Point> {
-    private double x, y;
+    private final double x;
+    private final double y;
 
     // constructs the point (x, y)
     public Point(int x, int y) {
@@ -13,12 +17,12 @@ public class Point implements Comparable<Point> {
 
     // draws this point
     public void draw() {
-
+        StdDraw.point(x, y);
     }
 
     // draws the line segment from this point to that point
     public void drawTo(Point that) {
-
+        StdDraw.line(x, y, that.x, that.y);
     }
     // string representation
     public String toString() {
@@ -40,17 +44,23 @@ public class Point implements Comparable<Point> {
 
     // the slope between this point and that point
     public double slopeTo(Point that) {
+//        StdOut.println(String.format("slopeTo: this = %s, that = %s", this.toString(), that.toString()));
         if (this.compareTo(that) == 0) {
+//            StdOut.println("equal - negative infinity");
             return Double.NEGATIVE_INFINITY;
         } else if (this.y == that.y) {
+//            StdOut.println("y equal - 0");
             return 0;
         } else if (this.x == that.x) {
+//            StdOut.println("y not equal but x equal - positive infinity");
             return Double.POSITIVE_INFINITY;
         }
         double x0 = this.x;
         double x1 = that.x;
         double y0 = this.y;
         double y1 = that.y;
+
+//        StdOut.println((y1 - y0) / (x1 - x0));
 
         return (y1 - y0) / (x1 - x0);
     }
@@ -63,7 +73,7 @@ public class Point implements Comparable<Point> {
     private class Sloparator implements Comparator<Point> {
         @Override
         public int compare(Point o1, Point o2) {
-            return (int) slopeTo(o1) - (int) slopeTo(o2);
+            return Double.compare(slopeTo(o1), slopeTo(o2));
         }
     }
 
