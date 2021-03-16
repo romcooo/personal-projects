@@ -1,11 +1,12 @@
-package com.romcooo.sorting;
+// package com.romcooo.sorting;
 
 import edu.princeton.cs.algs4.StdDraw;
-import edu.princeton.cs.algs4.StdOut;
 
 import java.util.Comparator;
 
 public class Point implements Comparable<Point> {
+    private static final double EQUALITY_THRESHOLD = 0.0001d;
+
     private final double x;
     private final double y;
 
@@ -31,8 +32,8 @@ public class Point implements Comparable<Point> {
 
     // compare two points by y-coordinates, breaking ties by x-coordinates
     public int compareTo(Point that) {
-        if (this.y == that.y) {
-            if (this.x == that.x) {
+        if (floatsAreEqual(this.y, that.y)) {
+            if (floatsAreEqual(this.x, that.x)) {
                 return 0;
             } else {
                 return ((this.x < that.x) ? -1 : 1);
@@ -48,10 +49,10 @@ public class Point implements Comparable<Point> {
         if (this.compareTo(that) == 0) {
 //            StdOut.println("equal - negative infinity");
             return Double.NEGATIVE_INFINITY;
-        } else if (this.y == that.y) {
+        } else if (floatsAreEqual(this.y, that.y)) {
 //            StdOut.println("y equal - 0");
             return 0;
-        } else if (this.x == that.x) {
+        } else if (floatsAreEqual(this.x, that.x)) {
 //            StdOut.println("y not equal but x equal - positive infinity");
             return Double.POSITIVE_INFINITY;
         }
@@ -75,6 +76,16 @@ public class Point implements Comparable<Point> {
         public int compare(Point o1, Point o2) {
             return Double.compare(slopeTo(o1), slopeTo(o2));
         }
+    }
+
+    private boolean floatsAreEqual(double a, double b) {
+        return (a == b ||
+                (abs(a - b) < EQUALITY_THRESHOLD));
+    }
+
+    private double abs(double a) {
+        if (a >= 0) return a;
+        else return - a;
     }
 
 }
