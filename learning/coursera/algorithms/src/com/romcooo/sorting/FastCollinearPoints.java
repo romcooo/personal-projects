@@ -6,7 +6,7 @@ import java.util.Arrays;
 import java.util.LinkedList;
 
 public class FastCollinearPoints {
-    private Point[] points;
+    private final Point[] points;
     private boolean computed = false;
 
     private LinkedList<LineSegment> lineSegments = new LinkedList<>();

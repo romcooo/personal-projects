@@ -2,8 +2,13 @@ package com.romcooo.sorting;
 
 import edu.princeton.cs.algs4.StdOut;
 
+import java.util.Arrays;
+import java.util.LinkedList;
+
 public class BruteCollinearPoints {
-    private Point[] points;
+    private final Point[] points;
+    private final LinkedList<LineSegment> lineSegments = new LinkedList<>();
+    private boolean computed = false;
 
     public BruteCollinearPoints(Point[] points) {
         if (points == null) {
@@ -18,6 +23,7 @@ public class BruteCollinearPoints {
     }
 
     public int numberOfSegments() {
+        Arrays.sort(points);
         if (points.length < 4) {
             StdOut.println("not enough points, returning 0");
             return 0;
@@ -29,17 +35,22 @@ public class BruteCollinearPoints {
                     for (int i3 = i2 + 1; i3 < points.length; i3++) {
                         if (compareAll(points[i0], points[i1], points[i2], points[i3])) {
                             counter++;
+                            lineSegments.add(new LineSegment(points[i0], points[i3]));
                         }
                     }
                 }
             }
         }
+        computed = true;
         return counter;
     }
 
     public LineSegment[] segments() {
-        // TODO
-        return null;
+        if (!computed) {
+            numberOfSegments();
+        }
+        LineSegment[] ls = new LineSegment[lineSegments.size()];
+        return lineSegments.toArray(ls);
     }
 
     private boolean compareAll(Point... points) {
@@ -69,7 +80,7 @@ public class BruteCollinearPoints {
         Point p5 = new Point(5, 6);
         Point[] points = {p1, p2, p3, p4, p5};
         BruteCollinearPoints b = new BruteCollinearPoints(points);
-//        StdOut.println(String.format("compareAll: %s", b.compareAll(points)));
         StdOut.println(String.format("numberOfSegments: %s", b.numberOfSegments()));
+        StdOut.println(String.format("segments: %s", Arrays.toString(b.segments())));
     }
 }
