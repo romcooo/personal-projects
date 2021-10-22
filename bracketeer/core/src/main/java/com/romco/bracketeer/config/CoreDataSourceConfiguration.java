@@ -27,16 +27,12 @@ public class CoreDataSourceConfiguration {
     @Bean(name = "coreDataSource")
     @Primary
     public DataSource coreDataSource() {
-        DataSourceBuilder dataSourceBuilder = DataSourceBuilder.create();
+        var dataSourceBuilder = DataSourceBuilder.create();
         dataSourceBuilder.driverClassName("com.mysql.cj.jdbc.Driver");
         dataSourceBuilder.url("jdbc:mysql://127.0.0.1:3306/bracketeer?useSSL=false&serverTimezone=UTC");
         dataSourceBuilder.username("brkt_core");
         dataSourceBuilder.password("corePASS420");
         return dataSourceBuilder.build();
-//        return coreDataSourceProperties().initializeDataSourceBuilder()
-//                                         .driverClassName("com.mysql.cj.jdbc.Driver")
-//                                         .url("jdbc:mysql://127.0.0.1:3306/bracketeer?user=brkt_core&useSSL=false&serverTimezone=UTC")
-//                                         .build();
     }
 
     @Bean(name = "coreTransactionManager")

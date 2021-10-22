@@ -17,14 +17,14 @@ public class MatcherHelper {
                                     Round currentRound,
                                     int matchCount) {
         if (toHandle.size() % 2 == 1) {
-            int acceptableNumberOfByes = 0;
-            for (int i = toHandle.size() - 1; i >= 0; i--) {
-                Participant participant = toHandle.get(i);
+            var acceptableNumberOfByes = 0;
+            for (var i = toHandle.size() - 1; i >= 0; i--) {
+                var participant = toHandle.get(i);
                 if (participant.getNumberOfByes() <= acceptableNumberOfByes) {
                     // create the bye match, then remove the participant
                     log.info("assigning bye to participant {}", participant);
 
-                    Match match = new Match(participant);
+                    var match = new Match(participant);
                     match.setMatchNumber(matchCount);
                     match.setOfRound(currentRound);
                     

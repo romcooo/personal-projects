@@ -10,6 +10,8 @@ import java.util.List;
 @Slf4j
 public class Standings {
 
+    private Standings() {}
+
     public static void printStandings(Tournament tournament) {
         printStandings(tournament, tournament.getRounds().size());
     }

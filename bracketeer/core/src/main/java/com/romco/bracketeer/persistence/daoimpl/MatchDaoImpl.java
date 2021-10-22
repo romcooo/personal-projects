@@ -4,6 +4,7 @@ import com.romco.bracketeer.domain.tournament.Match;
 import com.romco.bracketeer.persistence.dao.MatchDao;
 import com.romco.bracketeer.persistence.rowmapper.MatchRowMapper;
 import com.romco.bracketeer.persistence.util.NamedParameterJdbcTemplateHolder;
+import com.romco.bracketeer.persistence.util.NullKeyException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 @Slf4j
@@ -39,8 +41,7 @@ public class MatchDaoImpl implements MatchDao {
     public List<Match> retrieveByRoundId(long roundId) {
         String sqlQuery = SELECT_ALL_WHERE + "round_id = :roundId";
         SqlParameterSource source = new MapSqlParameterSource().addValue("roundId", roundId);
-        List<Match> matches = namedParameterJdbcTemplate.query(sqlQuery, source, new MatchRowMapper());
-        return matches;
+        return namedParameterJdbcTemplate.query(sqlQuery, source, new MatchRowMapper());
     }
     
     // TODO
@@ -52,7 +53,7 @@ public class MatchDaoImpl implements MatchDao {
     // TODO
     @Override
     public Collection<Match> retrieveAll() {
-        return null;
+        return Collections.emptyList();
     }
     
     // TODO
@@ -63,11 +64,13 @@ public class MatchDaoImpl implements MatchDao {
                 .addValue("roundId", match.getOfRound().getId())
                 .addValue("isBye", match.isBye())
                 .addValue("matchNumber", match.getMatchNumber());
-        GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
+        var keyHolder = new GeneratedKeyHolder();
         if (namedParameterJdbcTemplate.update(sqlQuery,
                                               source,
                                               keyHolder) == 1) {
-            return keyHolder.getKey().longValue();
+            var k = keyHolder.getKey();
+            if (k == null) throw new NullKeyException("For some reason, key is null when creating DB Entry.");
+            return k.longValue();
         } else {
             log.debug("create failed for match {}", match);
             return -1;

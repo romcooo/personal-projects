@@ -54,14 +54,15 @@ public class Match {
 
     public List<Participant> getOthers(Participant participant) {
         return matchResultMap.keySet().stream()
-                             .filter((p) -> !p.equals(participant))
-                             .peek((p) -> log.trace("After filter: " + p))
+                             .filter(p -> !p.equals(participant))
+                             // TODO remove peek after debugging
+                             .peek(p -> log.trace("After filter: " + p))
                              .collect(Collectors.toList());
     }
     
     public Participant getOther(Participant participant) {
         List<Participant> others = matchResultMap.keySet().stream()
-                                                 .filter((p) -> !p.equals(participant))
+                                                 .filter(p -> !p.equals(participant))
                                                  .collect(Collectors.toList());
         
         if (others.size() > 1) {
@@ -84,7 +85,7 @@ public class Match {
             return Collections.emptyList();
         }
         
-        MatchResult matchResult = matchResultMap.get(participant);
+        var matchResult = matchResultMap.get(participant);
         matchResult.setGamesWon(gamesWon);
     
         List<MatchResult> matchResults = new ArrayList<>();
@@ -98,11 +99,11 @@ public class Match {
             log.warn(PARTICIPANT_NOT_FOUND_WARN_MESSAGE, participant);
             return Collections.emptyList();
         }
-        Participant otherParticipant = getOther(participant);
+        var otherParticipant = getOther(participant);
 
-        MatchResult matchResult = matchResultMap.get(participant);
+        var matchResult = matchResultMap.get(participant);
         matchResult.setGamesWon(gamesWon);
-        MatchResult otherMatchResult = matchResultMap.get(otherParticipant);
+        var otherMatchResult = matchResultMap.get(otherParticipant);
         otherMatchResult.setGamesWon(gamesLost);
         log.debug("In setMatchScore, creating matchResults: {} and {}", matchResult, otherMatchResult);
         
@@ -125,7 +126,7 @@ public class Match {
 
         List<MatchResult> resultList = new ArrayList<>();
         for (Map.Entry<Participant, Integer> participantGamesWonEntry : gamesWonByParticipants.entrySet()) {
-            MatchResult matchResult = matchResultMap.get(participantGamesWonEntry.getKey());
+            var matchResult = matchResultMap.get(participantGamesWonEntry.getKey());
             matchResult.setGamesWon(participantGamesWonEntry.getValue());
             resultList.add(matchResult);
         }
@@ -148,14 +149,14 @@ public class Match {
         int gamesWon = matchResultMap.get(participant).getGamesWon();
         if (matchResultMap.values()
                           .stream()
-                          .filter((r) -> r.getForParticipant() != participant)
-                          .anyMatch((r1) -> r1.getGamesWon() > gamesWon)) {
+                          .filter(r -> r.getForParticipant() != participant)
+                          .anyMatch(r1 -> r1.getGamesWon() > gamesWon)) {
             matchResultEnum = MatchResultEnum.LOSS;
         } else if (matchResultMap
                 .values()
                 .stream()
-                .filter((r) -> r.getForParticipant() != participant)
-                .anyMatch((r1) -> r1.getGamesWon() == gamesWon)) {
+                .filter(r -> r.getForParticipant() != participant)
+                .anyMatch(r1 -> r1.getGamesWon() == gamesWon)) {
             matchResultEnum = MatchResultEnum.TIE;
         } else {
             matchResultEnum = MatchResultEnum.WIN;
@@ -176,12 +177,12 @@ public class Match {
     }
     
     public void addParticipant(Participant participant) {
-        if (!matchResultMap.containsKey(participant)) {
-            MatchResult matchResult = new MatchResult(this, participant, null);
-            this.matchResultMap.put(participant, matchResult);
-            participant.addPlayedMatch(this);
+        matchResultMap.computeIfAbsent(participant, p -> {
+            var matchResult = new MatchResult(this, p, null);
             // TODO recheck isBye here
-        }
+            p.addPlayedMatch(this);
+            return matchResult;
+        });
     }
     
     @Override

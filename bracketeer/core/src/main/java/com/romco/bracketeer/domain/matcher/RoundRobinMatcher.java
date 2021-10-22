@@ -13,15 +13,15 @@ class RoundRobinMatcher implements Matcher {
     public Round generateRound(List<Participant> participants, SortMode mode, int numberOfRoundToGenerate) {
         List<Participant> toPairList = mode.sort(participants, numberOfRoundToGenerate - 1);
         // first check if it's still possible - if one player played against everyone else
-        boolean matchIsPossible = false;
-        for (int i = 1; i < toPairList.size(); i++) {
+        var matchIsPossible = false;
+        for (var i = 1; i < toPairList.size(); i++) {
             if (!toPairList.get(0).hasPlayedAgainst(participants.get(i))) {
                 matchIsPossible = true;
             }
         }
 
-        Round round = new Round();
-        int matchCount = 1;
+        var round = new Round();
+        var matchCount = 1;
 
         // handle bye - need to update MatcherHelper for Round robin
         if (MatcherHelper.handleBye(toPairList, round, matchCount)) {
@@ -30,15 +30,15 @@ class RoundRobinMatcher implements Matcher {
 
         if (!matchIsPossible) {
             // TODO handle properly (or create an appropriate exception!)
-            throw new RuntimeException("Everyone has already played with everyone!");
+            throw new RoundGenerationFailedException("Everyone has already played with everyone!");
         }
 
         while (!toPairList.isEmpty()) {
             Participant current = toPairList.get(0);
-            for (int i = 1; i < toPairList.size(); i++) {
+            for (var i = 1; i < toPairList.size(); i++) {
                 if (!current.hasPlayedAgainst(toPairList.get(i))) {
                     Participant next = toPairList.get(i);
-                    Match match = new Match(current, next);
+                    var match = new Match(current, next);
                     match.setMatchNumber(matchCount);
                     match.setOfRound(round);
                     matchCount++;
@@ -49,15 +49,13 @@ class RoundRobinMatcher implements Matcher {
                     current.addPlayedMatch(match);
                     next.addPlayedMatch(match);
 
-//                    current.setPlayedAgainstBiDirectional(next);
-
                     toPairList.remove(current);
                     toPairList.remove(next);
                     break;
                 }
                 // if you reach the end and it didn't break, you didn't match anyone
                 if (i == toPairList.size() - 1) {
-                    throw new RuntimeException("Shouldn't get here");
+                    throw new RoundGenerationFailedException("Shouldn't get here");
                 }
             }
         }

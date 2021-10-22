@@ -19,8 +19,8 @@ class SingleElimMatcher implements Matcher {
                                .collect(Collectors.toList());
         log.debug("In generateRound, after elimination: {}", toPairList);
 
-        Round round = new Round();
-        int matchCount = 1;
+        var round = new Round();
+        var matchCount = 1;
 
         // first need to check a bye
         if (MatcherHelper.handleBye(toPairList,
@@ -35,7 +35,7 @@ class SingleElimMatcher implements Matcher {
             Participant current = toPairList.get(0);
             log.debug("current: {}", current);
             // then keep going through the rest of the list starting with the 2nd most point participant
-            int i2 = 1;
+            var i2 = 1;
             log.debug("at {} with size {}", i2, toPairList.size());
             if (i2 == toPairList.size()) {
                 log.error("Error - either everyone has already played with everyone or some kind of " +
@@ -43,15 +43,14 @@ class SingleElimMatcher implements Matcher {
                                   "\nTrying to pair participant: {} " +
                                   "\n withParticipants: {}", current, toPairList);
                 // TODO fix an error where if this happens it keeps looping forever
-                throw new RuntimeException("everyone already played with everyone in a swiss tournament");
-//                    break;
+                throw new RoundGenerationFailedException("everyone already played with everyone in a swiss tournament");
             }
             Participant next = toPairList.get(i2);
             log.debug("next: {}", next);
             // this is the goal - match current with next, then remove both from the list and keep going
             log.info("matching {} with {}", current, next);
 
-            Match match = new Match(current, next);
+            var match = new Match(current, next);
             match.setMatchNumber(matchCount);
             match.setOfRound(round);
             matchCount++;

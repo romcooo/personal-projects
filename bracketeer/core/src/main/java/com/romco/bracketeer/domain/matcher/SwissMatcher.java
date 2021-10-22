@@ -54,7 +54,7 @@ class SwissMatcher implements Matcher {
             return true;
         }
         // take first
-        Participant participantToBeMatched = toPairList.remove(0);
+        var participantToBeMatched = toPairList.remove(0);
 
         // determine whom he has not yet played
         List<Participant> notPlayedYet = toPairList.stream()
@@ -93,7 +93,7 @@ class SwissMatcher implements Matcher {
                 newList.remove(opponent);
                 newList.remove(participantToBeMatched);
 
-                Match match = new Match(participantToBeMatched, opponent);
+                var match = new Match(participantToBeMatched, opponent);
                 match.setMatchNumber(matchNumber);
                 match.setOfRound(round);
                 matchNumber++;

@@ -77,7 +77,6 @@ public class TournamentImpl implements Tournament {
 //            count++;
 //        }
 //        return count;
-
 //    }
 
     public void setStartingScore(Participant participant, double score) {
@@ -120,7 +119,7 @@ public class TournamentImpl implements Tournament {
      */
     @Override
     public Round getRound(int roundNumber) {
-        Optional<Round> round = rounds.stream().filter((r) -> r.getRoundNumber() == roundNumber).findFirst();
+        Optional<Round> round = rounds.stream().filter(r -> r.getRoundNumber() == roundNumber).findFirst();
         if (round.isEmpty()) {
             log.info("round of number {} doesn't exist", roundNumber);
             return null;
@@ -259,7 +258,7 @@ public class TournamentImpl implements Tournament {
         }
 
         private void reconcileParticipantCodes() {
-            for (int i = 0; i < participants.size(); i++) {
+            for (var i = 0; i < participants.size(); i++) {
                 Participant participant = participants.get(i);
                 participant.setCode(Integer.toString(i+1));
             }

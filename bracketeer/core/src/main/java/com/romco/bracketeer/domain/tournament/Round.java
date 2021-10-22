@@ -56,7 +56,7 @@ public class Round {
     }
 
     public List<MatchResult> setMatchResult(int matchNumber, Map<Participant, Integer> gamesWonByParticipants) {
-        Match m = getMatchByMatchNumber(matchNumber);
+        var m = getMatchByMatchNumber(matchNumber);
 
         if (m == null) {
             log.warn("no such match exists in this round");

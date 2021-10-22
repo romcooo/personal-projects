@@ -74,9 +74,9 @@
                     <td class="col-number" th:text="${iteration.count}">1</td>
                     <td class="col-player" th:text="${participant.name}">Player 1</td>
                     <td class="col-score" th:text="${participant.getScoreAfterRound(round.roundNumber)}">3</td>
-                    <td class="col-wins" th:text="${participant.getNumberOfMatchesWithResult('WIN')}">N/A</td>
-                    <td class="col-losses" th:text="${participant.getNumberOfMatchesWithResult('LOSS')}">N/A</td>
-                    <td class="col-ties" th:text="${participant.getNumberOfMatchesWithResult('TIE')}">N/A</td>
+                    <td class="col-wins" th:text="${participant.getNumberOfMatchesWithResultAfterRound('WIN', round.roundNumber)}">N/A</td>
+                    <td class="col-losses" th:text="${participant.getNumberOfMatchesWithResultAfterRound('LOSS', round.roundNumber)}">N/A</td>
+                    <td class="col-ties" th:text="${participant.getNumberOfMatchesWithResultAfterRound('TIE', round.roundNumber)}">N/A</td>
                     <td class="col-total-games" th:text="${participant.getTotalNumberOfPlayedMatches()}">N/A</td>
                 </tr>
             </tbody>
