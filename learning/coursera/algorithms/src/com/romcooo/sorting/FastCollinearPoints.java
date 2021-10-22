@@ -1,4 +1,4 @@
-// package com.romcooo.sorting;
+ package com.romcooo.sorting;
 
 import edu.princeton.cs.algs4.StdOut;
 
@@ -11,17 +11,21 @@ public class FastCollinearPoints {
     private int numberOfSegments = 0;
     private boolean computed = false;
 
-    // TODO sort and check for duplicates here
     public FastCollinearPoints(Point[] points) {
         if (points == null) {
             throw new IllegalArgumentException("argument can't be null");
         }
-        for (Point point : points) {
-            if (point == null) {
-                throw new IllegalArgumentException("argument can't be null");
-            }
-        }
         this.points = points.clone();
+        Arrays.sort(this.points);
+        Point lastPoint = null;
+        for (Point point : this.points) {
+            if (point == null || (lastPoint != null && point.compareTo(lastPoint) == 0)) {
+                throw new IllegalArgumentException("Argument cannot be null nor a duplicate of an already entered point.");
+            }
+            lastPoint = point;
+        }
+
+
     }
 
     public int numberOfSegments() {
@@ -29,55 +33,6 @@ public class FastCollinearPoints {
             compute();
         }
         return numberOfSegments;
-////        StdOut.println(String.format("Before sorting: %s", Arrays.toString(points)));
-//        Arrays.sort(points);
-////        StdOut.println(String.format("After sorting by y/x: %s", Arrays.toString(points)));
-//        int lineCounter = 0;
-//        // Start with the first point, but ignore the last 3 points, as they cannot create a line containing 4+ points.
-//        for (int i = 0; i < points.length - 3; i++) {
-//            Point p = points[i];
-//            // comparing others to point p[i]
-//            // copy the old array for sorting, accounting for the shorter length by subtracting the count i of previous points (and 1 for the current one)
-//            Point[] a = new Point[points.length - 1 - i];
-//            int c = 0;
-//            // i + 1 to not compare to itself
-//            for (int j = i + 1; j < points.length; j++) {
-//                Point point = points[j];
-//                if (point.compareTo(p) != 0) {
-//                    a[c++] = point;
-//                } else {
-//                    throw new IllegalArgumentException("Repeated point");
-//                }
-//            }
-//            Arrays.sort(a, 0, a.length, p.slopeOrder());
-////            StdOut.println(String.format("After sorting for %s: %s", p.toString(), Arrays.toString(a)));
-//
-//            c = 2;
-//            double slope = p.slopeTo(a[0]);
-//
-//            for (int j = 1; j < a.length; j++) {
-//                if (slope == p.slopeTo(a[j])) {
-//                    c++;
-//                } else {
-//                    c = 2;
-//                    slope = p.slopeTo(a[j]);
-//                }
-//                // If this is the 4th point on a line, add a new line segment.
-//                if (c == 4) {
-//                    lineSegments.add(new LineSegment(p, a[j]));
-//                    lineCounter++;
-//                }
-//                // If this is the 5th+ point on the line, replace the last reference to only keep the longest line in the list.
-//                if (c > 4) {
-//                    lineSegments.removeLast();
-//                    lineSegments.add(new LineSegment(p, a[j]));
-//                }
-//            }
-//
-//        }
-//
-//        computed = true;
-//        return lineCounter;
     }
 
     public LineSegment[] segments() {

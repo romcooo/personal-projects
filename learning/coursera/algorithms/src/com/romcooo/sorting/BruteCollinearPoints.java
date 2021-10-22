@@ -1,4 +1,4 @@
-// package com.romcooo.sorting;
+ package com.romcooo.sorting;
 
 import edu.princeton.cs.algs4.StdOut;
 
@@ -13,14 +13,20 @@ public class BruteCollinearPoints {
 
     public BruteCollinearPoints(Point[] points) {
         if (points == null) {
-            throw new IllegalArgumentException("Argument cannot be null.");
-        }
-        for (Point point : points) {
-            if (point == null) {
-                throw new IllegalArgumentException("argument can't be null");
-            }
+            throw new IllegalArgumentException("Argument cannot be null nor a duplicate of an already entered point.");
         }
         this.points = points.clone();
+        StdOut.println(Arrays.toString(this.points));
+        Arrays.sort(this.points);
+        StdOut.println(Arrays.toString(this.points));
+        Point lastPoint = null;
+        for (Point point : this.points) {
+            if (point == null || (lastPoint != null && point.compareTo(lastPoint) == 0)) {
+                throw new IllegalArgumentException("argument can't be null");
+            }
+            StdOut.println(point);
+            lastPoint = point;
+        }
     }
 
     public int numberOfSegments() {
@@ -28,29 +34,6 @@ public class BruteCollinearPoints {
             compute();
         }
         return numberOfSegments;
-//        if (computed) {
-//            return numberOfSegments;
-//        }
-//        Arrays.sort(points);
-//        if (points.length < 4) {
-//            StdOut.println("not enough points, returning 0");
-//            return 0;
-//        }
-//        int counter = 0;
-//        for (int i0 = 0; i0 < points.length; i0++) {
-//            for (int i1 = i0 + 1; i1 < points.length; i1++) {
-//                for (int i2 = i1 + 1; i2 < points.length; i2++) {
-//                    for (int i3 = i2 + 1; i3 < points.length; i3++) {
-//                        if (compareAll(points[i0], points[i1], points[i2], points[i3])) {
-//                            counter++;
-//                            lineSegments.add(new LineSegment(points[i0], points[i3]));
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//        computed = true;
-//        return counter;
     }
 
     public LineSegment[] segments() {
