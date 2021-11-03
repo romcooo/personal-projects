@@ -1,6 +1,7 @@
 package com.romco.bracketeer.controller;
 
 import com.romco.bracketeer.service.TournamentService;
+import com.romco.bracketeer.util.Mappings;
 import com.romco.bracketeer.util.ModelAttributeNames;
 import com.romco.bracketeer.util.ViewNames;
 import lombok.extern.slf4j.Slf4j;
@@ -46,5 +47,11 @@ public class HomeController {
     public String index(Model model) {
         log.info("index page loaded");
         return ViewNames.HOME;
+    }
+
+    @GetMapping(Mappings.ABOUT)
+    public String about() {
+        log.info("about page loaded");
+        return ViewNames.ABOUT;
     }
 }
