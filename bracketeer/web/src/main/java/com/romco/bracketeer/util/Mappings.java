@@ -5,6 +5,8 @@ public final class Mappings {
     
     public static final String HOME = "/templates/index.html";
 
+    public static final String ABOUT = "/about";
+
     
     public static class Tournament {
         public static final String BASE = "tournament";

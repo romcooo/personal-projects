@@ -17,6 +17,7 @@ import java.util.List;
 public class CustomAuthenticationProvider implements AuthenticationProvider {
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+        // TODO actually implement this, below is just a prototyping placeholder
         String username = authentication.getName();
         String password = (String) authentication.getCredentials();
 

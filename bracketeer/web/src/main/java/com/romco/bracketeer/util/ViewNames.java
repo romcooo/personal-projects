@@ -5,6 +5,8 @@ public final class ViewNames {
 
     public static final String HOME = "index";
 
+    public static final String ABOUT = "other/about";
+
     public static final String ERROR_WITH_MESSAGE = "error-with-message";
 
     public static class Tournament {
