@@ -4,6 +4,7 @@ import com.romco.bracketeer.domain.Role;
 import com.romco.bracketeer.domain.User;
 import com.romco.bracketeer.persistence.dao.RoleDao;
 import com.romco.bracketeer.persistence.dao.UserDao;
+import com.romco.bracketeer.security.CustomUserDetails;
 import com.romco.bracketeer.security.HashUtilKt;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
@@ -39,7 +40,7 @@ public class CustomUserServiceImpl implements CustomUserService, UserDetailsServ
                                 @NonNull String email) {
         log.info("in registerUser");
         String passwordHash = HashUtilKt.encodePassword(password);
-        User newUser =  User.Companion.buildUser(username, passwordHash, new Date());
+        User newUser =  User.Companion.buildUser(username, passwordHash, email, new Date());
         log.info(newUser.toString());
         // TODO add email to user and db etc.
         // TODO also take care of storing the appropriate roles in a many-to-many way here!
@@ -49,7 +50,7 @@ public class CustomUserServiceImpl implements CustomUserService, UserDetailsServ
     public boolean loginUser(String username,
                              String password) {
         // TODO ?
-        User user = userDao.retrieveByUsername(username);
+        var user = userDao.retrieveByUsername(username);
         if (user == null) {
             return false;
         }
@@ -62,8 +63,8 @@ public class CustomUserServiceImpl implements CustomUserService, UserDetailsServ
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userDao.retrieveByUsername(username);
-        UserDetails userDetails = null; //TODO
-        return null;
+        var user = userDao.retrieveByUsername(username);
+        if (user == null) throw new UsernameNotFoundException("Username not found: " + username);
+        return CustomUserDetails.Companion.buildFromUser(user);
     }
 }

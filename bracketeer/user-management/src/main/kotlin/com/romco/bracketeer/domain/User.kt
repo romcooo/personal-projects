@@ -7,12 +7,15 @@ import java.util.*
 data class User(var id: Long = 0,
                 var username: String,
                 var passwordHash: String,
+                var creationDate: Date?,
+                var lastPasswordChangeDate: Date?,
+                var email: String?,
                 var lastUpdateDate: Date?,
                 var roles: Collection<Role> = emptyList()) {
 
     companion object {
-        fun buildUser(username: String, passwordHash: String, lastUpdateDate: Date): User {
-            return User(username = username, passwordHash = passwordHash, lastUpdateDate =  lastUpdateDate)
+        fun buildUser(username: String, passwordHash: String, email: String?, lastUpdateDate: Date): User {
+            return User(username = username, passwordHash = passwordHash, email = email, lastUpdateDate = lastUpdateDate, creationDate = lastUpdateDate, lastPasswordChangeDate = null)
         }
     }
 }

@@ -18,14 +18,15 @@ public class DBInitializer {
     MatchDao matchDao;
     @Autowired
     MatchResultDao matchResultDao;
-    
+
+    // TODO update so cleanup doesn't remove data anymore
     @PostConstruct
     public void initialize() {
-        matchResultDao.cleanup();
-        matchDao.cleanup();
-        roundDao.cleanup();
-        participantDao.cleanup();
-        tournamentDao.cleanup();
+//        matchResultDao.cleanup();
+//        matchDao.cleanup();
+//        roundDao.cleanup();
+//        participantDao.cleanup();
+//        tournamentDao.cleanup();
     }
     
 //    @PostConstruct

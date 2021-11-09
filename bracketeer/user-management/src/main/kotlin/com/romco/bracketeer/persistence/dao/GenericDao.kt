@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate
 import javax.sql.DataSource
 
+// TODO refactor - this is not needed, it's too extensive. Separate it!
 interface GenericDao<T> {
     fun setDataSource(dataSource: DataSource)
     // retrieves all

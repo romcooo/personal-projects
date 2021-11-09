@@ -30,7 +30,7 @@ fun hashPassword(password: String): Password {
     return Password(hash.toString(), salt.toString())
 }
 
-fun encodePassword(password: String): String? {
+fun encodePassword(password: String): String {
     val passwordEncoder: PasswordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder()
     val hash = passwordEncoder.encode(password)
     logger<Main>().info("encoding password, resulting hash is $hash")
