@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,13 +40,15 @@ public class RoundController {
     public Tournament tournament() {
         return service.getTournament();
     }
+
     @ModelAttribute(TOURNAMENT_CODE)
-    public String tournamentCode(Model model) {
+    public String tournamentCode(Model model, HttpSession session) {
         if (service.getTournament() != null) {
-            String value = service.getTournament().getCode();
-            if (value != null) {
-                model.addAttribute(TOURNAMENT_CODE, value);
-                return value;
+            String code = service.getTournament().getCode();
+            if (code != null) {
+                session.setAttribute(TOURNAMENT_CODE, code);
+                model.addAttribute(TOURNAMENT_CODE, code);
+                return code;
             }
         }
         log.warn("Tournament code is not available, returning null.");
@@ -73,11 +76,9 @@ public class RoundController {
     @GetMapping(Mappings.Tournament.Round.WITH_NUMBER)
     public String getRound(@PathVariable(value = "roundNumber") int roundNumber,
                            @PathVariable(value = TOURNAMENT_CODE) String tournamentCode,
-                           Model model) {
+                           Model model, HttpSession session) {
         log.info("In getRound with roundNumber {}", roundNumber);
-
         service.getTournamentByCode(tournamentCode);
-
         Round round = service.getTournament().getRound(roundNumber);
 
         if (round == null) {
@@ -87,8 +88,7 @@ public class RoundController {
         }
 
         model.addAttribute("round", round);
-        tournamentCode(model);
-        model.addAttribute(TOURNAMENT_CODE, tournamentCode);
+        tournamentCode(model, session);
         return ViewNames.Tournament.ROUND;
     }
 

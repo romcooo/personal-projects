@@ -112,6 +112,10 @@ body a:hover {
 /*    color: #289df6;*/
 }
 
+.sidenav .subheading {
+    font-size: 50%;
+}
+
 .sidenav .subside {
     transition: inherit;
     

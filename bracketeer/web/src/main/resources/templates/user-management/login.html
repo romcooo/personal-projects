@@ -54,6 +54,12 @@
                 </tr>
             </table>
         </form>
+        <div th:if="${param.error}">
+            Invalid username and/or password.
+        </div>
+        <div th:if="${param.logout}">
+            You have been logged out.
+        </div>
     </div>
 </body>
 

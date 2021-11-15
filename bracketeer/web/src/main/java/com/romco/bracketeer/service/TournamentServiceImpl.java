@@ -34,6 +34,8 @@ public class TournamentServiceImpl implements TournamentService {
     MatchDao matchDao;
     @Autowired
     MatchResultDao matchResultDao;
+    @Autowired
+    RuleSetDao ruleSetDao;
     
     // == constructors
     @Autowired
@@ -92,6 +94,11 @@ public class TournamentServiceImpl implements TournamentService {
         // else look it up
         tournament = tournamentDao.retrieve(code);
         if (tournament != null) {
+            // get ruleSet
+            // TODO - check dao - type ("SWISS") needs to be moved to ruleSet in DB and properly retrieved
+            RuleSet ruleSet = ruleSetDao.retrieveByTournamentId(tournament.getId());
+            tournament.setRuleSet(ruleSet);
+
             // get participants and add them to the tournament
             List<Participant> participants = participantDao.retrieveByTournamentId(tournament.getId());
             for (Participant participant : participants) {

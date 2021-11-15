@@ -40,16 +40,16 @@
         <a href="/tournament/find">Find Existing</a>
         <a href="/tournament/all">All</a>
     </div>
-    <div class=sidenav-current th:if="${tournamentCode != null}">
-<!--        <p th:text="'REPLACED BY THYMELEAF'">This would be replaced by Thymeleaf.</p>-->
+    <div class=sidenav-current th:if="${session.tournamentCode != null}">
         <a class="not-clickable">Current</a>
+        <a class="not-clickable subheading" th:text="${session.tournamentCode}">tournament_code</a>
         <div class="subside subside-current">
-            <a th:href="'/tournament/' + ${tournamentCode} + '/round/1/standings'">Standings</a>
-            <a th:href="'/tournament/' + ${tournamentCode} + '/round/1'">Pairings</a>
-            <a th:href="'/tournament/' + ${tournamentCode} + '/players'">List of Players</a>
-            <a th:href="'/tournament/' + ${tournamentCode} + '/bracket'"
+            <a th:href="'/tournament/' + ${session.tournamentCode} + '/round/1/standings'">Standings</a>
+            <a th:href="'/tournament/' + ${session.tournamentCode} + '/round/1'">Pairings</a>
+            <a th:href="'/tournament/' + ${session.tournamentCode} + '/players'">List of Players</a>
+            <a th:href="'/tournament/' + ${session.tournamentCode} + '/bracket'"
                onmouseover="">Full Bracket</a>
-            <a th:href="'/tournament/' + ${tournamentCode} + '/setup'">Settings</a>
+            <a th:href="'/tournament/' + ${session.tournamentCode} + '/setup'">Settings</a>
         </div>
     </div>
 </div>

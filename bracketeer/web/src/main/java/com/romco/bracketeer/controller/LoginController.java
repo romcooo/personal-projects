@@ -34,24 +34,6 @@ public class LoginController {
         return ViewNames.UserManagement.LOGIN;
     }
 
-//    @PostMapping(Mappings.UserManagement.LOGIN)
-    @PostMapping("/login2")
-    public String login(@RequestParam(value = "username") String username,
-                        @RequestParam(value = "password") String password,
-                        Model model) {
-
-        log.info("In login with credentials: {}, {}", username, password);
-
-
-        return ViewNames.UserManagement.LOGIN;
-    }
-
-    @GetMapping("/login-error")
-    public String loginError(Model model) {
-        model.addAttribute("isLoginError", true);
-        return ViewNames.UserManagement.LOGIN;
-    }
-
     @GetMapping(Mappings.UserManagement.REGISTER)
     public String showRegister() {
         log.info("in /register");

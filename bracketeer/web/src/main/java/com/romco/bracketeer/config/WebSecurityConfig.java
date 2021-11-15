@@ -40,14 +40,11 @@ class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin()
                     .loginPage(Mappings.UserManagement.LOGIN) // TODO this ain't right, it should be from ViewNames
                     .loginProcessingUrl("/login")
-                    .failureUrl("/login-error")
+                    .failureUrl("/login?error=true")
                     .permitAll()
                     .and()
                 .csrf().disable() // TODO add csrf into thymeleaf templates and then remove this https://www.marcobehler.com/guides/spring-security
-
                 .httpBasic();
-//                .authenticationProvider(customAuthenticationProvider);
-
 //                .and()
 //                .logout()
 //                .permitAll()
